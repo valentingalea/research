@@ -1,4 +1,4 @@
-C++
+C++/C
 * What is encapsulation and how it works?
  Encapsulation is used to hide the values or state of a structured data object inside a class, preventing unauthorized parties direct access to them. Works by the language providing various access limits.
 * What is a virtual function? 
@@ -14,27 +14,27 @@ Virtual table & pointers
 At the root of a class hierarchy to insure proper cleanup
 * When do you need to override the default copy constructor and assignment operator?
 Rule of 3 in C++03 / Rule of 5 in C++11
-When the class needs to be copy/move assignable – that is when it needs to be „cloneable” i.e. has non-shareable data
+When the class needs to be copy/move assignable ï¿½ that is when it needs to be ï¿½cloneableï¿½ i.e. has non-shareable data
 * What are all the different uses and meanings of the keyword "static"?
-1. at file scope: signified „internal-linkage” that is: not shared between translation units
+1. at file scope: signified ï¿½internal-linkageï¿½ that is: not shared between translation units
 2. at function scope: variable retains value between function calls
 3. at class scope: signifies independence of class instance
 * What is a const function?  What is mutable?
-Const member function doesn’t alter the data it operates on; except the one marked as ‚mutable’
+Const member function doesnï¿½t alter the data it operates on; except the one marked as ï¿½mutableï¿½
 * What are common thread synchronization primitives? (mutex etc)
-1. CompareAndSwap instructions – atomic (that is no other thread can preempt it) only writes after the compare with a known value is true
-2. Mutex – locking mechanism used to synchronize access to a resource. only one "thing" at a time can acquire the mutex and the same „thing” must release it – thus OWNERSHIP property
-3. Semaphore – generalized mutex based on counting. NO ownership property, multiple threads can increase/decrease, when 0 it waits
-4. Condition Variable – used for signalling/event passing
+1. CompareAndSwap instructions ï¿½ atomic (that is no other thread can preempt it) only writes after the compare with a known value is true
+2. Mutex ï¿½ locking mechanism used to synchronize access to a resource. only one "thing" at a time can acquire the mutex and the same ï¿½thingï¿½ must release it ï¿½ thus OWNERSHIP property
+3. Semaphore ï¿½ generalized mutex based on counting. NO ownership property, multiple threads can increase/decrease, when 0 it waits
+4. Condition Variable ï¿½ used for signalling/event passing
 5. Memory Fence - a class of instructions that mean memory read/writes occur in the order you expect. For example a 'full fence' means all read/writes before the fence are committed before those after the fence.
 * What is thread local storage?
 Static(global) memory space made accessible per particular thread (each one will get its own copy rather than share & have to sync with others)
 * What is the keyword "volatile"?
-Depends on language and compiler. Usually marks „atomicity” for data (but not guarantees it): reads from threads are guaranteed to have latest; marks that variable can be modified ‘externally’
+Depends on language and compiler. Usually marks ï¿½atomicityï¿½ for data (but not guarantees it): reads from threads are guaranteed to have latest; marks that variable can be modified ï¿½externallyï¿½
 * When is a function reentrant?
 if it can be interrupted in the middle of its execution and then safely called again ("re-entered") before its previous invocations complete execution
 * When is a function thread-safe?
-When it’s written in such a way to avoid common multithreading errors such as deadlock, data races, etc.
+When itï¿½s written in such a way to avoid common multithreading errors such as deadlock, data races, etc.
 * Race conditions
 where the output is dependent on the sequence or timing of other uncontrollable events. It becomes a bug when events don't happen in the order that the programmer intended
 
@@ -57,7 +57,7 @@ Bloat (in code and binary) / Lack of clarity (especially with error) / Portabili
 C++11
 * What are closures?  What are lambdas?
 Lambda = anonymous local function
-Closure = lambda + referencing environment—a table storing a reference to each of the non-local (or captured) variables
+Closure = lambda + referencing environmentï¿½a table storing a reference to each of the non-local (or captured) variables
 * What is a move assignment operator?  When to use it?
 Tied to the concept of rvalue-reference (or xvalue)
 The move assignment operator is called whenever it is selected by overload resolution, e.g. when an object appears on the left side of an assignment expression, where the right-hand side is an rvalue of the same or implicitly convertible type.
@@ -79,13 +79,13 @@ Quaternions are an alternative mathematical entity similar to complex number and
 Unit quaternions are useful for expressing rotations more easily then 3D matrices and are more stable (and take less space)
 q(angle, unit-axis) = cos(angle/2) + sin(angle/2) * unit-axis
 rotation of point p(0, axis) with quaterion q is 
-p’ = p * q * q_conjugate
+pï¿½ = p * q * q_conjugate
 where q_conjugate = cos(angle/2) - sin(angle/2) * unit-axis
 * What is a common useful quaternion operation?
 Slerp; handling rotations more easily;
 Technical
 * What is a Load Hit Store penalty? How to avoid it?
-A stall in the CPU exec time when a write(or STORE) didn’t fully finish (it’s on its way to the cache) and very soon a read(or LOAD) is requested from the same address.
+A stall in the CPU exec time when a write(or STORE) didnï¿½t fully finish (itï¿½s on its way to the cache) and very soon a read(or LOAD) is requested from the same address.
 Can be helped with __restrict keyword: you guarantee that the mem address is not pointer aliased, thus the compiler can cache it in a register
 * What are the kinds of bit shifting and where is each of them used?
 
@@ -98,12 +98,12 @@ call           eax
 * How does a virtual function call work with the SPUs on PS3? (offload block)
 
 * How can you make a for loop faster?
-Loop unroll; Duff’s device
-* What is “in-place new”?
-allows programmers to explicitly specify the memory management of individual objects — i.e. their "placement" in memory.
+Loop unroll; Duffï¿½s device
+* What is ï¿½in-place newï¿½?
+allows programmers to explicitly specify the memory management of individual objects ï¿½ i.e. their "placement" in memory.
 new (expression) <type> [(arguments)]; for example:
 char buffer[] = new char[256];
-string *str = new (buffer) string(“hello world”);
+string *str = new (buffer) string(ï¿½hello worldï¿½);
 there is no placement delete syntax, but one can override the definition
 * How can you detect if a number is a power of 2?
 (n & (n - 1)) == 0
@@ -111,4 +111,34 @@ there is no placement delete syntax, but one can override the definition
 next = pow(2, ceil(log(x)/log(2)));
 n--; n |= n << 1; n |= n << 2; n |= n << 4; n |= n << 8; n |= n << 16; n++;
 STL
-ContainerImplementationInsertRemoveIndexFindvectordynamic arrayO(n)O(n)O(1)O(log n)listdouble link listO(1)O(1)-O(n)mapred-black b treeO(log n)O(log n)O(1)O(log n)hashmaphash tableO(1)-O(n)O(1)-O(n)O(1)-O(n)O(1)-O(n)
+Container
+Implementation
+Insert
+Remove
+Index
+Find
+vector
+dynamic array
+O(n)
+O(n)
+O(1)
+O(log n)
+list
+double link list
+O(1)
+O(1)
+-
+O(n)
+map
+red-black b tree
+O(log n)
+O(log n)
+O(1)
+O(log n)
+hashmap
+hash table
+O(1)-O(n)
+O(1)-O(n)
+O(1)-O(n)
+O(1)-O(n)
+
