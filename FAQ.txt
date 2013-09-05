@@ -1,0 +1,114 @@
+C++
+* What is encapsulation and how it works?
+ Encapsulation is used to hide the values or state of a structured data object inside a class, preventing unauthorized parties direct access to them. Works by the language providing various access limits.
+* What is a virtual function? 
+A virtual function allows derived classes to replace the implementation provided by the base class.
+When you refer to a derived class object using a pointer or a reference to the base class, you can call a virtual function for that object and execute the derived class's version of the function.
+Virtual functions ensure that the correct function is called for an object, regardless of the expression used to make the function call
+* What is a pure virtual function?
+a virtual function that is required to be implemented by a derived class
+Classes containing pure virtual methods are termed "abstract"; they cannot be instantiated directly.
+* Explain how polymorphism works?
+Virtual table & pointers
+* When do you need to define the destructor as virtual?
+At the root of a class hierarchy to insure proper cleanup
+* When do you need to override the default copy constructor and assignment operator?
+Rule of 3 in C++03 / Rule of 5 in C++11
+When the class needs to be copy/move assignable – that is when it needs to be „cloneable” i.e. has non-shareable data
+* What are all the different uses and meanings of the keyword "static"?
+1. at file scope: signified „internal-linkage” that is: not shared between translation units
+2. at function scope: variable retains value between function calls
+3. at class scope: signifies independence of class instance
+* What is a const function?  What is mutable?
+Const member function doesn’t alter the data it operates on; except the one marked as ‚mutable’
+* What are common thread synchronization primitives? (mutex etc)
+1. CompareAndSwap instructions – atomic (that is no other thread can preempt it) only writes after the compare with a known value is true
+2. Mutex – locking mechanism used to synchronize access to a resource. only one "thing" at a time can acquire the mutex and the same „thing” must release it – thus OWNERSHIP property
+3. Semaphore – generalized mutex based on counting. NO ownership property, multiple threads can increase/decrease, when 0 it waits
+4. Condition Variable – used for signalling/event passing
+5. Memory Fence - a class of instructions that mean memory read/writes occur in the order you expect. For example a 'full fence' means all read/writes before the fence are committed before those after the fence.
+* What is thread local storage?
+Static(global) memory space made accessible per particular thread (each one will get its own copy rather than share & have to sync with others)
+* What is the keyword "volatile"?
+Depends on language and compiler. Usually marks „atomicity” for data (but not guarantees it): reads from threads are guaranteed to have latest; marks that variable can be modified ‘externally’
+* When is a function reentrant?
+if it can be interrupted in the middle of its execution and then safely called again ("re-entered") before its previous invocations complete execution
+* When is a function thread-safe?
+When it’s written in such a way to avoid common multithreading errors such as deadlock, data races, etc.
+* Race conditions
+where the output is dependent on the sequence or timing of other uncontrollable events. It becomes a bug when events don't happen in the order that the programmer intended
+
+* Deadlock
+situation in which two or more competing actions are each waiting for the other to finish, and thus neither ever does
+2 threads wait on each other to release acquired resources
+* Starvation
+where a process is perpetually denied necessary resources
+* What is the keyword "restrict"?
+http://stackoverflow.com/questions/776283/what-does-the-restrict-keyword-mean-in-c
+Optimisation hint to limit pointer aliasing and aid caching
+it means a particular data is accessed only thru that pointer thus making optimisations like storing the ptr value in a registry for subsequent access
+* Mention 3-4 design patterns you know / use?
+1. Singleton - objects that ensure that only a single instance of them can exist at a time
+2. Factory - object whose purpose it is to create other objects based on external input
+3. Observer - object in question maintains a list of other objects that are interested in its state and notifies these listening objects of a change in its state
+4. State / Component - Allow an object to alter its behaviour when its internal state changes. The object will appear to change its class
+* What are the potential problems from overusing templates?
+Bloat (in code and binary) / Lack of clarity (especially with error) / Portability issues / Build times
+C++11
+* What are closures?  What are lambdas?
+Lambda = anonymous local function
+Closure = lambda + referencing environment—a table storing a reference to each of the non-local (or captured) variables
+* What is a move assignment operator?  When to use it?
+Tied to the concept of rvalue-reference (or xvalue)
+The move assignment operator is called whenever it is selected by overload resolution, e.g. when an object appears on the left side of an assignment expression, where the right-hand side is an rvalue of the same or implicitly convertible type.
+Move assignment operators typically "steal" the resources held by the argument (e.g. pointers to dynamically-allocated objects, file descriptors, TCP sockets, I/O streams, running threads, etc), rather than make copies of them, and leave the argument in some valid but otherwise indeterminate state. For example, move-assigning from a std::string or from a std::vector leaves the right-hand side argument empty.
+More http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2027.html#Move_Semantics
+* What are the atomic types and how would you use them?
+It allows lockless concurrent programming.
+Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are the only C++ objects free of data races; that is, if one thread writes to an atomic while another thread reads from it, the behavior is well-defined.
+Math
+* What is the Dot Product?  In which case would you use it in a game?
+The projection of a vector to another; scalar; |A| * |B| * cos(A,B)
+Used for lighting; various projections and formulas
+* What is the Cross product and what is its visual representation?
+Operation that gives a vector perpendicular to its operands (normal to the plane defined by them); vector; |A| * |B| * sin(A,B) * n
+* How can you take a direction vector from a Matrix?
+	You multiply the forward axis vector (Z for ex) with that matrix
+* What is a quaternion?  What are the advantages/disadvantages over a matrix?
+Quaternions are an alternative mathematical entity similar to complex number and are of the form: q = a + bi + cj + dk
+Unit quaternions are useful for expressing rotations more easily then 3D matrices and are more stable (and take less space)
+q(angle, unit-axis) = cos(angle/2) + sin(angle/2) * unit-axis
+rotation of point p(0, axis) with quaterion q is 
+p’ = p * q * q_conjugate
+where q_conjugate = cos(angle/2) - sin(angle/2) * unit-axis
+* What is a common useful quaternion operation?
+Slerp; handling rotations more easily;
+Technical
+* What is a Load Hit Store penalty? How to avoid it?
+A stall in the CPU exec time when a write(or STORE) didn’t fully finish (it’s on its way to the cache) and very soon a read(or LOAD) is requested from the same address.
+Can be helped with __restrict keyword: you guarantee that the mem address is not pointer aliased, thus the compiler can cache it in a register
+* What are the kinds of bit shifting and where is each of them used?
+
+* How does a virtual function call look in assembly?
+mov         eax,dword ptr [a]
+mov         edx,dword ptr [eax]
+mov         eax,dword ptr [edx+4]	
+mov         ecx,dword ptr [a]
+call           eax
+* How does a virtual function call work with the SPUs on PS3? (offload block)
+
+* How can you make a for loop faster?
+Loop unroll; Duff’s device
+* What is “in-place new”?
+allows programmers to explicitly specify the memory management of individual objects — i.e. their "placement" in memory.
+new (expression) <type> [(arguments)]; for example:
+char buffer[] = new char[256];
+string *str = new (buffer) string(“hello world”);
+there is no placement delete syntax, but one can override the definition
+* How can you detect if a number is a power of 2?
+(n & (n - 1)) == 0
+* How can you take the next power of 2 from a number? (e.g. 14 -> 16, 32 -> 32)
+next = pow(2, ceil(log(x)/log(2)));
+n--; n |= n << 1; n |= n << 2; n |= n << 4; n |= n << 8; n |= n << 16; n++;
+STL
+ContainerImplementationInsertRemoveIndexFindvectordynamic arrayO(n)O(n)O(1)O(log n)listdouble link listO(1)O(1)-O(n)mapred-black b treeO(log n)O(log n)O(1)O(log n)hashmaphash tableO(1)-O(n)O(1)-O(n)O(1)-O(n)O(1)-O(n)
