@@ -19,3 +19,15 @@ Depends on language and compiler. Usually marks _atomicity_ for data (but not gu
 http://stackoverflow.com/questions/776283/what-does-the-restrict-keyword-mean-in-c
 
 Optimisation hint to limit pointer aliasing and aid caching - it means a particular data is accessed only thru that pointer thus making optimisations like storing the ptr value in a registry for subsequent access
+
+##### *in place* new
+Allows to explicitly specify the memory management of individual objects, i.e. their "placement" in memory.
+
+new (expression) <type> [(arguments)]; for example:
+
+```
+char buffer[] = new char[256];
+string *str = new (buffer) string("Hello world");
+```
+
+there is no placement delete syntax (but both _new_ and _delete_ functions can be overrided to specify the in-place)
