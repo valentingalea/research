@@ -3,7 +3,6 @@ reseach
 
 various C++ and general programing info, tips &amp; tricks
 
-### header _3_
-#### header _4_
-##### header *5*
-###### header *6*
+Markdown syntax help:
+https://help.github.com/articles/github-flavored-markdown
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
