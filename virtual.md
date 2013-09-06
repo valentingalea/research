@@ -15,8 +15,10 @@ At the root of a class hierarchy to insure proper cleanup
 
 ##### virtual call in *assembly*
 ```
-mov eax, dword ptr [a]
+mov eax, dword ptr [this]
 mov edx, dword ptr [eax]
 mov eax, dword ptr [edx+4]
-mov ecx, dword ptr [a]
+mov ecx, dword ptr [this]
 call eax
+```
+

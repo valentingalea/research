@@ -31,3 +31,4 @@ string *str = new (buffer) string("Hello world");
 ```
 
 there is no placement delete syntax (but both _new_ and _delete_ functions can be overrided to specify the in-place)
+
