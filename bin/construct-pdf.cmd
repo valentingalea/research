@@ -5,15 +5,11 @@ set OUT=FAQ.pdf
 
 del %ALL%
 
-for %%i in (*.md) do (
-	if /I not %%i==README.md (
-		if /I not %%i==%ALL% (
-			type %%i
-			echo.
-			echo -------------------------------------------
-			echo.
-		)
-	)
+for %%i in (..\src\*.md) do (
+	type %%i
+	echo.
+	echo -------------------------------------------
+	echo.
 ) >> %ALL%
 
 pandoc %ALL% -o %OUT%
