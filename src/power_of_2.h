@@ -29,6 +29,8 @@ int next_power_of_2_fast(int n)
 	n = (n >> 4) | n;
 	n = (n >> 8) | n;
 	n = (n >> 16) | n;
+//	...
+//	n = (n >> (bitspace / 2)) | n;
 	n++;
 
 	return n;
