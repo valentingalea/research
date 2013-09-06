@@ -7,13 +7,16 @@ del %ALL%
 
 for %%i in (*.md) do (
 	if /I not %%i==README.md (
-		type %%i >> %ALL%
-		echo. >> %ALL%
-		echo ------------------------------------------- >> %ALL%
-		echo. >> %ALL%
+		if /I not %%i==%ALL% (
+			type %%i
+			echo.
+			echo -------------------------------------------
+			echo.
+		)
 	)
-)
+) >> %ALL%
 
 pandoc %ALL% -o %OUT%
 
 start %OUT%
+
