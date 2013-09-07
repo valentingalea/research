@@ -1,7 +1,7 @@
 @echo off
 
 set ALL=_all.md
-set OUT=FAQ.pdf
+set OUT=FAQ
 
 del %ALL%
 
@@ -12,7 +12,8 @@ for %%i in (..\src\*.md) do (
 	echo.
 ) >> %ALL%
 
-pandoc %ALL% -o %OUT%
+pandoc %ALL% -o %OUT%.pdf
+pandoc %ALL% -o %OUT%.html --to html5
 
-start %OUT%
+start %OUT%.pdf
 
