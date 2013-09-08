@@ -1,4 +1,4 @@
-### C++ syntax notes
+#### C++ syntax notes
 
 ##### *static* - all the different meanings?
 1. at _file scope_: signifies "internal-linkage" i.e. not shared between translation units
