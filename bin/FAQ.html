@@ -1,13 +1,13 @@
-<h4 id="c11">C++11</h4>
-<h5 id="what-are-closures-what-are-lambdas">What are <em>closures</em>? What are <em>lambdas</em>?</h5>
+<h4 id="c11"><a href="#c11">C++11</a></h4>
+<h5 id="what-are-closures-what-are-lambdas"><a href="#what-are-closures-what-are-lambdas">What are <em>closures</em>? What are <em>lambdas</em>?</a></h5>
 <p>Lambda = anonymous local function</p>
 <p>Closure = lambda + reference to the environment (a table storing a reference to each of the non-local captured variables)</p>
-<h5 id="what-is-a-move-assignment-operator-when-to-use-it">What is a <em>move assignment</em> operator? When to use it?</h5>
+<h5 id="what-is-a-move-assignment-operator-when-to-use-it"><a href="#what-is-a-move-assignment-operator-when-to-use-it">What is a <em>move assignment</em> operator? When to use it?</a></h5>
 <p>Tied to the concept of rvalue-reference (or xvalue)</p>
 <p>The move assignment operator is called whenever it is selected by overload resolution, e.g. when an object appears on the left side of an assignment expression, where the right-hand side is an rvalue of the same or implicitly convertible type.</p>
 <p>Move assignment operators typically &quot;steal&quot; the resources held by the argument (e.g. pointers to dynamically-allocated objects, file descriptors, TCP sockets, I/O streams, running threads, etc), rather than make copies of them, and leave the argument in some valid but otherwise indeterminate state. For example, move-assigning from a std::string or from a std::vector leaves the right-hand side argument empty.</p>
 <p>More http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2027.html#Move_Semantics</p>
-<h5 id="stdmove"><em>std::move()</em></h5>
+<h5 id="stdmove"><a href="#stdmove"><em>std::move()</em></a></h5>
 <p>Obtains an rvalue reference to its argument and converts it to an xvalue.</p>
 <p>Code that receives such an xvalue has the opportunity to optimize away unnecessary overhead by moving data out of the argument, leaving it in a valid but unspecified state.</p>
 <p>Basically it's just a cast:</p>
@@ -16,12 +16,12 @@ constexpr typename std::remove_reference&lt;_Tp&gt;::type&amp;&amp; move(_Tp&amp
 {
     return static_cast&lt;typename std::remove_reference&lt;_Tp&gt;::type&amp;&amp;&gt;(__t);
 }</code></pre>
-<h5 id="what-are-the-atomic-types-and-how-would-you-use-them">What are the <em>atomic types</em> and how would you use them?</h5>
+<h5 id="what-are-the-atomic-types-and-how-would-you-use-them"><a href="#what-are-the-atomic-types-and-how-would-you-use-them">What are the <em>atomic types</em> and how would you use them?</a></h5>
 <p>It allows lockless concurrent programming.</p>
 <p>Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are the only C++ objects free of data races; that is, if one thread writes to an atomic while another thread reads from it, the behavior is well-defined.</p>
 <hr />
-<h4 id="stl">STL</h4>
-<h5 id="containers-speed">containers speed</h5>
+<h4 id="stl"><a href="#stl">STL</a></h4>
+<h5 id="containers-speed"><a href="#containers-speed">containers speed</a></h5>
 <table>
 <thead>
 <tr class="header">
@@ -69,29 +69,29 @@ constexpr typename std::remove_reference&lt;_Tp&gt;::type&amp;&amp; move(_Tp&amp
 </tbody>
 </table>
 <hr />
-<h3 id="c-syntax-notes">C++ syntax notes</h3>
-<h5 id="static---all-the-different-meanings"><em>static</em> - all the different meanings?</h5>
+<h4 id="c-syntax-notes"><a href="#c-syntax-notes">C++ syntax notes</a></h4>
+<h5 id="static---all-the-different-meanings"><a href="#static---all-the-different-meanings"><em>static</em> - all the different meanings?</a></h5>
 <ol type="1">
 <li>at <em>file scope</em>: signifies &quot;internal-linkage&quot; i.e. not shared between translation units</li>
 <li>at <em>function scope</em>: variable retains value between function calls</li>
 <li>at <em>class scope</em>: signifies independence of class instance</li>
 </ol>
-<h5 id="const-and-mutable"><em>const</em> and <em>mutable</em></h5>
+<h5 id="const-and-mutable"><a href="#const-and-mutable"><em>const</em> and <em>mutable</em></a></h5>
 <p>Const member function doesn't alter the data it operates on; except the one marked as <em>mutable</em></p>
-<h5 id="default-copy-constructor-and-assignment-operator---when-to-override">default <em>copy constructor</em> and <em>assignment operator</em> - when to override?</h5>
+<h5 id="default-copy-constructor-and-assignment-operator---when-to-override"><a href="#default-copy-constructor-and-assignment-operator---when-to-override">default <em>copy constructor</em> and <em>assignment operator</em> - when to override?</a></h5>
 <p>Rule of 3 in C++03 / Rule of 5 in C++11 When the class needs to be copy/move assignable - that is when it needs to be <em>cloneable</em> i.e. has non-shareable data</p>
-<h5 id="volatile-keyword"><em>volatile</em> keyword</h5>
+<h5 id="volatile-keyword"><a href="#volatile-keyword"><em>volatile</em> keyword</a></h5>
 <p>Depends on language and compiler. Usually marks <em>atomicity</em> for data (but not guarantees it): reads from threads are guaranteed to have latest; marks that variable can be modified &quot;externally&quot;</p>
-<h5 id="restrict-keyword"><em>restrict</em> keyword</h5>
+<h5 id="restrict-keyword"><a href="#restrict-keyword"><em>restrict</em> keyword</a></h5>
 <p>http://stackoverflow.com/questions/776283/what-does-the-restrict-keyword-mean-in-c</p>
 <p>Optimisation hint to limit pointer aliasing and aid caching - it means a particular data is accessed only thru that pointer thus making optimisations like storing the ptr value in a registry for subsequent access</p>
-<h5 id="in-place-new"><em>in place</em> new</h5>
+<h5 id="in-place-new"><a href="#in-place-new"><em>in place</em> new</a></h5>
 <p>Allows to explicitly specify the memory management of individual objects, i.e. their &quot;placement&quot; in memory.</p>
 <p>new (expression) <type> [(arguments)]; for example:</p>
 <pre><code>char buffer[] = new char[256];
 string *str = new (buffer) string(&quot;Hello world&quot;);</code></pre>
 <p>there is no placement delete syntax (but both <em>new</em> and <em>delete</em> functions can be overrided to specify the in-place)</p>
-<h5 id="typename-keyword"><em>typename</em> keyword</h5>
+<h5 id="typename-keyword"><a href="#typename-keyword"><em>typename</em> keyword</a></h5>
 <ol type="1">
 <li>alias for the <em>class</em> keyword when declaring template parameters</li>
 <li>a method to indicate that a dependent name is a type</li>
@@ -108,16 +108,16 @@ struct Gotcha {
 
 foo&lt;Gotcha&gt;();</code></pre>
 <hr />
-<h4 id="c-virtual">C++ virtual</h4>
-<h5 id="what-is-a-virtual-function">What is a <em>virtual</em> function?</h5>
+<h4 id="c-virtual"><a href="#c-virtual">C++ virtual</a></h4>
+<h5 id="what-is-a-virtual-function"><a href="#what-is-a-virtual-function">What is a <em>virtual</em> function?</a></h5>
 <p>A virtual function allows derived classes to replace the implementation provided by the base class.</p>
 <p>When you refer to a derived class object using a pointer or a reference to the base class, you can call a virtual function for that object and execute the derived class's version of the function. Virtual functions ensure that the correct function is called for an object, regardless of the expression used to make the function call</p>
-<h5 id="pure-virtual-function"><em>pure</em> virtual function</h5>
+<h5 id="pure-virtual-function"><a href="#pure-virtual-function"><em>pure</em> virtual function</a></h5>
 <p>A virtual function that is required to be implemented by a derived class.</p>
 <p>Classes containing pure virtual methods are termed &quot;abstract&quot;; they cannot be instantiated directly.</p>
-<h5 id="virtual-destructor---whenwhy">virtual <em>destructor</em> - when/why?</h5>
+<h5 id="virtual-destructor---whenwhy"><a href="#virtual-destructor---whenwhy">virtual <em>destructor</em> - when/why?</a></h5>
 <p>At the root of a class hierarchy to insure proper cleanup</p>
-<h5 id="virtual-call-in-assembly">virtual call in <em>assembly</em></h5>
+<h5 id="virtual-call-in-assembly"><a href="#virtual-call-in-assembly">virtual call in <em>assembly</em></a></h5>
 <pre><code>mov eax, dword ptr [this]
 mov edx, dword ptr [eax]
 mov eax, dword ptr [edx+4]
