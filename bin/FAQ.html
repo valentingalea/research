@@ -20,6 +20,53 @@ constexpr typename std::remove_reference&lt;_Tp&gt;::type&amp;&amp; move(_Tp&amp
 <p>It allows lockless concurrent programming.</p>
 <p>Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are the only C++ objects free of data races; that is, if one thread writes to an atomic while another thread reads from it, the behavior is well-defined.</p>
 <hr />
+<h4 id="git"><a href="#git">git</a></h4>
+<h5 id="reset"><a href="#reset">reset</a></h5>
+<blockquote>
+<p>git reset &lt;mode&gt; &lt;commit&gt;</p>
+</blockquote>
+<p><mode> can be</p>
+<ul>
+<li><em>---soft</em> doesn't touch anything, just moves the head to the &lt;commit&gt;</li>
+<li><em>---mixed</em> (the default) only touches the index i.e. undo add/mark for commit</li>
+<li><em>---hard</em> reverts both the index and the working tree to the &lt;commit&gt; i.e. total undo!</li>
+</ul>
+<h5 id="timestamp-spec"><a href="#timestamp-spec">timestamp spec</a></h5>
+<blockquote>
+<p>branch@{&quot;any date format&quot;}</p>
+</blockquote>
+<h5 id="detach-head"><a href="#detach-head">detach head</a></h5>
+<blockquote>
+<p>git checkout <em>timestamp-spec</em></p>
+</blockquote>
+<h5 id="change-default-push-mode"><a href="#change-default-push-mode">change default push mode</a></h5>
+<blockquote>
+<p>git config --global push.default <em>mode</em></p>
+</blockquote>
+<ul>
+<li><em>nothing</em></li>
+<li><em>matching</em> - all branches having the same name in both ends (default)</li>
+<li><em>upstream</em> - the current branch to its upstream branch</li>
+<li><em>simple</em> - same as <em>upstream</em> but only if name is the same</li>
+<li><em>current</em> - the current branch to a branch of the same name</li>
+</ul>
+<h5 id="external-tools"><a href="#external-tools">external tools</a></h5>
+<blockquote>
+<p>git config --global mergetool.p4merge.path <em>path</em> git config --global merge.tool p4merge</p>
+</blockquote>
+<h5 id="ref-specs"><a href="#ref-specs">ref specs</a></h5>
+<p><em>r1..r2</em> equiv to <em>^r1 r2</em> - comits reachable from r2 but not r1 aka set difference</p>
+<p><em>r1...r2</em> equiv <em>r1 r2 --not $(git merge-base --all r1 r2)</em> - commits reachable from either r1 or r2 but not both aka symmetric difference</p>
+<h5 id="p4-git"><a href="#p4-git">p4 git</a></h5>
+<p>http://answers.perforce.com/articles/KB_Article/Git-P4 http://ericlathrop.com/2012/12/how-to-set-up-git-p4-in-windows/ http://git-scm.com/docs/git-p4</p>
+<h5 id="rebase"><a href="#rebase">rebase</a></h5>
+<ul>
+<li>is done in the branch and that branch is applied on top of master</li>
+<li>on master u can do a fast-forward merge to sync up</li>
+</ul>
+<p>before: <code>A---B---C topic              /     D---E---F---G master</code></p>
+<p>after: <code>A'--B'--C' topic                  /     D---E---F---G master</code></p>
+<hr />
 <h4 id="stl"><a href="#stl">STL</a></h4>
 <h5 id="containers-speed"><a href="#containers-speed">containers speed</a></h5>
 <table>
@@ -107,6 +154,15 @@ struct Gotcha {
 };
 
 foo&lt;Gotcha&gt;();</code></pre>
+<h5 id="sfinae"><a href="#sfinae">SFINAE</a></h5>
+<p>If an error occurs during the substitution of a set of arguments for any given template, the compiler removes the potential overload from the candidate set instead of stopping with a compilation error</p>
+<p>http://en.wikipedia.org/wiki/SFINAE</p>
+<h5 id="meyers-singleton"><a href="#meyers-singleton">Meyers Singleton</a></h5>
+<pre><code>static Singleton&amp; Instance()
+{
+  static Singleton theSingleton; // initialized at first function call
+  return theSingleton;
+}</code></pre>
 <hr />
 <h4 id="c-virtual"><a href="#c-virtual">C++ virtual</a></h4>
 <h5 id="what-is-a-virtual-function"><a href="#what-is-a-virtual-function">What is a <em>virtual</em> function?</a></h5>
@@ -123,4 +179,6 @@ mov edx, dword ptr [eax]
 mov eax, dword ptr [edx+4]
 mov ecx, dword ptr [this]
 call eax</code></pre>
+<h5 id="co-variant-return-types"><a href="#co-variant-return-types">co-variant return types</a></h5>
+<p>http://katyscode.wordpress.com/2013/08/22/c-polymorphic-cloning-and-the-crtp-curiously-recurring-template-pattern/</p>
 <hr />
