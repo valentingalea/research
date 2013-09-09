@@ -22,3 +22,6 @@ mov ecx, dword ptr [this]
 call eax
 ```
 
+##### co-variant return types
+
+http://katyscode.wordpress.com/2013/08/22/c-polymorphic-cloning-and-the-crtp-curiously-recurring-template-pattern/
