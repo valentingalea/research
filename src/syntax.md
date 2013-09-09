@@ -51,3 +51,9 @@ struct Gotcha {
 
 foo<Gotcha>();
 ```
+
+##### SFINAE
+
+If an error occurs during the substitution of a set of arguments for any given template, the compiler removes the potential overload from the candidate set instead of stopping with a compilation error
+
+http://en.wikipedia.org/wiki/SFINAE
