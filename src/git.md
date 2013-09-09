@@ -59,7 +59,7 @@ before:
 
 after:
 ```
-                         A'--B'--C' topic
-                        /
+                  A'--B'--C' topic
+                 /
     D---E---F---G master
 ```
