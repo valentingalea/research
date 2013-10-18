@@ -31,6 +31,7 @@
 ##### external tools
 
 > git config --global mergetool.p4merge.path *path*
+
 > git config --global merge.tool p4merge
 
 ##### ref specs
