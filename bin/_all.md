@@ -38,6 +38,15 @@ It allows lockless concurrent programming.
 
 Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are the only C++ objects free of data races; that is, if one thread writes to an atomic while another thread reads from it, the behavior is well-defined.
 
+##### New memory model
+
+Detailed info:
+
+http://stackoverflow.com/questions/6319146/c11-introduced-a-standardized-memory-model-what-does-it-mean-and-how-is-it-g
+
+http://bartoszmilewski.com/2008/12/01/c-atomics-and-memory-ordering/
+
+
 -------------------------------------------
 
 #### git
@@ -106,6 +115,20 @@ after:
                  /
     D---E---F---G master
 ```
+
+-------------------------------------------
+
+#### Desktop vs Mobile GPU's
+
+Desktop GPU                              | Mobile GPU 
+-----------------------------------------|------------------------------------------------|
+Maximize throughput, minimize latency    | -
+Lots of memory                           | Limited memory
+Hight power consumption (100W+)          | Low power consumption (~100mW)
+No restrictions on draw calls            | Limitations on draw calls
+Transparency is not a problem            | Opaque geometry prefered / Expensive overdraw
+On-demand as-you-send rendering          | Tiled rendering
+
 
 -------------------------------------------
 

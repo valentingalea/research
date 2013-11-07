@@ -19,6 +19,10 @@ constexpr typename std::remove_reference&lt;_Tp&gt;::type&amp;&amp; move(_Tp&amp
 <h5>What are the <em>atomic types</em> and how would you use them?</h5>
 <p>It allows lockless concurrent programming.</p>
 <p>Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are the only C++ objects free of data races; that is, if one thread writes to an atomic while another thread reads from it, the behavior is well-defined.</p>
+<h5>New memory model</h5>
+<p>Detailed info:</p>
+<p><a href="http://stackoverflow.com/questions/6319146/c11-introduced-a-standardized-memory-model-what-does-it-mean-and-how-is-it-g">http://stackoverflow.com/questions/6319146/c11-introduced-a-standardized-memory-model-what-does-it-mean-and-how-is-it-g</a></p>
+<p><a href="http://bartoszmilewski.com/2008/12/01/c-atomics-and-memory-ordering/">http://bartoszmilewski.com/2008/12/01/c-atomics-and-memory-ordering/</a></p>
 <hr />
 <h4>git</h4>
 <h5>reset</h5>
@@ -74,6 +78,42 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'branch@{&quot;any'+'<\/'+'
 </ul>
 <p>before:<br /><code>A---B---C topic              /     D---E---F---G master</code></p>
 <p>after:<br /><code>A'--B'--C' topic                  /     D---E---F---G master</code></p>
+<hr />
+<h4>Desktop vs Mobile GPU's</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Desktop GPU</th>
+<th style="text-align: left;">Mobile GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Maximize throughput, minimize latency</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lots of memory</td>
+<td style="text-align: left;">Limited memory</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hight power consumption (100W+)</td>
+<td style="text-align: left;">Low power consumption (~100mW)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No restrictions on draw calls</td>
+<td style="text-align: left;">Limitations on draw calls</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Transparency is not a problem</td>
+<td style="text-align: left;">Opaque geometry prefered / Expensive overdraw</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">On-demand as-you-send rendering</td>
+<td style="text-align: left;">Tiled rendering</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h4>STL</h4>
 <h5>containers speed</h5>
