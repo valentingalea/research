@@ -1,6 +1,4 @@
-#### STL
-
-##### containers speed
+##### STL containers speed
 
 Container | Implementation   | Insert   | Remove   | Index  | Find
 --------- | ---------------- | -------- | -------- | ------ | -------

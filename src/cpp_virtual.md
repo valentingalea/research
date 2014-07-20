@@ -1,5 +1,3 @@
-#### C++ virtual
-
 ##### What is a *virtual* function? 
 A virtual function allows derived classes to replace the implementation provided by the base class.
 

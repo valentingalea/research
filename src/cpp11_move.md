@@ -1,12 +1,4 @@
-#### C++11
-
-##### What are *closures*?  What are *lambdas*?
-
-Lambda = anonymous local function
-
-Closure = lambda + reference to the environment (a table storing a reference to each of the non-local captured variables)
-
-##### What is a *move assignment* operator?  When to use it?
+##### *move assignment*?  When to use it?
 
 Tied to the concept of rvalue-reference (or xvalue)
 
@@ -31,18 +23,3 @@ constexpr typename std::remove_reference<_Tp>::type&& move(_Tp&& __t) noexcept
     return static_cast<typename std::remove_reference<_Tp>::type&&>(__t);
 }
 ```
-
-##### What are the *atomic types* and how would you use them?
-
-It allows lockless concurrent programming.
-
-Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are the only C++ objects free of data races; that is, if one thread writes to an atomic while another thread reads from it, the behavior is well-defined.
-
-##### New memory model
-
-Detailed info:
-
-http://stackoverflow.com/questions/6319146/c11-introduced-a-standardized-memory-model-what-does-it-mean-and-how-is-it-g
-
-http://bartoszmilewski.com/2008/12/01/c-atomics-and-memory-ordering/
-

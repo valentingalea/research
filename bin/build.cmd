@@ -1,9 +1,9 @@
 @echo off
 
 set ALL=_all.md
-set OUT=FAQ
+set OUT=FAQ.pdf
 
-del %ALL%
+if exist %ALL% del %ALL%
 
 for %%i in (..\src\*.md) do (
 	type %%i
@@ -12,8 +12,7 @@ for %%i in (..\src\*.md) do (
 	echo.
 ) >> %ALL%
 
-pandoc %ALL% -o %OUT%.pdf --toc --toc-depth=5 --from=markdown_github
-pandoc %ALL% -o %OUT%.html --toc --toc-depth=5 --from=markdown_github --to html5 
+pandoc %ALL% -o %OUT% --toc --toc-depth=5 --from=markdown_github
 
-start %OUT%.pdf
+start %OUT%
 
