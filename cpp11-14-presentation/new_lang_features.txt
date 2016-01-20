@@ -1,0 +1,269 @@
+<<New Language Features>>
+-------------------------
+
+uniform initialisation
+----------------------
+C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom:
+
+[role="incremental"]
+[source,cpp]
+widget W;           // works in all versions, declares uninitialised variable
+
+[role="incremental"]
+[source,cpp]
+widget W();         // most-vexing-parse: you would think it's variable declaration but it's actually a function declaration
+widget W{};         // C++11 new way of declaration - calls default constructor
+
+[role="incremental"]
+[source,cpp]
+widget W(x);        // C++03 init by calling copy/convert constructor (depending on type of x)
+widget W{x};        // C++11 same thing but safer
+
+[role="incremental"]
+[source,cpp]
+widget W = x;       // still init (not assignment), calls copy constructor
+widget W = {x};     // same thing but better - can potentially call move constructor
+
+uniform initialisation (continued)
+----------------------------------
+NOTE: Doesn't do automatic narrowing conversion!
+
+[role="incremental"]
+[source,cpp]
+int i = 1.0;        // compiles, implicitly converts from float to int
+int i = { 1.0 };    // won't compile
+
+[role="incremental"]
+More examples:
+
+[role="incremental"]
+[source,cpp]
+-------------------------------------------------------------------------------
+int arr[]            { 1,2,3,4,5 };
+std::vector<int> v   { 1,2,3,4,5 };
+std::set<int> s      { 1,2,3,4,5 };
+
+std::map<int,std::string> m { {0,"zero"}, {1,"one"}, {2,"two"} };
+
+struct mystruct { int x, y; };
+mystruct m = { 1, 2 };
+-------------------------------------------------------------------------------
+
+auto
+----
+The type of the variable that is being declared will be automatically deduced from its initializer.
+
+[role="incremental"]
+[source,cpp]
+ int j = 0;         // Variable j is explicitly type int.
+auto k = 0;         // Variable k is implicitly type int because 0 is an integer.
+auto d = 3.14;      // Variable d is double
+auto f = 3.14f;     // Variable f is float
+
+[role="incremental"]
+[source,cpp]
+map<int,list<string>>::iterator i = m.begin(); 
+                           auto i = m.begin();
+						   
+[role="incremental"]
+[source,cpp]
+auto func = [](int arg) { return arg + 2; };
+func();
+
+auto (continued)
+----------------
+The rules of this deduction are the same of T from template declaration.
+
+[role="incremental"]
+This means that it doesn't deduct(it *drops*) `references` and `const` !!!
+
+[role="incremental"]
+[source,cpp]
+-------------------------------------------------------------------------------
+float& f1();
+auto a1 = f1();     // a1 is value float, not reference!
+
+const int f2();
+auto a2 = f2();     // a2 is not const!
+
+const Widget& f3();
+auto Widget = f3(); // a3 is not reference, not const, it will be a copy!!!
+-------------------------------------------------------------------------------
+
+// Scott Meyer: https://www.youtube.com/watch?v=wQxj20X-tIU
+// http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+
+decltype
+--------
+Inspects the declared type of an entity or queries the type and value category of an expression.
+
+[role="incremental"]
+[source,cpp]
+const int& foo();
+const int bar();
+int i;
+struct A { double x; };
+const A* a = new A();
+
+[role="incremental"]
+[source,cpp]
+decltype(foo()) x1;    // type is const int &
+decltype(bar()) x2;    // type is const int
+decltype(i) x3;        // type is int
+decltype(a->x) x4;     // type is double
+decltype((a->x)) x5;   // type is const double & -- because of expression
+
+decltype (continued)
+--------------------
+_decltype_ will get different results from _auto_ in similar situations:
+
+[role="incremental"]
+[source,cpp]
+const int& x;
+auto a1 = x;           // a1 is int
+decltype(x) a2;        // a2 is const int &
+
+[role="incremental"]
+C++14 "fixes" this:
+
+[role="incremental"]
+[source,cpp]
+decltype(auto) a2 = x; // a2 is const int &
+
+constexpr
+---------
+Declares that it is possible to evaluate the value of the function or variable at compile time.
+
+[role="incremental"]
+Excellent replacement for macros: they are full C++ entities with scope and are debug-able!
+
+[role="incremental"]
+[source,cpp]
+/* BAD */
+#define MAGIC 0xFF04
+
+[role="incremental"]
+[source,cpp]
+/* GOOD */
+constexpr int MAGIC = 0xFF04;
+
+[role="incremental"]
+[source,cpp]
+/* BAD */
+#define FUNC(a, b) ((a) + (b) - 123)
+
+[role="incremental"]
+[source,cpp]
+/* GOOD */
+constexpr int FUNC(int a, int b)
+{
+        return a + b - 123;
+}
+// NOTE: can be template
+
+constexpr (continued)
+---------------------
+constexpr functions in C++11 are limited in what they can use/do:
+
+* only one return statement (but supports recursion)
+* no if/while/for/switch
+* no local variables.
+
+C++14 relaxes these requirements a lot - but sadly VS 2015 doesn't support it
+
+// https://www.youtube.com/watch?v=fZjYCQ8dzTc
+
+range-based for loop
+--------------------
+[source,cpp]
+int array[] = {0, 1, 2, 3, 4, 5};
+std::vector<int> vector = {0, 1, 2, 3, 4, 5};
+
+[role="incremental"]
+[source,cpp]
+for(int n: array)
+    std::cout << n << ' ';
+
+[role="incremental"]
+[source,cpp]	
+for(const int &i : vector) // access by const reference
+    std::cout << i << ' ';
+
+[role="incremental"]
+[source,cpp]	
+for(auto i: vector) // access by value, the type of i is int
+    std::cout << i << ' ';
+
+[role="incremental"]
+TIP: works on anything that has .begin() and .end() or the free functions equivalent
+
+strong enum
+-----------
+C++03 `enum`'s have big problems:
+
+[role="incremental"]
+* implicitly convert to an integer, causing errors when that is not desired
+* export their enumerators to the surrounding scope, causing name clashes
+* the underlying type of an enum cannot be specified
+
+[role="incremental"]
+[source,cpp]
+enum Alert { green, yellow, orange, red };  // traditional enum
+enum class Colour : char { red, blue };     // scoped and strongly typed enum
+enum class TrafficLight : unsigned int { red, yellow, green }; // default is int
+
+[role="incremental"]
+[source,cpp]
+Alert a = 7;              // error (as ever in C++)
+Colour c = 7;             // error: no int->Color conversion
+int a2 = red;             // ok: Alert->int conversion
+int a3 = Alert::red;      // error in C++03; ok in C++11
+int a4 = blue;            // error: blue not in scope
+int a5 = Colour::blue;    // error: not Color->int conversion
+Color a6 = Colour::blue;  // ok
+
+noexcept
+--------
+In C++03 functions declarations could specify their exceptions via `throw()` statements, but it never caught on and it had lot of problems.
+
+Since C++11 there is a way simpler method: `noexcept`
+
+[role="incremental"]
+[source,cpp]
+-------------------------------------------------------------------------------
+void func(int, float) noexcept;                // this function will never throw exceptions
+void func(int, float) noexcept(true);          // same thing
+
+template <typename T>
+T copy_object(T& obj) noexcept(std::is_pod<T>) // throws exception only when gets non-POD object
+-------------------------------------------------------------------------------
+
+[role="incremental"]
+* A function declared with `noexcept` enables compilers to generate more efficient/optimised code!
+* If a noexcept function does throw an exception, `std::terminate` is called immediately
+* All the functions called from within a `noexcept` function must be themselves like that - compiler doesn't check
+
+syntactic sugar
+---------------
+[role="incremental"]
+* `using` - type alias equivalent to `typedef` but better
+
+[role="incremental"]
+[source,cpp]
+using my_int = int;                   typedef int my_int;
+using func = void (*) (int,int);      typedef void (*func)(int, int);
+template<class T> using ptr = T*;     // no equivalent
+
+[role="incremental"]
+* string literals
+
+[role="incremental"]
+[source,cpp]
+  "normal ASCII string"
+ L"wide char string"
+u8"string encoded in UTF-8"
+ u"string encoded in UTF-16"
+ U"string encoded in UTF-32"
+ R"delimiter( string with anything unescaped like \ / " )delimiter" // delimiter can be any 16 character string, including empty
+
+ 

@@ -1,0 +1,120 @@
+<<Multithreading and Memory>>
+-----------------------------
+
+new POD distinction
+-------------------
+"plain old data" - ambiguous term in C++03. Now properly defined in 2 categories:
+
+[role="incremental"]
+* *trivial* - basically means it can be _memcpy_'d
+** no virtual funcs or virtual base classes
+** non-virtual destructor
+* *standard-layout* - can interop with C
+** no virtual funcs or virtual base classes
+** all non-static member have same access control (public, private, protected)
+** no references
+
+[role="incremental"]
+POD is defined recursively: If all your members and bases are PODs, you're a POD.
+
+[role="incremental"]
+TIP: can be queried with `std::is_pod`, `std::is_trivial`, `std::is_standard_layout`
+
+[role="incremental"]
+Possible to give up one without losing the other. A class with complex move and copy constructors may not be trivial, but it could be standard-layout and thus interop with C. Similarly, a class with public and private non-static data members would not be standard-layout, but it could be trivial and thus memcpy-able.
+
+memory model
+------------
+The program you write is not necessarily the same one that gets executed. Compiler optimisations, CPU mechanics like OoO execution and threads, cache design etc can transform the code, particularly in respect to load/store operations.
+
+[role="incremental"]
+C++03 doesn't particularly care of this and doesn't offer anything in the standard.
+
+[role="incremental"]
+C++11 offers a new model, multi-threaded aware, in which it supports _Sequential Consistency_ as long as you don't write code with race conditions.
+
+[role="incremental"]
+The main tools used to achieve this are _atomics_ operations with support for memory ordering constraints: `std::atomic` and `memory_order` enum.
+
+std::atomic
+-----------
+[source,cpp]
+template<class T> struct atomic; // specialised for bool, char, int, long etc (also atomic_flag - a lock-free bool variant)
+
+[source,cpp]
+(constructors)       // trivial, copy-constr is deleted
+operator =           // same as store()
+store()              // atomically replaces the value of the atomic object with a non-atomic argument 
+load()               // atomically obtains the value of the atomic object 
+
+[source,cpp]
+exchange()                 // atomically replaces the value of the atomic object and obtains the value held previously 
+compare_exchange_weak()    // atomically compares the value of the atomic object with non-atomic argument
+compare_exchange_strong()  // and performs atomic exchange if equal or atomic load if not 
+
+[source,cpp]
+fetch_add/sub/and/or/xor   // atomically adds/subtracts/etc to/from the value stored in the atomic
+operator ++/--/+=/-=/etc   // performs the increment/subtract/add etc on the atomic value
+
+NOTE: all these can also take a `memory_order` argument
+
+std::memory_order
+-----------------
+Specifies how regular, non-atomic memory accesses are to be ordered around an atomic operation.
+
+Absent any constraints on a multi-core system, when multiple threads simultaneously read and write to several variables, one thread can observe the values change in an order different from the order another thread wrote them.
+
+[source,cpp]
+enum memory_order {
+    memory_order_relaxed,
+    memory_order_consume,
+    memory_order_acquire,
+    memory_order_release,
+    memory_order_acq_rel,
+    memory_order_seq_cst // default
+};
+
+std::memory_order (continued)
+-----------------------------
+* `memory_order_relaxed`
+no synchronization or ordering constraints, only atomicity is required of this operation
+
+* `memory_order_acq_rel` or `memory_order_acquire`/`memory_order_release`
+fine tuned control on how other operations "move" around the atomic load/stores
+
+* `memory_order_seq_cst`
+default, but most expensive - respects full SC on all operations tagged with it
+
+volatile - a note
+-----------------
+The `volatile` keyword is almost useless. Doesn't add atomicity or any inter-thread synchronization. It only makes sure reads/writes to variable marked with it are not reordered in the same thread.
+
+However Microsoft in Visual Studio assigned special meaning to it: It will add full acquire/release semantics to variables declared as such - but it can add expensive hardware memory barriers.
+
+NOTE: This behaviour can be switched with a compiler flag: https://msdn.microsoft.com/en-us/library/jj204392.aspx
+
+thread_local
+------------
+Marks that the the object is allocated when the thread begins and deallocated when the thread ends.
+
+Each thread has its own instance of the object. Can be combined with `static` and `extern`.
+
+[source,cpp]
+-------------------------------------------------
+thread_local int g = 1;
+
+void thread_func() {
+    std::cout << g++;
+}
+
+// each thread running the function will print 1
+-------------------------------------------------
+
+magic statics
+-------------
+Basically means that static declared variables are thread safe by default. They weren't before.
+
+From the standard: "If control enters the declaration concurrently while the variable is being initialized, the concurrent execution shall wait for completion of the initialization."
+
+NOTE: C++11 feature but only available in VS 2015
+

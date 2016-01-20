@@ -1,0 +1,124 @@
+<<Object Construction Improvements>>
+------------------------------------
+
+=default
+--------
+Better explicit control over the treatment of default constructors and assignment operators.
+
+Leaving it to the compiler to implement the default behaviour is simpler, less error-prone, and often leads to better object code.
+
+[source,cpp]
+struct SomeType
+{
+    SomeType() = default; // the default constructor is explicitly stated, but it's not defined
+    SomeType(OtherType value);
+};
+
+// https://en.wikipedia.org/wiki/C%2B%2B11#Explicitly_defaulted_and_deleted_special_member_functions
+// https://isocpp.org/wiki/faq/cpp11-language-classes#default-delete
+
+=delete
+-------
+Used to prohibit calling any function, which can be used to disallow construction, copying or undesired conversions.
+
+[role="incremental"]
+[source,cpp]
+struct NonCopyable {
+    NonCopyable() = default;
+    NonCopyable(const NonCopyable&) = delete;
+    NonCopyable& operator=(const NonCopyable&) = delete;
+};
+
+[role="incremental"]
+[source,cpp]
+struct OnlyDouble {
+    void f(double d);
+    template<class T> void f(T) = delete;
+};
+
+[role="incremental"]
+This replaces the trick of moving the functions in the private section and doesn't generate any code.
+
+delegating constructors
+-----------------------
+In C++03, if you want two constructors to do the same thing, repeat yourself or call "an init() function."
+
+[role="incremental"]
+Now constructors can call each other:
+
+[role="incremental"]
+[source,cpp]
+class SomeType
+{
+    int number;
+public:
+    SomeType(int new_number) : number(new_number) {}
+    SomeType() : SomeType(42) {}
+};
+
+// https://en.wikipedia.org/wiki/C%2B%2B11#Object_construction_improvement
+// https://isocpp.org/wiki/faq/cpp11-language-classes#delegating-ctor
+
+inheriting constructors
+-----------------------
+Non-virtual methods are not automatically available in derived classes. They have to be brought into scope with `using::` and in C++03 constructors couldn't be.
+
+[role="incremental"]
+[source,cpp]
+-------------------------------------------------------------------------------
+struct Base {
+    Base(int);
+    void f(double);
+};
+
+struct Derived : public Base { 
+    using Base::f;      // lift Base's f into Derived's scope -- works in C++03
+    void f(char);       // provide a new f 
+    void f(double);     // prefer this f to Base::f(double) 
+    
+    using Base::Base;   // lift Base constructors into Derived's scope -- new in C++11
+    Derived(char);      // provide a new constructor 
+    Derived(int);       // prefer this constructor to Base::Base(int) 
+};
+-------------------------------------------------------------------------------
+
+// https://isocpp.org/wiki/faq/cpp11-language-classes#inherited-ctors
+
+explicit overrides and final
+----------------------------
+[role="incremental"]
+[source,cpp]
+struct Base {
+    virtual void f();
+    virtual void g() const;
+    virtual void h(char) final;
+    void k();               // not virtual
+};
+
+[role="incremental"]
+[source,cpp]
+struct Derived : Base {
+    void f() override;      // OK: overrides B::f()
+    void g() override;      // error: wrong signature
+    virtual void h(char);   // error: attempt to override final method
+    void k() override;      // error: B::k() is not virtual
+};
+
+[role="incremental"]
+both _final_ and _override_ are contextual keywords - they can be used in normal declarations (but it's discouraged)
+
+member initialisation
+---------------------
+[source,cpp]
+struct S {
+    int x = 7;
+    int y {8};
+    int &ref = x;
+    S() : x(77) {} // override
+};
+
+[role="incremental"]
+* If a member has a default member initializer and also appears in the member initialization list in a constructor, the default member initializer is ignored
+* Doesn't work with bit fields
+* References to temporaries are not allowed
+

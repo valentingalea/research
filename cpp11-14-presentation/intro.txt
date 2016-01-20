@@ -1,0 +1,32 @@
+C++11/14 for gamedev
+====================
+practical new features
+
+//TODO: bigger font
+
+Purpose
+-------
+A survey of the new features of C++ 11 and 14 suitable for game development.
+
+[role="incremental"]
+It is presented for enumeration rather than guidance/style unless there is a clear proven benefit.
+
+[role="incremental"]
+Devs are encouraged to cherry pick features (maybe all!) and use them in day to day development to get faster, better and more maintainable code.
+
+Support in compilers
+--------------------
+[options="header"]
+|========================================================
+| Compiler           | C++11                | C++14
+| Visual Studio 2012 | partial (but usable) | none
+| Visual Studio 2013 | almost full          | none
+| Visual Studio 2015 | full                 | almost full
+|========================================================
+
+TIP: More info:
+https://msdn.microsoft.com/en-us/library/hh567368.aspx 
+http://en.cppreference.com/w/cpp/compiler_support
+
+//TODO: colour the cells
+
