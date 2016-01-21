@@ -1,3 +1,5 @@
+@echo off
+
 set OUT=cpp11-14-presentation.txt
 set INTRO=intro.txt
 set LANG=new_lang_features.txt
@@ -5,11 +7,23 @@ set LAMBDA=lambda.txt
 set MOVE=move_semantics.txt
 set UTIL=util_and_libraries.txt
 set MEM=multithreading_and_memory.txt
+set ROOT=%CD%
 
-copy /A /Y %INTRO% + %LANG% + %LAMBDA% + %MOVE% + %UTIL% + %MEM% %OUT%
+cd src
+copy /A /Y %INTRO% + %LANG% + %LAMBDA% + %MOVE% + %UTIL% + %MEM% ..\bin\%OUT%
+cd ..
 
-set HERE=%CD%
-cd ..\tools\src-highlite\bin
-..\..\asciidoc\asciidoc.py --backend slidy "..\..\..\cpp-presentation\%OUT%"
+rem 
+rem GNU Source-highlight
+rem http://www.gnu.org/software/src-highlite/
+rem win32 binaries from http://gnuwin32.sourceforge.net/packages/source-highlight.htm
+rem 
+cd tools\gnu-highlite\bin
+..\..\asciidoc\asciidoc.py --backend slidy -a stylesheet=..\..\src\custom.css ..\..\..\bin\%OUT%
+cd %ROOT%
 
-cd %HERE%
+rem
+rem http://www.andre-simon.de/doku/highlight/en/highlight.php
+rem 
+rem set PATH=%PATH%;D:\cpp-presentation\tools\highlight-3.26
+rem tools\asciidoc\asciidoc.py --backend slidy -a stylesheet=custom.css bin\%OUT%

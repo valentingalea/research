@@ -1,0 +1,303 @@
+Making check in src
+make[1]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src'
+Making check in lib
+make[2]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+make  check-am
+make[3]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+make  test_langdefparser.exe test_langmap.exe test_textstyle.exe test_textgenerator.exe test_outlangparser.exe
+make[4]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+make[4]: `test_langdefparser.exe' is up to date.
+make[4]: `test_langmap.exe' is up to date.
+make[4]: `test_textstyle.exe' is up to date.
+make[4]: `test_textgenerator.exe' is up to date.
+make[4]: `test_outlangparser.exe' is up to date.
+make[4]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+make  check-TESTS
+make[4]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+orig: <font color="$style">$text</font>
+transformed: <font color="green">foo</font>
+orig: <b>$text</b>
+transformed: <b>foo</b>
+orig:<b><i>$text</i></b>
+transformed: <b><i>foo</i></b>
+orig: $text
+transformed: (\foo)
+PASS: test_textstyle
+orig: fookeyword
+transformed: <b>fookeyword</b>
+orig: fookeyword
+transformed: <b><i>fookeyword</i></b>
+orig: fookeyword
+transformed: <b><i>fookeyword</i></b>
+orig: fookeyword
+transformed: start{bold;italics fookeyword}
+orig start : $headerthe title: $title
+the css url: $css
+and some additional text: $additional
+transformed: HEADER
+the title: TITLE
+the css url: CSS
+and some additional text: ADDITIONAL
+orig end   : $footer
+transformed: 
+FOOTER
+PASS: test_textgenerator
+DocTemplate start:
+this is the start of my doc
+and this is a line with a backslash \text
+and this contains a {
+this is the title: $title
+this is the css url: $css
+this is the header: $header
+and this is some additional stuff: $additional
+DocTemplate end:
+this is the end of my doc
+this is simply the footer: $footer
+DocTemplate start:
+this is the start of my doc
+and this is a line with a backslash \text
+and this contains a {
+this is the title: title
+this is the css url: css
+this is the header: header
+and this is some additional stuff: additional
+DocTemplate end:
+this is the end of my doc
+this is simply the footer: footer
+Style template:
+[$stylem$text[
+Style separator: ;
+Bold: \textbf{$text}
+text formatted in bold: \textbf{TEXT}
+Italics: <i>$text</i>
+Underline: <u>$text</u>
+Color: <font color="$style">$text</font>
+ColorMap:
+[green]=#33CC00
+[red]=#FF0000
+default=#000000
+CharTranslator:
+(&)|(<)|(>) -> (?1&amp;)(?2&lt;)(?3&gt;)
+Onestyle: <span class="$style">$text</span>
+original: 0x1b
+conversion: 0
+PASS: test_outlangparser
+==================
+All 3 tests passed
+==================
+make[4]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+make[3]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+make[2]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/lib'
+Making check in includes
+make[2]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/includes'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src/includes'
+make[2]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src'
+make[2]: Niets te doen voor `check-am'.
+make[2]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src'
+for langfile in bison.lang      cpp.lang       javascript.lang  perl.lang    ruby.lang c_comment.lang  flex.lang      log.lang         php.lang     sml.lang caml.lang       function.lang  lua.lang         prolog.lang  symbols.lang changelog.lang  java.lang      number.lang      python.lang  url.lang pascal.lang fortran.lang html.lang latex.lang logtalk.lang; do \
+  ../src/source-highlight.exe --data-dir=../../source-highlight-2.1.2-src/src --check-lang ../../source-highlight-2.1.2-src/src/$langfile ; \
+done && \
+for outlangfile in css_common.outlang cssdoc.outlang esc.outlang html_common.outlang htmldoc.outlang html.outlang latexdoc.outlang latex.outlang latexcolordoc.outlang latexcolor.outlang xhtmlcss.outlang xhtmldoc.outlang xhtml.outlang texinfo.outlang; do \
+  ../src/source-highlight.exe --data-dir=../../source-highlight-2.1.2-src/src --check-outlang ../../source-highlight-2.1.2-src/src/$outlangfile ; \
+done
+checking ../../source-highlight-2.1.2-src/src/bison.lang... OK
+checking ../../source-highlight-2.1.2-src/src/cpp.lang... OK
+checking ../../source-highlight-2.1.2-src/src/javascript.lang... OK
+checking ../../source-highlight-2.1.2-src/src/perl.lang... OK
+checking ../../source-highlight-2.1.2-src/src/ruby.lang... OK
+checking ../../source-highlight-2.1.2-src/src/c_comment.lang... OK
+checking ../../source-highlight-2.1.2-src/src/flex.lang... OK
+checking ../../source-highlight-2.1.2-src/src/log.lang... OK
+checking ../../source-highlight-2.1.2-src/src/php.lang... OK
+checking ../../source-highlight-2.1.2-src/src/sml.lang... OK
+checking ../../source-highlight-2.1.2-src/src/caml.lang... OK
+checking ../../source-highlight-2.1.2-src/src/function.lang... OK
+checking ../../source-highlight-2.1.2-src/src/lua.lang... OK
+checking ../../source-highlight-2.1.2-src/src/prolog.lang... OK
+checking ../../source-highlight-2.1.2-src/src/symbols.lang... OK
+checking ../../source-highlight-2.1.2-src/src/changelog.lang... OK
+checking ../../source-highlight-2.1.2-src/src/java.lang... OK
+checking ../../source-highlight-2.1.2-src/src/number.lang... OK
+checking ../../source-highlight-2.1.2-src/src/python.lang... OK
+checking ../../source-highlight-2.1.2-src/src/url.lang... OK
+checking ../../source-highlight-2.1.2-src/src/pascal.lang... OK
+checking ../../source-highlight-2.1.2-src/src/fortran.lang... OK
+checking ../../source-highlight-2.1.2-src/src/html.lang... OK
+checking ../../source-highlight-2.1.2-src/src/latex.lang... OK
+checking ../../source-highlight-2.1.2-src/src/logtalk.lang... OK
+checking ../../source-highlight-2.1.2-src/src/css_common.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/cssdoc.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/esc.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/html_common.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/htmldoc.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/html.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/latexdoc.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/latex.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/latexcolordoc.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/latexcolor.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/xhtmlcss.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/xhtmldoc.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/xhtml.outlang... OK
+checking ../../source-highlight-2.1.2-src/src/texinfo.outlang... OK
+make[1]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/src'
+Making check in doc
+make[1]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/doc'
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  -i ../../source-highlight-2.1.2-src/doc/Hello.java -o Hello1.html
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  --input ../../source-highlight-2.1.2-src/doc/Hello.java --output Hello2.html --doc
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  -i ../../source-highlight-2.1.2-src/doc/Hello.java -o Hello3.html --title "Happy Java with java2html :-)" --tab 3
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  < ../../source-highlight-2.1.2-src/doc/Hello.java > Hello4.html --title "and what about CSS :-)" --css "Hello.css"
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  < ../../source-highlight-2.1.2-src/doc/Hello.java > Hello5.html --title "Wooo... this is quite dark ;-D" --css "mono-alt.css"
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  --doc --output-dir=../doc ../../source-highlight-2.1.2-src/doc/*.java
+Processed ../../source-highlight-2.1.2-src/doc/Hello.java
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/style2.style --doc -i ../../source-highlight-2.1.2-src/doc/Hello.java -o Hello_h_f.html --header="../../source-highlight-2.1.2-src/doc/header.html" --footer="../../source-highlight-2.1.2-src/doc/footer.html"
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html  --style-file ../../source-highlight-2.1.2-src/src/default.style  --line-number --doc -i ../../source-highlight-2.1.2-src/doc/Hello.java -o Hello_lines.html
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f xhtml --doc -i ../../source-highlight-2.1.2-src/doc/Hello.java -o Hello_xhtml.html --css ../../source-highlight-2.1.2-src/doc/xhtml.css
+../src/source-highlight.exe --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f xhtml --doc -i ../../source-highlight-2.1.2-src/doc/Hello.java -o Hello_xhtml2.html --style-file ../../source-highlight-2.1.2-src/src/default.style
+make[1]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/doc'
+Making check in tests
+make[1]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/tests'
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html --style-file ../../source-highlight-2.1.2-src/src/default.style  -i ../../source-highlight-2.1.2-src/tests/test.java -o test.java.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s javascript -f html --style-file ../../source-highlight-2.1.2-src/src/default.style  < ../../source-highlight-2.1.2-src/tests/test.js > test.js.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f xhtml --style-file ../../source-highlight-2.1.2-src/src/default.style --doc --lang-def=../../source-highlight-2.1.2-src/tests/../src/java.lang < ../../source-highlight-2.1.2-src/tests/test.java > test_xhtml.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html --css ../doc/mono.css --lang-def=../../source-highlight-2.1.2-src/tests/../src/java.lang < ../../source-highlight-2.1.2-src/tests/test.java > test_css.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html --css ../doc/mono.css --no-doc --lang-def=../../source-highlight-2.1.2-src/tests/../src/java.lang < ../../source-highlight-2.1.2-src/tests/test.java > test_css_nodoc.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html --style-file ../../source-highlight-2.1.2-src/src/default.style  -i ../../source-highlight-2.1.2-src/tests/test_comments.java -o test_comments.java.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html --style-file ../../source-highlight-2.1.2-src/src/default.style  -n --line-number-ref -i ../../source-highlight-2.1.2-src/tests/test.java -o test_java_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f esc --style-file=../../source-highlight-2.1.2-src/src/esc.style --doc --lang-def=../../source-highlight-2.1.2-src/tests/../src/java.lang -n -i ../../source-highlight-2.1.2-src/tests/test.java -o test.java.out.txt
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ --doc -s java -f latexcolor --style-file ../../source-highlight-2.1.2-src/src/default.style --title="formatted with source-highlight" -n -i ../../source-highlight-2.1.2-src/tests/test.java -o test.java.out.tex
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f texinfo --style-file ../../source-highlight-2.1.2-src/src/texinfo.style -n -i ../../source-highlight-2.1.2-src/tests/test.java -o test.java.out.texinfo
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.java.html test.java.out.html
+diff ../../source-highlight-2.1.2-src/tests/test.js.html test.js.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_xhtml.html test_xhtml.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_css.html test_css.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_css_nodoc.html test_css_nodoc.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_comments.java.html test_comments.java.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_java_lines.html test_java_lines.out.html
+diff ../../source-highlight-2.1.2-src/tests/test.java.txt test.java.out.txt
+diff ../../source-highlight-2.1.2-src/tests/test.java.tex test.java.out.tex
+diff ../../source-highlight-2.1.2-src/tests/test.java.texinfo test.java.out.texinfo
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s cpp -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/cpp.lang -i ../../source-highlight-2.1.2-src/tests/test.h > test.h.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s cpp -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/cpp.lang -i ../../source-highlight-2.1.2-src/tests/test_comments.cc > test_comments.cc.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s cpp -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/cpp.lang -i ../../source-highlight-2.1.2-src/tests/test_template.cc > test_template.cc.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s cpp -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/cpp.lang --header=../../source-highlight-2.1.2-src/tests/header.html --footer=../../source-highlight-2.1.2-src/tests/footer.html --title="Header and footer test" -i ../../source-highlight-2.1.2-src/tests/test.h -o test_header.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s cpp -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/cpp.lang -n -i ../../source-highlight-2.1.2-src/tests/test.h -o test_cpp_lines.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.h.html test.h.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_comments.cc.html test_comments.cc.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_template.cc.html test_template.cc.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_header.html test_header.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_cpp_lines.html test_cpp_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s prolog -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/prolog.lang < ../../source-highlight-2.1.2-src/tests/test.pl > test.pl.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s prolog -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/prolog.lang -n -i ../../source-highlight-2.1.2-src/tests/test.pl -o test_pl_lines.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.pl.html test.pl.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_pl_lines.html test_pl_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s logtalk -f html --style-file ../../source-highlight-2.1.2-src/src/default.style < ../../source-highlight-2.1.2-src/tests/test.lgt > test.lgt.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.lgt.html test.lgt.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s perl -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/perl.lang < ../../source-highlight-2.1.2-src/tests/test.pm > test.pm.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s perl -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/perl.lang < ../../source-highlight-2.1.2-src/tests/test_comments.pm > test_comments.pm.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s perl -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/perl.lang -n -i ../../source-highlight-2.1.2-src/tests/test.pm -o test_perl_lines.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.pm.html test.pm.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_comments.pm.html test_comments.pm.out.html 
+diff ../../source-highlight-2.1.2-src/tests/test_perl_lines.html test_perl_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s php3 -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/php.lang < ../../source-highlight-2.1.2-src/tests/test.php3 > test.php3.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s php3 -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/php.lang -n -i ../../source-highlight-2.1.2-src/tests/test.php3 -o test_php3_lines.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.php3.html test.php3.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_php3_lines.html test_php3_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s python -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/python.lang < ../../source-highlight-2.1.2-src/tests/test.py > test.py.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s python -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/python.lang < ../../source-highlight-2.1.2-src/tests/test_comments.py > test_comments.py.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s python -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/python.lang -n -i ../../source-highlight-2.1.2-src/tests/test.py -o test_python_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s python -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/python.lang -n -i ../../source-highlight-2.1.2-src/tests/test_comments.py -o test_py_comments_lines.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.py.html test.py.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_comments.py.html test_comments.py.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_python_lines.html test_python_lines.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_py_comments_lines.html test_py_comments_lines.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s changelog -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/changelog.lang < ../../source-highlight-2.1.2-src/tests/test.chlog > test.chlog.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s changelog -f html --css ./changelog.css  --title="ChangeLog with css" --lang-def=../../source-highlight-2.1.2-src/tests/../src/changelog.lang -i ../../source-highlight-2.1.2-src/tests/test.chlog > test.chlog_css.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.chlog.html test.chlog.out.html
+diff ../../source-highlight-2.1.2-src/tests/test.chlog_css.html test.chlog_css.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s flex -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/flex.lang < ../../source-highlight-2.1.2-src/tests/test.l > test.l.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.l.html test.l.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s bison -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/bison.lang < ../../source-highlight-2.1.2-src/tests/test.y > test.y.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.y.html test.y.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s ruby -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/ruby.lang < ../../source-highlight-2.1.2-src/tests/test.rb > test.rb.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s ruby -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/ruby.lang < ../../source-highlight-2.1.2-src/tests/test_comments.rb > test_comments.rb.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.rb.html test.rb.out.html
+diff ../../source-highlight-2.1.2-src/tests/test_comments.rb.html test_comments.rb.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s lua -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/lua.lang < ../../source-highlight-2.1.2-src/tests/test.lua > test.lua.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.lua.html test.lua.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s caml -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/caml.lang < ../../source-highlight-2.1.2-src/tests/test.ml > test.ml.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.ml.html test.ml.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s sml -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/sml.lang < ../../source-highlight-2.1.2-src/tests/test.sml > test.sml.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.sml.html test.sml.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s log -f html --style-file=../../source-highlight-2.1.2-src/tests/syslog.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/log.lang < ../../source-highlight-2.1.2-src/tests/test.log > test.log.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s log -f html --style-file=../../source-highlight-2.1.2-src/tests/syslog.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/log.lang < ../../source-highlight-2.1.2-src/tests/access.log > access.log.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s log -f html --style-file=../../source-highlight-2.1.2-src/tests/syslog.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/log.lang < ../../source-highlight-2.1.2-src/tests/auth.log > auth.log.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s log -f html --style-file=../../source-highlight-2.1.2-src/tests/syslog.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/log.lang < ../../source-highlight-2.1.2-src/tests/error.log > error.log.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s log -f html --style-file=../../source-highlight-2.1.2-src/tests/syslog.style --lang-def=../../source-highlight-2.1.2-src/tests/../src/log.lang < ../../source-highlight-2.1.2-src/tests/syslog.log > syslog.log.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.log.html test.log.out.html
+diff ../../source-highlight-2.1.2-src/tests/access.log.html access.log.out.html
+diff ../../source-highlight-2.1.2-src/tests/auth.log.html auth.log.out.html
+diff ../../source-highlight-2.1.2-src/tests/error.log.html error.log.out.html
+diff ../../source-highlight-2.1.2-src/tests/syslog.log.html syslog.log.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -i ../../source-highlight-2.1.2-src/tests/test.pas > test.pas.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.pas.html test.pas.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -i ../../source-highlight-2.1.2-src/tests/test.htm --title="html output formatted in html" > test.htm.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.htm.html test.htm.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -i ../../source-highlight-2.1.2-src/tests/test.tex  > test.tex.out.html
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -i ../../source-highlight-2.1.2-src/tests/test.java.tex  > test.java.tex.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.tex.html test.tex.out.html
+diff ../../source-highlight-2.1.2-src/tests/test.java.tex.html test.java.tex.out.html
+../src/source-highlight.exe --gen-version --outlang-def=../../source-highlight-2.1.2-src/tests/simple.outlang --lang-def=../../source-highlight-2.1.2-src/tests/simple.lang --style-file ../../source-highlight-2.1.2-src/src/default.style -i ../../source-highlight-2.1.2-src/tests/test.simple -o test.simple.out.html
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.simple.html test.simple.out.html
+rm -f *.err_out
+make wrong_exp.err_out
+make[2]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/tests'
+../src/source-highlight.exe --check-lang ./../../source-highlight-2.1.2-src/tests/wrong_exp.lang 2> wrong_exp.err_out || true; 
+checking ./../../source-highlight-2.1.2-src/tests/wrong_exp.lang... sed -r -i -f ../../source-highlight-2.1.2-src/tests/erasedir.sed wrong_exp.err_out 
+make[2]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/tests'
+make wrong_var.err_out
+make[2]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/tests'
+../src/source-highlight.exe --check-lang ./../../source-highlight-2.1.2-src/tests/wrong_var.lang 2> wrong_var.err_out || true; 
+checking ./../../source-highlight-2.1.2-src/tests/wrong_var.lang... sed -r -i -f ../../source-highlight-2.1.2-src/tests/erasedir.sed wrong_var.err_out 
+make[2]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/tests'
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/wrong_exp.err wrong_exp.err_out
+diff ../../source-highlight-2.1.2-src/tests/wrong_var.err wrong_var.err_out
+rm -f *.unknown_out
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ --failsafe -i ../../source-highlight-2.1.2-src/tests/test.unknown -o test.unknown_out
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/test.unknown test.unknown_out
+rm -f *.err_out
+../src/source-highlight.exe --outlang-def=../../source-highlight-2.1.2-src/tests/simple.outlang --style-file ../../source-highlight-2.1.2-src/src/default.style --data-dir=../../source-highlight-2.1.2-src/tests/ -i ../../source-highlight-2.1.2-src/tests/test.simple -o test.err_out 2> missing_langmap.err_out || true
+../src/source-highlight.exe --outlang-def=../../source-highlight-2.1.2-src/tests/simple.outlang --style-file ../../source-highlight-2.1.2-src/src/default.style --data-dir=../../source-highlight-2.1.2-src/tests/ -i ../../source-highlight-2.1.2-src/tests/test.simple 2> missing_extension.err_out || true
+expect no output from diff
+sed -r -i -f ../../source-highlight-2.1.2-src/tests/erasedir2.sed missing_langmap.err_out
+sed -r -i -f ../../source-highlight-2.1.2-src/tests/erasedir2.sed missing_extension.err_out
+diff ../../source-highlight-2.1.2-src/tests/missing_langmap.err missing_langmap.err_out
+diff ../../source-highlight-2.1.2-src/tests/missing_extension.err missing_extension.err_out
+rm -f *.out.debug
+../src/source-highlight.exe --gen-version --data-dir ../../source-highlight-2.1.2-src/src/ -s java -f html --style-file ../../source-highlight-2.1.2-src/src/default.style --debug-lang -i ../../source-highlight-2.1.2-src/tests/debug.java -o NUL > debug.out.debug
+expect no output from diff
+diff ../../source-highlight-2.1.2-src/tests/debug.debug debug.out.debug
+make[1]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2/tests'
+make[1]: Entering directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2'
+make[1]: Leaving directory `/cygdrive/k/Textproc/src-highlite/2.1.2/source-highlight-2.1.2'

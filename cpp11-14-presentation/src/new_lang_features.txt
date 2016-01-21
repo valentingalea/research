@@ -38,16 +38,18 @@ More examples:
 
 [role="incremental"]
 [source,cpp]
--------------------------------------------------------------------------------
-int arr[]            { 1,2,3,4,5 };
-std::vector<int> v   { 1,2,3,4,5 };
-std::set<int> s      { 1,2,3,4,5 };
+int arr[]            { 1, 2, 3, 4, 5 };
+int matrix[2][2]     { {5, 6}, {7, 8} };
+std::vector<int> v   { 1, 2, 3, 4, 5 };
 
+[role="incremental"]
+[source,cpp]
 std::map<int,std::string> m { {0,"zero"}, {1,"one"}, {2,"two"} };
 
+[role="incremental"]
+[source,cpp]
 struct mystruct { int x, y; };
 mystruct m = { 1, 2 };
--------------------------------------------------------------------------------
 
 auto
 ----
