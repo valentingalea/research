@@ -61,7 +61,9 @@ public:
 
 inheriting constructors
 -----------------------
-Non-virtual methods are not automatically available in derived classes. They have to be brought into scope with `using::` and in C++03 constructors couldn't be.
+Non-virtual methods are not automatically available in derived classes.
+
+They have to be brought into scope with `using::` and in C++03 constructors couldn't be.
 
 [role="incremental"]
 [source,cpp]
@@ -105,7 +107,7 @@ struct Derived : Base {
 };
 
 [role="incremental"]
-both _final_ and _override_ are contextual keywords - they can be used in normal declarations (but it's discouraged)
+both `final` and `override` are contextual keywords - they can be used in normal declarations (but it's discouraged)
 
 member initialisation
 ---------------------

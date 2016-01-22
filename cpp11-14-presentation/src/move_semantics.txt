@@ -19,7 +19,6 @@ In C++03 you cannot do much with _rvalues_, you need to "capture" them by assign
 
 move semantics - lvalue/rvalue - examples
 -----------------------------------------
-[role="incremental"]
 [source,cpp]
 /*lvalue*/ /*rvalue*/
 int x      = 3 + 4;
@@ -47,7 +46,12 @@ move semantics - rvalue references
 C++11 introduces _rvalue_ references: `<identifier> &&`
 
 [role="incremental"]
-They are most useful as arguments to functions in order to work with temporaries as well rather than "final result". Also now functions can return _rvalue_ references to optimise the passing around of the return value.
+They are most useful as arguments to functions in order to work with temporaries as well rather than "final result".
+
+[role="incremental"]
+Also now functions can return _rvalue_ references to optimise the passing around of the return value.
+
+[role="incremental"]
 To leverage this, _move constructors_ and _move assignment operator_ are introduced.
 
 [role="incremental"]

@@ -3,6 +3,7 @@
 set OUT=cpp11-14-presentation.txt
 set INTRO=intro.txt
 set LANG=new_lang_features.txt
+set OBJ=obj_creation_improvements.txt
 set LAMBDA=lambda.txt
 set MOVE=move_semantics.txt
 set UTIL=util_and_libraries.txt
@@ -10,7 +11,7 @@ set MEM=multithreading_and_memory.txt
 set ROOT=%CD%
 
 cd src
-copy /A /Y %INTRO% + %LANG% + %LAMBDA% + %MOVE% + %UTIL% + %MEM% ..\bin\%OUT%
+copy /A /Y %INTRO% + %LANG% + %OBJ% + %LAMBDA% + %MOVE% + %UTIL% + %MEM% ..\bin\%OUT%
 cd ..
 
 rem 

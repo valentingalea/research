@@ -74,7 +74,7 @@ func();
 
 auto (continued)
 ----------------
-The rules of this deduction are the same of T from template declaration.
+The rules of this deduction are the same of `T` from template declaration.
 
 [role="incremental"]
 This means that it doesn't deduct(it *drops*) `references` and `const` !!!
@@ -268,4 +268,3 @@ u8"string encoded in UTF-8"
  U"string encoded in UTF-32"
  R"delimiter( string with anything unescaped like \ / " )delimiter" // delimiter can be any 16 character string, including empty
 
- 

@@ -84,7 +84,9 @@ fwrite(&data, sizeof(data), 1, file.get());
 
 std::shared_ptr
 ---------------
-Smart pointer that retains shared ownership of an object. This is referenced by the contained raw pointer and it will be destroyed when and only when all copies of the shared_ptr have been destroyed.
+Smart pointer that retains shared ownership of an object. 
+
+The referenced object will be destroyed _only_ when all copies of the `shared_ptr` have been destroyed.
 
 More overhead than normal pointer (due to need of storing the reference count). Can also contain a custom deleter function.
 
@@ -111,9 +113,9 @@ std::shared_ptr - examples
 
 std::tuple
 ----------
-A kind of generalized anonymous `struct`. When it has 2 members it's called a pair. 
+A kind of generalized anonymous `struct`. For only 2 members there's also `std::pair`. 
 
-Useful to return multiple values from functions (data + error flag for ex.)
+Useful to return multiple values from functions (ex: data + error flag)
 
 [role="incremental"]
 [source,cpp]

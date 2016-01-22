@@ -10,7 +10,10 @@ auto SomeFunction(int x, int y) -> int
 }
 
 [role="incremental"]
-_auto_ here means something different than in type deduction. C++14 allows the return type to be automatically deduced, no more need for `->`
+_auto_ here means something different than in type deduction.
+
+[role="incremental"]
+C++14 allows the return type to be automatically deduced, no more need for `->`
 
 [role="incremental"]
 Especially needed in template declarations where the return type cannot be easily determined due to how the C++ parser works:
@@ -189,8 +192,8 @@ lambda - under the hood (continued)
 [source,cpp]
 /* what the compiler secretly does */
 struct ClosureType {
-    template<class T>
-    auto operator() (T x, T y) -> decltype(x + y) {
+    template<typename X, typename Y>
+    auto operator() (X x, Y y) -> decltype(x + y) {
         return x + y;
     }
 };
