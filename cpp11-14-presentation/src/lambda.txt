@@ -112,7 +112,7 @@ struct Widget {
 	auto factory() {
 		return [=]() { return member; }; // actually: this->member 
 	}
-}
+};
 
 [role="incremental"]
 * Globals aren't captured - they are used like in normal functions

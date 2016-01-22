@@ -70,7 +70,7 @@ map<int,list<string>>::iterator i = m.begin();
 [role="incremental"]
 [source,cpp]
 auto func = [](int arg) { return arg + 2; };
-func();
+func(42);
 
 auto (continued)
 ----------------
@@ -222,7 +222,7 @@ int a2 = red;             // ok: Alert->int conversion
 int a3 = Alert::red;      // error in C++03; ok in C++11
 int a4 = blue;            // error: blue not in scope
 int a5 = Colour::blue;    // error: not Color->int conversion
-Color a6 = Colour::blue;  // ok
+Colour a6 = Colour::blue;  // ok
 
 noexcept
 --------

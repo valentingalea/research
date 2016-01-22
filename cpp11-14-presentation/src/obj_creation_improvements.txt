@@ -114,7 +114,7 @@ member initialisation
 [source,cpp]
 struct S {
     int x = 7;
-    int y {8};
+    int y{ 8 };
     int &ref = x;
     S() : x(77) {} // override
 };
