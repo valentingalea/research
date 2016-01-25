@@ -7,22 +7,22 @@ C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by in
 
 [role="incremental"]
 [source,cpp]
-widget W;           // works in all versions, declares uninitialised variable
+Widget w;              // works in all versions, declares uninitialised variable
 
 [role="incremental"]
 [source,cpp]
-widget W();         // most-vexing-parse: you would think it's variable declaration but it's actually a function declaration
-widget W{};         // C++11 new way of declaration - calls default constructor
+Widget w();            // most-vexing-parse: actually a function declaration!
+Widget w{};            // C++11 new way of declaration - calls default constructor
 
 [role="incremental"]
 [source,cpp]
-widget W(x);        // C++03 init by calling copy/convert constructor (depending on type of x)
-widget W{x};        // C++11 same thing but safer
+Widget w( other );     // C++03 init by calling copy/convert constructor (depending on type of other)
+Widget w{ other };     // C++11 same thing but safer
 
 [role="incremental"]
 [source,cpp]
-widget W = x;       // still init (not assignment), calls copy constructor
-widget W = {x};     // same thing but better - can potentially call move constructor
+Widget w = other;      // still init (not assignment), calls copy constructor
+Widget w = { other };  // same thing but better - can potentially call move constructor
 
 uniform initialisation (continued)
 ----------------------------------
@@ -69,8 +69,9 @@ map<int,list<string>>::iterator i = m.begin();
 						   
 [role="incremental"]
 [source,cpp]
-auto func = [](int arg) { return arg + 2; };
-func(42);
+int Func(int arg) { return arg + 2; }
+int (*callback)(int arg) = Func;
+           auto callback = Func; 
 
 auto (continued)
 ----------------
