@@ -69,13 +69,22 @@ map<int,list<string>>::iterator i = m.begin();
 						   
 [role="incremental"]
 [source,cpp]
-int Func(int arg) { return arg + 2; }
-int (*callback)(int arg) = Func;
-           auto callback = Func; 
+int data;
+auto value = data;        //type is: int
+auto &ref = data;         // type is: int&
+auto ptr = &data;         // type is: int*
+auto *ptr = &data;        // type is: int*
+const auto &cref = data;  // type is: int& const
+const auto &cref = &data; // type is: int *const &
 
 auto (continued)
 ----------------
 The rules of this deduction are the same of `T` from template declaration.
+
+[role="incremental"]
+[source,cpp]
+auto a = expr;    /* is actually: */   template<class T> void temp(T a) {}
+                                       temp(expr); // compile and extract type of expr
 
 [role="incremental"]
 This means that it doesn't deduct(it *drops*) `references` and `const` !!!
@@ -95,6 +104,7 @@ auto Widget = f3(); // a3 is not reference, not const, it will be a copy!!!
 
 // Scott Meyer: https://www.youtube.com/watch?v=wQxj20X-tIU
 // http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+// http://en.cppreference.com/w/cpp/language/auto
 
 decltype
 --------
@@ -132,6 +142,34 @@ C++14 "fixes" this:
 [role="incremental"]
 [source,cpp]
 decltype(auto) a2 = x; // a2 is const int &
+
+range-based for loop
+--------------------
+[source,cpp]
+int array[] = {0, 1, 2, 3, 4, 5};
+std::vector<int> vector = {0, 1, 2, 3, 4, 5};
+
+[role="incremental"]
+[source,cpp]
+for(int n: array)
+    std::cout << n << ' ';
+
+[role="incremental"]
+[source,cpp]	
+for(const int &i : vector) // access by const reference
+    std::cout << i << ' ';
+
+[role="incremental"]
+NOTE: Careful when using auto - it can introduce hidden complexity due to type deduction rules
+
+[role="incremental"]
+[source,cpp]	
+std::vector<Big_Object> big_list = {...};
+for(auto i: big_list) // access by value - will copy every time!!!
+    std::cout << i << ' ';
+
+[role="incremental"]
+TIP: works on anything that has .begin() and .end() or the free functions equivalent
 
 constexpr
 ---------
@@ -175,30 +213,6 @@ constexpr functions in C++11 are limited in what they can use/do:
 C++14 relaxes these requirements a lot - but sadly VS 2015 doesn't support it
 
 // https://www.youtube.com/watch?v=fZjYCQ8dzTc
-
-range-based for loop
---------------------
-[source,cpp]
-int array[] = {0, 1, 2, 3, 4, 5};
-std::vector<int> vector = {0, 1, 2, 3, 4, 5};
-
-[role="incremental"]
-[source,cpp]
-for(int n: array)
-    std::cout << n << ' ';
-
-[role="incremental"]
-[source,cpp]	
-for(const int &i : vector) // access by const reference
-    std::cout << i << ' ';
-
-[role="incremental"]
-[source,cpp]	
-for(auto i: vector) // access by value, the type of i is int
-    std::cout << i << ' ';
-
-[role="incremental"]
-TIP: works on anything that has .begin() and .end() or the free functions equivalent
 
 strong enum
 -----------
