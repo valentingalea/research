@@ -30,8 +30,9 @@ NOTE: Doesn't do automatic narrowing conversion!
 
 [role="incremental"]
 [source,cpp]
-int i = 1.0;        // compiles, implicitly converts from float to int
-int i = { 1.0 };    // won't compile
+int i = 1.0;        // OK: implicitly converts from float to int
+int i = { 1.0 };    // error: won't compile
+float f = { 3 };    // OK: not narrowing just another way of saying 3.0
 
 [role="incremental"]
 More examples:
