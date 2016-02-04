@@ -3,7 +3,7 @@
 
 uniform initialisation
 ----------------------
-C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom:
+C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom. For ex:
 
 [role="incremental"]
 [source,cpp]
@@ -70,7 +70,7 @@ map<int,list<string>>::iterator i = m.begin();
 [role="incremental"]
 [source,cpp]
 int data;
-auto value = data;        //type is: int
+auto value = data;        // type is: int
 auto &ref = data;         // type is: int&
 auto ptr = &data;         // type is: int*
 auto *ptr = &data;        // type is: int*
@@ -176,7 +176,7 @@ constexpr
 Declares that it is possible to evaluate the value of the function or variable at compile time.
 
 [role="incremental"]
-Excellent replacement for macros: they are full C++ entities with scope and are debug-able!
+Excellent replacement for macros: they are full C++ entities with scope and are debug-able if needed.
 
 [role="incremental"]
 [source,cpp]
@@ -233,11 +233,11 @@ enum class TrafficLight : unsigned int { red, yellow, green }; // default is int
 [source,cpp]
 Alert a = 7;              // error (as ever in C++)
 Colour c = 7;             // error: no int->Color conversion
-int a2 = red;             // ok: Alert->int conversion
-int a3 = Alert::red;      // error in C++03; ok in C++11
-int a4 = blue;            // error: blue not in scope
+int a2 = red;             // OK: Alert->int conversion (but only because it's normal enum)
+int a3 = Alert::red;      // error in C++03; OK in C++11
+int a4 = blue;            // error: blue not in scope (would be OK C++03)
 int a5 = Colour::blue;    // error: not Color->int conversion
-Colour a6 = Colour::blue;  // ok
+Colour a6 = Colour::blue; // OK
 
 noexcept
 --------
@@ -267,9 +267,9 @@ syntactic sugar
 
 [role="incremental"]
 [source,cpp]
-using my_int = int;                   typedef int my_int;
-using func = void (*) (int,int);      typedef void (*func)(int, int);
-template<class T> using ptr = T*;     // no equivalent
+using my_int = int;                    typedef int my_int;
+using func = void (*) (int,int);       typedef void (*func)(int, int);
+template<class T> using ptr = T*;      // no equivalent
 
 [role="incremental"]
 * string literals

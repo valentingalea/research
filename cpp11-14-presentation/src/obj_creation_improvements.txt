@@ -7,12 +7,16 @@ Better explicit control over the treatment of default constructors and assignmen
 
 Leaving it to the compiler to implement the default behaviour is simpler, less error-prone, and often leads to better object code.
 
+[role="incremental"]
 [source,cpp]
 struct SomeType
 {
     SomeType() = default; // the default constructor is explicitly stated, but it's not defined
     SomeType(OtherType value);
 };
+
+[role="incremental"]
+TIP: this now makes possible `SomeType s();` which wasn't allowed in C++03 due to lack of explicit default constructor
 
 // https://en.wikipedia.org/wiki/C%2B%2B11#Explicitly_defaulted_and_deleted_special_member_functions
 // https://isocpp.org/wiki/faq/cpp11-language-classes#default-delete
