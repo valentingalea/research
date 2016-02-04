@@ -202,6 +202,52 @@ constexpr int FUNC(int a, int b)
 }
 // NOTE: can be template
 
+constexpr - under the hood
+--------------------------
+[role="incremental"]
+[source,cpp]
+int factorial (int n)
+{
+    return n > 0 ? n * factorial( n - 1 ) : 1;
+}
+int i = factorial(5);
+
+[role="incremental"]
+[source,cpp]
+factorial(int):
+        mov     eax, 1
+        test    edi, edi
+        jle     .L6
+        push    rbx
+        mov     ebx, edi
+        lea     edi, [rdi-1]
+        call    factorial(int)
+        imul    eax, ebx
+        pop     rbx
+.L6:
+        rep ret
+        sub     rsp, 8
+        mov     edi, 5
+        call    factorial(int)
+        mov     DWORD PTR i[rip], eax
+        add     rsp, 8
+        ret
+
+constexpr - under the hood (continued)
+--------------------------------------
+[role="incremental"]
+[source,cpp]
+constexpr int factorial (int n)
+{
+    return n > 0 ? n * factorial( n - 1 ) : 1;
+}
+int i = factorial(5);
+
+[role="incremental"]
+[source,cpp]
+i:
+        .long   120
+
 constexpr (continued)
 ---------------------
 constexpr functions in C++11 are limited in what they can use/do:
@@ -210,7 +256,14 @@ constexpr functions in C++11 are limited in what they can use/do:
 * no if/while/for/switch
 * no local variables.
 
-C++14 relaxes these requirements a lot - but sadly VS 2015 doesn't support it
+C++14 relaxes these requirements a lot - but sadly not even VS 2015 supports it
+
+[role="incremental"]
+TIP: more info:
+
+[role="incremental"]
+* `constexpr` means implicitly `const` and `inline`
+* a constexpr function with non-literal, non-constexpr arguments will turn into a normal runtime function
 
 // https://www.youtube.com/watch?v=fZjYCQ8dzTc
 
