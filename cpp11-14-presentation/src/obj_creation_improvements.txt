@@ -28,13 +28,18 @@ struct NonCopyable {
     NonCopyable(const NonCopyable&) = delete;
     NonCopyable& operator=(const NonCopyable&) = delete;
 };
+NonCopyable nc {};      // OK
+NonCopyable nc = other; // error: won't compile
 
 [role="incremental"]
 [source,cpp]
 struct OnlyDouble {
-    void f(double d);
-    template<class T> void f(T) = delete;
+    void convert(double d);
+    template<class T> void convert(T) = delete;
 };
+OnlyDouble d;
+d.convert(3.14); // OK
+d.convert(3);    // error: won't compile
 
 [role="incremental"]
 This replaces the trick of moving the functions in the private section and doesn't generate any code.
@@ -123,4 +128,3 @@ struct S {
 * If a member has a default member initializer and also appears in the member initialization list in a constructor, the default member initializer is ignored
 * Doesn't work with bit fields
 * References to temporaries are not allowed
-
