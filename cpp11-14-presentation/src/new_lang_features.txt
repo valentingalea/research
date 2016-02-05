@@ -3,6 +3,8 @@
 
 uniform initialisation
 ----------------------
+TODO: rewrite completely!!!
+
 C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom. For ex:
 
 [role="incremental"]
@@ -72,11 +74,11 @@ map<int,list<string>>::iterator i = m.begin();
 [source,cpp]
 int data;
 auto value = data;        // type is: int
-auto &ref = data;         // type is: int&
-auto ptr = &data;         // type is: int*
-auto *ptr = &data;        // type is: int*
-const auto &cref = data;  // type is: int& const
-const auto &cref = &data; // type is: int *const &
+auto &ref = data;         // type is: int &
+auto ptr = &data;         // type is: int *
+auto *ptr = &data;        // type is: int *
+const auto &cref = data;  // type is: int & const
+const auto &cref = &data; // type is: int * const &
 
 auto (continued)
 ----------------
@@ -100,8 +102,10 @@ const int f2();
 auto a2 = f2();     // a2 is not const!
 
 const Widget& f3();
-auto Widget = f3(); // a3 is not reference, not const, it will be a copy!!!
+auto a3 = f3();     // a3 is not reference, not const, it will be a copy!!!
 -------------------------------------------------------------------------------
+
+TODO: info about std::initialiser_list
 
 // Scott Meyer: https://www.youtube.com/watch?v=wQxj20X-tIU
 // http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
@@ -260,7 +264,7 @@ constexpr functions in C++11 are limited in what they can use/do:
 C++14 relaxes these requirements a lot - but sadly not even VS 2015 supports it
 
 [role="incremental"]
-TIP: more info:
+TIP: Additional info:
 
 [role="incremental"]
 * `constexpr` means implicitly `const` and `inline`
@@ -270,6 +274,7 @@ TIP: more info:
 
 strong enum
 -----------
+TODO: redo completely
 C++03 `enum`'s have big problems:
 
 [role="incremental"]
@@ -304,7 +309,7 @@ Since C++11 there is a way simpler method: `noexcept`
 -------------------------------------------------------------------------------
 void func(int, float) noexcept;                // this function will never throw exceptions
 void func(int, float) noexcept(true);          // same thing
-
+//TODO: better example here or remove
 template <typename T>
 T copy_object(T& obj) noexcept(std::is_pod<T>) // throws exception only when gets non-POD object
 -------------------------------------------------------------------------------
@@ -323,7 +328,9 @@ syntactic sugar
 [source,cpp]
 using my_int = int;                    typedef int my_int;
 using func = void (*) (int,int);       typedef void (*func)(int, int);
-template<class T> using ptr = T*;      // no equivalent
+;
+template<class T> using pointer = T*;  // no equivalent with typedef
+pointer<int> p;                        // alias for int *
 
 [role="incremental"]
 * string literals
@@ -336,4 +343,8 @@ u8"string encoded in UTF-8"
  u"string encoded in UTF-16"
  U"string encoded in UTF-32"
  R"delimiter( string with anything unescaped like \ / " )delimiter" // delimiter can be any 16 character string, including empty
+
+[role="incremental"] 
+** the `R` one can be combined with the others (to specify Unicode etc)
+** they all (if same type) support multi-line
 

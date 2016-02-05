@@ -16,7 +16,13 @@ struct SomeType
 };
 
 [role="incremental"]
-TIP: this now makes possible `SomeType s();` which wasn't allowed in C++03 due to lack of explicit default constructor
+[source,cpp]
+SomeType(42);             // OK: legal in all C++ versions
+SomeType();               // error in C++03 (due to lack of explicit default constructor)
+                          // but OK in C++11
+
+[role="incremental"]
+NOTE: Works on: _Default constructor_, _Copy constructor_, _Move constructor_, _Copy assignment operator_, _Move assignment operator_ and _Destructor_
 
 // https://en.wikipedia.org/wiki/C%2B%2B11#Explicitly_defaulted_and_deleted_special_member_functions
 // https://isocpp.org/wiki/faq/cpp11-language-classes#default-delete
@@ -32,6 +38,9 @@ struct NonCopyable {
     NonCopyable(const NonCopyable&) = delete;
     NonCopyable& operator=(const NonCopyable&) = delete;
 };
+
+[role="incremental"]
+[source,cpp]
 NonCopyable nc {};      // OK
 NonCopyable nc = other; // error: won't compile
 
@@ -41,12 +50,12 @@ struct OnlyDouble {
     void convert(double d);
     template<class T> void convert(T) = delete;
 };
-OnlyDouble d;
-d.convert(3.14); // OK
-d.convert(3);    // error: won't compile
 
 [role="incremental"]
-This replaces the trick of moving the functions in the private section and doesn't generate any code.
+[source,cpp]
+OnlyDouble d;
+d.convert(3.14);        // OK
+d.convert(3);           // error: won't compile
 
 delegating constructors
 -----------------------
@@ -76,22 +85,26 @@ They have to be brought into scope with `using::` and in C++03 constructors coul
 
 [role="incremental"]
 [source,cpp]
--------------------------------------------------------------------------------
 struct Base {
     Base(int);
-    void f(double);
+    void method(double);
 };
 
+[role="incremental"]
+[source,cpp]
 struct Derived : public Base { 
-    using Base::f;      // lift Base's f into Derived's scope -- works in C++03
-    void f(char);       // provide a new f 
-    void f(double);     // prefer this f to Base::f(double) 
+    using Base::method;      // lift Base's method into Derived's scope -- works in C++03
+                             // thus Derived::method exists now
+    void method(char);       // alternatively provide a new overload
+    void method(double);     // alternatively prefer this to Base::method(double) 
     
-    using Base::Base;   // lift Base constructors into Derived's scope -- new in C++11
-    Derived(char);      // provide a new constructor 
-    Derived(int);       // prefer this constructor to Base::Base(int) 
+[role="incremental"]
+[source,cpp]
+    using Base::Base;        // lift all Base constructors into Derived's scope -- new in C++11
+                             // so Derived(5) is now possible
+    Derived(char);           // alternatively provide a new constructor 
+    Derived(int);            // alternatively prefer this constructor to Base::Base(int) 
 };
--------------------------------------------------------------------------------
 
 // https://isocpp.org/wiki/faq/cpp11-language-classes#inherited-ctors
 
@@ -100,35 +113,44 @@ explicit overrides and final
 [role="incremental"]
 [source,cpp]
 struct Base {
-    virtual void f();
-    virtual void g() const;
-    virtual void h(char) final;
-    void k();               // not virtual
+    virtual void method_a();
+    virtual void method_b() const;
+    virtual void method_c(char) final;
+            void method_d();               
 };
 
 [role="incremental"]
 [source,cpp]
 struct Derived : Base {
-    void f() override;      // OK: overrides B::f()
-    void g() override;      // error: wrong signature
-    virtual void h(char);   // error: attempt to override final method
-    void k() override;      // error: B::k() is not virtual
+    void method_a() override;     // OK: overrides B::method_a()
+    void method_b() override;     // error: wrong signature - not const
+    void method_c(char);          // error: attempt to override final method
+    void method_d() override;     // error: B::method_d() is not virtual
 };
 
 [role="incremental"]
-both `final` and `override` are contextual keywords - they can be used in normal declarations (but it's discouraged)
+* both `final` and `override` are contextual keywords - they can be used in normal declarations (but it's discouraged)
+* `final` can also be used for class declaration to disable inheritance 
 
 member initialisation
 ---------------------
 [source,cpp]
-struct S {
+struct SomeType {
     int x = 7;
-    int y{ 8 };
+    int y {8};
     int &ref = x;
-    S() : x(77) {} // override
 };
 
 [role="incremental"]
-* If a member has a default member initializer and also appears in the member initialization list in a constructor, the default member initializer is ignored
-* Doesn't work with bit fields
-* References to temporaries are not allowed
+[source,cpp]
+SomeType s;
+assert(s.x == 7);
+assert(s.y == 8);
+
+[role="incremental"]
+[source,cpp]
+struct SomeType {
+    // same as above ...
+    SomeType() : x(42) {}   // override value from member initialisation
+};
+
