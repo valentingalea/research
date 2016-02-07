@@ -3,28 +3,65 @@
 
 uniform initialisation
 ----------------------
-TODO: rewrite completely!!!
+C++03 had multiple (and inconsistent) methods to declare/initialise data:
 
-C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom. For ex:
+[role="incremental"]
+* `<nothing>` - default initialisation
 
 [role="incremental"]
 [source,cpp]
-Widget w;              // works in all versions, declares uninitialised variable
+int i;             // integer with undefined value
+Widget w;          // calls default constructor if any
+
+[role="incremental"]
+* `()` or `(arg, ...)` - default or direct initialisation
 
 [role="incremental"]
 [source,cpp]
-Widget w();            // most-vexing-parse: actually a function declaration!
-Widget w{};            // C++11 new way of declaration - calls default constructor
+int i = int();     // zero-init integer
+int f(5);          // an integer with value 5
+Widget();          // calls default contructor, temp object
 
 [role="incremental"]
 [source,cpp]
-Widget w( other );     // C++03 init by calling copy/convert constructor (depending on type of other)
-Widget w{ other };     // C++11 same thing but safer
+int f();           // Error: "most vexing parse"
+                   // this is a function declaration: int (*)(void)
+;
+Widget w(param);   // OK: copy/convert construction if param is variable
+Widget w(Param()); // Error: if Param is type - function declaration again
+
+[role="incremental"]
+* `{ item1, ... }` - array or aggregate initialisation
+** _aggregate_ is class without constructors, private/protected, bases, virtual
+
+uniform initialisation (continued)
+----------------------------------
+C++11 introduces the `{}` that can be used in all these cases:
 
 [role="incremental"]
 [source,cpp]
-Widget w = other;      // still init (not assignment), calls copy constructor
-Widget w = { other };  // same thing but better - can potentially call move constructor
+int{};
+int i{};             // OK: not function declaration
+Widget w{};          // OK: again
+Widget w{other};     // OK: copy or conversion construction
+Widget w = other;    // OK: still construction, not assigment
+Widget w = {other};  // OK: the same 
+
+[role="incremental"]
+[source,cpp]
+int arr[] = { 1, 2, 3, 4, 5 };
+int matrix[2][2] = { {5, 6}, {7, 8} };
+std::vector<int> v = { 1, 2, 3, 4, 5 };
+std::map<int,std::string> m = { {0,"zero"}, {1,"one"}, {2,"two"} };
+
+[role="incremental"]
+[source,cpp]
+struct Type {
+	int i;
+	double d;
+	Type() : i{3}, d{3.14} {
+	}
+};
 
 uniform initialisation (continued)
 ----------------------------------
@@ -36,23 +73,7 @@ int i = 1.0;        // OK: implicitly converts from float to int
 int i = { 1.0 };    // error: won't compile
 float f = { 3 };    // OK: not narrowing just another way of saying 3.0
 
-[role="incremental"]
-More examples:
-
-[role="incremental"]
-[source,cpp]
-int arr[]            { 1, 2, 3, 4, 5 };
-int matrix[2][2]     { {5, 6}, {7, 8} };
-std::vector<int> v   { 1, 2, 3, 4, 5 };
-
-[role="incremental"]
-[source,cpp]
-std::map<int,std::string> m { {0,"zero"}, {1,"one"}, {2,"two"} };
-
-[role="incremental"]
-[source,cpp]
-struct mystruct { int x, y; };
-mystruct m = { 1, 2 };
+TODO: std::initialisation_list
 
 auto
 ----
@@ -156,12 +177,12 @@ std::vector<int> vector = {0, 1, 2, 3, 4, 5};
 
 [role="incremental"]
 [source,cpp]
-for(int n: array)
+for(int n: array) // access by value copy (like normal for)
     std::cout << n << ' ';
 
 [role="incremental"]
 [source,cpp]	
-for(const int &i : vector) // access by const reference
+for(const int &i : vector) // access by reference
     std::cout << i << ' ';
 
 [role="incremental"]
@@ -274,7 +295,6 @@ TIP: Additional info:
 
 strong enum
 -----------
-TODO: redo completely
 C++03 `enum`'s have big problems:
 
 [role="incremental"]
@@ -284,40 +304,49 @@ C++03 `enum`'s have big problems:
 
 [role="incremental"]
 [source,cpp]
-enum Alert { green, yellow, orange, red };  // traditional enum
-enum class Colour : char { red, blue };     // scoped and strongly typed enum
-enum class TrafficLight : unsigned int { red, yellow, green }; // default is int
+enum Alert { green, yellow, red };  // what's the type?
+Alert r = Alert::red;               // error, but why?
+int b = blue;                       // OK, but where is blue coming from and why convert to int?
+
+[role="incremental"]
+The new C++11 `enum`:
 
 [role="incremental"]
 [source,cpp]
-Alert a = 7;              // error (as ever in C++)
-Colour c = 7;             // error: no int->Color conversion
-int a2 = red;             // OK: Alert->int conversion (but only because it's normal enum)
-int a3 = Alert::red;      // error in C++03; OK in C++11
-int a4 = blue;            // error: blue not in scope (would be OK C++03)
-int a5 = Colour::blue;    // error: not Color->int conversion
-Colour a6 = Colour::blue; // OK
+enum class NewAlert { green, yellow, red };  // C++11 scoped, strong enum
+enum class Direction : char { left, right }; // custom underlying type, default is int
+
+[role="incremental"]
+[source,cpp]
+NewAlert r = Alert::red;            // OK now
+int q = NewAlert::red               // error: no conversion to int anymore
+Direction d = 1;                    // error: no convertion from int
 
 noexcept
 --------
-In C++03 functions declarations could specify their exceptions via `throw()` statements, but it never caught on and it had lot of problems.
+In C++03 functions declarations could specify their exceptions via `throw()` statements, but it never caught on and it had problems.
 
+[source,cpp]
+void func() throw(std::exception, int);  // the list of potential exceptions that trigger inside func
+
+[role="incremental"]
 Since C++11 there is a way simpler method: `noexcept`
 
 [role="incremental"]
 [source,cpp]
--------------------------------------------------------------------------------
-void func(int, float) noexcept;                // this function will never throw exceptions
-void func(int, float) noexcept(true);          // same thing
-//TODO: better example here or remove
-template <typename T>
-T copy_object(T& obj) noexcept(std::is_pod<T>) // throws exception only when gets non-POD object
--------------------------------------------------------------------------------
+void func() noexcept;                    // this function will never throw exceptions
+void func() noexcept(true);              // same thing
+void func() noexcept(<expression>);      // bool constexpr expression for cases when func has exceptions
+;
+bool errors = noexcept(func());          // operator version to check
 
 [role="incremental"]
-* A function declared with `noexcept` enables compilers to generate more efficient/optimised code!
+Why care?
+
+[role="incremental"]
+* A function declared with `noexcept` enables compilers to generate more efficient, optimised code!
+* Some `std` containers like `std::vector` won't move elements unless the move constructor is `noexcept`!
 * If a noexcept function does throw an exception, `std::terminate` is called immediately
-* All the functions called from within a `noexcept` function must be themselves like that - compiler doesn't check
 
 syntactic sugar
 ---------------
