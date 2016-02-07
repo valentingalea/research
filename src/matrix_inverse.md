@@ -8,3 +8,5 @@ An n x n matrix M is invertible if and only if determinant(M) != 0.
 A quick formula for 3x3 matrices:
 ![](../src/matrix_3x3_inverse_part1.png)
 ![](../src/matrix_3x3_inverse_part2.png)
+
+For a rotation matrix, the inverse is *the transpose*; also its determinant is 1.
