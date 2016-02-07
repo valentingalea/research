@@ -3,26 +3,28 @@
 
 uniform initialisation
 ----------------------
-C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom:
+TODO: rewrite completely!!!
+
+C\+\+03 had a lot of inconsistencies with initialisation. C++11 fixes this by introducing a new idiom. For ex:
 
 [role="incremental"]
 [source,cpp]
-widget W;           // works in all versions, declares uninitialised variable
+Widget w;              // works in all versions, declares uninitialised variable
 
 [role="incremental"]
 [source,cpp]
-widget W();         // most-vexing-parse: you would think it's variable declaration but it's actually a function declaration
-widget W{};         // C++11 new way of declaration - calls default constructor
+Widget w();            // most-vexing-parse: actually a function declaration!
+Widget w{};            // C++11 new way of declaration - calls default constructor
 
 [role="incremental"]
 [source,cpp]
-widget W(x);        // C++03 init by calling copy/convert constructor (depending on type of x)
-widget W{x};        // C++11 same thing but safer
+Widget w( other );     // C++03 init by calling copy/convert constructor (depending on type of other)
+Widget w{ other };     // C++11 same thing but safer
 
 [role="incremental"]
 [source,cpp]
-widget W = x;       // still init (not assignment), calls copy constructor
-widget W = {x};     // same thing but better - can potentially call move constructor
+Widget w = other;      // still init (not assignment), calls copy constructor
+Widget w = { other };  // same thing but better - can potentially call move constructor
 
 uniform initialisation (continued)
 ----------------------------------
@@ -30,8 +32,9 @@ NOTE: Doesn't do automatic narrowing conversion!
 
 [role="incremental"]
 [source,cpp]
-int i = 1.0;        // compiles, implicitly converts from float to int
-int i = { 1.0 };    // won't compile
+int i = 1.0;        // OK: implicitly converts from float to int
+int i = { 1.0 };    // error: won't compile
+float f = { 3 };    // OK: not narrowing just another way of saying 3.0
 
 [role="incremental"]
 More examples:
@@ -69,12 +72,22 @@ map<int,list<string>>::iterator i = m.begin();
 						   
 [role="incremental"]
 [source,cpp]
-auto func = [](int arg) { return arg + 2; };
-func(42);
+int data;
+auto value = data;        // type is: int
+auto &ref = data;         // type is: int &
+auto ptr = &data;         // type is: int *
+auto *ptr = &data;        // type is: int *
+const auto &cref = data;  // type is: int & const
+const auto &cref = &data; // type is: int * const &
 
 auto (continued)
 ----------------
 The rules of this deduction are the same of `T` from template declaration.
+
+[role="incremental"]
+[source,cpp]
+auto a = expr;    /* is actually: */   template<class T> void temp(T a) {}
+                                       temp(expr); // compile and extract type of expr
 
 [role="incremental"]
 This means that it doesn't deduct(it *drops*) `references` and `const` !!!
@@ -89,11 +102,14 @@ const int f2();
 auto a2 = f2();     // a2 is not const!
 
 const Widget& f3();
-auto Widget = f3(); // a3 is not reference, not const, it will be a copy!!!
+auto a3 = f3();     // a3 is not reference, not const, it will be a copy!!!
 -------------------------------------------------------------------------------
+
+TODO: info about std::initialiser_list
 
 // Scott Meyer: https://www.youtube.com/watch?v=wQxj20X-tIU
 // http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+// http://en.cppreference.com/w/cpp/language/auto
 
 decltype
 --------
@@ -132,12 +148,40 @@ C++14 "fixes" this:
 [source,cpp]
 decltype(auto) a2 = x; // a2 is const int &
 
+range-based for loop
+--------------------
+[source,cpp]
+int array[] = {0, 1, 2, 3, 4, 5};
+std::vector<int> vector = {0, 1, 2, 3, 4, 5};
+
+[role="incremental"]
+[source,cpp]
+for(int n: array)
+    std::cout << n << ' ';
+
+[role="incremental"]
+[source,cpp]	
+for(const int &i : vector) // access by const reference
+    std::cout << i << ' ';
+
+[role="incremental"]
+NOTE: Careful when using auto - it can introduce hidden complexity due to type deduction rules
+
+[role="incremental"]
+[source,cpp]	
+std::vector<Big_Object> big_list = {...};
+for(auto i: big_list) // access by value - will copy every time!!!
+    std::cout << i << ' ';
+
+[role="incremental"]
+TIP: works on anything that has .begin() and .end() or the free functions equivalent
+
 constexpr
 ---------
 Declares that it is possible to evaluate the value of the function or variable at compile time.
 
 [role="incremental"]
-Excellent replacement for macros: they are full C++ entities with scope and are debug-able!
+Excellent replacement for macros: they are full C++ entities with scope and are debug-able if needed.
 
 [role="incremental"]
 [source,cpp]
@@ -163,6 +207,52 @@ constexpr int FUNC(int a, int b)
 }
 // NOTE: can be template
 
+constexpr - under the hood
+--------------------------
+[role="incremental"]
+[source,cpp]
+int factorial (int n)
+{
+    return n > 0 ? n * factorial( n - 1 ) : 1;
+}
+int i = factorial(5);
+
+[role="incremental"]
+[source,cpp]
+factorial(int):
+        mov     eax, 1
+        test    edi, edi
+        jle     .L6
+        push    rbx
+        mov     ebx, edi
+        lea     edi, [rdi-1]
+        call    factorial(int)
+        imul    eax, ebx
+        pop     rbx
+.L6:
+        rep ret
+        sub     rsp, 8
+        mov     edi, 5
+        call    factorial(int)
+        mov     DWORD PTR i[rip], eax
+        add     rsp, 8
+        ret
+
+constexpr - under the hood (continued)
+--------------------------------------
+[role="incremental"]
+[source,cpp]
+constexpr int factorial (int n)
+{
+    return n > 0 ? n * factorial( n - 1 ) : 1;
+}
+int i = factorial(5);
+
+[role="incremental"]
+[source,cpp]
+i:
+        .long   120
+
 constexpr (continued)
 ---------------------
 constexpr functions in C++11 are limited in what they can use/do:
@@ -171,36 +261,20 @@ constexpr functions in C++11 are limited in what they can use/do:
 * no if/while/for/switch
 * no local variables.
 
-C++14 relaxes these requirements a lot - but sadly VS 2015 doesn't support it
+C++14 relaxes these requirements a lot - but sadly not even VS 2015 supports it
+
+[role="incremental"]
+TIP: Additional info:
+
+[role="incremental"]
+* `constexpr` means implicitly `const` and `inline`
+* a constexpr function with non-literal, non-constexpr arguments will turn into a normal runtime function
 
 // https://www.youtube.com/watch?v=fZjYCQ8dzTc
 
-range-based for loop
---------------------
-[source,cpp]
-int array[] = {0, 1, 2, 3, 4, 5};
-std::vector<int> vector = {0, 1, 2, 3, 4, 5};
-
-[role="incremental"]
-[source,cpp]
-for(int n: array)
-    std::cout << n << ' ';
-
-[role="incremental"]
-[source,cpp]	
-for(const int &i : vector) // access by const reference
-    std::cout << i << ' ';
-
-[role="incremental"]
-[source,cpp]	
-for(auto i: vector) // access by value, the type of i is int
-    std::cout << i << ' ';
-
-[role="incremental"]
-TIP: works on anything that has .begin() and .end() or the free functions equivalent
-
 strong enum
 -----------
+TODO: redo completely
 C++03 `enum`'s have big problems:
 
 [role="incremental"]
@@ -218,11 +292,11 @@ enum class TrafficLight : unsigned int { red, yellow, green }; // default is int
 [source,cpp]
 Alert a = 7;              // error (as ever in C++)
 Colour c = 7;             // error: no int->Color conversion
-int a2 = red;             // ok: Alert->int conversion
-int a3 = Alert::red;      // error in C++03; ok in C++11
-int a4 = blue;            // error: blue not in scope
+int a2 = red;             // OK: Alert->int conversion (but only because it's normal enum)
+int a3 = Alert::red;      // error in C++03; OK in C++11
+int a4 = blue;            // error: blue not in scope (would be OK C++03)
 int a5 = Colour::blue;    // error: not Color->int conversion
-Colour a6 = Colour::blue;  // ok
+Colour a6 = Colour::blue; // OK
 
 noexcept
 --------
@@ -235,7 +309,7 @@ Since C++11 there is a way simpler method: `noexcept`
 -------------------------------------------------------------------------------
 void func(int, float) noexcept;                // this function will never throw exceptions
 void func(int, float) noexcept(true);          // same thing
-
+//TODO: better example here or remove
 template <typename T>
 T copy_object(T& obj) noexcept(std::is_pod<T>) // throws exception only when gets non-POD object
 -------------------------------------------------------------------------------
@@ -252,9 +326,11 @@ syntactic sugar
 
 [role="incremental"]
 [source,cpp]
-using my_int = int;                   typedef int my_int;
-using func = void (*) (int,int);      typedef void (*func)(int, int);
-template<class T> using ptr = T*;     // no equivalent
+using my_int = int;                    typedef int my_int;
+using func = void (*) (int,int);       typedef void (*func)(int, int);
+;
+template<class T> using pointer = T*;  // no equivalent with typedef
+pointer<int> p;                        // alias for int *
 
 [role="incremental"]
 * string literals
@@ -267,4 +343,8 @@ u8"string encoded in UTF-8"
  u"string encoded in UTF-16"
  U"string encoded in UTF-32"
  R"delimiter( string with anything unescaped like \ / " )delimiter" // delimiter can be any 16 character string, including empty
+
+[role="incremental"] 
+** the `R` one can be combined with the others (to specify Unicode etc)
+** they all (if same type) support multi-line
 
