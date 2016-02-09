@@ -236,3 +236,4 @@ ScopeExit<F> MakeScopeExit(F f) {
 -------------------------------------------------------------------------------
 
 //TODO: mention Andrei's version which used operator + and lambda header
+
