@@ -116,6 +116,8 @@ struct Derived : public Base {
 
 explicit overrides and final
 ----------------------------
+New mechanisms for better enforcing and checking polymorphism rules:
+
 [role="incremental"]
 [source,cpp]
 struct Base {
@@ -140,7 +142,10 @@ struct Derived : Base {
 
 member initialisation
 ---------------------
+Non-static data members may be initialized at declaration site now:
+
 [source,cpp]
+[role="incremental"]
 struct SomeType {
     int x = 7;
     int y {8};

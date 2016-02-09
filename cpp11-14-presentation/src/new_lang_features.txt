@@ -161,7 +161,7 @@ decltype(v)::iterator i = v.begin();
 
 decltype (continued)
 --------------------
-_decltype_ will get different results from _auto_ in similar situations:
+`decltype` will get different results from `auto` in similar situations:
 
 [role="incremental"]
 [source,cpp]
@@ -335,6 +335,7 @@ noexcept
 In C++03 functions declarations could specify their exceptions via `throw()` statements, but it never caught on and it had problems.
 
 [source,cpp]
+[role="incremental"]
 void func() throw(std::exception, int);  // the list of potential exceptions that trigger inside func
 
 [role="incremental"]
