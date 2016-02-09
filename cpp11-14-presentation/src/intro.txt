@@ -2,8 +2,6 @@ C++11/14 for gamedev
 ====================
 practical new features
 
-//TODO: bigger font
-
 Purpose
 -------
 A survey of the new features of C++ 11 and 14 suitable for game development.
@@ -19,11 +17,14 @@ Who am I
 
 [role="incremental"]
 * Valentin Galea - Senior Core Tech (currently on Sparta)
-* not an expert per se, just love C++ and like to keep up with it
-* originally started this for my own benefit then expanded it for everyone
+* Not an expert per se, just love C++ and like to keep up with it
+* Originally started this for my own benefit then expanded it for everyone
 
 [role="incremental"]
-NOTE: talk assumes familiarity with templates
+NOTE: Talk assumes familiarity with templates
+
+[role="incremental"]
+TIP: Questions are welcomed at the end of each item - I will let you know when
 
 Support in compilers
 --------------------
