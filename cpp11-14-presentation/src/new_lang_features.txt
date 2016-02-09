@@ -390,3 +390,60 @@ u8"string encoded in UTF-8"
 ** the `R` one can be combined with the others (to specify Unicode etc)
 ** they all (if same type) support multi-line
 
+alignas, alignof
+----------------
+New keywords to control memory alignment for declarations.
+
+[role="incremental"]
+[source,cpp]
+/* every object of type sse_t will be aligned to 16-byte boundary */
+struct alignas(16) sse_t
+{
+  float sse_data[4];
+};
+
+[role="incremental"]
+[source,cpp]
+[role="incremental"]
+/* the array "cacheline" will be aligned to 128-byte boundary */
+alignas(128) char cacheline[128];
+
+[role="incremental"]
+[source,cpp]
+/* get the alignment of something */
+alignof(char)      // returns 1
+alignof(int *)     // returns 8 on x64 systems
+alignof(sse_t)     // returns 16
+
+[role="incremental"]
+[source,cpp]
+/* equivalent statements */
+alignas(float)      alignas(alignof(float))
+
+static_assert
+-------------
+Compile time error messages: `static_assert (constexpr-expression, error-message);`
+
+[role="incremental"]
+[source,cpp]
+template<class T>
+struct Check {
+    static_assert(sizeof(int) <= sizeof(T), "T is not big enough!");
+};
+
+[role="incremental"]
+[source,cpp]
+static_assert(sizeof(unsigned int) * CHAR_BIT == 32);
+
+[role="incremental"]
+[source,cpp]
+template <class T>
+void MyFunc(T value) {
+    static_assert(std::is_base_of<MyBase, T>::value, "T must be derived from MyBase");
+    // ...
+}
+
+// https://msdn.microsoft.com/en-us/library/dd293588.aspx
+// http://stackoverflow.com/questions/1647895/what-does-static-assert-do-and-what-would-you-use-it-for
+// https://en.wikipedia.org/wiki/C%2B%2B11#Static_assertions
+
