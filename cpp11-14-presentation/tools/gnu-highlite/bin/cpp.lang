@@ -22,7 +22,7 @@ keyword = "__asm|__cdecl|__declspec|__export|__far16|__fastcall|__fortran|__impo
       "public|register|reinterpret_cast|return|sizeof|static|static_cast",
       "struct|switch|template|this|throw|true|try|typedef|typeid|typename|union",
       "using|virtual|volatile|while",
-	  "decltype|alignas|alignof|nullptr|static_assert|thread_local|noexcept"
+	  "decltype|alignas|alignof|nullptr|static_assert|thread_local|noexcept|constexpr"
 
 type = "bool|char|double|float|int|long|short|signed|unsigned|void|wchar_t"
 
