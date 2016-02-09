@@ -41,7 +41,7 @@ struct NonCopyable {
 
 [role="incremental"]
 [source,cpp]
-NonCopyable nc {};      // OK
+NonCopyable nc{};       // OK
 NonCopyable nc = other; // error: won't compile
 
 [role="incremental"]
@@ -68,10 +68,16 @@ Now constructors can call each other:
 [source,cpp]
 class SomeType
 {
-    int number;
+    int number;	
 public:
-    SomeType(int new_number) : number(new_number) {}
-    SomeType() : SomeType(42) {}
+    SomeType(int new_number) 
+	    : number{new_number}
+	{
+	}
+    SomeType()
+	    : SomeType{42}
+	{
+	}
 };
 
 // https://en.wikipedia.org/wiki/C%2B%2B11#Object_construction_improvement
@@ -151,6 +157,6 @@ assert(s.y == 8);
 [source,cpp]
 struct SomeType {
     // same as above ...
-    SomeType() : x(42) {}   // override value from member initialisation
+    SomeType() : x{42} {}   // override value from member initialisation
 };
 

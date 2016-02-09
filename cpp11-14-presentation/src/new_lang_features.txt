@@ -44,7 +44,7 @@ int{};
 int i{};             // OK: not function declaration
 Widget w{};          // OK: again
 Widget w{other};     // OK: copy or conversion construction
-Widget w = other;    // OK: still construction, not assigment
+Widget w = other;    // OK: still construction, not assignment
 Widget w = {other};  // OK: the same 
 
 [role="incremental"]
@@ -138,19 +138,26 @@ Inspects the declared type of an entity or queries the type and value category o
 
 [role="incremental"]
 [source,cpp]
-const int& foo();
-const int bar();
 int i;
-struct A { double x; };
-const A* a = new A();
+decltype(i) x;           // type is int
 
 [role="incremental"]
 [source,cpp]
-decltype(foo()) x1;    // type is const int &
-decltype(bar()) x2;    // type is const int
-decltype(i) x3;        // type is int
-decltype(a->x) x4;     // type is double
-decltype((a->x)) x5;   // type is const double & -- because of expression
+struct A { double x; };
+const A* a = new A{};
+decltype(a) x1;         // type is const A *
+decltype(a->x) x2;      // type is double
+
+[role="incremental"]
+[source,cpp]
+const int func();
+decltype(func()) x1;    // type is const int
+decltype(func) x2;      // function declaration
+
+[role="incremental"]
+[source,cpp]
+std::vector<int> v = { 0, 1, 2, 3 };
+decltype(v)::iterator i = v.begin();
 
 decltype (continued)
 --------------------
@@ -159,6 +166,7 @@ _decltype_ will get different results from _auto_ in similar situations:
 [role="incremental"]
 [source,cpp]
 const int& x;
+;
 auto a1 = x;           // a1 is int
 decltype(x) a2;        // a2 is const int &
 
@@ -337,8 +345,10 @@ Since C++11 there is a way simpler method: `noexcept`
 void func() noexcept;                    // this function will never throw exceptions
 void func() noexcept(true);              // same thing
 void func() noexcept(<expression>);      // bool constexpr expression for cases when func has exceptions
-;
-bool errors = noexcept(func());          // operator version to check
+
+[role="incremental"]
+[source,cpp]
+bool has_errors = noexcept(func());      // operator version for checking
 
 [role="incremental"]
 Why care?
@@ -357,7 +367,9 @@ syntactic sugar
 [source,cpp]
 using my_int = int;                    typedef int my_int;
 using func = void (*) (int,int);       typedef void (*func)(int, int);
-;
+
+[role="incremental"]
+[source,cpp]
 template<class T> using pointer = T*;  // no equivalent with typedef
 pointer<int> p;                        // alias for int *
 
