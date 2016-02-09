@@ -49,19 +49,21 @@ Widget w = {other};  // OK: the same
 
 [role="incremental"]
 [source,cpp]
-int arr[] = { 1, 2, 3, 4, 5 };
-int matrix[2][2] = { {5, 6}, {7, 8} };
-std::vector<int> v = { 1, 2, 3, 4, 5 };
-std::map<int,std::string> m = { {0,"zero"}, {1,"one"}, {2,"two"} };
+int arr[]                   = { 1, 2, 3, 4, 5 };
+int matrix[2][2]            = { {5, 6}, {7, 8} };
+std::vector<int> v          = { 1, 2, 3, 4, 5 };
+std::map<int,std::string> m = { {0, "zero"}, {1, "one"}, {2, "two"} };
 
 [role="incremental"]
 [source,cpp]
-struct Type {
-	int i;
-	double d;
-	Type() : i{3}, d{3.14} {
-	}
-};
+struct Widget {
+    int i;
+    double d;
+}
+;
+Widget factory() {
+    return {1, 1.0};
+}
 
 uniform initialisation (continued)
 ----------------------------------
@@ -70,10 +72,23 @@ NOTE: Doesn't do automatic narrowing conversion!
 [role="incremental"]
 [source,cpp]
 int i = 1.0;        // OK: implicitly converts from float to int
-int i = { 1.0 };    // error: won't compile
+int i = { 1.0 };    // Error: won't compile
 float f = { 3 };    // OK: not narrowing just another way of saying 3.0
 
-TODO: std::initialisation_list
+[role="incremental"]
+TIP: Leverage the initializer list:
+
+[role="incremental"]
+[source,cpp]
+struct Widget {
+    Widget(std::initializer_list<int> list) {
+        for (const int *i = list.begin(); i != list.end(); ++i) { // no [] operator
+            *i; // do some work...
+        }
+    }
+}
+;
+Widget w = { 0, 1, 2, 3 };
 
 auto
 ----
@@ -88,18 +103,23 @@ auto f = 3.14f;     // Variable f is float
 
 [role="incremental"]
 [source,cpp]
-map<int,list<string>>::iterator i = m.begin(); 
-                           auto i = m.begin();
+map<int, list<string>>::iterator i = m.begin(); 
+                            auto i = m.begin();
 						   
 [role="incremental"]
 [source,cpp]
 int data;
 auto value = data;        // type is: int
 auto &ref = data;         // type is: int &
+
+[role="incremental"]
+[source,cpp]
 auto ptr = &data;         // type is: int *
 auto *ptr = &data;        // type is: int *
-const auto &cref = data;  // type is: int & const
-const auto &cref = &data; // type is: int * const &
+
+[role="incremental"]
+[source,cpp]
+auto i = { 42 };          // type is std::initializer_list<int> !!!
 
 auto (continued)
 ----------------
@@ -125,8 +145,6 @@ auto a2 = f2();     // a2 is not const!
 const Widget& f3();
 auto a3 = f3();     // a3 is not reference, not const, it will be a copy!!!
 -------------------------------------------------------------------------------
-
-TODO: info about std::initialiser_list
 
 // Scott Meyer: https://www.youtube.com/watch?v=wQxj20X-tIU
 // http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
@@ -179,28 +197,30 @@ decltype(auto) a2 = x; // a2 is const int &
 
 range-based for loop
 --------------------
+More readable for loop over a range. 
+
+[role="incremental"]
 [source,cpp]
 int array[] = {0, 1, 2, 3, 4, 5};
-std::vector<int> vector = {0, 1, 2, 3, 4, 5};
+for(int n: array)
+    std::cout << n; // access by value (like regular for usage)
 
 [role="incremental"]
 [source,cpp]
-for(int n: array) // access by value copy (like normal for)
-    std::cout << n << ' ';
-
+std::vector<int> vector = {0, 1, 2, 3, 4, 5};
+for(const int &i : vector)
+    std::cout << i; // access by reference
+	
 [role="incremental"]
-[source,cpp]	
-for(const int &i : vector) // access by reference
-    std::cout << i << ' ';
-
-[role="incremental"]
-NOTE: Careful when using auto - it can introduce hidden complexity due to type deduction rules
+[source,cpp]
+for(int n: {0, 1, 2, 3, 4, 5})
+    std::cout << n;
 
 [role="incremental"]
 [source,cpp]	
 std::vector<Big_Object> big_list = {...};
-for(auto i: big_list) // access by value - will copy every time!!!
-    std::cout << i << ' ';
+for(auto i: big_list)
+    std::cout << i; // DANGER - will value copy every iteration!!!
 
 [role="incremental"]
 TIP: works on anything that has .begin() and .end() or the free functions equivalent

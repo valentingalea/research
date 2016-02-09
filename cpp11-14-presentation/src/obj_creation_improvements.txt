@@ -9,17 +9,17 @@ Leaving it to the compiler to implement the default behaviour is simpler, less e
 
 [role="incremental"]
 [source,cpp]
-struct SomeType
+struct Widget
 {
-    SomeType() = default; // the default constructor is explicitly stated, but it's not defined
-    SomeType(OtherType value);
+    Widget() = default; // the default constructor is explicitly stated, but it's not defined
+    Widget(OtherType value);
 };
 
 [role="incremental"]
 [source,cpp]
-SomeType(42);             // OK: legal in all C++ versions
-SomeType();               // error in C++03 (due to lack of explicit default constructor)
-                          // but OK in C++11
+Widget(42);             // OK: legal in all C++ versions
+Widget();               // error in C++03 (due to lack of explicit default constructor)
+                        // but OK in C++11
 
 [role="incremental"]
 NOTE: Works on: _Default constructor_, _Copy constructor_, _Move constructor_, _Copy assignment operator_, _Move assignment operator_ and _Destructor_
@@ -66,16 +66,16 @@ Now constructors can call each other:
 
 [role="incremental"]
 [source,cpp]
-class SomeType
+class Widget
 {
     int number;	
 public:
-    SomeType(int new_number) 
+    Widget(int new_number) 
 	    : number{new_number}
 	{
 	}
-    SomeType()
-	    : SomeType{42}
+    Widget()
+	    : Widget{42}
 	{
 	}
 };
@@ -121,18 +121,18 @@ New mechanisms for better enforcing and checking polymorphism rules:
 [role="incremental"]
 [source,cpp]
 struct Base {
-    virtual void method_a();
+    virtual void method_a(char);
     virtual void method_b() const;
-    virtual void method_c(char) final;
+    virtual void method_c() final;
             void method_d();               
 };
 
 [role="incremental"]
 [source,cpp]
 struct Derived : Base {
-    void method_a() override;     // OK: overrides B::method_a()
+    void method_a(char) override; // OK: overrides B::method_a()
     void method_b() override;     // error: wrong signature - not const
-    void method_c(char);          // error: attempt to override final method
+    void method_c();              // error: attempt to override final method
     void method_d() override;     // error: B::method_d() is not virtual
 };
 
@@ -146,7 +146,7 @@ Non-static data members may be initialized at declaration site now:
 
 [source,cpp]
 [role="incremental"]
-struct SomeType {
+struct Widget {
     int x = 7;
     int y {8};
     int &ref = x;
@@ -154,14 +154,14 @@ struct SomeType {
 
 [role="incremental"]
 [source,cpp]
-SomeType s;
+Widget s;
 assert(s.x == 7);
 assert(s.y == 8);
 
 [role="incremental"]
 [source,cpp]
-struct SomeType {
+struct Widget {
     // same as above ...
-    SomeType() : x{42} {}   // override value from member initialisation
+    Widget() : x{42} {}   // override value from member initialisation
 };
 
