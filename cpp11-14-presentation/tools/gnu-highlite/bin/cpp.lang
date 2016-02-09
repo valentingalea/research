@@ -21,7 +21,8 @@ keyword = "__asm|__cdecl|__declspec|__export|__far16|__fastcall|__fortran|__impo
       "if|inline|mutable|namespace|new|operator|pascal|private|protected",
       "public|register|reinterpret_cast|return|sizeof|static|static_cast",
       "struct|switch|template|this|throw|true|try|typedef|typeid|typename|union",
-      "using|virtual|volatile|while"
+      "using|virtual|volatile|while",
+	  "decltype|alignas|alignof|nullptr|static_assert|thread_local|noexcept"
 
 type = "bool|char|double|float|int|long|short|signed|unsigned|void|wchar_t"
 
