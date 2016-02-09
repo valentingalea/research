@@ -14,6 +14,17 @@ It is presented for enumeration rather than guidance/style unless there is a cle
 [role="incremental"]
 Devs are encouraged to cherry pick features (maybe all!) and use them in day to day development to get faster, better and more maintainable code.
 
+Who am I
+--------
+
+[role="incremental"]
+* Valentin Galea - Senior Core Tech (currently on Sparta)
+* not an expert per se, just love C++ and like to keep up with it
+* originally started this for my own benefit then expanded it for everyone
+
+[role="incremental"]
+NOTE: talk assumes familiarity with templates
+
 Support in compilers
 --------------------
 [options="header"]
