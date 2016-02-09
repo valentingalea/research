@@ -22,6 +22,7 @@ move semantics - lvalue/rvalue - examples
 [source,cpp]
 /*lvalue*/ /*rvalue*/
 int x      = 3 + 4;
+;
 *ptr;      // lvalue
 &x;        // rvalue: the address of x
 "hello";   // rvalue: literal
@@ -47,12 +48,14 @@ C++11 introduces _rvalue_ references: `<identifier> &&`
 
 [role="incremental"]
 They are most useful as arguments to functions in order to work with temporaries as well rather than "final result".
+TODO: clarify this
 
 [role="incremental"]
 Also now functions can return _rvalue_ references to optimise the passing around of the return value.
 
 [role="incremental"]
 To leverage this, _move constructors_ and _move assignment operator_ are introduced.
+TODO: give examples here
 
 [role="incremental"]
 NOTE: In the context of template deduction && means something different: a "universal reference" used to implement perfect forwarding: that is ability to accept both _lvalue_ and _rvalue_ arguments.
@@ -107,6 +110,7 @@ move semantics - example (continued)
 
 move semantics - usage (continued)
 ----------------------------------
+TODO: redo all this
 [role="incremental"]
 [source,cpp]
 std::vector<MemoryPage> pages;
