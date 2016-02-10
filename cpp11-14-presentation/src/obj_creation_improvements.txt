@@ -5,6 +5,7 @@
 --------
 Better explicit control over the treatment of default constructors and assignment operators.
 
+[role="incremental"]
 Leaving it to the compiler to implement the default behaviour is simpler, less error-prone, and often leads to better object code.
 
 [role="incremental"]
@@ -18,7 +19,7 @@ struct Widget
 [role="incremental"]
 [source,cpp]
 Widget(42);             // OK: legal in all C++ versions
-Widget();               // error in C++03 (due to lack of explicit default constructor)
+Widget();               // Error in C++03 (due to lack of explicit default constructor)
                         // but OK in C++11
 
 [role="incremental"]
@@ -42,7 +43,7 @@ struct NonCopyable {
 [role="incremental"]
 [source,cpp]
 NonCopyable nc{};       // OK
-NonCopyable nc = other; // error: won't compile
+NonCopyable nc = other; // Error: won't compile
 
 [role="incremental"]
 [source,cpp]
@@ -55,7 +56,7 @@ struct OnlyDouble {
 [source,cpp]
 OnlyDouble d;
 d.convert(3.14);        // OK
-d.convert(3);           // error: won't compile
+d.convert(3);           // Error: won't compile
 
 delegating constructors
 -----------------------
@@ -114,8 +115,8 @@ struct Derived : public Base {
 
 // https://isocpp.org/wiki/faq/cpp11-language-classes#inherited-ctors
 
-explicit overrides and final
-----------------------------
+override and final
+------------------
 New mechanisms for better enforcing and checking polymorphism rules:
 
 [role="incremental"]

@@ -135,16 +135,20 @@ This means that it doesn't deduct(it *drops*) `references` and `const` !!!
 
 [role="incremental"]
 [source,cpp]
--------------------------------------------------------------------------------
 float& f1();
-auto a1 = f1();     // a1 is value float, not reference!
-
+auto a1 = f1();          // a1 is value float, not reference!
+;
 const int f2();
-auto a2 = f2();     // a2 is not const!
-
+auto a2 = f2();         // a2 is not const!
+;
 const Widget& f3();
-auto a3 = f3();     // a3 is not reference, not const, it will be a copy!!!
--------------------------------------------------------------------------------
+auto a3 = f3();         // a3 is not reference, not const, it will be a copy!!!
+
+[role="incremental"]
+[source,cpp]
+auto &a1 = f1();        // fixed!
+const auto a2 = f2();   // fixed!
+const auto &a3 = f3();  // fixed!
 
 // Scott Meyer: https://www.youtube.com/watch?v=wQxj20X-tIU
 // http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
@@ -163,6 +167,7 @@ decltype(i) x;           // type is int
 [source,cpp]
 struct A { double x; };
 const A* a = new A{};
+;
 decltype(a) x1;         // type is const A *
 decltype(a->x) x2;      // type is double
 
@@ -333,11 +338,11 @@ C++03 `enum`'s have big problems:
 [role="incremental"]
 [source,cpp]
 enum Alert { green, yellow, red };  // what's the type?
-Alert r = Alert::red;               // error, but why?
-int b = blue;                       // OK, but where is blue coming from and why convert to int?
+Alert r = Alert::red;               // Error, but why?
+int b = red;                        // OK, but where is it coming from and why convert to int?
 
 [role="incremental"]
-The new C++11 `enum`:
+The new C++11 `enum` alternative:
 
 [role="incremental"]
 [source,cpp]
@@ -346,9 +351,9 @@ enum class Direction : char { left, right }; // custom underlying type, default 
 
 [role="incremental"]
 [source,cpp]
-NewAlert r = Alert::red;            // OK now
-int q = NewAlert::red               // error: no conversion to int anymore
-Direction d = 1;                    // error: no convertion from int
+NewAlert r = NewAlert::red;         // OK now
+int q = NewAlert::red               // Error: no conversion to int any more
+Direction d = 1;                    // Error: no conversion from int
 
 noexcept
 --------
@@ -412,7 +417,7 @@ u8"string encoded in UTF-8"
 
 alignas, alignof
 ----------------
-New keywords to control memory alignment for declarations.
+New keywords to control memory alignment for declarations (before it was compiler specific with #pragma etc)
 
 [role="incremental"]
 [source,cpp]
@@ -447,21 +452,24 @@ Compile time error messages: `static_assert (constexpr-expression, error-message
 [role="incremental"]
 [source,cpp]
 template<class T>
-struct Check {
-    static_assert(sizeof(int) <= sizeof(T), "T is not big enough!");
-};
+struct Widget {
+    static_assert(sizeof(int) <= sizeof(T), "Type not big enough!");
+	// ...
+}
+;
+Widget<char> w;              // compile error!
 
 [role="incremental"]
 [source,cpp]
-static_assert(sizeof(unsigned int) * CHAR_BIT == 32);
+static_assert(sizeof(unsigned int) * CHAR_BIT == 32, "Unsupported architecture!");
 
 [role="incremental"]
 [source,cpp]
 template <class T>
-void MyFunc(T value) {
-    static_assert(std::is_base_of<MyBase, T>::value, "T must be derived from MyBase");
+void func(T value) {
+    static_assert(std::is_base_of<MyBase, T>::value, "Type must be derived from MyBase");
     // ...
-}
+};
 
 // https://msdn.microsoft.com/en-us/library/dd293588.aspx
 // http://stackoverflow.com/questions/1647895/what-does-static-assert-do-and-what-would-you-use-it-for
