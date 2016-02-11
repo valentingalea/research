@@ -13,7 +13,7 @@ Leaving it to the compiler to implement the default behaviour is simpler, less e
 struct Widget
 {
     Widget() = default; // the default constructor is explicitly stated, but it's not defined
-    Widget(OtherType value);
+    Widget(int value);
 };
 
 [role="incremental"]
@@ -72,11 +72,11 @@ class Widget
     int number;	
 public:
     Widget(int new_number) 
-	    : number{new_number}
+	    : number {new_number}
 	{
 	}
     Widget()
-	    : Widget{42}
+	    : Widget {42}
 	{
 	}
 };
@@ -101,17 +101,13 @@ struct Base {
 [source,cpp]
 struct Derived : public Base { 
     using Base::method;      // lift Base's method into Derived's scope -- works in C++03
-                             // thus Derived::method exists now
-    void method(char);       // alternatively provide a new overload
-    void method(double);     // alternatively prefer this to Base::method(double) 
+    using Base::Base;        // lift all Base constructors into Derived's scope -- new in C++11
+};
     
 [role="incremental"]
 [source,cpp]
-    using Base::Base;        // lift all Base constructors into Derived's scope -- new in C++11
-                             // so Derived(5) is now possible
-    Derived(char);           // alternatively provide a new constructor 
-    Derived(int);            // alternatively prefer this constructor to Base::Base(int) 
-};
+Derived d {42};
+d.method (3.14);
 
 // https://isocpp.org/wiki/faq/cpp11-language-classes#inherited-ctors
 
@@ -162,7 +158,7 @@ assert(s.y == 8);
 [role="incremental"]
 [source,cpp]
 struct Widget {
-    // same as above ...
-    Widget() : x{42} {}   // override value from member initialisation
+    int x {7};
+    Widget() : x {42} {}   // override value from member initialisation
 };
 
