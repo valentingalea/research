@@ -1,8 +1,8 @@
 <<New Language Features>>
 -------------------------
 
-uniform initialisation
-----------------------
+uniform initialisation (VS2013+/GCC4.4+)
+----------------------------------------
 C++03 had multiple (and inconsistent) methods to declare/initialise data:
 
 [role="incremental"]
@@ -91,8 +91,8 @@ struct Widget {
 Widget w { 0, 1, 2, 3 }; // technically should be: { {0, 1, 2, 3} }
                          // NOTE: these type of ctors will take precedence over others
 
-auto
-----
+auto (VS2010+/GCC4.4+)
+----------------------
 The type of the variable that is being declared will be automatically deduced from its initializer.
 
 [role="incremental"]
@@ -155,8 +155,8 @@ const auto &a3 = f3();  // fixed!
 // http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
 // http://en.cppreference.com/w/cpp/language/auto
 
-decltype
---------
+decltype (VS2010+/GCC4.3+)
+--------------------------
 Inspects the declared type of an entity or queries the type and value category of an expression.
 
 [role="incremental"]
@@ -201,8 +201,8 @@ C++14 "fixes" this:
 [source,cpp]
 decltype(auto) a2 = x; // a2 is const int &
 
-range-based for loop
---------------------
+range-based for loop (VS2013+/GCC4.6+)
+--------------------------------------
 More readable for loop over a range. 
 
 [role="incremental"]
@@ -254,8 +254,8 @@ for (auto &i : list) {
     i; // type is MyObject &
 }
 
-constexpr
----------
+constexpr (VS2015+/GCC4.6+)
+---------------------------
 Declares that it is possible to evaluate the value of the function or variable at compile time.
 
 [role="incremental"]
@@ -339,7 +339,7 @@ constexpr functions in C++11 are limited in what they can use/do:
 * no if/while/for/switch
 * no local variables.
 
-C++14 relaxes these requirements a lot - but sadly not even VS 2015 supports it
+C++14 relaxes these requirements a lot - but sadly VS 2015 doesn't support it
 
 [role="incremental"]
 TIP: Additional info:
@@ -350,8 +350,8 @@ TIP: Additional info:
 
 // https://www.youtube.com/watch?v=fZjYCQ8dzTc
 
-strong enum
------------
+strong enum (VS2012+/GCC4.4+)
+-----------------------------
 C++03 `enum`'s have big problems:
 
 [role="incremental"]
@@ -379,8 +379,8 @@ NewAlert r = NewAlert::red;                  // OK now
 int q = NewAlert::red                        // Error: no conversion to int any more
 Direction d = static_cast<Direction>(1);     // OK with explicit cast
 
-noexcept
---------
+noexcept (VS2015+/GCC4.6)
+-------------------------
 In C++03 functions declarations could specify their exceptions via `throw()` statements, but it never caught on and it had problems.
 
 [source,cpp]
@@ -439,8 +439,8 @@ u8"string encoded in UTF-8"
 ** the `R` one can be combined with the others (to specify Unicode etc)
 ** they all (if same type) support multi-line
 
-alignas, alignof
-----------------
+alignas, alignof (VS2012+/GCC4.8+)
+----------------------------------
 New keywords to control memory alignment for declarations (before it was compiler specific with #pragma etc)
 
 [role="incremental"]
@@ -469,8 +469,8 @@ alignof(sse_t)     // returns 16
 /* equivalent statements */
 alignas(float)      alignas(alignof(float))
 
-static_assert
--------------
+static_assert (VS2010+/GCC4.3+)
+-------------------------------
 Compile time error messages: `static_assert (constexpr-expression, error-message);`
 
 [role="incremental"]

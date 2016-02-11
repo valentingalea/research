@@ -1,8 +1,8 @@
 <<Object Construction Improvements>>
 ------------------------------------
 
-=default
---------
+=default (VS2013+/GCC4.4+)
+--------------------------
 Better explicit control over the treatment of default constructors and assignment operators.
 
 [role="incremental"]
@@ -28,8 +28,8 @@ NOTE: Works on: _Default constructor_, _Copy constructor_, _Move constructor_, _
 // https://en.wikipedia.org/wiki/C%2B%2B11#Explicitly_defaulted_and_deleted_special_member_functions
 // https://isocpp.org/wiki/faq/cpp11-language-classes#default-delete
 
-=delete
--------
+=delete (VS2013+/GCC4.4+)
+-------------------------
 Used to prohibit calling any function, which can be used to disallow construction, copying or undesired conversions.
 
 [role="incremental"]
@@ -58,8 +58,8 @@ OnlyDouble d;
 d.convert(3.14);        // OK
 d.convert(3);           // Error: won't compile
 
-delegating constructors
------------------------
+delegating constructors (VS2013+/GCC4.7+)
+-----------------------------------------
 In C++03, if you want two constructors to do the same thing, repeat yourself or call "an init() function."
 
 [role="incremental"]
@@ -84,8 +84,8 @@ public:
 // https://en.wikipedia.org/wiki/C%2B%2B11#Object_construction_improvement
 // https://isocpp.org/wiki/faq/cpp11-language-classes#delegating-ctor
 
-inheriting constructors
------------------------
+inheriting constructors (VS2015+/GCC4.8)
+----------------------------------------
 Non-virtual methods are not automatically available in derived classes.
 
 They have to be brought into scope with `using::` and in C++03 constructors couldn't be.
@@ -111,8 +111,8 @@ d.method (3.14);
 
 // https://isocpp.org/wiki/faq/cpp11-language-classes#inherited-ctors
 
-override and final
-------------------
+override and final (VS2012+/GCC4.7)
+-----------------------------------
 New mechanisms for better enforcing and checking polymorphism rules:
 
 [role="incremental"]
@@ -137,8 +137,8 @@ struct Derived : Base {
 * both `final` and `override` are contextual keywords - they can be used in normal declarations (but it's discouraged)
 * `final` can also be used for class declaration to disable inheritance 
 
-member initialisation
----------------------
+member initialisation (VS2013+/GCC4.6+)
+---------------------------------------
 Non-static data members may be initialized at declaration site now:
 
 [source,cpp]

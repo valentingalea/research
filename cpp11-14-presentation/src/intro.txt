@@ -37,6 +37,7 @@ Support in compilers
 | Visual Studio 2012 | partial (but usable) | none
 | Visual Studio 2013 | almost full          | none
 | Visual Studio 2015 | full                 | almost full
+| GCC                | 4.4+                 | 4.8+
 |========================================================
 
 TIP: More info:
