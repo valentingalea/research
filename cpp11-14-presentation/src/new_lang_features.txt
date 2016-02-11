@@ -88,7 +88,8 @@ struct Widget {
     }
 }
 ;
-Widget w = { 0, 1, 2, 3 };
+Widget w { 0, 1, 2, 3 }; // technically should be: { {0, 1, 2, 3} }
+                         // NOTE: these type of ctors will take precedence over others
 
 auto
 ----
@@ -222,13 +223,36 @@ for(int n: {0, 1, 2, 3, 4, 5})
     std::cout << n;
 
 [role="incremental"]
-[source,cpp]	
+[source,cpp]
 std::vector<Big_Object> big_list = {...};
 for(auto i: big_list)
     std::cout << i; // DANGER - will value copy every iteration!!!
 
+range-based for loop - roll your own
+------------------------------------
+Works on anything that has .begin() and .end() or the free functions equivalent:
+
 [role="incremental"]
-TIP: works on anything that has .begin() and .end() or the free functions equivalent
+[source,cpp]
+struct MyObject {
+    // ...
+};
+
+[role="incremental"]
+[source,cpp]
+struct MyList {
+    typedef MyObject* Iterator;
+    Iterator begin();
+    Iterator end();
+    // ...	
+};
+
+[role="incremental"]
+[source,cpp]
+MyList list;
+for (auto &i : list) {
+    i; // type is MyObject &
+}
 
 constexpr
 ---------
@@ -351,9 +375,9 @@ enum class Direction : char { left, right }; // custom underlying type, default 
 
 [role="incremental"]
 [source,cpp]
-NewAlert r = NewAlert::red;         // OK now
-int q = NewAlert::red               // Error: no conversion to int any more
-Direction d = 1;                    // Error: no conversion from int
+NewAlert r = NewAlert::red;                  // OK now
+int q = NewAlert::red                        // Error: no conversion to int any more
+Direction d = static_cast<Direction>(1);     // OK with explicit cast
 
 noexcept
 --------

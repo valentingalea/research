@@ -26,6 +26,9 @@ NOTE: Talk assumes familiarity with templates
 [role="incremental"]
 TIP: Questions are welcomed at the end of each item - I will let you know when
 
+[role="incremental"]
+TIP: we have a dedicated HipChat room: C++11/14
+
 Support in compilers
 --------------------
 [options="header"]
