@@ -128,7 +128,7 @@ The rules of this deduction are the same of `T` from template declaration.
 [role="incremental"]
 [source,cpp]
 auto a = expr;    /* is actually: */   template<class T> void temp(T a) {}
-                                       temp(expr); // compile and extract type of expr
+                                       temp<???>(expr); // compile and extract type of T
 
 [role="incremental"]
 This means that it doesn't deduct(it *drops*) `references` and `const` !!!
@@ -136,7 +136,7 @@ This means that it doesn't deduct(it *drops*) `references` and `const` !!!
 [role="incremental"]
 [source,cpp]
 float& f1();
-auto a1 = f1();          // a1 is value float, not reference!
+auto a1 = f1();         // a1 is value float, not reference!
 ;
 const int f2();
 auto a2 = f2();         // a2 is not const!
@@ -469,9 +469,10 @@ template <class T>
 void func(T value) {
     static_assert(std::is_base_of<MyBase, T>::value, "Type must be derived from MyBase");
     // ...
-};
+}
+;
+func(42);                    // compile error: int not derived from MyBase
 
 // https://msdn.microsoft.com/en-us/library/dd293588.aspx
 // http://stackoverflow.com/questions/1647895/what-does-static-assert-do-and-what-would-you-use-it-for
 // https://en.wikipedia.org/wiki/C%2B%2B11#Static_assertions
-
