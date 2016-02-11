@@ -16,7 +16,7 @@ Who am I
 --------
 
 [role="incremental"]
-* Valentin Galea - Senior Core Tech (currently on Sparta)
+* Valentin Galea - Senior Core Tech
 * Not an expert per se, just love C++ and like to keep up with it
 * Originally started this for my own benefit then expanded it for everyone
 
@@ -45,4 +45,3 @@ https://msdn.microsoft.com/en-us/library/hh567368.aspx
 http://en.cppreference.com/w/cpp/compiler_support
 
 //TODO: colour the cells
-
