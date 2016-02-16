@@ -3,16 +3,27 @@
 
 move semantics - lvalues/rvalues
 --------------------------------
-Every C++ statement is either an _lvalue_ or an _rvalue_.
+Every C++ statement is either an *lvalue* or an *rvalue*.
 
 [role="incremental"]
-_lvalues_ generally sit on the left of =, are always named, persist and you can take their address.
+* _lvalues_ 
+** generally sit on the left of =
+** are always named, persist
+** you can take their address
 
 [role="incremental"]
-_rvalues_ generally sit on right of =, are temporary i.e. they don't persist beyond the expression that uses them.
+* _rvalues_ 
+** generally sit on right of =
+** are temporary i.e. they don't persist beyond the expression that uses them
 
 [role="incremental"]
-In C++03 you cannot do much with _rvalues_, you need to "capture" them by assignment if you want to use them otherwise they go away.
+In C++03 you cannot do much with _rvalues_, normally they go away after their use (get destructed)
+
+[role="incremental"]
+[source,cpp]
+int& ref = 1 + 2;           // Error: not permitted, getting address of temporary
+const int& ref = 1 + 2;     // Ok: because it's constant, extends lifetime
+                            // but extremely limited use
 
 // https://msdn.microsoft.com/en-us/library/f90831hc.aspx
 // http://blog.smartbear.com/development/c11-tutorial-explaining-the-ever-elusive-lvalues-and-rvalues/
@@ -22,17 +33,19 @@ move semantics - lvalue/rvalue - examples
 [source,cpp]
 /*lvalue*/ /*rvalue*/
 int x      = 3 + 4;
-;
-*ptr;      // lvalue
-&x;        // rvalue: the address of x
-"hello";   // rvalue: literal
+
+[role="incremental"]
+[source,cpp]
+*ptr;                   // lvalue
+&x;                     // rvalue: the address of x
+"hello";                // rvalue: literal
 
 [role="incremental"]
 [source,cpp]
 int& func();
 int func2();
-func();     // lvalue, the call will return a meaningful address
-func2();    // rvalue - an 'invisible' temporary is returned
+func();                 // lvalue, the call will return a meaningful address
+func2();                // rvalue - an 'invisible' temporary is returned
 
 [role="incremental"]
 [source,cpp]
@@ -47,21 +60,25 @@ move semantics - rvalue references
 C++11 introduces _rvalue_ references: `<identifier> &&`
 
 [role="incremental"]
-They are most useful as arguments to functions in order to work with temporaries as well rather than "final result".
-TODO: clarify this
+[source,cpp]
+int&& ref = 1 + 2;                         // OK now, grabbing temporary
+ref = 42;                                  // still alive and kicking!
 
 [role="incremental"]
-Also now functions can return _rvalue_ references to optimise the passing around of the return value.
+To leverage this, _move constructors_ and _move assignment operator_ are introduced:
 
-[role="incremental"]
-To leverage this, _move constructors_ and _move assignment operator_ are introduced.
-TODO: give examples here
-
-[role="incremental"]
-NOTE: In the context of template deduction && means something different: a "universal reference" used to implement perfect forwarding: that is ability to accept both _lvalue_ and _rvalue_ arguments.
 [role="incremental"]
 [source,cpp]
-template<class T> void func(T&& arg); // not a rvalue reference, but could be!
+struct Widget {
+    Widget(Widget&& other);                // move constructor
+    Widget& operator=(Widget&& other);     // move assignment operator
+};
+
+[role="incremental"]
+NOTE: In the context of template deduction `&&` means something different: a "universal reference" used to implement _perfect forwarding_: that is ability to accept both _lvalue_ and _rvalue_ arguments.
+[role="incremental"]
+[source,cpp]
+template<class T> void func(T&& arg);      // not a rvalue reference, but could be!
 
 move semantics - example
 ------------------------
@@ -90,7 +107,7 @@ move semantics - example (continued)
 [source,cpp]
 -------------------------------------------------------------------------------
     // move constructor and move assignment operator
-    MemoryPage(MemoryPage&& other) {
+    MemoryPage(MemoryPage&& other) noexcept {
         // trivial swap of data
         address = other.address;
         size = other.size;
@@ -98,7 +115,7 @@ move semantics - example (continued)
         other.address = nullptr;
         other.size = 0;
     }
-    MemoryPage& MemoryPage::operator=(MemoryPage&& other) {
+    MemoryPage& operator=(MemoryPage&& other) noexcept {
         // release the current object's resources
         delete[] address;
         size = 0;
@@ -108,28 +125,85 @@ move semantics - example (continued)
 }
 -------------------------------------------------------------------------------
 
-move semantics - usage (continued)
-----------------------------------
-TODO: redo all this
+move semantics - usage
+----------------------
+[role="incremental"]
+[source,cpp]
+MemoryPage factory() {
+    MemoryPage p;
+    // ... more code that confuses compiler to not trigger NRVO
+    return p;
+}
+MemoryPage p = factory(); // copy construction  or
+                          // move construction if we provide move ctor (which we did)
+
+[source,cpp]
+[role="incremental"]
+std::vector<MemoryPage> pages;
+;
+pages.push_back(MemoryPage{});    // avoid copy, insert directly
+pages.push_back(MemoryPage{});    // again
+
+move semantics - forcing
+------------------------
+_lvalues_ don't trigger move semantics, but they can be forced to with `std::move` (which is a fancy static_cast to `&&`)
+
 [role="incremental"]
 [source,cpp]
 std::vector<MemoryPage> pages;
-pages.push_back(MemoryPage());                  // avoid copy, insert directly
-pages.push_back(MemoryPage());                  // again
-pages.emplace_back((void *)0xFF02320, 1024);    // even better: C++11 method that does perfect forwarding and just constructs in-place (no move)
-
-[role="incremental"]
-_lvalues_ don't trigger move semantics, but they can be forced to with `std::move` (which is a fancy static_cast to &&)
-
-[role="incremental"]
-NOTE: within functions, arguments are always _lvalues_, even if originally at the call site a _rvalue_ was passed
+;
+MemoryPage p{};
+pages.push_back(p);                // calls copy constructor (even if we have move ctor) !!!
 
 [role="incremental"]
 [source,cpp]
-MemoryPage p(...);
-pages.push_back(p);                // calls copy constructor
-pages.push_back(std::move(p));     // calls move constructor, p is now useless on its own
+pages.push_back(std::move(p));     // calls move constructor (and p is now useless on its own)
+
+[role="incremental"]
+[source,cpp]
+MemoryPage p = other;              // always copy construction
+MemoryPage p = std::move(other);   // move construct - Thief :)
 
 [role="incremental"]
 NOTE: UE4 version of std::move is called MoveTemp
+
+move semantics - forcing (continued)
+------------------------------------
+Within functions, arguments are always _lvalues_, even if originally at the call site a _rvalue_ was passed
+
+[role="incremental"]
+[source,cpp]
+void func(MemoryPage&& input) {    // clearly it's rvalue 
+     MemoryPage p = input;         // copy :(
+}
+;
+func(MemoryPage{});                // pass temporary
+
+[role="incremental"]
+[source,cpp]
+void func(MemoryPage&& input) {    
+    MemoryPage p = std::move(input);
+}
+
+move semantics - std::move - a study in C++11
+---------------------------------------------
+Let's see a typical implementation of `std::move`
+
+[role="incremental"]
+[source,cpp]
+template<class T>
+constexpr auto move(T&& arg) noexcept
+    -> typename remove_reference<T>::type&&
+{
+    return static_cast<typename remove_reference<T>::type&&>(arg);
+}
+
+[role="incremental"]
+[source,cpp]
+template<class T> struct remove_reference      { typedef T type; };
+template<class T> struct remove_reference<T&>  { typedef T type; };
+template<class T> struct remove_reference<T&&> { typedef T type; };
+
+// TODO: explain why this is needed
+// http://stackoverflow.com/questions/7510182/how-does-stdmove-transfer-values-into-rvalues
 

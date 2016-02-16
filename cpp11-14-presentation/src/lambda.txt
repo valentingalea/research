@@ -45,6 +45,7 @@ struct functor {
 void work(std::vector<int> &v) {
     functor f;
     std::for_each(v.begin(), v.end(), f); // good but what if f is used only here
+                                          // also a global function works here but same problem
 }
 
 [role="incremental"]
@@ -77,6 +78,7 @@ weap.OnFire = // What to put here???
 [role="incremental"]
 * global function
 * functor object
+* std::function -- a generalisation of functors
 * turn the events into virtual methods and create interface
 
 lambda - example
