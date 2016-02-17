@@ -436,8 +436,55 @@ u8"string encoded in UTF-8"
  R"delimiter( string with anything unescaped like \ / " )delimiter" // delimiter can be any 16 character string, including empty
 
 [role="incremental"] 
-** the `R` one can be combined with the others (to specify Unicode etc)
+** the `R` one (raw string) can be combined with the others (to specify Unicode etc)
 ** they all (if same type) support multi-line
+** Unicode versions are available VS2015+/GCC4.4
+** raw string available VS2013+/GCC4.5
+
+syntactic sugar (continued)
+---------------------------
+[role="incremental"]
+* binary base numbers (VS2015+/GCC4.9+)
+
+[role="incremental"]
+[source,cpp]
+int i = 0b001110101;
+int j = 0B1111;
+
+[role="incremental"]
+* `'` (single quote) digit separator (VS2015+/GCC4.9+)
+
+[role="incremental"]
+[source,cpp]
+int i = 1'000'000;
+float f = 3'154.632'524f;
+int h = 0xFF'FF'FF'FF;
+
+nullptr (VS2010+/GCC4.6+)
+-------------------------
+Defining null pointers in C++03 was hacky and problematic:
+
+[role="incremental"]
+[source,cpp]
+void func(int);
+void func(int *);
+;
+func(0);               // which overload to call?
+func(NULL);            // same problem because of #define NULL 0
+
+[role="incremental"]
+C++11 introduces the `nullptr` literal which improves pointer checks:
+
+[role="incremental"]
+[source,cpp]
+func(nullptr);         // will always call the int* version
+;
+int *ptr = nullptr;
+if (ptr == nullptr) {
+}
+
+[role="incremental"]
+TIP: `nullptr` is of type `std::nullptr_t` (which is implementation defined)
 
 alignas, alignof (VS2012+/GCC4.8+)
 ----------------------------------
