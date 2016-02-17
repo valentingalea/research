@@ -1,8 +1,11 @@
 <<Lambda's>>
 ------------
 
-alternative function declaration
---------------------------------
+VS2010+/GCC4.5+
+~~~~~~~~~~~~~~~
+
+alternative function declaration (VS2010+/GCC4.4+)
+--------------------------------------------------
 [source,cpp]
 auto SomeFunction(int x, int y) -> int
 {

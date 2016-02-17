@@ -1,6 +1,9 @@
 <<Move Semantics>>
 ------------------
 
+VS2010+/GCC4.3+
+~~~~~~~~~~~~~~~
+
 move semantics - lvalues/rvalues
 --------------------------------
 Every C++ statement is either an *lvalue* or an *rvalue*.
