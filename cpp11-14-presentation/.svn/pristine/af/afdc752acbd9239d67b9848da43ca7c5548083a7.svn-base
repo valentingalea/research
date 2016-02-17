@@ -1,0 +1,164 @@
+<<Object Construction Improvements>>
+------------------------------------
+
+=default (VS2013+/GCC4.4+)
+--------------------------
+Better explicit control over the treatment of default constructors and assignment operators.
+
+[role="incremental"]
+Leaving it to the compiler to implement the default behaviour is simpler, less error-prone, and often leads to better object code.
+
+[role="incremental"]
+[source,cpp]
+struct Widget
+{
+    Widget() = default; // the default constructor is explicitly stated, but it's not defined
+    Widget(int value);
+};
+
+[role="incremental"]
+[source,cpp]
+Widget(42);             // OK: legal in all C++ versions
+Widget();               // Error in C++03 (due to lack of explicit default constructor)
+                        // but OK in C++11
+
+[role="incremental"]
+NOTE: Works on: _Default constructor_, _Copy constructor_, _Move constructor_, _Copy assignment operator_, _Move assignment operator_ and _Destructor_
+
+// https://en.wikipedia.org/wiki/C%2B%2B11#Explicitly_defaulted_and_deleted_special_member_functions
+// https://isocpp.org/wiki/faq/cpp11-language-classes#default-delete
+
+=delete (VS2013+/GCC4.4+)
+-------------------------
+Used to prohibit calling any function, which can be used to disallow construction, copying or undesired conversions.
+
+[role="incremental"]
+[source,cpp]
+struct NonCopyable {
+    NonCopyable() = default;
+    NonCopyable(const NonCopyable&) = delete;
+    NonCopyable& operator=(const NonCopyable&) = delete;
+};
+
+[role="incremental"]
+[source,cpp]
+NonCopyable nc{};       // OK
+NonCopyable nc = other; // Error: won't compile
+
+[role="incremental"]
+[source,cpp]
+struct OnlyDouble {
+    void convert(double d);
+    template<class T> void convert(T) = delete;
+};
+
+[role="incremental"]
+[source,cpp]
+OnlyDouble d;
+d.convert(3.14);        // OK
+d.convert(3);           // Error: won't compile
+
+delegating constructors (VS2013+/GCC4.7+)
+-----------------------------------------
+In C++03, if you want two constructors to do the same thing, repeat yourself or call "an init() function."
+
+[role="incremental"]
+Now constructors can call each other:
+
+[role="incremental"]
+[source,cpp]
+class Widget
+{
+    int number;	
+public:
+    Widget(int new_number) 
+	    : number {new_number}
+	{
+	}
+    Widget()
+	    : Widget {42}
+	{
+	}
+};
+
+// https://en.wikipedia.org/wiki/C%2B%2B11#Object_construction_improvement
+// https://isocpp.org/wiki/faq/cpp11-language-classes#delegating-ctor
+
+inheriting constructors (VS2015+/GCC4.8)
+----------------------------------------
+Non-virtual methods are not automatically available in derived classes.
+
+They have to be brought into scope with `using::` and in C++03 constructors couldn't be.
+
+[role="incremental"]
+[source,cpp]
+struct Base {
+    Base(int);
+    void method(double);
+};
+
+[role="incremental"]
+[source,cpp]
+struct Derived : public Base { 
+    using Base::method;      // lift Base's method into Derived's scope -- works in C++03
+    using Base::Base;        // lift all Base constructors into Derived's scope -- new in C++11
+};
+    
+[role="incremental"]
+[source,cpp]
+Derived d {42};
+d.method (3.14);
+
+// https://isocpp.org/wiki/faq/cpp11-language-classes#inherited-ctors
+
+override and final (VS2012+/GCC4.7)
+-----------------------------------
+New mechanisms for better enforcing and checking polymorphism rules:
+
+[role="incremental"]
+[source,cpp]
+struct Base {
+    virtual void method_a(char);
+    virtual void method_b() const;
+    virtual void method_c() final;
+            void method_d();               
+};
+
+[role="incremental"]
+[source,cpp]
+struct Derived : Base {
+    void method_a(char) override; // OK: overrides B::method_a()
+    void method_b() override;     // error: wrong signature - not const
+    void method_c();              // error: attempt to override final method
+    void method_d() override;     // error: B::method_d() is not virtual
+};
+
+[role="incremental"]
+* both `final` and `override` are contextual keywords - they can be used in normal declarations (but it's discouraged)
+* `final` can also be used for class declaration to disable inheritance 
+
+member initialisation (VS2013+/GCC4.6+)
+---------------------------------------
+Non-static data members may be initialized at declaration site now:
+
+[source,cpp]
+[role="incremental"]
+struct Widget {
+    int x = 7;
+    int y {8};
+    int &ref = x;
+};
+
+[role="incremental"]
+[source,cpp]
+Widget s;
+assert(s.x == 7);
+assert(s.y == 8);
+
+[role="incremental"]
+[source,cpp]
+struct Widget {
+    int x {7};
+    Widget() : x {42} {}   // override value from member initialisation
+};
+

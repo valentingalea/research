@@ -188,9 +188,6 @@ void func(MemoryPage&& input) {
     MemoryPage p = std::move(input);
 }
 
-[role="incremental"]
-TIP: Remember: a named _rvalue reference_ is treated as _lvalue_ (and implicit conversion from _lvalue_ to _rvalue reference_ is forbidden by the standard, that's why the need for `std::move` cast)
-
 move semantics - std::move - a study in C++11
 ---------------------------------------------
 Let's see a typical implementation of `std::move`
@@ -209,10 +206,8 @@ constexpr auto move(T&& arg) noexcept
 template<class T> struct remove_reference      { typedef T type; };
 template<class T> struct remove_reference<T&>  { typedef T type; };
 template<class T> struct remove_reference<T&&> { typedef T type; };
-;
-// The reason this is needed is because of the special rules of template argument deduction (the perfect forwarding mechanic)
-// Otherwise move(lvalue_reference) wouldn't work
 
+// TODO: explain why this is needed
 // http://stackoverflow.com/questions/7510182/how-does-stdmove-transfer-values-into-rvalues
 
 move semantics - recap

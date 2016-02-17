@@ -1,0 +1,52 @@
+C++11/14 for gamedev
+====================
+practical new features
+
+Purpose
+-------
+A survey of the new features of C++ 11 and 14 suitable for game development.
+
+[role="incremental"]
+It is presented for enumeration rather than guidance/style unless there is a clear proven benefit.
+
+[role="incremental"]
+Devs are encouraged to cherry pick features (maybe all!) and use them in day to day development to get faster, better and more maintainable code.
+
+// Examples for embedding "live" code
+//[subs="none"]
+//<script src="http://ideone.com/e.js/ri7c1H" type="text/javascript" ></script>
+//<iframe src="http://coliru.stacked-crooked.com/a/04497ca6860c5f8c" style="width:100%; height:200px;"></iframe>
+
+Who am I
+--------
+
+[role="incremental"]
+* Valentin Galea - Senior Core Tech
+* Not an expert per se, just love C++ and like to keep up with it
+* Originally started this for my own benefit then expanded it for everyone
+
+[role="incremental"]
+NOTE: Talk assumes familiarity with templates
+
+[role="incremental"]
+TIP: Questions are welcomed at the end of each item - I will let you know when
+
+[role="incremental"]
+TIP: we have a dedicated HipChat room: C++11/14
+
+Support in compilers
+--------------------
+[options="header"]
+|========================================================
+| Compiler           | C++11                | C++14
+| Visual Studio 2012 | partial (but usable) | none
+| Visual Studio 2013 | almost full          | none
+| Visual Studio 2015 | full                 | almost full
+| GCC                | 4.4+                 | 4.8+
+|========================================================
+
+TIP: More info:
+https://msdn.microsoft.com/en-us/library/hh567368.aspx 
+http://en.cppreference.com/w/cpp/compiler_support
+
+//TODO: colour the cells

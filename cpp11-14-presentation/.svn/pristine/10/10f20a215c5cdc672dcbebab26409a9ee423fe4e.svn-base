@@ -1,0 +1,300 @@
+<<Lambda's>>
+------------
+
+VS2010+/GCC4.5+
+~~~~~~~~~~~~~~~
+
+alternative function declaration (VS2010+/GCC4.4+)
+--------------------------------------------------
+[source,cpp]
+auto SomeFunction(int x, int y) -> int
+{
+    return x + y;
+}
+
+[role="incremental"]
+_auto_ here means something different than in type deduction.
+
+[role="incremental"]
+C++14 allows the return type to be automatically deduced, no more need for `->`
+
+[role="incremental"]
+Especially needed in template declarations where the return type cannot be easily determined due to how the C++ parser works:
+
+[role="incremental"]
+[source,cpp]
+/* ILLEGAL */
+template<class L, class R>
+Ret adding_func(const L &lhs, const R &rhs) { return lhs + rhs; } // what type is Ret???
+
+[role="incremental"]
+[source,cpp]
+/* OK */
+template<class L, class R>
+auto adding_func(const L &lhs, const R &rhs) -> decltype(lhs + rhs) { return lhs + rhs; }
+
+lambda - motivation
+-------------------
+C++ has some very useful generic functions like `std::for_each` and `std::transform` but they tend to be cumbersome to use:
+
+[role="incremental"]
+[source,cpp]
+struct functor {
+    void operator() (int) {
+        // do something
+    }
+}
+;
+void work(std::vector<int> &v) {
+    functor f;
+    std::for_each(v.begin(), v.end(), f); // good but what if f is used only here
+                                          // also a global function works here but same problem
+}
+
+[role="incremental"]
+[source,cpp]
+void work(std::vector<int> &v) {
+    struct functor {
+        void operator() (int) {
+             // do something
+        }
+    } f;
+    std::for_each(v.begin(), v.end(), f); // Error: not permitted in C++03!!!
+}
+
+lambda - motivation (continued)
+-------------------------------
+Delegates are a very useful construct:
+
+[role="incremental"]
+[source,cpp]
+struct Weapon : public Item {
+    // ...
+    void (*OnFire)(Bullet &projectile);
+    void (*OnReload)(Clip &ammo);
+    void (*OnBulletImpact)(MuzzleEffect &vfx, Vec3 origin, Vec3 normal);
+}
+;
+Weapon weap;
+weap.OnFire = // What to put here???
+
+[role="incremental"]
+* global function
+* functor object
+* std::function -- a generalisation of functors
+* turn the events into virtual methods and create interface
+
+lambda - example
+----------------
+In C++11 in all the previous scenarios we can use lambda's:
+
+[role="incremental"]
+[source,cpp]
+void work(std::vector<int> &v) {
+    std::for_each(v.begin(), v.end(), [](int i) {
+        std::cout << i;
+    });
+}
+
+[role="incremental"]
+[source,cpp]
+Weapon weap;
+weap.OnFire = [](Bullet &projectile) {
+    projectile.explode();
+    // ...
+};
+
+[role="incremental"]
+[source,cpp]
+Player pl;
+weap.OnFire = [&pl](Bullet &projectile) {
+    pl.fired_gun = true;
+    // ...
+};
+
+lambda - definition
+-------------------
+Anonymous in-place function (or alternatively an object called _closure_).
+
+[role="incremental"]
+[source,cpp]
+/* lambda introducer     param    modifiable   exception  return type */
+/* and capture clause    list     spec         spec                   */
+            []          (int x)   mutable      noexcept   -> int
+            {
+                int n = x + y;
+                return n;
+            }
+
+[role="incremental"]
+* `[]`       capture nothing
+* `[=]`      all by value
+* `[&]`      all by reference
+* `[v, &r]`  v by value, r by ref
+* `[=, &r]`  r by ref, rest by value
+* `[&, v]`   v by value, rest by ref
+* `[this]`  capture the instance. provide access to methods and members
+
+lambda - definition (continued)
+-------------------------------
+[source,cpp]
+/* lambda introducer     param    modifiable   exception  return type */
+/* and capture clause    list     spec         spec                   */
+            []          (int x)   mutable      noexcept   -> int
+            {
+                int n = x + y;
+                return n;
+            }
+			
+[role="incremental"]			
+* `mutable`
+** allows the body to modify the parameters captured by copy, and to call their non-const member functions
+* `noexcept(...)`
+** conditions under which exceptions may be thrown or that it doesn't throw
+* `-> ...`
+** return type. If not present it's implied by the function return statements (can be void as well)
+
+lambda - what's the type
+------------------------
+[role="incremental"]
+* raw function pointer -- if it doesn't capture
+
+[role="incremental"]
+[source,cpp]
+void (*func)(int, float) = [](int arg1, float arg2){};
+
+[role="incremental"]
+* hidden, unique "ClosureType" that can be only captured with _auto_
+
+[role="incremental"]
+[source,cpp]
+auto func = [](int arg1, float arg2){};
+
+[role="incremental"]
+* `std::function` with the signature of the lambda argument types. Useful to pass around but heavyweight (NOTE: uses type erasure which does heap alloc!) 
+
+[role="incremental"]
+[source,cpp]
+std::function<int, float> func = [](int arg1, float arg2){};
+
+lambda - C++14 additions
+------------------------
+[role="incremental"]
+* Generic arguments: (this effectively turns it into a template function)
+
+[role="incremental"]
+[source,cpp]
+[] (auto first, auto second) {
+    return first + second;
+};
+
+[role="incremental"]
+* Capture expressions:
+
+[role="incremental"]
+[source,cpp]
+[&ref = x, new_val = val + 1] () {
+    // ...
+};
+
+[role="incremental"]
+TIP: This especially allows capture by move, which wasn't possible before
+
+[role="incremental"]
+[source,cpp]
+[x = std::move(x)] () {
+    // ...
+};
+
+lambda - under the hood
+-----------------------
+[role="incremental"]
+[source,cpp]
+/* simple lambda declaration */
+[](int x) -> int {
+    return x + 1;
+};
+
+[role="incremental"]
+[source,cpp]
+/* what the compiler secretly does */
+struct ClosureType {
+    int operator() (int x) {
+        return x + 1;
+    }
+};
+
+lambda - under the hood (continued)
+-----------------------------------
+[role="incremental"]
+[source,cpp]
+int y = 42;
+int r = 52;
+// etc...
+
+[role="incremental"]
+[source,cpp]
+/* closure declaration */
+[y, &r](int x) -> int {
+    return x + y + r;
+};
+
+[role="incremental"]
+[source,cpp]
+/* what the compiler secretly does */
+struct ClosureType {
+    int y_;
+    int &r_;
+    ClosureType(int y, int &r) : y_(y), r_(r) {}
+    int operator() (int x) {
+        return x + y_ + r_;
+    }
+};
+
+lambda - under the hood (continued)
+-----------------------------------
+[role="incremental"]
+[source,cpp]
+/* generic lambda declaration */
+[](auto x, auto y) {
+    return x + y;
+};
+
+[role="incremental"]
+[source,cpp]
+/* what the compiler secretly does */
+struct ClosureType {
+    template<typename X, typename Y>
+    auto operator() (X x, Y y) -> decltype(x + y) {
+        return x + y;
+    }
+};
+
+lambda - gotchas
+----------------
+[role="incremental"]
+* Beware of dangling references!
+
+[role="incremental"]
+[source,cpp]
+{
+	Widget w = ...
+	callback = [&w]() { w.function(); }
+}
+callback(); // Disaster!
+
+[role="incremental"]
+* Beware of implicit capture of `this`
+
+[role="incremental"]
+[source,cpp]
+struct Widget {
+	int member;
+	auto factory() {
+		return [=]() { return member; }; // actually: this->member 
+	}
+};
+
+[role="incremental"]
+* Globals aren't captured - they are used like in normal functions
+
