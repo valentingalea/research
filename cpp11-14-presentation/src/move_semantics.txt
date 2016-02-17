@@ -207,3 +207,12 @@ template<class T> struct remove_reference<T&&> { typedef T type; };
 // TODO: explain why this is needed
 // http://stackoverflow.com/questions/7510182/how-does-stdmove-transfer-values-into-rvalues
 
+move semantics - recap
+----------------------
+[role="incremental"]
+* move helps with performance, optimise temporaries passed around
+* you need to have move constructors (sometimes the default may work)
+* use them when you want *transfer* of resources instead of _copy_
+** this mean you are willing to allow _stealing_, letting go of previous data
+* they don't always kick in - make sure you nudge it with `std::move`
+
