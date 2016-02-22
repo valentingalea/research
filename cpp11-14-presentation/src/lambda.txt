@@ -35,31 +35,31 @@ auto adding_func(const L &lhs, const R &rhs) -> decltype(lhs + rhs) { return lhs
 
 lambda - motivation
 -------------------
-C++ has some very useful generic functions like `std::for_each` and `std::transform` but they tend to be cumbersome to use:
+C++ has some very useful generic functions like `std::sort` and `std::transform` but they tend to be cumbersome to use:
 
 [role="incremental"]
 [source,cpp]
-struct functor {
-    void operator() (int) {
-        // do something
+struct comp_functor {
+    void operator() (int a, int b) {
+        return a < b;
     }
 }
 ;
 void work(std::vector<int> &v) {
-    functor f;
-    std::for_each(v.begin(), v.end(), f); // good but what if f is used only here
-                                          // also a global function works here but same problem
+    com_functor f;
+    std::sort(v.begin(), v.end(), f);  // good but what if f is used only here
+                                       // also a global function works here but same problem
 }
 
 [role="incremental"]
 [source,cpp]
 void work(std::vector<int> &v) {
-    struct functor {
-        void operator() (int) {
-             // do something
+    struct comp_functor {
+        void operator() (int a, int b) {
+             return a < b;
         }
     } f;
-    std::for_each(v.begin(), v.end(), f); // Error: not permitted in C++03!!!
+    std::sort(v.begin(), v.end(), f);  // Error: not permitted in C++03!!!
 }
 
 lambda - motivation (continued)
@@ -91,8 +91,8 @@ In C++11 in all the previous scenarios we can use lambda's:
 [role="incremental"]
 [source,cpp]
 void work(std::vector<int> &v) {
-    std::for_each(v.begin(), v.end(), [](int i) {
-        std::cout << i;
+    std::sort(v.begin(), v.end(), [](int a, int b) {
+        return a < b;
     });
 }
 
@@ -120,7 +120,7 @@ Anonymous in-place function (or alternatively an object called _closure_).
 [source,cpp]
 /* lambda introducer     param    modifiable   exception  return type */
 /* and capture clause    list     spec         spec                   */
-            []          (int x)   mutable      noexcept   -> int
+            [y]         (int x)   mutable      noexcept   -> int
             {
                 int n = x + y;
                 return n;
@@ -140,7 +140,7 @@ lambda - definition (continued)
 [source,cpp]
 /* lambda introducer     param    modifiable   exception  return type */
 /* and capture clause    list     spec         spec                   */
-            []          (int x)   mutable      noexcept   -> int
+            [y]         (int x)   mutable      noexcept   -> int
             {
                 int n = x + y;
                 return n;
