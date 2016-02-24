@@ -36,36 +36,57 @@ std::unique_ptr
 ---------------
 Smart pointer that retains sole ownership of an object and destroys it when it goes out of scope.
 
-No two unique_ptr instances can manage the same object.
+No two `unique_ptr` instances can manage the same object.
 
-0 overhead to normal pointer but can optionally store a custom deleter function.
+[role="incremental"]
+[source,cpp]
+std::unique_ptr<int> p1(new int(5));
+std::unique_ptr<int> p1 = std::make_unique<int>(5); // since C++14
 
+[role="incremental"]
+No overhead like normal pointer but can optionally store a custom deleter function.
+
+[role="incremental"]
+Typical usage:
+
+[role="incremental"]
+* ownership (acquiring / passing) of dynamically allocated objects 
+* safety by guaranteeing deletion on both
+** normal exit
+** exit through exception/error
+* as the element type in move-aware containers, such as `std::vector`, which hold pointers to dynamically-allocated objects 
+
+[role="incremental"]
 TIP: UE4 equivalent is TUniquePtr.
 
 std::unique_ptr - examples
 --------------------------
 [role="incremental"]
 [source,cpp]
--------------------------------------------------------------------------------
+----
 {
-    std::unique_ptr<int> p1(new int(5));
-    std::unique_ptr<int> p1 = std::make_unique<int>(5); // since C++14
+    std::unique_ptr<int> p1 = std::make_unique<int>(5);
 
     std::unique_ptr<int> p2 = p1; // Compile error!!! cannot copy
-    std::unique_ptr<int> p3 = std::move(p1); // Transfers ownership. p3 now owns the memory and p1 is rendered invalid.
+    std::unique_ptr<int> p3 = std::move(p1); // Transfers ownership.
+                                             // p3 now owns the memory and p1 is rendered invalid.
 
-    // end of scope: p3 will be destroyed, p1 is empty so nothing happens
-}
--------------------------------------------------------------------------------
+}   // end of scope: p3 will be destroyed, p1 is empty so nothing happens
+----
 
 [role="incremental"]
 [source,cpp]
+----
 auto file_closer = [](FILE* f) {
     ::fclose(f);
 };
+
 std::unique_ptr<FILE, decltype(file_closer)> file = { ::fopen("output.bin", "wb"), file_closer };
-// ...
-fwrite(&data, sizeof(data), 1, file.get());
+
+if (file) {
+    fwrite(&data, sizeof(data), 1, file.get());
+}
+----
 
 std::shared_ptr
 ---------------
