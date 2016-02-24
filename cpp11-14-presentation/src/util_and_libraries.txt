@@ -1,6 +1,37 @@
 <<Utilities & Libraries>>
 -------------------------
 
+std::tuple
+----------
+A kind of generalized anonymous `struct`. For only 2 members there's also `std::pair`. 
+
+Useful to return multiple values from functions (ex: data + error flag)
+
+[role="incremental"]
+[source,cpp]
+/* tuple */                                      /* struct equivalent */
+std::tuple<int, float, std::string>              struct tuple {
+                                                     int _0;
+                                                     float _1;
+                                                     std::string _2;
+                                                 };
+
+[role="incremental"]
+[source,cpp]
+/* tuple */                                      /* struct equivalent */
+auto t = std::make_tuple(1, 3.14f, "hello");     auto t = tuple {1, 3.14f, "hello"};
+
+[role="incremental"]
+[source,cpp]
+/* tuple */                                      /* struct equivalent */
+std::get<0>(t);                                  t._0;
+std::get<float>(t); // C++14 only                no equivalent 
+
+[role="incremental"]
+TIP: UE4 equivalent is TTuple
+
+// http://www.oracle.com/technetwork/articles/servers-storage-dev/c-array-containers-2252536.html
+
 std::unique_ptr
 ---------------
 Smart pointer that retains sole ownership of an object and destroys it when it goes out of scope.
@@ -64,34 +95,6 @@ std::shared_ptr - examples
     
 } // p1 is destroyed and so is object
 -------------------------------------------------------------------------------
-
-std::tuple
-----------
-A kind of generalized anonymous `struct`. For only 2 members there's also `std::pair`. 
-
-Useful to return multiple values from functions (ex: data + error flag)
-
-[role="incremental"]
-[source,cpp]
-/* tuple */                                      /* struct equivalent */
-std::tuple<int, float, std::string>              struct tuple {
-                                                     int _0;
-                                                     float _1;
-                                                     std::string _2;
-                                                 };
-
-[role="incremental"]
-[source,cpp]
-/* tuple */                                      /* struct equivalent */
-auto t = std::make_tuple(1, 3.14f, "hello");     auto t = tuple {1, 3.14f, "hello"};
-
-[role="incremental"]
-[source,cpp]
-/* tuple */                                      /* struct equivalent */
-std::get<0>(t);                                  t._0;
-std::get<float>(t); // C++14 only                no equivalent 
-
-// http://www.oracle.com/technetwork/articles/servers-storage-dev/c-array-containers-2252536.html
 
 RAII
 ----
