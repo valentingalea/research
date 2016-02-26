@@ -40,8 +40,8 @@ No two `unique_ptr` instances can manage the same object.
 
 [role="incremental"]
 [source,cpp]
-std::unique_ptr<int> p1(new int(5));
-std::unique_ptr<int> p1 = std::make_unique<int>(5); // since C++14
+std::unique_ptr<int> p1 { new int {42} };
+std::unique_ptr<int> p1 = std::make_unique<int>(42); // since C++14
 
 [role="incremental"]
 No overhead like normal pointer but can optionally store a custom deleter function.
@@ -65,27 +65,29 @@ std::unique_ptr - examples
 [source,cpp]
 ----
 {
-    std::unique_ptr<int> p1 = std::make_unique<int>(5);
+    std::unique_ptr<int> p1 = std::make_unique<int>(42);
 
     std::unique_ptr<int> p2 = p1; // Compile error!!! cannot copy
     std::unique_ptr<int> p3 = std::move(p1); // Transfers ownership.
                                              // p3 now owns the memory and p1 is rendered invalid.
 
-}   // end of scope: p3 will be destroyed, p1 is empty so nothing happens
+} // end of scope: p3 will be destroyed, p1 is empty so nothing happens
 ----
 
 [role="incremental"]
 [source,cpp]
 ----
-auto file_closer = [](FILE* f) {
-    ::fclose(f);
-};
+{
+    auto file_closer = [](FILE* f) {
+        ::fclose(f);
+    };
 
-std::unique_ptr<FILE, decltype(file_closer)> file = { ::fopen("output.bin", "wb"), file_closer };
+    std::unique_ptr<FILE, decltype(file_closer)> file = { ::fopen("output.bin", "wb"), file_closer };
 
-if (file) {
-    fwrite(&data, sizeof(data), 1, file.get());
-}
+    if (file) {
+        ::fwrite(&data, sizeof(data), 1, file.get());
+    }
+} // end of scope: file will be closed gracefully
 ----
 
 std::shared_ptr
@@ -94,28 +96,58 @@ Smart pointer that retains shared ownership of an object.
 
 The referenced object will be destroyed _only_ when all copies of the `shared_ptr` have been destroyed.
 
+[role="incremental"]
+[source,cpp]
+std::shared_ptr<int> p1 { new int {42} };
+std::shared_ptr<int> p1 = std::make_shared<int>(42);
+	
+[role="incremental"]
 More overhead than normal pointer (due to need of storing the reference count). Can also contain a custom deleter function.
 
-Has a lightweight variant `std::weak_ptr` that models temporary ownership: when an object needs to be accessed only if it exists, and it may be deleted at any time by someone else.
+[role="incremental"]
+Typical usage:
 
+[role="incremental"]
+* safe shared ownership of data
+* multi-threaded safety of shared access (but not modification)
+
+[role="incremental"]
 TIP: UE4 equivalent is TSharedPtr.
 
-std::shared_ptr - examples
---------------------------
+std::weak_ptr
+-------------
+Smart pointer that holds a non-owning ("weak") reference to an object that is managed by `std::shared_ptr`.
+
+Models temporary ownership:
+
+* when an object needs to be accessed only if it exists
+* and it may be deleted at any time by someone else
+
+[role="incremental"]
+To actually be used it will be converted into a temporary `std::shared_ptr`.
+
+[role="incremental"]
+TIP: UE4 equivalent is TWeakPtr.
+
+std::shared_ptr/weak_ptr - examples
+-----------------------------------
 [source,cpp]
--------------------------------------------------------------------------------
+----
 {
-    std::shared_ptr<int> p1(new int(5));
-    std::shared_ptr<int> p1 = std::make_shared<int>(5); // preferred way of construction
-    
+    std::shared_ptr<int> p1 = std::make_shared<int>(5);
+
     {
-        std::shared_ptr<int> p2 = p1; // add a new reference
-        std::weak_ptr<int> wp1 = p1; // doesn't count as new reference
+        std::shared_ptr<int> p2 = p1;  // add a new reference
+        std::weak_ptr<int> wp1 = p1;   // doesn't count as new reference
         
-    } // end of this scope, p2 destroyed but not the owned object 
-    
-} // p1 is destroyed and so is object
--------------------------------------------------------------------------------
+        int n = *p2;                   // dereference like normal pointer
+
+        int q = wp1.expired() ? 0 : *(wp1.lock()); // safe dereference
+
+    } // end of this scope, p2 and wp1 destroyed but not the owned object 
+
+} // p1 is destroyed and so is the object
+----
 
 RAII
 ----
@@ -166,7 +198,7 @@ Alternative implementation: https://www.youtube.com/watch?v=lKG1m2NkANM
 
 Quick and usable article by the guys of The Witness/Braid: http://the-witness.net/news/2012/11/scopeexit-in-c11/
 
-"official"" release maintained by Facebook: https://github.com/facebook/folly/blob/master/folly/ScopeGuard.h
+"official" release maintained by Facebook: https://github.com/facebook/folly/blob/master/folly/ScopeGuard.h
 
 scope_exit - examples
 ---------------------
