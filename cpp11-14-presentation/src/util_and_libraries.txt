@@ -32,6 +32,35 @@ TIP: UE4 equivalent is TTuple
 
 // http://www.oracle.com/technetwork/articles/servers-storage-dev/c-array-containers-2252536.html
 
+std::tuple - examples
+---------------------
+
+[role="incremental"]
+[source,cpp]
+std::tuple<int, int> CalculateSize() {
+    // logic ...
+    return std::make_tuple(x, y, width, height);
+}
+
+[role="incremental"]
+[source,cpp]
+std::tuple<Widget, bool> GetWidget() {
+    Widget work{};
+    // logic ...
+    if (error) {
+        return std::make_tuple(Widget{}, false);
+    } else {
+        return std::make_tuple(std::move(work), true);
+    }
+}
+
+[role="incremental"]
+[source,cpp]
+auto w = GetWidget();
+if (std::get<bool>(w)) {
+    std::get<Widget>(w).method();
+}
+
 std::unique_ptr
 ---------------
 Smart pointer that retains sole ownership of an object and destroys it when it goes out of scope.
