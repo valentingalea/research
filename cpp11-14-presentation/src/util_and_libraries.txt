@@ -19,7 +19,7 @@ std::tuple<int, float, std::string>              struct tuple {
 [role="incremental"]
 [source,cpp]
 /* tuple */                                      /* struct equivalent */
-auto t = std::make_tuple(1, 3.14f, "hello");     auto t = tuple {1, 3.14f, "hello"};
+auto t = std::make_tuple(1, 3.14f, "hello"s);    auto t = tuple {1, 3.14f, "hello"};
 
 [role="incremental"]
 [source,cpp]
@@ -37,7 +37,7 @@ std::tuple - examples
 
 [role="incremental"]
 [source,cpp]
-std::tuple<int, int> CalculateSize() {
+std::tuple<int, int, int, int> CalculateSize() {
     // logic ...
     return std::make_tuple(x, y, width, height);
 }
@@ -60,6 +60,23 @@ auto w = GetWidget();
 if (std::get<bool>(w)) {
     std::get<Widget>(w).method();
 }
+
+std::tuple - more examples 
+--------------------------
+[role="incremental"]
+[source,cpp]
+std::tuple<int, int, int, int> CalculateSize() { ... }
+;
+int x, y, witdh, height;
+std::tie(x, y, witdh, height) = CalculateSize();
+
+[role="incremental"]
+[source,cpp]
+std::tuple<int, int, int, int> CalculateSize() { ... }
+;
+int x, y;
+std::tie(x, y, std::ignore, std::ignore) = CalculateSize();
+
 
 std::unique_ptr
 ---------------
