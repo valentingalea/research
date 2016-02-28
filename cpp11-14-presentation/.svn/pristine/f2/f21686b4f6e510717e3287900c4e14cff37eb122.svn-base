@@ -1,4 +1,0 @@
-.paragraph {
-	/* default: 24 */
-	font-size: 24pt;
-}
