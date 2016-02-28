@@ -195,3 +195,24 @@ std::shared_ptr/weak_ptr - examples
 } // p1 is destroyed and so is the object
 ----
 
+other libraries
+---------------
+[role="incremental"]
+* Multithreading - separate session
+** `thread`, `mutex`, `condition_variable`, `lock_guard` etc
+** `async`
+** `<atomic>`
+* Hash tables
+** `unordered_map`, `unordered_set` etc
+* Regular expressions
+** `regex_search`, `match_results` etc
+* Random numbers
+** generator algoritms: `linear_congruential_engine`, `mersenne_twister_engine` etc
+** distributions: `uniform_int_distribution`, `poisson_distribution`, `normal_distribution` etc
+* Type traits
+** `is_integral`, `is_pointer`, `is_copy_constructible`, `is_pod` etc 
+** `remove_const`, `remove_reference`, `enable_if`, `result_of` etc
+* <chrono> - date & time
+** `system_clock`, `high_resolution_clock` etc
+** `duration`, `time_point`,  etc
+
