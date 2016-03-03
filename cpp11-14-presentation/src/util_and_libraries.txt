@@ -63,34 +63,60 @@ if (std::get<bool>(w)) {
 
 std::tuple - more examples 
 --------------------------
-[role="incremental"]
-[source,cpp]
-std::tuple<int, int, int, int> CalculateSize() { ... }
-;
-int x, y, witdh, height;
-std::tie(x, y, witdh, height) = CalculateSize();
+`std::tie` - tuple of lvalue references
 
 [role="incremental"]
 [source,cpp]
+----
 std::tuple<int, int, int, int> CalculateSize() { ... }
-;
+
+int x, y, width, height;
+std::tie(x, y, width, height) = CalculateSize();
+----
+
+[role="incremental"]
+[source,cpp]
 int x, y;
 std::tie(x, y, std::ignore, std::ignore) = CalculateSize();
 
+[role="incremental"]
+[source,cpp]
+/* tuple supports lexicographically comparisons of its elements */
+float x1, y1, z1;
+float x2, y2, z2;
+return std::tie(x1, y1, z1) < std::tie(x2, y2, z2);
 
 std::unique_ptr
 ---------------
 Smart pointer that retains sole ownership of an object and destroys it when it goes out of scope.
 
-No two `unique_ptr` instances can manage the same object.
+[role="incremental"]
+[source,cpp]
+std::unique_ptr<int> ptr { new int {42} };
+std::unique_ptr<int> ptr = std::make_unique<int>(42); // since C++14
 
 [role="incremental"]
 [source,cpp]
-std::unique_ptr<int> p1 { new int {42} };
-std::unique_ptr<int> p1 = std::make_unique<int>(42); // since C++14
+std::unique_ptr<int []> ptr { new int [10] };
+std::unique_ptr<int []> ptr = std::make_unique<int []>(42); // 42 elements !!!
 
 [role="incremental"]
-No overhead like normal pointer but can optionally store a custom deleter function.
+[source,cpp]
+int i = *ptr;
+ptr[5] = 0;
+ptr->method(); // if unique_ptr<Widget> ...
+
+[role="incremental"]
+[source,cpp]
+if (ptr) { ... }
+if (ptr.get() != nullptr) { ... }
+
+std::unique_ptr (continued)
+---------------------------
+No two `unique_ptr` instances can manage the same object.
+
+[role="incremental"]
+No overhead just like normal pointer but can optionally store a custom deleter function.
 
 [role="incremental"]
 Typical usage:
@@ -107,22 +133,25 @@ TIP: UE4 equivalent is TUniquePtr.
 
 std::unique_ptr - examples
 --------------------------
-[role="incremental"]
 [source,cpp]
 ----
-{
-    std::unique_ptr<int> p1 = std::make_unique<int>(42);
+{ // begin scope
+    std::unique_ptr<int> ptr_1 = std::make_unique<int>(42);
 
-    std::unique_ptr<int> p2 = p1; // Compile error!!! cannot copy
-    std::unique_ptr<int> p3 = std::move(p1); // Transfers ownership.
-                                             // p3 now owns the memory and p1 is rendered invalid.
+    std::unique_ptr<int> ptr_2 = ptr_1; // Compile error!!! cannot copy
 
-} // end of scope: p3 will be destroyed, p1 is empty so nothing happens
+    std::unique_ptr<int> ptr_3 = std::move(ptr_1);
+    // Transfers ownership.
+    // ptr_3 now owns the memory and ptr_1 is rendered invalid.
+
+} // end of scope: ptr_3 will be destroyed, ptr_1 is empty so nothing happens
 ----
 
-[role="incremental"]
+std::unique_ptr - another example
+---------------------------------
 [source,cpp]
 ----
+void do_work()
 {
     auto file_closer = [](FILE* f) {
         ::fclose(f);
@@ -130,9 +159,16 @@ std::unique_ptr - examples
 
     std::unique_ptr<FILE, decltype(file_closer)> file = { ::fopen("output.bin", "wb"), file_closer };
 
-    if (file) {
+    // more code...
+
+    if (some_condition) {
         ::fwrite(&data, sizeof(data), 1, file.get());
+    } else {
+        return; // file closed!
     }
+
+    // more code...
+
 } // end of scope: file will be closed gracefully
 ----
 
