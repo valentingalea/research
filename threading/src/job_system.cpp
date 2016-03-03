@@ -33,18 +33,25 @@ struct notification_queue
 	std::deque<job_t>		items;
 	std::mutex				mutex;
 	std::condition_variable	ready_cv;
+	bool					done = false;
 
-	void pop(job_t &out_job)
+	bool pop(job_t &out_job)
 	{
 		lock_t lock(mutex); // also aquires the lock
 		
 		// this form avoids spurious wakeup
 		// also it will release the lock before going into wait
-		ready_cv.wait(lock, [&] { return !items.empty(); }); 
+		ready_cv.wait(lock, [&] { return !items.empty() || done; });
 		// when wait exits, lock is reaquired
+
+		if (items.empty()) {
+			return false;
+		}
 
 		out_job = std::move(items.front());
 		items.pop_front();
+
+		return true;
 	}   // release lock on destruction
 
 	template<typename T>
@@ -55,6 +62,15 @@ struct notification_queue
 			items.emplace_back(std::forward<T>(job));			
 		}
 		ready_cv.notify_one();	
+	}
+
+	void finish()
+	{
+		{
+			critical_section_t cs(mutex);
+			done = true;
+		}
+		ready_cv.notify_all();
 	}
 };
 
@@ -78,6 +94,9 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	}
 	~job_system()
 	{
+		// send done signal (can process last pending job)
+		queue.finish();
+
 		// blocks until all threads finish
 		for (auto &i : threads) {
 			i.join();
@@ -89,7 +108,9 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 		while (true) {
 			// grab new job - blocking
 			job_t job{};
-			queue.pop(job);
+			if (!queue.pop(job)) {
+				return;
+			}
 
 			// execute it
 			job();
@@ -105,13 +126,21 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 
 int main()
 {
-	job_system jobs;
+	{
+		job_system jobs;
 
-	jobs.async([](void){
-		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		printf("job A\n");
-	});
+		jobs.async([](void) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			printf("job A\n");
+		});
 
-	// run the jobs system and return
+		jobs.async([](void) {
+			printf("job B\n");
+		});
+
+		// the destruct actually blocks
+		// while we process the jobs
+	}
+
 	return 0;
 }
