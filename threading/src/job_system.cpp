@@ -3,7 +3,8 @@
 #include <condition_variable>
 #include <vector>
 #include <deque>
-
+#include <random>
+#include <functional>
 #include <cassert>
 #include <cstdio>
 
@@ -26,7 +27,7 @@ struct non_move
 	non_move& operator=(non_move &&) = delete;
 };
 
-using job_t = void(*)(void);
+using job_t = std::function<void()>;
 using lock_t = std::unique_lock<std::mutex>;
 using critical_section_t = std::lock_guard<std::mutex>;
 
@@ -147,11 +148,10 @@ struct telemetry
 		}
 	}
 };
-
-#define TIME(name) rmt_ScopedCPUSample(name)
-#else
-#define TIME(name)
 #endif
+
+std::random_device rd;
+std::mt19937 gen(rd());
 
 void LOG(const char *text)
 {
@@ -172,15 +172,24 @@ int main()
 	{
 		job_system jobs;
 
-		jobs.async([](void) {
-			TIME(job_1);
-			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		});
+		auto count = std::uniform_int_distribution<int>(1, 50)(gen);
+		for (auto i = 0; i < count; ++i) {
+			jobs.async([=](void) {
+				constexpr int buff_len = 32;
+				char buff[buff_len];
+				snprintf(buff, buff_len, "job %i\0", i);
+				rmt_BeginCPUSampleDynamic(buff);
 
-		jobs.async([](void) {
-			TIME(job_2);
-			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-		});
+				auto time = std::uniform_int_distribution<int>(100, 5000)(gen);
+				std::this_thread::sleep_for(std::chrono::milliseconds(time));
+
+				rmt_EndCPUSample();
+				LOG(buff);
+			});
+
+			auto time = std::uniform_int_distribution<int>(50, 200)(gen);
+			std::this_thread::sleep_for(std::chrono::milliseconds(time));
+		}
 
 		printf("Press ENTER to finish...\n");
 		scanf("%*c");
