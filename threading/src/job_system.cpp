@@ -1,9 +1,10 @@
-#include <cassert>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
 #include <vector>
 #include <deque>
+
+#include <cassert>
 #include <cstdio>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -125,22 +126,66 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	}
 };
 
+#define TELEMETRY
+
+#ifdef TELEMETRY
+#include "../lib/Remotery/lib/Remotery.h"
+
+struct telemetry
+{
+	Remotery* rmt;
+
+	telemetry()
+	{
+		rmt = nullptr;
+		assert(RMT_ERROR_NONE == rmt_CreateGlobalInstance(&rmt));
+	}
+	~telemetry()
+	{
+		if (rmt) {
+			rmt_DestroyGlobalInstance(rmt);
+		}
+	}
+};
+
+#define TIME(name) rmt_ScopedCPUSample(name)
+#else
+#define TIME(name)
+#endif
+
+void LOG(const char *text)
+{
+	printf(text);
+	printf("\n");
+#ifdef TELEMETRY
+	rmt_LogText(text);
+#endif
+}
+
 int main()
 {
+#ifdef TELEMETRY
+	telemetry metrics;
+#endif
+	LOG("Starting...");
+
 	{
 		job_system jobs;
 
 		jobs.async([](void) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
-			printf("job A\n");
+			TIME(job_1);
+			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		});
 
 		jobs.async([](void) {
-			printf("job B\n");
+			TIME(job_2);
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 		});
 
-		// the destruct actually blocks
-		// while we process the jobs
+		printf("Press ENTER to finish...\n");
+		scanf("%*c");
+
+		// destructor waits on jobs
 	}
 
 	return 0;
