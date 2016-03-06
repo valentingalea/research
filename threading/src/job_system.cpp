@@ -144,17 +144,21 @@ struct telemetry
 			rmt_DestroyGlobalInstance(rmt);
 		}
 	}
-} metrics; // singleton shared by all threads
+};
 
 thread_local std::random_device rd;
 thread_local std::mt19937 gen(rd());
 
 int main()
 {
+	telemetry t; // only on main thread
+
 	{
 		job_system jobs;
 
 		auto count = std::uniform_int_distribution<int>(1, 50)(gen);
+		printf("will process %i jobs...\n", count);
+
 		for (auto i = 0; i < count; ++i) {
 			jobs.async([=](void) {
 				constexpr int buff_len = 32;
@@ -166,14 +170,13 @@ int main()
 				std::this_thread::sleep_for(std::chrono::milliseconds(time));
 
 				rmt_EndCPUSample();
+				printf("done job %i\n", i);
 			});
 
-			auto time = std::uniform_int_distribution<int>(50, 200)(gen);
+			auto time = std::uniform_int_distribution<int>(200, 2000)(gen);
 			std::this_thread::sleep_for(std::chrono::milliseconds(time));
+			printf("new job %i\n", i);
 		}
-
-		printf("Press ENTER to finish...\n");
-		scanf("%*c");
 
 		// destructor waits on jobs
 	}
