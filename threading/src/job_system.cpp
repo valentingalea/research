@@ -170,10 +170,10 @@ int main()
 
 		for (auto i = 0; i < count; ++i) {
 			jobs.async([i, &t_end, &tmutex](void) {
-				constexpr int buff_len = 32;
-				char buff[buff_len];
-				snprintf(buff, buff_len, "job %i\0", i);
-				rmt_BeginCPUSampleDynamic(buff);
+				constexpr int descript_len = 32;
+				char descript[descript_len];
+				snprintf(descript, descript_len, "job %i\0", i);
+				rmt_BeginCPUSampleDynamic(descript);
 
 				auto time = std::uniform_int_distribution<int>(100, 500)(gen);
 				std::this_thread::sleep_for(std::chrono::milliseconds(time));
@@ -186,7 +186,7 @@ int main()
 				}
 
 				rmt_EndCPUSample();
-				printf("done job %i\n", i);
+				printf("done %s\n", descript);
 			});
 
 			auto time = std::uniform_int_distribution<int>(20, 200)(gen);
