@@ -127,9 +127,6 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	}
 };
 
-#define TELEMETRY
-
-#ifdef TELEMETRY
 #include "../lib/Remotery/lib/Remotery.h"
 
 struct telemetry
@@ -147,28 +144,13 @@ struct telemetry
 			rmt_DestroyGlobalInstance(rmt);
 		}
 	}
-};
-#endif
+} metrics; // singleton shared by all threads
 
 thread_local std::random_device rd;
 thread_local std::mt19937 gen(rd());
 
-void LOG(const char *text)
-{
-	printf(text);
-	printf("\n");
-#ifdef TELEMETRY
-	rmt_LogText(text);
-#endif
-}
-
 int main()
 {
-#ifdef TELEMETRY
-	telemetry metrics;
-#endif
-	LOG("Starting...");
-
 	{
 		job_system jobs;
 
@@ -184,7 +166,6 @@ int main()
 				std::this_thread::sleep_for(std::chrono::milliseconds(time));
 
 				rmt_EndCPUSample();
-				LOG(buff);
 			});
 
 			auto time = std::uniform_int_distribution<int>(50, 200)(gen);
