@@ -1,6 +1,7 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <atomic>
 #include <vector>
 #include <deque>
 #include <random>
@@ -35,9 +36,12 @@ using critical_section_t = std::lock_guard<std::mutex>;
 struct notification_queue
 {
 	std::deque<job_t>		items;
+	bool					done = false;
 	std::mutex				mutex;
 	std::condition_variable	ready_cv;
-	bool					done = false;
+	// these 2 vars are NOT CopyConstructible nor MoveConstructible
+	// making the whole class the same, thus deleting the constructors and operators
+	// more info: http://stackoverflow.com/questions/29986208/how-should-i-deal-with-mutexes-in-movable-types-in-c
 
 	bool pop(job_t &out_job)
 	{
@@ -80,18 +84,17 @@ struct notification_queue
 
 struct job_system : non_copy<job_system>, non_move<job_system>
 {
-	int							count;
-	std::vector<std::thread>	threads;
-	notification_queue			queue;
+	unsigned int					th_count{ std::thread::hardware_concurrency() };
+	std::vector<std::thread>		threads;
+	std::atomic_uint				q_index = 0; // tracker to help pidgeonholing jobs to queues
+	const unsigned int				q_max = th_count; // either 1 to force a global queue or th_count to dedicate a queue per thread
+	std::vector<notification_queue>	queues{ th_count }; // has to init here (calls .reserve()) due to NotCopy, NotMove nature of the queue class
 
 	job_system()
 	{
-		count = std::thread::hardware_concurrency();
-		assert(count);
-
-		// create & start the threads
-		for (auto i = 0; i < count; ++i) {
-			threads.emplace_back([&, i](void){
+		// create and start the threads
+		for (auto i = 0u; i < th_count; ++i) {
+			threads.emplace_back([this, i](void){
 				run(i);
 			});
 		}
@@ -99,20 +102,22 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	~job_system()
 	{
 		// send done signal (can process last pending job)
-		queue.finish();
+		for (auto &q : queues) {
+			q.finish();
+		}
 
 		// blocks until all threads finish
 		for (auto &i : threads) {
 			i.join();
 		}
 	}
-	
+
 	void run(int thread_id)
 	{
 		while (true) {
 			// grab new job - blocking
-			job_t job{};
-			if (!queue.pop(job)) {
+			job_t job;
+			if (!queues[thread_id % q_max].pop(job)) {
 				return;
 			}
 
@@ -124,7 +129,8 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	template<typename F>
 	void async(F&& new_job)
 	{
-		queue.push(std::forward<F>(new_job));
+		auto i = q_index++;
+		queues[i % q_max].push(std::forward<F>(new_job));
 	}
 };
 
