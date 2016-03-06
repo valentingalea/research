@@ -43,6 +43,17 @@ struct notification_queue
 	// making the whole class the same, thus deleting the constructors and operators
 	// more info: http://stackoverflow.com/questions/29986208/how-should-i-deal-with-mutexes-in-movable-types-in-c
 
+	bool try_pop(job_t &out_job)
+	{
+		lock_t lock(mutex, std::try_to_lock); // not blocking 
+		if (!lock.owns_lock() || items.empty()) return false;
+
+		out_job = std::move(items.front());
+		items.pop_front();
+
+		return true;
+	} // release the lock if got it
+
 	bool pop(job_t &out_job)
 	{
 		lock_t lock(mutex); // also aquires the lock
@@ -52,15 +63,26 @@ struct notification_queue
 		ready_cv.wait(lock, [&] { return !items.empty() || done; });
 		// when wait exits, lock is reaquired
 
-		if (items.empty()) {
-			return false;
-		}
+		if (items.empty()) return false;
 
 		out_job = std::move(items.front());
 		items.pop_front();
 
 		return true;
-	}   // release lock on destruction
+	} // release lock on destruction
+
+	template<typename T>
+	bool try_push(T&& job)
+	{
+		{
+			lock_t lock(mutex, std::try_to_lock);
+			if (!lock) return false;
+
+			items.emplace_back(std::forward<T>(job));
+		}
+		ready_cv.notify_one();
+		return true;
+	}
 
 	template<typename T>
 	void push(T&& job)
@@ -105,7 +127,6 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 		for (auto &q : queues) {
 			q.finish();
 		}
-
 		// blocks until all threads finish
 		for (auto &i : threads) {
 			i.join();
@@ -115,9 +136,15 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	void run(int thread_id)
 	{
 		while (true) {
-			// grab new job - blocking
 			job_t job;
-			if (!queues[thread_id % q_max].pop(job)) {
+
+			// spin and try grab new job from all the queues - non blocking
+			for (unsigned n = 0; n != q_max; ++n) {
+				if (queues[(thread_id + n) % q_max].try_pop(job)) break;
+			}
+
+			// grab new job from own queue - blocking
+			if (!job && !queues[thread_id % q_max].pop(job)) {
 				return;
 			}
 
@@ -130,6 +157,13 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	void async(F&& new_job)
 	{
 		auto i = q_index++;
+
+		// speculatively (non-block) push job to other queues
+		for (unsigned n = 0; n != q_max; ++n) {
+			if (queues[(i + n) % q_max].try_push(std::forward<F>(new_job))) return;
+		}
+
+		// push into own queue, guaranteed to succeed because it blocks
 		queues[i % q_max].push(std::forward<F>(new_job));
 	}
 };
