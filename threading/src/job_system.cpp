@@ -7,6 +7,7 @@
 #include <functional>
 #include <cassert>
 #include <cstdio>
+#include <cstdlib>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////
@@ -127,6 +128,7 @@ struct job_system : non_copy<job_system>, non_move<job_system>
 	}
 };
 
+#define RMT_ENABLED 0
 #include "../lib/Remotery/lib/Remotery.h"
 
 struct telemetry
@@ -147,11 +149,15 @@ struct telemetry
 };
 
 thread_local std::random_device rd;
-thread_local std::mt19937 gen(rd());
+thread_local std::mt19937 gen(1779);
 
 int main()
 {
 	telemetry t; // only on main thread
+
+	using tclock_t = std::chrono::steady_clock;
+	using tpoint_t = tclock_t::time_point;
+	tpoint_t t_start, t_end;
 
 	{
 		job_system jobs;
@@ -159,27 +165,43 @@ int main()
 		auto count = std::uniform_int_distribution<int>(1, 50)(gen);
 		printf("will process %i jobs...\n", count);
 
+		t_start = t_end = tclock_t::now();
+		std::mutex tmutex;
+
 		for (auto i = 0; i < count; ++i) {
-			jobs.async([=](void) {
+			jobs.async([i, &t_end, &tmutex](void) {
 				constexpr int buff_len = 32;
 				char buff[buff_len];
 				snprintf(buff, buff_len, "job %i\0", i);
 				rmt_BeginCPUSampleDynamic(buff);
 
-				auto time = std::uniform_int_distribution<int>(100, 5000)(gen);
+				auto time = std::uniform_int_distribution<int>(100, 500)(gen);
 				std::this_thread::sleep_for(std::chrono::milliseconds(time));
+
+				tpoint_t t = tclock_t::now(); {
+					critical_section_t cs(tmutex);
+					if (t > t_end) {
+						t_end = t;
+					}
+				}
 
 				rmt_EndCPUSample();
 				printf("done job %i\n", i);
 			});
 
-			auto time = std::uniform_int_distribution<int>(200, 2000)(gen);
+			auto time = std::uniform_int_distribution<int>(20, 200)(gen);
 			std::this_thread::sleep_for(std::chrono::milliseconds(time));
 			printf("new job %i\n", i);
 		}
 
 		// destructor waits on jobs
 	}
+
+	using tdiff_t = std::chrono::duration<float, std::chrono::seconds::period>;
+	auto elapsted = tdiff_t(t_end - t_start).count();
+	printf("Running time: %f\n", elapsted);
+
+	std::system("pause");
 
 	return 0;
 }
