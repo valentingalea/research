@@ -150,8 +150,8 @@ struct telemetry
 };
 #endif
 
-std::random_device rd;
-std::mt19937 gen(rd());
+thread_local std::random_device rd;
+thread_local std::mt19937 gen(rd());
 
 void LOG(const char *text)
 {
