@@ -403,3 +403,54 @@ int q = dist(engine);                        // another one
 /* generate between [0..1) with 10 bits of randomness */
 double chance = std::generate_canonical<double, 10>(engine);
 
+
+std::chrono
+-----------
+Library defines three main types (durations, clocks, and time points) as well as utility functions and common typedefs.
+
+[role="incremental"]
+A _clock_ consists of a starting point (or epoch) and a tick rate. C++11 defines three clock types:
+
+[role="incremental"]
+* `system_clock`
+** wall clock time from the system-wide realtime clock
+** can be adjusted from C-style `std::time_t`
+* `steady_clock`
+** monotonic clock that will never be adjusted
+** good for measuring time intervals
+* `high_resolution_clock`
+** most accurate available with the smallest tick period
+** at the very worst it's just an typedef for the others
+
+[role="incremental"]
+`time_point` is an interval of time that has passed since the epoch of a specific clock. Typedef'ed per clock type.
+
+[role="incremental"]
+`duration` consists of a count of ticks of type `T` and a tick period. Can be obtained from 2 `time_point`
+
+std::chrono - examples
+----------------------
+[role="incremental"]
+[source,cpp]
+----
+using clock_t = std::chrono::system_clock;
+clock_t::time_point now = clock_t::now();
+
+std::time_t now_c = clock_t::to_time_t(now);
+std::cout << std::put_time(std::localtime(&now_c), "%F %T"); // prints <date> <time>
+----
+
+[role="incremental"]
+[source,cpp]
+----
+using clock_t = std::chrono::high_resolution_clock;
+
+clock_t::time_point start = clock_t::now();
+// expensive operation ...
+clock_t::time_point end = clock_t::now();
+
+std::chrono::duration<float, std::chrono::seconds::period> d = end - start;
+std::cout << "Time taken: " << d.count();
+----
+
+
