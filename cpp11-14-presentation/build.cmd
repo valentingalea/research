@@ -11,7 +11,7 @@ set MEM=multithreading_and_memory.txt
 set ROOT=%CD%
 
 cd src
-copy /A /Y %INTRO% + %LANG% + %OBJ% + %LAMBDA% + %MOVE% + %UTIL% + %MEM% ..\bin\%OUT%
+copy /A /Y %INTRO% + %LANG% + %OBJ% + %LAMBDA% + %MOVE% + %UTIL% ..\bin\%OUT%
 cd ..
 
 rem 
