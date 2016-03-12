@@ -333,4 +333,52 @@ std::shared_ptr/weak_ptr - examples
 } // p1 is destroyed and so is the object
 ----
 
+random - old way
+----------------
+C++03 only had `srand()` and `rand()` which have a lot of problems:
+
+[role="incremental"]
+[source,cpp]
+#include <stdlib.h>
+#include <time.h>
+srand(time(NULL));
+int i = rand() % 100;
+
+[role="incremental"]
+* Lots of problems:
+* seeding based on `time()` has only 1Hz frequency
+* 32 bit seed only, weird unsigned to `time_t` warnings
+* `rand()` has only [0..32767] range
+* non-uniform distribution, applying `%` can skew probabilities
+* uses Linear Congruential Generator which is weak and has low period
+* hard to convert to floats - needs bad hacks like `rand() * 1.0 / RAND_MAX`
+
+random - new and better way
+---------------------------
+C++11 introduces a new paradigm by separating engines and distributions:
+
+[role="incremental"]
+*Random number engines* - algorithms that produce integer sequences:
+
+[role="incremental"]
+* `linear_congruential_engine`
+** already prepared typedefs: `minstd_rand`, ...
+* `mersenne_twister_engine`
+** already prepared typedefs: `mt19937`, `mt19937_64`
+* `subtract_with_carry_engine`
+** already prepared typedefs: `ranlux24`
+* `random_device`
+** non-deterministic true random number generator using hardware entropy source 
+
+[role="incremental"]
+*Random number distributions* - convert the output of engines:
+
+[role="incremental"]
+*  `uniform_int_distribution`, `uniform_real_distribution`, etc
+* `bernoulli_distribution`, `poisson_distribution`, etc
+* `normal_distribution`, `discrete_distribution`, etc
+
+random - example
+----------------
+TODO:
 
