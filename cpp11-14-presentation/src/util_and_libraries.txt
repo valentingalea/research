@@ -348,7 +348,7 @@ int i = rand() % 100;
 * Lots of problems:
 * seeding based on `time()` has only 1Hz frequency
 * 32 bit seed only, weird unsigned to `time_t` warnings
-* `rand()` has only [0..32767] range
+* `rand()` by standard only has [0..32767] range
 * non-uniform distribution, applying `%` can skew probabilities
 * uses Linear Congruential Generator which is weak and has low period
 * hard to convert to floats - needs bad hacks like `rand() * 1.0 / RAND_MAX`
@@ -374,11 +374,32 @@ C++11 introduces a new paradigm by separating engines and distributions:
 *Random number distributions* - convert the output of engines:
 
 [role="incremental"]
-*  `uniform_int_distribution`, `uniform_real_distribution`, etc
+* `uniform_int_distribution`, `uniform_real_distribution`, etc
 * `bernoulli_distribution`, `poisson_distribution`, etc
 * `normal_distribution`, `discrete_distribution`, etc
 
 random - example
 ----------------
-TODO:
+[role="incremental"]
+[source,cpp]
+std::random_device rd;  // can be implemented with hardware support
+                        // otherwise reverts to PRNG
+int r = rd();           // has limited entropy pool
+                        // better used to just seed other RNG's
+	
+[role="incremental"]
+[source,cpp]	
+std::mt19937 engine(rd);
+std::mt19937 engine(1779);
+
+[role="incremental"]
+[source,cpp]
+std::uniform_int_distribution<> dist(1, 6);  // simulate a die
+int r = dist(engine);                        // get a random throw
+int q = dist(engine);                        // another one
+
+[role="incremental"]
+[source,cpp]
+/* generate between [0..1) with 10 bits of randomness */
+double chance = std::generate_canonical<double, 10>(engine);
 
