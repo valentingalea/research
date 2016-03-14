@@ -22,14 +22,13 @@ Who am I
 
 [role="incremental"]
 * Valentin Galea - Senior Core Tech
-* Not an expert per se, just love C++ and like to keep up with it
-* Originally started this for my own benefit then expanded it for everyone
+* valentin.galea@splashdamage.com
 
 [role="incremental"]
 NOTE: Talk assumes familiarity with templates
 
 [role="incremental"]
-TIP: Questions are welcomed at the end of each item - I will let you know when
+TIP: Questions are welcomed throughout
 
 [role="incremental"]
 TIP: we have a dedicated HipChat room: C++11/14
