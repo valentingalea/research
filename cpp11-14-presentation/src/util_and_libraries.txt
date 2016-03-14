@@ -14,7 +14,7 @@ Everything lives under the `std::` namespace
 * `#include <utility>`
 ** `move` for forcing move semantics
 ** `forward` for passing function arguments while preserving lvalue/rvalue'ness
-** `swap`
+** `swap` specialisations for various STL types (`string`, `vector`, etc)
 
 [role="incremental"]
 * `include <tuple>`
@@ -96,7 +96,7 @@ new libraries (continued)
 
 [role="incremental"]
 * `#include <future>`
-** `async` runs a function asynchronously (potentially in a new thread) and returns a `future` that will hold the result
+** `async` runs a function asynchronously (new thread or at a later time) and returns a `future` that will hold the result
 
 [role="incremental"]
 * `#include <atomic>`
