@@ -96,3 +96,51 @@ ScopeExit<F> MakeScopeExit(F f) {
 
 //TODO: mention Andrei's version which used operator + and lambda header
 
+general best practices
+----------------------
+* use typedef !!!
+bad examples: TMultiMap constructrors, TWeakPtr
+
+default/delete
+--------------
+= default quite a lot
+in containers
+usually in groups for rule of 5
+
+	TMap() = default;
+	TMap(TMap&&) = default;
+	TMap(const TMap&) = default;
+	TMap& operator=(TMap&&) = default;
+	TMap& operator=(const TMap&) = default;
+	
+TODO: explain rule of 5
+
+= delete 
+not so much
+
+	/** Not Copyable */
+	FUpdateCacheTransaction(const FUpdateCacheTransaction&) = delete;
+	FUpdateCacheTransaction& operator=(const FUpdateCacheTransaction&) = delete;
+	
+usually to implement NotCopy or NotMove
+
+override/final
+--------------
+override used a lot
+TODO: 1-2 examples
+final - the RHI API uses it a lot (together with final)
+TODO: a couple of RHI calls, talk why
+
+lambda
+------
+//regex: \[.*\]\(.*\)
+[] a lot
+SblueprintDiff.cpp
+for sorting: SPackagesDialog.cpp
+TODO: give random examples
+
+[&] quite a lot 
+Slate, Async, etc
+TODO: give random examples
+TODO: talk troubles
+TODO: pick a couple of examples and talk (like BlueprintDetailsCustomization.cpp(2394))
