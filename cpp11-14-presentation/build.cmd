@@ -10,6 +10,7 @@ set UTIL=util_and_libraries.txt
 set MEM=multithreading_and_memory.txt
 set ROOT=%CD%
 
+md bin
 cd src
 copy /A /Y %INTRO% + %LANG% + %OBJ% + %LAMBDA% + %MOVE% + %UTIL% ..\bin\%OUT%
 cd ..
