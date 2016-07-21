@@ -21,7 +21,7 @@ rem http://www.gnu.org/software/src-highlite/
 rem win32 binaries from http://gnuwin32.sourceforge.net/packages/source-highlight.htm
 rem 
 cd tools\gnu-highlite\bin
-..\..\asciidoc\asciidoc.py --backend slidy -a stylesheet=..\..\src\custom.css ..\..\..\bin\%OUT%
+python ..\..\asciidoc\asciidoc.py --backend slidy -a stylesheet=..\..\src\custom.css ..\..\..\bin\%OUT%
 cd %ROOT%
 
 rem
