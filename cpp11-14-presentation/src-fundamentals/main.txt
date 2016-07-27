@@ -1,0 +1,302 @@
+C++ fundamentals
+================
+a tour of C++ for game dev
+
+Purpose
+-------
+Teach new dogs old tricks :D
+
+// Examples for embedding "live" code
+//[subs="none"]
+//<script src="http://ideone.com/e.js/ri7c1H" type="text/javascript" ></script>
+//<iframe src="http://coliru.stacked-crooked.com/a/04497ca6860c5f8c" style="width:100%; height:200px;"></iframe>
+
+Who am I
+--------
+
+[role="incremental"]
+* Valentin Galea - Senior Core Tech
+* valentin.galea@splashdamage.com
+
+[role="incremental"]
+NOTE: Talk assumes familiarity with programming and other languages
+
+[role="incremental"]
+TIP: Questions are welcomed throughout
+
+Short C++ history
+-----------------
+
+[role="incremental"]
+* 1972 - Dennis Ritchie, and later Ken Thompson, design C and use it to write 90% of Unix with it
+* Late 70's - OOP becomes popular
+* Early 80's - Bjarne Stroustrup at Bell Labs adds features to C to form "C with Classes"
+* 1983 - The name `C++` starts getting used
+* Late 80's and 90's - C++ gets lots of usage and traction
+* 1998 - ISO standard: `C++98`
+* 2003 - small addition to standard: `C++03`
+* 2011 - big additions, new standard: `C++11`
+* 2014 - medium level additions to standard: `C++14`
+* 2017 - tried to be bigger in scope, reverted to small: `C++17`
+* 2020 - the future...
+
+//C++ timeline
+//------------
+//
+//image:https://www.esrlabs.com/wp-content/uploads/2016/01/wg21-timeline.png[timeline]
+
+What is C++?
+------------
+
+[quote, Bjarne Stroustrup, The C++ Programming Language]
+C++ is a general-purpose programming language providing a direct and efficient model of hardware combined with facilities for defining lightweight abstractions.
+
+[role="incremental"]
+A core principle of C++ is:
+_What you don't use, you don't pay for!_
+
+[role="incremental"]
+The language supports 4 programming styles:
+
+[role="incremental"]
+* Procedural programming
+** owning from `C` the language is declarative and makes distictions between functions and data structures
+* Data abstraction
+** focus on designing interfaces, hiding implementation detail, abstract and concrete structures
+* Object-oriented programming
+** direct support for class hierarchies, run-time polymorphism, encapsulation
+* Generic programming
+** making possible algorithms that accept a variety of types - achieved by templates
+
+
+The ISO Standard
+----------------
+
+TODO: standard vs implementators
+
+TODO: quick state of current big compilers
+
+TODO: notes about (page 136)
+
+* implementation-default
+* unspecified
+* undefined behaviour
+
+Compilation
+-----------
+
+// http://www.slideshare.net/LegalizeAdulthood/consuming-and-creating-libraries-in-c
+
+TODO: mechanic of compilation
+
+TODO: roles of diff components
+
+TODO: declaration vs definition
+
+TODO: one definition rule
+
+TODO: libraries (!later session)
+
+Preprocessor
+------------
+
+TODO: what it is and role
+
+TODO: major directives
+
+TODO: notes on abuse
+
+Hello World
+-----------
+
+A most minimal C++ program:
+
+[source]
+int main() {
+	return 0; // successful completion
+}
+
+
+The _textbook_ hello world:
+
+[source]
+#include <iostream>
+int main() {
+	std::cout << "Hello World!" << std::endl;
+	// the return can be implicit for main
+}
+
+A _real world_ example:
+
+//TODO:
+
+Keywords and names
+------------------
+
+The language uses the following keywords:
+
+[subs="none"]
+++++++++++++++++++++++++++++++++++++++
+<table border="1" cellpadding="5" cellspacing="0" style="td color: blue;">
+<tbody><tr valign="top">
+<td>
+alignas<br>
+alignof<br>
+asm<br>
+auto<br>
+bool<br>
+break<br>
+case<br>
+catch<br>
+char<br>
+char16_t<br>
+char32_t
+</td>
+<td>
+class<br>
+const<br>
+constexpr<br>
+const_cast<br>
+continue<br>
+decltype<br>
+default<br>
+delete<br>
+do<br>
+double<br>
+dynamic_cast
+</td>
+<td>
+else<br>
+enum<br>
+explicit<br>
+export<br>
+extern<br>
+false<br>
+float<br>
+for<br>
+friend<br>
+goto<br>
+if
+</td>
+<td>
+inline<br>
+int<br>
+long<br>
+mutable<br>
+namespace<br>
+new<br>
+noexcept<br>
+nullptr<br>
+operator<br>
+private<br>
+protected
+</td>
+<td>
+public<br>
+register<br>
+reinterpret_cast<br>
+return<br>
+short<br>
+signed<br>
+sizeof<br>
+static<br>
+static_assert<br>
+static_cast<br>
+struct
+</td>
+<td>
+switch<br>
+template<br>
+this<br>
+thread_local<br>
+throw<br>
+true<br>
+try<br>
+typedef<br>
+typeid<br>
+typename<br>
+union
+</td>
+<td>
+unsigned<br>
+using<br>
+virtual<br>
+void<br>
+volatile<br>
+wchar_t<br>
+while
+</td>
+</tr>
+</tbody></table>
+++++++++++++++++++++++++++++++++++++++
+
+Other than these any name composed of letters, digits and _ can be used as user identifiers (but not starting with digits).
+
+Names are case-sensitive.
+
+Identifiers constaining __ (double underline) or starting with underline and capital letter (ex: _Foo) are reserved.
+
+Types and functions
+-------------------
+
+Basically all C++ programs are a mix of declarations of *types* and *functions* (that use them).
+
+TODO: code samples of various types declaration
+
+TODO: code samples of functions
+
+Declarations and definitions
+----------------------------
+
+//http://en.cppreference.com/w/cpp/language/declarations
+
+TODO: what's one, what's the other, the diff
+
+TODO: schema of a declaration with all possible prefix/suffix
+
+TODO: examples
+
+Basic types
+-----------
+
+TODO: int, char, float and size chart
+
+TODO: bool
+
+TODO: void
+
+TODO: C string
+
+Literals
+--------
+
+TODO: integer literals
+
+TODO: char and string literals
+
+TODO: the suffixes (!later session)
+
+Scope
+-----
+
+TODO: explain
+
+TODO: examples
+
+Object and values
+-----------------
+
+TODO: explanations
+
+TODO: lvalue vs rvalue
+
+Memory model / Lifetimes
+------------------------
+
+TODO: explain (page 167)
+
+* Automatic
+* Static
+* Free store
+* Temporary objects
+* Thread-local
