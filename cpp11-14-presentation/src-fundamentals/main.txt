@@ -13,7 +13,6 @@ Teach new dogs old tricks :D
 
 Who am I
 --------
-
 [role="incremental"]
 * Valentin Galea - Senior Core Tech
 * valentin.galea@splashdamage.com
@@ -26,7 +25,6 @@ TIP: Questions are welcomed throughout
 
 Short C++ history
 -----------------
-
 [role="incremental"]
 * 1972 - Dennis Ritchie, and later Ken Thompson, design C and use it to write 90% of Unix with it
 * Late 70's - OOP becomes popular
@@ -47,7 +45,6 @@ Short C++ history
 
 What is C++?
 ------------
-
 [quote, Bjarne Stroustrup, The C++ Programming Language]
 C++ is a general-purpose programming language providing a direct and efficient model of hardware combined with facilities for defining lightweight abstractions.
 
@@ -71,7 +68,6 @@ The language supports 4 programming styles:
 
 The ISO Standard
 ----------------
-
 TODO: standard vs implementators
 
 TODO: quick state of current big compilers
@@ -84,7 +80,6 @@ TODO: notes about (page 136)
 
 Compilation
 -----------
-
 // http://www.slideshare.net/LegalizeAdulthood/consuming-and-creating-libraries-in-c
 
 TODO: mechanic of compilation
@@ -99,7 +94,6 @@ TODO: libraries (!later session)
 
 Preprocessor
 ------------
-
 TODO: what it is and role
 
 TODO: major directives
@@ -108,7 +102,6 @@ TODO: notes on abuse
 
 Hello World
 -----------
-
 A most minimal C++ program:
 
 [source]
@@ -132,7 +125,6 @@ A _real world_ example:
 
 Keywords and names
 ------------------
-
 The language uses the following keywords:
 
 [subs="none"]
@@ -148,7 +140,6 @@ Identifiers constaining __ (double underline) or starting with underline and cap
 
 Types and functions
 -------------------
-
 Basically all C++ programs are a mix of declarations of *types* and *functions* (that use them).
 
 TODO: code samples of various types declaration
@@ -157,7 +148,6 @@ TODO: code samples of functions
 
 Declarations and definitions
 ----------------------------
-
 //http://en.cppreference.com/w/cpp/language/declarations
 
 TODO: what's one, what's the other, the diff
@@ -168,7 +158,6 @@ TODO: examples
 
 Basic types
 -----------
-
 TODO: int, char, float and size chart
 
 TODO: bool
@@ -177,9 +166,12 @@ TODO: void
 
 TODO: C string
 
+Enumerations
+------------
+TODO: ...
+
 Literals
 --------
-
 TODO: integer literals
 
 TODO: char and string literals
@@ -188,21 +180,18 @@ TODO: the suffixes (!later session)
 
 Scope
 -----
-
 TODO: explain
 
 TODO: examples
 
 Object and values
 -----------------
-
 TODO: explanations
 
 TODO: lvalue vs rvalue
 
 Memory model / Lifetimes
 ------------------------
-
 TODO: explain (page 167)
 
 * Automatic
@@ -213,7 +202,6 @@ TODO: explain (page 167)
 
 Pointers
 --------
-
 TODO: diagram to ilustrate indirection mechanims
 
 TODO: explain dereference
@@ -226,14 +214,12 @@ TODO: aritmethic (!later)
 
 Pointers - Const
 ----------------
-
 TODO: explain const in general sense
 
 TODO: `const` vs `* const`
 
 Arrays
 ------
-
 TODO: basic array examples
 
 TODO: string literals
@@ -244,7 +230,6 @@ TODO: how they decay into pointers and the gotchas
 
 References
 ----------
-
 A _one time pointer_, an object _alias_.
 
 * allows access with the same syntax as the name of the object
@@ -255,24 +240,20 @@ TODO: examples
 
 References - Lvalue and const
 -----------------------------
-
 TODO: ...
 
 References - Rvalues
 --------------------
-
 TODO: ...
 
 Statements
 ----------
-
 TODO: definitions and difference from expressions
 
 TODO: comments
 
 Statements - if
 ---------------
-
 TODO: examples of if
 
 TODO: how the condition works - implicit cast to bool
@@ -283,7 +264,6 @@ TODO: assignment within
 
 Statements - switch/case
 ------------------------
-
 TODO: examples of switch with case's
 
 TODO: default
@@ -292,21 +272,18 @@ TODO: explain fallthrough
 
 Statements - while/do
 ---------------------
-
 TODO: couple of examples for each
 
 TODO: discourage do's
 
 Statements - for
 ----------------
-
 TODO: examples of normal for - explain the 3 parts
 
 TODO: range-for
 
 Statements - goto
 -----------------
-
 TODO: short examples
 
 TODO: explain why is bad (also show the one good example)
@@ -325,7 +302,6 @@ TODO: role of temp objects
 
 Operators
 ---------
-
 [subs="none"]
 ++++++++++++++++++++++++++++++++++++++
 <table> <tbody><tr style="text-align:center"> <th colspan="7"> Common operators </th></tr> <tr style="text-align:center"> <td> <a href="/w/cpp/language/operator_assignment" title="cpp/language/operator assignment"> assignment</a> </td> <td> <a href="/w/cpp/language/operator_incdec" title="cpp/language/operator incdec"> increment<br>decrement</a> </td> <td> <a href="/w/cpp/language/operator_arithmetic" title="cpp/language/operator arithmetic"> arithmetic</a> </td> <td> <a href="/w/cpp/language/operator_logical" title="cpp/language/operator logical"> logical</a> </td> <td> <a href="/w/cpp/language/operator_comparison" title="cpp/language/operator comparison"> comparison</a> </td> <td> <a href="/w/cpp/language/operator_member_access" title="cpp/language/operator member access"> member<br>access</a> </td> <td> <a href="/w/cpp/language/operator_other" title="cpp/language/operator other"> other</a> </td></tr> <tr style="text-align:center"> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp">a <span class="sy1">=</span> b<br> a <span class="sy2">+</span><span class="sy1">=</span> b<br> a <span class="sy2">-</span><span class="sy1">=</span> b<br> a <span class="sy2">*</span><span class="sy1">=</span> b<br> a <span class="sy2">/</span><span class="sy1">=</span> b<br> a <span class="sy2">%</span><span class="sy1">=</span> b<br> a <span class="sy3">&amp;</span><span class="sy1">=</span> b<br> a <span class="sy3">|</span><span class="sy1">=</span> b<br> a <span class="sy3">^</span><span class="sy1">=</span> b<br> a <span class="sy1">&lt;&lt;=</span> b<br> a <span class="sy1">&gt;&gt;=</span> b</span></span> </p> </td> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp"><span class="sy2">++</span>a<br> <span class="sy2">--</span>a<br> a<span class="sy2">++</span><br> a<span class="sy2">--</span></span></span> </p> </td> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp"><span class="sy2">+</span>a<br> <span class="sy2">-</span>a<br> a <span class="sy2">+</span> b<br> a <span class="sy2">-</span> b<br> a <span class="sy2">*</span> b<br> a <span class="sy2">/</span> b<br> a <span class="sy2">%</span> b<br> ~a<br> a <span class="sy3">&amp;</span> b<br> a <span class="sy3">|</span> b<br> a <span class="sy3">^</span> b<br> a <span class="sy1">&lt;&lt;</span> b<br> a <span class="sy1">&gt;&gt;</span> b</span></span> </p> </td> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp"><span class="sy3">!</span>a<br> a <span class="sy3">&amp;&amp;</span> b<br> a <span class="sy3">||</span> b</span></span> </p> </td> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp">a <span class="sy1">==</span> b<br> a <span class="sy3">!</span><span class="sy1">=</span> b<br> a <span class="sy1">&lt;</span> b<br> a <span class="sy1">&gt;</span> b<br> a <span class="sy1">&lt;=</span> b<br> a <span class="sy1">&gt;=</span> b</span></span> </p> </td> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp">a<span class="br0">[</span>b<span class="br0">]</span><br> <span class="sy2">*</span>a<br> <span class="sy3">&amp;</span>a<br> a<span class="sy2">-</span><span class="sy1">&gt;</span>b<br> a.<span class="me1">b</span><br> a<span class="sy2">-</span><span class="sy1">&gt;</span><span class="sy2">*</span>b<br> a.<span class="sy2">*</span>b</span></span> </p> </td> <td> <p><span class="t-c"><span class="mw-geshi cpp source-cpp">a<span class="br0">(</span>...<span class="br0">)</span><br> a, b<br> <span class="sy4">?</span> <span class="sy4">:</span></span></span> </p> </td></tr> <tr> <th colspan="7"> Special operators </th></tr> <tr> <td colspan="7"> <p><a href="/w/cpp/language/static_cast" title="cpp/language/static cast"><tt>static_cast</tt></a> - converts one type to another related type <br> <a href="/w/cpp/language/dynamic_cast" title="cpp/language/dynamic cast"><tt>dynamic_cast</tt></a> - converts within inheritance hierarchies <br> <a href="/w/cpp/language/const_cast" title="cpp/language/const cast"><tt>const_cast</tt></a> - adds or removes cv qualifiers<br> <a href="/w/cpp/language/reinterpret_cast" title="cpp/language/reinterpret cast"><tt>reinterpret_cast</tt></a> - converts type to unrelated type<br> <a href="/w/cpp/language/explicit_cast" title="cpp/language/explicit cast">()</a> - C-style cast converts one type to another by a mix of <code>static_cast</code>, <code>const_cast</code>, and <code>reinterpret_cast</code> <br> <a href="/w/cpp/memory/new/operator_new" title="cpp/memory/new/operator new"><tt>new</tt></a> - allocates memory<br> <a href="/w/cpp/memory/new/operator_delete" title="cpp/memory/new/operator delete"><tt>delete</tt></a> - deallocates memory<br> <a href="/w/cpp/language/sizeof" title="cpp/language/sizeof"><tt>sizeof</tt></a> - queries the size of a type<br> <a href="/w/cpp/language/sizeof..." title="cpp/language/sizeof..."><tt>sizeof...</tt></a> - queries the size of a parameter pack <br> <a href="/w/cpp/language/typeid" title="cpp/language/typeid"><tt>typeid</tt></a> - queries the type information of a type<br> <a href="/w/cpp/language/noexcept" title="cpp/language/noexcept"><tt>noexcept</tt></a> - checks if an expression can throw an exception <br> <a href="/w/cpp/language/alignof" title="cpp/language/alignof"><tt>alignof</tt></a> - queries alignment requirements of a type  </p> </td></tr></tbody></table>
@@ -333,7 +309,6 @@ Operators
 
 Operators - precedence
 ----------------------
-
 [subs="none"]
 ++++++++++++++++++++++++++++++++++++++
 <table border=1 style="border-collapse: collapse; line-height: 1.2em; "> <tbody><tr> <th style="text-align: left"> Precedence </th> <th style="text-align: left"> Operator </th> <th style="text-align: left"> Description </th> <th style="text-align: left"> Associativity </th></tr> <tr> <th> 1 </th> <td> <code>::</code> </td> <td> Scope resolution </td> <td style="vertical-align: top" rowspan="6"> Left-to-right </td></tr> <tr> <th rowspan="5"> 2 </th> <td > <code>a++</code>&nbsp;&nbsp; <code>a--</code> </td> <td > Suffix/postfix increment and decrement </td></tr> <tr> <td > <code><i>type</i>()</code>&nbsp;&nbsp; <code><i>type</i>{}</code> </td> <td > Functional cast </td></tr> <tr> <td > <code>a()</code> </td> <td > Function call </td></tr> <tr> <td > <code>a[]</code> </td> <td > Subscript </td></tr> <tr> <td > <code>.</code>&nbsp;&nbsp; <code>-&gt;</code> </td> <td > Member access </td></tr> <tr> <th rowspan="9"> 3 </th> <td > <code>++a</code>&nbsp;&nbsp; <code>--a</code> </td> <td > Prefix increment and decrement </td> <td style="vertical-align: top" rowspan="9"> Right-to-left </td></tr> <tr> <td > <code>+a</code>&nbsp;&nbsp; <code>-a</code> </td> <td > Unary plus and minus </td></tr> <tr> <td > <code>!</code>&nbsp;&nbsp; <code>~</code> </td> <td > Logical NOT and bitwise NOT </td></tr> <tr> <td > <code>(<i>type</i>)</code> </td> <td > C-style cast </td></tr> <tr> <td > <code>*a</code> </td> <td > Indirection (dereference) </td></tr> <tr> <td > <code>&amp;a</code> </td> <td > Address-of </td></tr> <tr> <td > <code>sizeof</code> </td> <td > Size-of </td></tr> <tr> <td > <code>new</code>&nbsp;&nbsp; <code>new[]</code> </td> <td > Dynamic memory allocation </td></tr> <tr> <td> <code>delete</code>&nbsp;&nbsp; <code>delete[]</code> </td> <td> Dynamic memory deallocation </td></tr> <tr> <th> 4 </th> <td> <code>.*</code>&nbsp;&nbsp; <code>-&gt;*</code> </td> <td> Pointer-to-member </td> <td style="vertical-align: top" rowspan="12"> Left-to-right </td></tr> <tr> <th> 5 </th> <td> <code>a*b</code>&nbsp;&nbsp; <code>a/b</code>&nbsp;&nbsp; <code>a%b</code> </td> <td> Multiplication, division, and remainder </td></tr> <tr> <th> 6 </th> <td> <code>a+b</code>&nbsp;&nbsp; <code>a-b</code> </td> <td> Addition and subtraction </td></tr> <tr> <th> 7 </th> <td> <code>&lt;&lt;</code>&nbsp;&nbsp; <code>&gt;&gt;</code> </td> <td> Bitwise left shift and right shift </td></tr> <tr> <th rowspan="2"> 8 </th> <td > <code>&lt;</code>&nbsp;&nbsp; <code>&lt;=</code> </td> <td > For relational operators &lt; and ≤ respectively </td></tr> <tr> <td> <code>&gt;</code>&nbsp;&nbsp; <code>&gt;=</code> </td> <td> For relational operators &gt; and ≥ respectively </td></tr> <tr> <th> 9 </th> <td> <code>==</code>&nbsp;&nbsp; <code>!=</code> </td> <td> For relational operators = and ≠ respectively </td></tr> <tr> <th> 10 </th> <td> <code>a&amp;b</code> </td> <td> Bitwise AND </td></tr> <tr> <th> 11 </th> <td> <code>^</code> </td> <td> Bitwise XOR (exclusive or) </td></tr> <tr> <th> 12 </th> <td> <code>|</code> </td> <td> Bitwise OR (inclusive or) </td></tr> <tr> <th> 13 </th> <td> <code>&amp;&amp;</code> </td> <td> Logical AND </td></tr> <tr> <th> 14 </th> <td> <code>||</code> </td> <td> Logical OR </td></tr> <tr> <th rowspan="7"> 15 </th> <td > <code>a?b:c</code> </td> <td > Ternary conditional </td> <td style="vertical-align: top" rowspan="7"> Right-to-left </td></tr> <tr> <td > <code>throw</code> </td> <td > throw operator </td></tr> <tr> <td > <code>=</code> </td> <td > Direct assignment (provided by default for C++ classes) </td></tr> <tr> <td > <code>+=</code>&nbsp;&nbsp; <code>-=</code> </td> <td > Compound assignment by sum and difference </td></tr> <tr> <td > <code>*=</code>&nbsp;&nbsp; <code>/=</code>&nbsp;&nbsp; <code>%=</code> </td> <td > Compound assignment by product, quotient, and remainder </td></tr> <tr> <td > <code>&lt;&lt;=</code>&nbsp;&nbsp; <code>&gt;&gt;=</code> </td> <td > Compound assignment by bitwise left shift and right shift </td></tr> <tr> <td> <code>&amp;=</code>&nbsp;&nbsp; <code>^=</code>&nbsp;&nbsp; <code>|=</code> </td> <td> Compound assignment by bitwise AND, XOR, and OR </td></tr> <tr> <th> 16 </th> <td> <code>,</code> </td> <td> Comma </td> <td> Left-to-right </td></tr></tbody></table>
@@ -342,4 +317,44 @@ Operators - precedence
 TODO: couple of examples to showcase various precedence gotchas
 // https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Criticism_of_bitwise_and_equality_operators_precedence
 
+
+Operators - conditional expression
+----------------------------------
+TODO: examples
+
+TODO: same type / common type for both branches
+
+Operators - increment and decrement
+-----------------------------------
+TODO: definitions, prefix vs suffix (good example page 276)
+
+TODO: why prefix is generally better
+
+Operators - others
+------------------
+TODO: comma
+
+TODO: new / delete
+
+TODO: sizeof
+
+TODO: more? all? remove this page?
+
+Implicit convertions
+--------------------
+TODO: narrowing & promotion - give examples
+
+TODO: pointer convertions
+
+TODO: boolean convertions
+
+Explicit convertions
+--------------------
+TODO: explain (maybe separate pages for each?)
+
+* const_cast conversion
+* static_cast conversion
+* dynamic_cast conversion
+* reinterpret_cast conversion
+* explicit cast conversion using C-style cast notation and functional notation 
 
