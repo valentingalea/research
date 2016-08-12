@@ -121,7 +121,10 @@ int main() {
 
 A _real world_ example:
 
-//TODO:
+[source]
+int wmain(int argc, wchar_t *argv[], wchar_t *envp[]) {
+	// Win32 specific stuff...
+}
 
 Keywords and names
 ------------------
@@ -129,7 +132,7 @@ The language uses the following keywords:
 
 [subs="none"]
 ++++++++++++++++++++++++++++++++++++++
-<table border="1" cellpadding="5" cellspacing="0" style="td color: blue;"> <tbody><tr valign="top"> <td> alignas<br> alignof<br> asm<br> auto<br> bool<br> break<br> case<br> catch<br> char<br> char16_t<br> char32_t </td> <td> class<br> const<br> constexpr<br> const_cast<br> continue<br> decltype<br> default<br> delete<br> do<br> double<br> dynamic_cast </td> <td> else<br> enum<br> explicit<br> export<br> extern<br> false<br> float<br> for<br> friend<br> goto<br> if </td> <td> inline<br> int<br> long<br> mutable<br> namespace<br> new<br> noexcept<br> nullptr<br> operator<br> private<br> protected </td> <td> public<br> register<br> reinterpret_cast<br> return<br> short<br> signed<br> sizeof<br> static<br> static_assert<br> static_cast<br> struct </td> <td> switch<br> template<br> this<br> thread_local<br> throw<br> true<br> try<br> typedef<br> typeid<br> typename<br> union </td> <td> unsigned<br> using<br> virtual<br> void<br> volatile<br> wchar_t<br> while </td> </tr> </tbody></table>
+<table border="0" cellpadding="5" cellspacing="5" style="color: blue;"> <tbody><tr valign="top"> <td> alignas<br> alignof<br> asm<br> auto<br> bool<br> break<br> case<br> catch<br> char<br> char16_t<br> char32_t </td> <td> class<br> const<br> constexpr<br> const_cast<br> continue<br> decltype<br> default<br> delete<br> do<br> double<br> dynamic_cast </td> <td> else<br> enum<br> explicit<br> export<br> extern<br> false<br> float<br> for<br> friend<br> goto<br> if </td> <td> inline<br> int<br> long<br> mutable<br> namespace<br> new<br> noexcept<br> nullptr<br> operator<br> private<br> protected </td> <td> public<br> register<br> reinterpret_cast<br> return<br> short<br> signed<br> sizeof<br> static<br> static_assert<br> static_cast<br> struct </td> <td> switch<br> template<br> this<br> thread_local<br> throw<br> true<br> try<br> typedef<br> typeid<br> typename<br> union </td> <td> unsigned<br> using<br> virtual<br> void<br> volatile<br> wchar_t<br> while </td> </tr> </tbody></table>
 ++++++++++++++++++++++++++++++++++++++
 
 Other than these any name composed of letters, digits and _ can be used as user identifiers (but not starting with digits).
@@ -168,7 +171,7 @@ TODO: C string
 
 Enumerations
 ------------
-TODO: ...
+TODO: examples of the 2 types
 
 Literals
 --------
@@ -180,7 +183,7 @@ TODO: the suffixes (!later session)
 
 Scope
 -----
-TODO: explain
+TODO: explain the concept and how important it is
 
 TODO: examples
 
@@ -240,11 +243,13 @@ TODO: examples
 
 References - Lvalue and const
 -----------------------------
-TODO: ...
+TODO: examples
+
+TODO: emphaysis on _const_ as a lot of missunderstanding here especially how const ref preserves lifetime
 
 References - Rvalues
 --------------------
-TODO: ...
+TODO: explanation and couple of examples without going into move semantics detail
 
 Statements
 ----------
@@ -288,6 +293,8 @@ TODO: short examples
 
 TODO: explain why is bad (also show the one good example)
 
+TODO: remove?
+
 Expressions
 -----------
 An expression is a sequence of operators and their operands, that specifies a computation.
@@ -317,7 +324,6 @@ Operators - precedence
 TODO: couple of examples to showcase various precedence gotchas
 // https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Criticism_of_bitwise_and_equality_operators_precedence
 
-
 Operators - conditional expression
 ----------------------------------
 TODO: examples
@@ -340,7 +346,7 @@ TODO: sizeof
 
 TODO: more? all? remove this page?
 
-Implicit convertions
+Implicit conversions
 --------------------
 TODO: narrowing & promotion - give examples
 
@@ -348,9 +354,9 @@ TODO: pointer convertions
 
 TODO: boolean convertions
 
-Explicit convertions
+Explicit conversions
 --------------------
-TODO: explain (maybe separate pages for each?)
+TODO: explain
 
 * const_cast conversion
 * static_cast conversion
@@ -358,3 +364,52 @@ TODO: explain (maybe separate pages for each?)
 * reinterpret_cast conversion
 * explicit cast conversion using C-style cast notation and functional notation 
 
+Functions
+---------
+Functions are C++ entities that associate a sequence of statements (a function body) with a name and a list of zero or more function parameters. 
+
+TODO: couple of examples
+
+TODO: mention lambdas
+
+Functions - declaration
+-----------------------
+TODO: schema with all possible attributes
+
+TODO: how names are ignored
+
+TODO: default arguments
+
+Functions - definition
+----------------------
+TODO: how const is ignored at top-level
+
+TODO: arg name ignore
+
+Functions - return
+------------------
+TODO: the 2 types of return declarations
+
+TODO: return type deduction
+
+Functions - arguments
+---------------------
+TODO: by value - copy semantics
+
+TODO: by reference and const reference
+
+TODO: arrays
+
+TODO: initializer_list (!later)
+
+TODO: variadic (!later)
+
+Functions - inline / constexpr
+------------------------------
+TODO: (!later)
+
+Functions - overloading
+-----------------------
+TODO: the rules, how not by return
+
+TODO: examples
