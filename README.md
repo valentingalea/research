@@ -2,16 +2,8 @@
 
 various projects for keeping up with C++ and other things.
 
-## Reference
+## Asciidoc
 
-### Markdown syntax help
+http://www.methods.co.nz/asciidoc/userguide.html
 
-https://help.github.com/articles/github-flavored-markdown
-
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-
-### Producing PDF's
-
-http://johnmacfarlane.net/pandoc/installing.html
-
-http://miktex.org/download
+https://asciidoclive.com/edit/scratch/1
