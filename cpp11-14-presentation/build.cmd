@@ -1,6 +1,7 @@
 @echo off
 
-set OUT=cpp11-14-presentation.txt
+set IN=_all.txt
+set OUT=cpp11-14-presentation.html
 set INTRO=intro.txt
 set LANG=new_lang_features.txt
 set OBJ=obj_creation_improvements.txt
@@ -10,9 +11,8 @@ set UTIL=util_and_libraries.txt
 set MEM=multithreading_and_memory.txt
 set ROOT=%CD%
 
-md bin
 cd src
-copy /A /Y %INTRO% + %LANG% + %OBJ% + %LAMBDA% + %MOVE% + %UTIL% ..\bin\%OUT%
+copy /A /Y %INTRO% + %LANG% + %OBJ% + %LAMBDA% + %MOVE% + %UTIL% %IN%
 cd ..
 
 rem 
@@ -21,7 +21,7 @@ rem http://www.gnu.org/software/src-highlite/
 rem win32 binaries from http://gnuwin32.sourceforge.net/packages/source-highlight.htm
 rem 
 cd ..\tools\gnu-highlite\bin
-python ..\..\asciidoc\asciidoc.py --backend slidy %ROOT%\bin\%OUT%
+python ..\..\asciidoc\asciidoc.py --backend slidy --out-file "%ROOT%\..\docs\%OUT%" %ROOT%\src\%IN%
 cd %ROOT%
 
 rem
