@@ -1,0 +1,152 @@
+:toc:
+//:max-width: 5cm
+
+C++ Guidelines Cards
+====================
+
+:language: cpp
+
+TODO: check diff syntax highliter
+TODO: diff font (Hack?)
+
+TODO: Core Guidelines
+---------------------
+
+TODO: Scott Meyers
+------------------
+
+no raw loops
+------------
+Seek to extract functionality into STL (or custom) algorithms.
+
+TODO: maybe show Seasoning before/after style (6:00)
+TODO: but name the predicate/lamba (from Fewer Bugs)
+
+.Insertion sort
+[source]
+for (auto i = start; i != end; ++i)
+    std::rotate(std::upper_bound(start, i, *i), i, std::next(i));
+
+.Slide a selection (TODO: picture)
+[source]
+template <typename It> 
+auto slide(It f, It l, randIter p) -> std::pair<It, It>
+{
+    if (p < f) return { p, std::rotate(p, f, l) };
+    if (l < p) return { std::rotate(f, l, p), p };
+    return { f, l };
+}
+
+'''
+[bibliography]
+- Sean Parent 'C++ Seasoning'
+// https://channel9.msdn.com/Events/GoingNative/2013/Cpp-Seasoning
+- 'Top 5 Beautiful C++ std Algorithms Examples'
+// http://www.bfilipek.com/2014/12/top-5-beautiful-c-std-algorithms.html
+// http://stackoverflow.com/questions/24650626/how-to-implement-classic-sorting-algorithms-in-modern-c/24650627#24650627
+
+chain operations in pipelines
+-----------------------------
+Write programs by putting together highly composable parts, combining in flexible ways the possible actions that can work on a particular type of data.
+
+.Word frequency counter
+[source]
+data
+	| transform([] (char c) {
+		return isalnum(c) ? c : '\n';
+	})
+	| transform(tolower)
+	| split ('\n')
+	| sort
+	| group_by(equal_to<>())
+	| transform([] (const auto &grp) {
+		return make_pair(
+			count(grp), *grp.cbegin ());
+	})
+	| sort
+	| reverse
+	| take(n);
+
+'''
+[bibliography]
+- https://en.wikipedia.org/wiki/Monad_(functional_programming)
+- Functional reactive programming in C++ Ivan Cukic Meeting C++ 2016
+// https://www.youtube.com/watch?v=a2MmURgc6cU&list=PLsvF5XSgex0nuJkFTyimVFcwzixh_hOzC&index=17
+
+no raw sync
+-----------
+C++ seasoning
+Kevlin Henney gist
+Kevlin talk: Thinking outside the synchronisation quadrant 
+Sean Parent Seasoning and Sean Parent – Better Code: Concurrency 
+
+no polymorphism in interface
+----------------------------
+put in the guts
+Inheritance Is The Base Class of Evil  - Sean Parent
+
+unambiguous interface
+---------------------------
+strong native types with wrappers
+Andrzej Krzemieński – Fewer bugs 
+https://github.com/akrzemi1/explicit
+more of his examples
+
+tag dispatch
+------------
+- for named constructors
+- for selecting flavours of algos
+- for making unique flavours of same type
+
+separation of concerns
+----------------------
+- "Fewer Bugs" separate the checks from logic
+- pure functions (should do one thing and good)
+
+type decorations
+----------------
+- GSL
+- "Fewer Bugs" the contract example 26:40
+
+implicit vs explicit
+--------------------
+auto vs c-casts
+
+misc/unsorted
+-------------
+- copy ctor vs move ctor delete when class is non trivial (has destructor) -- Fewer Bugs 49:43
+- shared_ptr knows how to delete type -- no need for virtual destructor
+
+better returns
+--------------
+- optional<>
+- beware of hungry convertions "Andrzej Krzemieński - constrain yourself" 42:00
+- C++17 if
+- that talk of Patrice
+
+policy based design
+-------------------
+https://www.google.co.uk/search?q=c%2B%2B+policy+based+design
+- read Andrei's chapter
+- UE4 uses it a lot in rendering
+
+TODO: Kevlin Henney talks
+-------------------------
+- Clean Coders hate whn you use these programming trics
+-- from 6:00 to 13:00
+-- 36:00 "Component"
+
+clang-format
+------------
+- has VS extention
+- Chandler talk: https://www.youtube.com/watch?v=cX_GhJ6BuWI&t=107s&list=PLsvF5XSgex0nuJkFTyimVFcwzixh_hOzC&index=2
+https://github.com/OSVR/OSVR-Unreal/blob/master/.clang-format
+https://aranhase.github.io/2015/11/30/ue4_cpp_notes.html
+- clang-tidy ???
+
+const
+-----
+https://akrzemi1.wordpress.com/2016/12/16/more-const-fewer-bugs/
+but not everywhere - disrupts the RVO (that should be a card in itself)
+how it helps functional style
+the Carmack article?
