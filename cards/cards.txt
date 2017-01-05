@@ -86,7 +86,7 @@ put in the guts
 Inheritance Is The Base Class of Evil  - Sean Parent
 
 unambiguous interface
----------------------------
+---------------------
 strong native types with wrappers
 Andrzej Krzemieński – Fewer bugs 
 https://github.com/akrzemi1/explicit
@@ -116,6 +116,7 @@ misc/unsorted
 -------------
 - copy ctor vs move ctor delete when class is non trivial (has destructor) -- Fewer Bugs 49:43
 - shared_ptr knows how to delete type -- no need for virtual destructor
+- Scott Meyers auto https://www.youtube.com/watch?v=J-tA17slViE&index=12&list=PLK3T2dt6T1fcZswWn2HbWpRHprPHyJ4wZ
 
 better returns
 --------------
