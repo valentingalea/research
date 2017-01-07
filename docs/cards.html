@@ -854,16 +854,20 @@ Sean Parent Seasoning and Sean Parent – Better Code: Concurrency</p></div>
 <div class="sectionbody">
 <div class="paragraph"><p>put in the guts
 Inheritance Is The Base Class of Evil  - Sean Parent</p></div>
-<div class="paragraph"><p>unambiguous interface</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><code>strong native types with wrappers
+</div>
+</div>
+<div class="sect1">
+<h2 id="_unambiguous_interface">unambiguous interface</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>strong native types with wrappers
 Andrzej Krzemieński – Fewer bugs
-https://github.com/akrzemi1/explicit
-more of his examples
-
-tag dispatch</code></pre>
-</div></div>
+<a href="https://github.com/akrzemi1/explicit">https://github.com/akrzemi1/explicit</a>
+more of his examples</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tag_dispatch">tag dispatch</h2>
+<div class="sectionbody">
 <div class="ulist"><ul>
 <li>
 <p>
@@ -935,6 +939,11 @@ copy ctor vs move ctor delete when class is non trivial (has destructor)&#8201;&
 <li>
 <p>
 shared_ptr knows how to delete type&#8201;&#8212;&#8201;no need for virtual destructor
+</p>
+</li>
+<li>
+<p>
+Scott Meyers auto <a href="https://www.youtube.com/watch?v=J-tA17slViE&amp;index=12&amp;list=PLK3T2dt6T1fcZswWn2HbWpRHprPHyJ4wZ">https://www.youtube.com/watch?v=J-tA17slViE&amp;index=12&amp;list=PLK3T2dt6T1fcZswWn2HbWpRHprPHyJ4wZ</a>
 </p>
 </li>
 </ul></div>
@@ -1020,11 +1029,64 @@ how it helps functional style
 the Carmack article?</p></div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_type_classification">type classification</h2>
+<div class="sectionbody">
+<div class="tableblock">
+<table rules="all"
+width="25%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<tbody>
+<tr>
+<td rowspan="4" align="center" valign="middle"><p class="table"><code>Semi-Regular</code></p></td>
+<td align="center" valign="top"><p class="table"><code>T a;</code></p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><code>T a = b;</code></p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><code>~T(a);</code></p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><code>a = b;</code></p></td>
+</tr>
+<tr>
+<td rowspan="2" align="center" valign="middle"><p class="table"><code>Regular</code></p></td>
+<td align="center" valign="top"><p class="table"><code>a == b;</code></p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><code>a != b;</code></p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><code>Totally Ordered</code></p></td>
+<td align="center" valign="top"><p class="table"><code>a &lt; b;</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<div class="ulist bibliography"><ul>
+<li>
+<p>
+<a href="http://www.slideshare.net/ilio-catallo/regular-types-in-c">http://www.slideshare.net/ilio-catallo/regular-types-in-c</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stackoverflow.com/a/14000046/5760">http://stackoverflow.com/a/14000046/5760</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
 </div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-27 00:24:44 GMT Standard Time
+Last updated 2017-01-07 16:41:26 GMT Standard Time
 </div>
 </div>
 </body>
