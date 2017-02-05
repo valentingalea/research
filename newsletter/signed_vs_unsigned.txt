@@ -1,0 +1,63 @@
+= Signed vs Unsigned - the great battle that everybody is fighting without knowing it
+
+When it comes to integers, C++ has 2 major flavors: signed and unsigned. While these can be intuitively easy to understand and use they have some surprising aspects to them and weird corners. There are different schools of thought nowadays that suggest the exclusive use of one to the detriment of the other. In order to understand these opposing fronts let's learn the basics better.
+
+== Unsigned
+First off unsigned int types: they are more or less self explanatory: they encode only positive integer numbers as a series of bits. You get to use all the bits available, making them very suitable for storing bit masks and encoding flags. They are able to represent the range 0 to 2^N-1, everything bigger will be truncated modulo 2^N. This last fact is very important, it's actually codified in the standard, therefore making unsigned int always behave predictable.
+
+The actual encoding is straightforward base 2 representation:
+[source]
+unsigned int i = 3;   // bits: 0000 0000 0000 0011 = 1*2^1 + 1*2^0
+unsigned int j = 25;  // bits: 0000 0000 0001 1001 = 1*2^4 + 1*2^3 + 1*2^0
+unsigned int k = 255; // bits: 0000 0000 1111 1111 = sum of all the powers of 2 up to the 8th - 1
+unsigned int l = 256; // bits: 0000 0001 0000 0000 = 2^8
+
+It is now obvious that you can only represent numbers to the extent of bits you have available, anything greater will overflow as specified earlier. The reverse can also happen - underflow - when you try to go lower than 0. Things will just "wrap around" via modulo but this can be a double edge sword: known behavior but sometimes easy to fall prey to. 
+
+Consider this:
+[source]
+for (unsigned int i = size - 1; i >=0; i--)
+
+What happens at the edge case when size is 0? Disaster, because it will wrap around to UINT_MAX (max value posible, when all the bits are set to 1)! These kind of loopsa should be avoided. Also don't bother with just greater than comparisons, because they will always be true! Normally compilers are quick to point this out via warnings.
+
+== Signed
+Let's see signed integers now. These are enabled by default when you only use they keyword "int" and true to their name they can represent numbers both positive and negative. There are various ways to encode a negative number into a finite set of bits but the most used one and the de-facto standard is two's complement.
+
+The two's complement of an N-bit number is defined as the complement with respect to 2N; in other words, it is the result of subtracting the number from 2N. A handy method for obtaining the two complement from a given bits input is to get the one's complement (which is just inverting every bit) and then adding 1. Let's see some examples - using char instead of int simply because it has fewer overall bits:
+
+[source]
+signed char s = 25;   // same as unsigned: 0001 1001
+signed char s = -25;  // invert the unsigned variant: 1110 0110; add 1: 1110 0111
+signed char s = -127; // bits: 1000 0001 = -1*2^7 + 1*2^0 
+
+Overflow and underflow happen when you are out of bits, when you try to represent things smaller then -2^N-1 or greater than (2^N-1)-1. The trouble is that there are no actual rules for this, signed overflow is actual Undefined Behavior!!!
+
+[source]
+int sum(int x, int y)
+{
+	return x + y;
+}
+
+If the result is greater than INT_MAX then who knows what will happen calling this function: it could work somehow, it could crash, it could reveal the location of Noah's Ark! Actually some compilers knowingly take advantage of this for optimizations: they assume overflow won't happen and they can then more easily transform operations around.
+
+So there you have it: unsigned - predictable but somehow limited; signed: unpredictable but more general. Choose your poison!
+
+== Don't make a mix of it!
+But wait, the real problems begin when you combine unsigned and signed in the same expressions - be it arithmetic or comparisons.
+
+[source]
+int x = -1;
+unsigned y = 1;
+bool weird = x < y; // wanna bet what the answer is?
+
+This is all due to complicated conversion rules inherited from C and integer promotion. Usually things will get promoted to unsigned in ways that you might not expect and create hidden gotchas.
+
+Normally programmers know the types they are working with so you might think mixing is not that common but working with API's quickly muddies the water. The most infamous is size_t, the type used in a lot of Standard Library stuff. It's actually the type returned by the sizeof() operator and it's unsigned by definition.
+
+== Conclusion
+Some people recommend to avoid unsigned altogether primary because it's so easy to underflow; while others argue that it's not a real problem because is totally predictable and traceable, unlike signed which looks legit on paper but can lead into trouble.
+
+I think you should follow your codebase, see what makes more sense there, choose one and be consistent. Single out the mixing of types to specific controlled places.
+
+Until next time,
+Valentin
