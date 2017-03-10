@@ -1,0 +1,133 @@
+= Issue #5 
+
+Welcome to this edition of the newsletter in which we get to rant a bit more about Unreal whilst learning something new! But first,
+
+== CppCon 2016
+
+The conference has ended and from the look of it it's been one of the best in terms of attendance and quality of talks. They started uploading the videos online: https://www.youtube.com/playlist?list=PLHTh1InhhwT7J5jl4vAhO1WvGHUUFgUQH. Make sure you at least check out the _C++17 in Breadth_ one!
+
+== Perfect Forwarding - what is and why should you care
+
+Recently I worked with UE4's FAsyncTask class. This is a quick and handy way to dispatch some work in the background:
+
+[source]
+-------------------------------------------------------------------------------
+class ExampleAsyncTask : public FNonAbandonableTask
+{
+   int32 ExampleData;
+
+   ExampleAsyncTask(int32 InExampleData)
+		  : ExampleData(InExampleData)
+   {
+   }
+
+   void DoWork()
+   {
+   }
+};
+
+auto MyTask = std::make_unique(FAsyncTask<ExampleAsyncTask>(42));
+MyTask->StartBackgroundTask();
+-------------------------------------------------------------------------------
+
+All good right? Well in real life(TM) you don't have just one argument that you want pass/keep/process, you have multiple. How does Unreal handle that (up to 4.11)? Like this...
+
+[source]
+-------------------------------------------------------------------------------
+FAsyncTask( )
+{
+	  Init();
+}
+template<typename T>
+FAsyncTask( T Arg )
+	  : Task(Arg)
+{
+	  Init();
+}
+template<typename T1,typename T2>
+FAsyncTask( T1 Arg1, T2 Arg2 )
+	  : Task(Arg1,Arg2)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3 )
+	  : Task(Arg1,Arg2,Arg3)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3, typename T4>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4 )
+	  : Task(Arg1,Arg2,Arg3,Arg4)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3, typename T4, typename T5>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5 )
+	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6 )
+	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7 )
+	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7, T8 Arg8 )
+	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7,Arg8)
+{
+	  Init();
+}
+template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9>
+FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7, T8 Arg8, T9 Arg9 )
+	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7,Arg8,Arg9)
+{
+	  Init();
+}
+-------------------------------------------------------------------------------	   
+
+Let's pretend we can forget for a second the beyond ugly repetition - this was probably written sometime before C++11's variadic templates. Still that's no excuse to not go back and refactor the code when you are targeting better/newer compilers.
+
+There are other major problems with this system:
+
+* It passes down everything by copy!!!
+* Doesn't handle const
+* Doesn't handle references
+* Doesn't support calling it with temporaries/rvalues:
+
+[source]
+FAsyncTask<ExampleAsyncTask>(GetInput()); // doesn't work!
+
+How do we fix this? Easy:
+
+[source]
+template <typename... ArgTypes>
+FAsyncTask(ArgTypes&&... Args)
+       : Task(std::forward<ArgTypes>(Args)...)
+{
+       Init();
+}
+
+Don't worry too much about the ... that's the variadic template stuff and in this case it's pretty much self-explanatory. For more information do check the presentation of our own Andrew Gresyk: https://jarvis/pages/viewpage.action?pageId=467468341 or https://warchest.atlassian.net/wiki/pages/viewpage.action?pageId=75268171.
+
+The most important thing is that now, every combination of arguments passed to this task will be properly propagated down to the actual constructor of our work class! Btw Epic managed to finally fix it in the very latest UE4!
+
+How does this work and what's `std::forward<>` (or in UE4 parlance `Forward<>`)? This is more tricky to explain here but basically you need to be aware of 2 things:
+
+* Reference collapse rules
+* Special template deduction rules for `T&&` - which are called forwarding references (or until quite recently universal references)
+
+Surprisingly one of the best explanations out there is at this answer at Stack Overflow. Another good one is http://eli.thegreenplace.net/2014/perfect-forwarding-and-universal-references-in-c/
+
+This is not stuff that you will write on a daily basis unless you are writing some sort of task/job/factory/forwarder system but it definitely helps knowing about it. In my case I blindly trusted the existing system, worked with references and then had all my stuff crash left and right for no good reason :D
+
+Happy forwarding!
+Valentin
