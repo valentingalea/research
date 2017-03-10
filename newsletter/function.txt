@@ -1,0 +1,131 @@
+//:max-width: 21cm
+
+= Issue #1
+
+Hi everybody,
+
+Introducing the `C++` newsletter, a - hopefully regular - digest of something cool, interesting and useful about `C++`.
+
+I will kickstart the first one, but this is also an open invitation! Anyone feeling they want to share, feel free to write something - long or short - and send it to me so I can include it in the next issue.
+
+== This week's story: A tale of std::function
+
+Recently whilst working on one of our projects I needed a system that does a sort of "delayed function execution". Essentially I wanted that when some function were called, instead of doing their logic, I would "record" their arguments and push them in a queue so that at a later point in time I would call them. The project uses Unreal Engine 4 compiled with the latest Visual Studio 2015, so I had all `C++11/14` at my disposal!
+
+Indeed in `C++11` there is already support for doing something like this: `std::function` http://en.cppreference.com/w/cpp/utility/functional/function. In a nutshell I was now able to do this:
+
+[source]
+-------------------------------------------------------------------------------
+bool FSlateApplication::ProcessMouseMoveEvent( FPointerEvent& MouseEvent, bool bIsSynthetic )
+{
+       if (ShouldDelayInput())
+       {
+              std::function<void(FSlateApplication &)> func = [=](FSlateApplication &app) mutable {
+                     app.ProcessMouseMoveEvent(MouseEvent, bIsSynthetic);
+              });
+              MyFancyQueue.push(func);
+
+              return false;
+       }
+
+       // rest of the code...
+-------------------------------------------------------------------------------
+
+Notice how I capture by copy everything - that's the key aspect of what I wanted: delegates with state.
+
+Now I love `std::function` as much as the next guy, it's a very powerful mechanism, but it has 2 hidden performance limitation: one minor, other quite major. We shall discuss each of them.
+
+=== How does it work: type erasure
+
+`std::function` does something quite magical - it can accept any function, functor or lambda that matches its template arguments definition. Anything with `operator ()` `std::function` will happily gobble it up. In order to achieve this, it uses a technique called _type erasure_. That's a fancy name for quite a simple idea: bury  a type into some sort of opaque container and later retrieve it based on a known signature. The most straightforward implementation of this is the C way of throwing stuff into `void *`.
+
+Obviously here a more sophisticated mechanism is used: `C++` polymorphism. Because `std::function` main feature is calling stuff thru `operator ()` we can piggyback on it to call into a virtual base class that's actually derived to wrap our target object. You will see this in detail below. Also `C++11` makes this easier by having variadic templates. In this way `std::function` can accept any combination of arguments on earth.
+
+The downside is the cost of the virtual call but at the same time for ex. in the Unreal Engine it's like a drop in the ocean!
+
+=== Where does stuff go: heap memory, that's where!
+
+Actually the biggest magic of `std::function` is that it can accept any lambda no matter how "fat" it is (by that I mean it captured a lot of variables). How  can it do that? Well easy: by calling `malloc()` ...
+
+So herein lies the biggest problem of `std::function`: it will heap allocate most of the time. It has to, because it's so generic. I especially wanted to avoid this - I'm in core-tech after all!
+
+In fairness `std::function` by standard has a small-object optimisation: if you just feed it dump functions, it will just store the pointer to that inside it. But still...
+
+=== A better solution
+
+So like any programmer worth its salt I went and reinvented the wheel and implemented my own `std::function` :D
+
+The biggest change is that it doesn't allocate any memory, instead it has a small fixed buffer and it works within the confines of that. If you try to push bigger stuff it will just statically assert so the user has a chance to adjust.
+
+Here is the full source code of it - you can copy/paste and use it everywhere, it still retains the generic programming aspect of the original:
+
+[source]
+-------------------------------------------------------------------------------
+template<typename Signature>
+struct Function;
+
+template<typename Ret, typename... Args>
+struct Function<Ret(Args...)>
+{
+       char Storage[128];
+
+       inline Function() = default;
+
+       template<typename Functor>
+       inline Function(Functor&& f)
+       {
+              static_assert(sizeof(f) <= sizeof(Storage), "Max storage size hit, increase buffer!");
+
+              ::new(Storage) Impl<Functor>(f);
+       }
+
+       Function(const Function &other) = default;
+       Function& operator =(const Function &other) = default;
+       Function(Function &&) = default;
+       Function& operator =(Function &&) = default;
+
+       inline Ret `operator ()`(Args&& ...args)
+       {
+              return GetImpl().Call(std::forward<Args>(args)...);
+       }
+
+       struct Base
+       {
+              virtual ~Base() {}
+              virtual Ret Call(Args &&...) = 0;
+       };
+
+       template<typename T>
+       struct Impl : Base
+       {
+              inline Impl(const T& f) : Payload(f) {}
+
+              inline Ret Call(Args&& ...args) override final
+              {
+                     return Payload(std::forward<Args>(args)...);
+              }
+
+              T Payload;
+       };
+
+       inline Base& GetImpl()
+       {
+              return *static_cast<Base *>(reinterpret_cast<void *>(Storage));
+       }
+};
+-------------------------------------------------------------------------------
+
+=== The Unreal way
+
+I mentioned this was a project using UE4. Did you know they reinvented a lot of wheels as well? Especially in regards with _STL_... so it turns out they have their own variant called `TFunction`?
+
+It seems quite well done and more importantly has some nice allocator optimisations: it will first use a small buffer like mine (up to 32 bytes) and after that cascade to a more general allocator. See _Function.h_ in the UE4 repository (and especially line 82-91)
+
+=== Closing notes
+
+The `C++` standardisation committee is organised in several subcommittees, one of which is SG14 and it deals with embedded and video games programming - https://groups.google.com/a/isocpp.org/forum/#!forum/sg14 Several members are programmers from AAA games companies like Creative Assembly, Wargaming, Ubisoft etc
+
+Case in point: there is a discussion there about this very same topic I addressed today: they call it basic_function or inplace_function and if they succeed sometimes in the future it will be included in `C++`! See everything about it here: https://groups.google.com/a/isocpp.org/forum/#!topic/sg14/1Sw_qEdIYes
+
+Until next time, +
+Valentin Galea
