@@ -1,0 +1,135 @@
+= Issue #10 
+
+== Using STL algorithms with UE4 containers
+For a laugh and as an experiment I tried to see if the usual UE4 containers TArray, TDoubleLinkList, TMap etc work with STL algorithms like `std::sort` and `std::find_if`. Spoiler alert: not really!
+
+First off, what does it take for a specific container to be eligible as input to STL algorithm? It needs to provide iterator support: have either .begin() and .end() member function of equivalent global functions. Obviously iterator classes need to exists which in essence means structures that support traversal operations like ++, += as well as dereferencing operators. UE4 implemented some of these because they support the C++11 range-for and that basically forces you to have begin(), end() and ++.
+
+The problem is that the support is bare bones, not much more than the mentioned requirements for ranged for. The couple of iterator classes that exist (TIndexedContainerIterator, TCheckedPointerIterator, etc) are not complete so while this will work:
+
+[source]
+TArray<int> arr = ...
+std::sort(begin(arr), end(arr));
+
+This will not:
+
+[source]
+std::find(begin(arr), end(arr), 42);
+
+It will fail with some cryptic template message that ultimately means Epic didn’t implement some operators. Too bad because there is a lot of power in the STL algorithms – they allow you to chain more complex operations from basic building blocks.
+
+== Improve code readability by leveraging the type system
+We should strive to write descriptive and intuitive interfaces and function signatures in general. For example what does this do?
+
+[source]
+void f(int, int);
+
+Contrived example? Not far for production code sometimes... Ok we can do better:
+
+[source]
+void draw_rectangle(int, int);
+
+Now at least the intent is visible, but the arguments are unclear. So far we have been abusing the feature that at declaration time the actual names of the arguments are optional. Let's correct that:
+
+[source]
+void draw_rectange(int width, int height);
+
+That's better right? Yes but there are problems elsewhere as well, let's now look at the caller side:
+
+[source]
+draw_rectangle(5, 6);
+
+Without knowing the function signature would you be able to judge what those number mean? Usually yes, but how about if we mess the order? The 6 was supposed to be width, not the height! The compiler cannot help you with this one.
+Another bad example is:
+
+[source]
+some_function("text to display", get_bounds(), true);
+
+Just by looking we can kind of guess what the first 2 arguments do, but what about that true? What's that supposed to be and why isn't false?
+Imagine if we had:
+
+[source]
+-------------------------------------------------------------------------------
+enum class Cache { yes, no };
+void some_function(std::string, Bounds, Cache);
+
+some_function("hello", get_bounds(), Cache::yes);
+-------------------------------------------------------------------------------
+
+Much clearer don't you think? Let's try a similar tactic on the original example. A simple enum won't make it so we need to get off our lazy C++ bums and write some helpers:
+
+[source]
+-------------------------------------------------------------------------------
+struct Width
+{
+	int value;
+};
+
+struct Height
+{
+	int value;
+};
+
+void draw_rectangle(Width, Height);
+-------------------------------------------------------------------------------
+
+You would instinctively think that is a bit overkill but now suddenly we have the whole type checking and semantics system at our disposal:
+
+[source]
+draw_rectangle(Width{ 10 }, Height{ 20 });
+draw_rectangle(Height{ 10 }, Width{ 20 }); // doesn't compile
+draw_rectangle(5, 6); // doesn't compile and for the better :D
+draw_rectangle({ 5 }, { 6 }); // sadly this compiles but at least it looks suspicious
+
+You can fix that last form by adding an explicit constructor to these classes. Obviously nobody wants to write them by hand so templates to the rescue:
+
+[source]
+-------------------------------------------------------------------------------
+template<typename T, class /*tag*/ = void>
+struct Dimension
+{
+	T value;
+	explicit Dimension(T arg) : value{ arg } {}
+}
+
+using Width = Dimension<int, class W>;
+using Height = Dimension<int, class H>;
+using Length = Dimension<float>;
+-------------------------------------------------------------------------------
+
+As you can guess, that class tag trick is needed in order to have multiple helper utilities of the same underlying type.
+What about some other use cases? How about "named" constructors to avoid things like this:
+
+[source]
+std::vector<int> v(2); // what does this do? insert element 2 or reserves space for 2 elements?
+
+Instead one can picture an implementation along the lines of:
+
+[source]
+-------------------------------------------------------------------------------
+template<typename T>
+class MyVector
+{
+	struct Reserve {};
+	struct Insert {};
+
+	MyVector(int, Reserve);
+	MyVector(T, Insert);
+
+	/* ... */
+};
+
+MyVector v(5, MyVector::Reserve());
+-------------------------------------------------------------------------------
+
+Those types are just unused dummies with the sole purpose to help overload resolution. So the general idea here is to not propagate “naked” int, floats, arrays etc everywhere, but instead try to wrap them in things that make semantic sense. Being explicit (without going into verbose) it’s always a good thing.
+
+Another example: wrapping pointers in a simple class that expresses (and optionally checks) that the pointer cannot be null:
+
+[source]
+void do_work(not_null<char *> data);
+
+Actually this last one is a real life example from the GSL (Guideline Support Library - a collection of helper classes to enforce good practice guidelines maintained by Microsoft).
+
+That’s it for now! Hope I inspired you to write more descriptive code! +
+Valentin
