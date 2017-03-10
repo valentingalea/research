@@ -14,16 +14,16 @@ Recently I worked with UE4's FAsyncTask class. This is a quick and handy way to 
 -------------------------------------------------------------------------------
 class ExampleAsyncTask : public FNonAbandonableTask
 {
-   int32 ExampleData;
+	int32 ExampleData;
 
-   ExampleAsyncTask(int32 InExampleData)
-		  : ExampleData(InExampleData)
-   {
-   }
+	ExampleAsyncTask(int32 InExampleData)
+		: ExampleData(InExampleData)
+	{
+	}
 
-   void DoWork()
-   {
-   }
+	void DoWork()
+	{
+	}
 };
 
 auto MyTask = std::make_unique(FAsyncTask<ExampleAsyncTask>(42));
@@ -36,63 +36,63 @@ All good right? Well in real life(TM) you don't have just one argument that you 
 -------------------------------------------------------------------------------
 FAsyncTask( )
 {
-	  Init();
+	Init();
 }
 template<typename T>
 FAsyncTask( T Arg )
-	  : Task(Arg)
+	: Task(Arg)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2>
 FAsyncTask( T1 Arg1, T2 Arg2 )
-	  : Task(Arg1,Arg2)
+	: Task(Arg1,Arg2)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3 )
-	  : Task(Arg1,Arg2,Arg3)
+	: Task(Arg1,Arg2,Arg3)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3, typename T4>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4 )
-	  : Task(Arg1,Arg2,Arg3,Arg4)
+	: Task(Arg1,Arg2,Arg3,Arg4)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3, typename T4, typename T5>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5 )
-	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5)
+	: Task(Arg1,Arg2,Arg3,Arg4,Arg5)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6 )
-	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6)
+	: Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7 )
-	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7)
+	: Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7, T8 Arg8 )
-	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7,Arg8)
+	: Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7,Arg8)
 {
-	  Init();
+	Init();
 }
 template<typename T1,typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9>
 FAsyncTask( T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7, T8 Arg8, T9 Arg9 )
-	  : Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7,Arg8,Arg9)
+	: Task(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7,Arg8,Arg9)
 {
-	  Init();
+	Init();
 }
--------------------------------------------------------------------------------	   
+-------------------------------------------------------------------------------	 
 
 Let's pretend we can forget for a second the beyond ugly repetition - this was probably written sometime before C++11's variadic templates. Still that's no excuse to not go back and refactor the code when you are targeting better/newer compilers.
 
@@ -111,9 +111,9 @@ How do we fix this? Easy:
 [source]
 template <typename... ArgTypes>
 FAsyncTask(ArgTypes&&... Args)
-       : Task(std::forward<ArgTypes>(Args)...)
+ : Task(std::forward<ArgTypes>(Args)...)
 {
-       Init();
+	Init();
 }
 
 Don't worry too much about the ... that's the variadic template stuff and in this case it's pretty much self-explanatory. For more information do check the presentation of our own Andrew Gresyk: https://jarvis/pages/viewpage.action?pageId=467468341 or https://warchest.atlassian.net/wiki/pages/viewpage.action?pageId=75268171.
