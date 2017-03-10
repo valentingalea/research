@@ -1,0 +1,136 @@
+= Issue #2
+
+Hi everybody,
+
+Time for the 2ed edition - all new and improved. This time we have 2 short stories:
+
+== 1. How not to refactor
+
+This tale is from something encountered in one of our projects. Some changes were made to the code to be shareable, but the ideas remain the same.
+
+So first PSA: don't write code like this:
+
+[source]
+-------------------------------------------------------------------------------
+FInputActionKeyMapping* ActionKeyMapping;
+
+ActionKeyMapping = PC->PlayerInput->FindActionMappingByPredicate(KEY_CODE_Execute, [&](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); });
+if (ActionKeyMapping != nullptr)
+{
+	ButtonMap.Add(ActionKeyMapping->Key, EGameButtons::X);
+}
+
+ActionKeyMapping = PC->PlayerInput->FindActionMappingByPredicate(KEY_CODE_Grenades, [&](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); });
+if (ActionKeyMapping != nullptr)
+{
+	ButtonMap.Add(ActionKeyMapping->Key, EGameButtons::DPad_Up);
+}
+
+ActionKeyMapping = PC->PlayerInput->FindActionMappingByPredicate(KEY_CODE_Melee, [&](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); });
+if (ActionKeyMapping != nullptr)
+{
+	ButtonMap.Add(ActionKeyMapping->Key, EGameButtons::B);
+}
+
+ActionKeyMapping = PC->PlayerInput->FindActionMappingByPredicate(KEY_CODE_Reload, [&](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); });
+if (ActionKeyMapping != nullptr)
+{
+	ButtonMap.Add(ActionKeyMapping->Key, EGameButtons::RightBumper);
+}
+
+ActionKeyMapping = PC->PlayerInput->FindActionMappingByPredicate(KEY_CODE_Zoom, [&](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); });
+if (ActionKeyMapping != nullptr)
+{
+	ButtonMap.Add(ActionKeyMapping->Key, EGameButtons::RightStick_Push);
+}
+-------------------------------------------------------------------------------
+
+Obviously there is a lot of repetition leading to all kinds of maintainability and usability problems. Also PSA #2: don't capture all by reference in lambda's by default! That's setting yourself for trouble. In this example the lambda's don't even capture anything! This kind of "future-proofing" is bad practice.
+
+Ok so a refactoring is due... PSA #3: don't refactor like this:
+
+[source]
+-------------------------------------------------------------------------------
+#define ACTION_MAPPPING_TO_GAMEPAD_BUTTON(Name, Button) \
+{ \
+	FInputActionKeyMapping* ActionKeyMapping = \
+			 PC->PlayerInput->FindActionMappingByPredicate(Name, [&](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); }); \
+	if (ActionKeyMapping != nullptr) \
+	{ \
+			 ButtonMap.Add(ActionKeyMapping->Key, Button); \
+	} \
+}
+			 
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Shoot,EGameButtons::RightTrigger);
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Target, EGameButtons::LeftTrigger);
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Melee,EGameButtons::B);
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Execute_Keyboard, EGameButtons::X);
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Grenades, EGameButtons::DPad_Up);
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Reload, EGameButtons::RightBumper);
+ACTION_MAPPPING_TO_GAMEPAD_BUTTON(KEY_CODE_Zoom, EGameButtons::RightStick_Push);
+
+#undef ACTION_MAPPPING_TO_GAMEPAD_BUTTON
+-------------------------------------------------------------------------------
+
+Contrary to popular belief, macro's aren't the answer to everything. 42 is :P This technique pretty much obliterates any debug attempt. Also we still create the same lambda multiple times (increasing compilation times).
+
+So here is the modern `C++` _Right Way_ to do it:
+
+[source]
+-------------------------------------------------------------------------------
+struct Tuple
+{
+	FName Action;
+	EGameButtons::Type Mapping;
+};
+Tuple Mappings[] =
+{
+	{ KEY_CODE_Execute, EGameButtons::X },
+	{ KEY_CODE_Grenades, EGameButtons::DPad_Up },
+	{ KEY_CODE_Melee, EGameButtons::B },
+	{ KEY_CODE_Reload, EGameButtons::RightBumper },
+	{ KEY_CODE_Zoom, EGameButtons::RightStick_Push },
+	{ KEY_CODE_Shoot, EGameButtons::RightTrigger }
+};
+
+auto KeyPredicate = [](const FKey& Key) { return Key.IsKeyboardKey() || Key.IsMouseButton(); };
+for (auto& i : Mappings)
+{
+	auto ActionKeyMapping = PC->PlayerInput->FindActionMappingByPredicate(i.Action, KeyPredicate);
+	if (ActionKeyMapping != nullptr)
+	{
+			 FKeyToEGameButtonMap.Add(ActionKeyMapping->Key, i.Mapping);
+	}
+}
+-------------------------------------------------------------------------------
+
+Couple of points:
+
+* We are now data-driven! We have a proper table of the definitions that we can inspect, move out to somewhere else etc
+* We could have used `std::tuple` but for this may be overkill. Sometimes a small in-place type suffices.
+* We fixed the lambda, and we recycled it instead of repeating it 5 times!
+* We use an efficient ranged-for - taking a reference iterator. Could be `const` as well.
+* The first auto is unavoidable, but the others could be replaced with explicit types - it's just a matter of personal/project style
+
+== 2. Careful with references to temporaries
+
+Another one encountered in the wild. Basically we had a very subtle crash with:
+
+[source]
+const FText& Formated = FText::ToUpper(TEXT("Hello, World")).ToString(); // Crash
+
+while this was ok (the fix actually):
+
+[source]
+const FText Formated = FText::ToUpper(TEXT("Hello, World")).ToString(); // Good
+
+Those FText functions returned full objects, which in the expressions on the right become temporaries, that are at the mercy of the compiler to be destructed. The const reference extends their lifetime, but it's still risky business.
+
+For a quick and very good explanation read this: https://herbsutter.com/2008/01/01/gotw-88-a-candidate-for-the-most-important-const/
+
+== Closing
+
+Hope you liked this edition; it was a bit on the rant side, but a call to good practices is always good in my (`C++`) book :D
+
+Until next time, +
+Valentin
