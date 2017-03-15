@@ -8,6 +8,7 @@ python ..\..\asciidoc\asciidoc.py ^
 -a disable-javascript ^
 -a linkcss ^
 -a tabsize=4 ^
+--theme=volnitsky ^
 --no-header-footer ^
 "%1"
 
