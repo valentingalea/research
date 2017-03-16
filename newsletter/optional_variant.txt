@@ -1,21 +1,10 @@
-= Issue #7
+include::style.inline.txt[]
 
-Here we go for lucky number 7!
+=== optional
 
-== Puzzle Answer
+Handling errors is an integral part of everyday programing yet still there isn't a true elegant method of doing it. Some might say that there is, and it's called throwing exceptions, but here we are in game dev and we hate exceptions with a passion!
 
-The correct answer for the last edition question was: Argument dependent lookup. Basically this means that function names and operators are also searched in the namespace of their arguments. So we don’t need to write this monstrosity:
-
-[source]
-std::operator<< (std::cout, "hello world!");
-
-The fastest to reply correctly was Stefano Sampietro – congrats! He will get 1000 C++ points that he can spend at the Little Shop of C++ Horrors.
-
-== optional
-
-Handling errors is an integral part of everyday programing yet still there isn’t a true elegant method of doing it. Some might say that there is, and it’s called throwing exceptions, but here we are in game dev and we hate exceptions with a passion :D
-
-Let’s suppose we define our own square root function:
+Let's suppose we define our own square root function:
 
 [source]
 float squareRoot(float number);
@@ -26,7 +15,7 @@ It is well known that this is invalid for negative values. How do you report tha
 if (squareRoot(x) != NaN)
 	/* do work */
 
-This is fragile and actually very difficult for floating points as in this example. Let’s rewrite it the old fashioned C way:
+This is fragile and actually very difficult for floating points as in this example. Let's rewrite it the old fashioned C way:
 
 [source]
 bool squareRoot(float in, float &out);
@@ -38,7 +27,7 @@ float result = 0.f;
 if (squareRoot(x, result))
 	/* do work */
 
-Fortunately there is a construct upcoming in C++17 to help with all this: std::optional As the name suggests this is a small struct that can either have a T or not. Let’s rewrite the function to take advantage of this:
+Fortunately there is a construct upcoming in C++17 to help with all this: `std::optional`. As the name suggests this is a small structure that can either have a `T` or not. Let's rewrite the function to take advantage of this:
 
 [source]
 std::optional<float> squareRoot(float number);
@@ -52,15 +41,18 @@ if (squareRoot(x))
 
 auto result = squareRoot(x);
 if (result.has_value())
-	result.value(); // *n works as well to get the value
+	result.value();
 
 if (auto result = squareRoot(x))
-	/* do work */
+	*result; // a dereference operator is also provided
+	
 if (auto result = squareRoot(x); result.has_value()) // C++17 style of the above
 	/* do work */
 -------------------------------------------------------------------------------			
 
-Alas at the moment Visual Studio doesn’t support it (but latest Clang/GCC do). Support for it is coming. There is an alternative implementation in Boost (in fact this was the inspiration for the standard one), and Unreal Engine 4 has its own flavour called TOptional. Here’s the equivalent of the above examples in UE4:
+All modern compilers support it. Visual Studio added it as of 2017. There is an alternative implementation in Boost (in fact this was the inspiration for the standard one).
+
+If you are working with Unreal Engine 4, it has its own flavour called `TOptional`. Here's the equivalent of the above examples in UE4:
 
 [source]
 -------------------------------------------------------------------------------
@@ -71,9 +63,11 @@ if (result.Is_Set())
 	result.GetValue();
 -------------------------------------------------------------------------------
 
-== variant
+=== variant
 
-C++ inherited from C the union construct: basically a struct that packs together all its members in the same space (sized as the largest member). It’s quite useful to group like that and optimise space, or have heterogeneous containers. Unfortunately it’s very limited due to its specific requirements of what you can store - it used to work only with POD (plain-old-data) members, although C++11 relaxed this:
+C++ inherited from C the union construct: basically a struct that packs together all its members in the same space (sized as the largest member). It's quite useful to group things like that and optimize space, or to have heterogeneous containers.
+
+Unfortunately it's very limited due to its specific requirements of what you can store - it used to work only with POD (plain-old-data) members, although C++11 and above relaxed this:
 
 [source]
 -------------------------------------------------------------------------------
@@ -85,9 +79,11 @@ union Bundle
 };
 -------------------------------------------------------------------------------
 
-but by allowing this, it puts more burden on the user: the special functions like constructors, destructors etc are deleted and the user has to redefine them based on the usage.
+By allowing this, it puts more burden on the user: the special functions like constructors, destructors etc are deleted and the user has to redefine them based on the usage.
 
-I can show/talk more about this, but that’s not the point. I want to show a better structure introduced in C++17 as well: std::variant. It is a type-safe, more powerful variant of the union (see what I did there?) and same as its counterpart, never dynamically allocates memory, everything is stored in-place.
+I can talk more about this, but that's not the point. I want to show a better structure introduced as of C++17: http://en.cppreference.com/w/cpp/utility/variant[std::variant].
+
+It is a type-safe, more powerful equivalent of the union, that never dynamically allocates memory - everything is stored in-place.
 
 [source]
 std::variant<int, float, std::string> bundle;
@@ -95,11 +91,11 @@ std::variant<int, float, std::string> bundle;
 You can now assign values into it, each new one destroying and overwriting the old one:
 
 [source]
-bundle = 42; // now contains int
-bundle = 3.14f; // now contains float
+bundle = 42; // now contains an int
+bundle = 3.14f; // now contains a float
 bundle = "hello"; // now contains a string, the previous values are gone
 
-Equally you can retrieve values out of it in various ways:
+One can retrieve values out of it in various ways:
 
 [source]
 std::get<int>(bundle);
@@ -111,11 +107,11 @@ Of course you have to be mindful of what you last put inside, otherwise these ac
 if (auto value = std::get_if<float>(&bundle))
 	do_work(*value);
 
-Another useful utility function is the ability to “visit” the variant and react appropriately to what value it currently holds. This is a bit more advanced but do take a look at some examples here.
+Another useful utility function is the ability to "visit" the `variant` and react appropriately to what value it currently holds. This is a bit more advanced but do take a look at some http://en.cppreference.com/w/cpp/utility/variant/visit[examples here].
 
-UE4 tries to mimic all this with FVariant, but sadly it does it poorly by using a different approach whereby it actually serializes the things put in.
+Other libraries have similar constructs, for example Unreal Engine 4 has its own `FVariant`, but it uses a different approach whereby it actually serializes the things put in.
 
-Here is technique to have in mind where std::variant will save a lot of headache. Suppose you try to model something with multiple states:
+Here is technique to have in mind for when you architecture systems - suppose you try to model something with multiple states:
 
 [source]
 -------------------------------------------------------------------------------
@@ -159,13 +155,7 @@ struct Player {
 };
 -------------------------------------------------------------------------------
 
-I hope it speaks for itself as to the advantages it offers.
-
-== Closing bits
-
-Linked before above, but Visual Studio is preparing a new version (confusingly codenamed “15” – yeah the 2015 one is internal version 14). It will have a lot of improvements compiler wise – they are rewriting major portions of it, so it will support everything discussed here. You can check previews of it already.
-
-Speaking of VS you can vote to request a major improvement of its debugger: support for IntelliTrace.
+I hope this speaks for itself as to the advantages it offers.
 
 Until next time, +
 Valentin
