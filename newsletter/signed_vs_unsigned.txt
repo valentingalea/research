@@ -1,15 +1,14 @@
-= Issue #11
+include::style.inline.txt[]
 
-Hi all,
+=== Signed vs Unsigned - the great battle that everybody is fighting without knowing it
 
-This one is a bit late due to a busy schedule and sickness  I plan to issue these more frequently and cover more non-advanced material [last famous words].
+When it comes to integers, C++ has two major flavours: `signed` and `unsigned`. While these can be intuitively easy to understand and use, they have some surprising aspects to them and weird corners.
 
-== Signed vs Unsigned - the great battle that everybody is fighting without knowing it
+There are different schools of thought nowadays that suggest the exclusive use of one to the detriment of the other. In order to understand these opposing fronts let's learn the basics better.
 
-When it comes to integers, C++ has 2 major flavours: signed and unsigned. While these can be intuitively easy to understand and use, they have some surprising aspects to them and weird corners. There are different schools of thought nowadays that suggest the exclusive use of one to the detriment of the other. In order to understand these opposing fronts let's learn the basics better.
+==== Unsigned
 
-=== Unsigned
-First off unsigned int types: they are more or less self-explanatory: they encode only positive integer numbers as a series of bits. You get to use all the bits available, making them very suitable for storing bit masks and encoding flags. They are able to represent the range 0 to 2^N-1, everything bigger will be truncated modulo 2^N. This last fact is very important, it's actually codified in the standard, therefore making unsigned int always behave predictably.
+First off `unsigned int` types: they are more or less self-explanatory: they encode only positive integer numbers as a series of bits. You get to use all the bits available, making them very suitable for storing bit masks and encoding flags. They are able to represent the range 0 to 2^N-1^, everything bigger will be truncated modulo 2^N^. This last fact is very important, it's actually codified in the standard, therefore making `unsigned int` always behave predictably.
 
 The actual encoding is straightforward base 2 representation:
 
@@ -26,23 +25,23 @@ Consider this:
 [source]
 for (unsigned int i = size - 1; i >= 0; i--)
 
-What happens at the edge case when size is 0? Disaster, because it will wrap around to UINT_MAX (max value possible, when all the bits are set to 1)! This kind of loops should be avoided. Also don't bother with just greater than comparisons, because they will always be true! Normally compilers are quick to point this out via warnings.
 
 [source]
-unsigned int z = 0;                // bits: 0000 0000 0000 0000
-unsigned int y = -1 -> 4294967295; // bits: 1111 1111 1111 1111
+unsigned int z = 0; // bits: 0000 0000 0000 0000
+unsigned int y = -1 // bits: 1111 1111 1111 1111 (actual value: 4294967295)
 
-=== Signed
-Let's see signed integers now. These are enabled by default when you only use they keyword "int" and true to their name they can represent numbers both positive and negative. There are various ways to encode a negative number into a finite set of bits but the most used one and the de-facto standard is two's complement.
+==== Signed
 
-The two's complement of an N-bit number is defined as the complement with respect to 2N; in other words, it is the result of subtracting the number from 2N. A handy method for obtaining the two complement from a given bits input is to get the one's complement (which is just inverting every bit) and then adding 1. Let's see some examples - using char instead of int simply because it has fewer overall bits:
+Let's see `signed` integers now. These are enabled by default when you only use the keyword `int` and true to their name they can represent numbers both positive and negative. There are various ways to encode a negative number into a finite set of bits but the most used one and the de-facto standard is two's complement.
+
+The two's complement of an N-bit number is defined as the complement with respect to 2N; in other words, it is the result of subtracting the number from 2N. A handy method for obtaining the two complement from a given bits input is to get the one's complement (which is just inverting every bit) and then adding 1. Let's see some examples - using `char` instead of `int` simply because it has fewer overall bits:
 
 [source]
 signed char s = 25;   // same as unsigned: 0001 1001
 signed char s = -25;  // invert the unsigned variant: 1110 0110; add 1: 1110 0111
 signed char s = -127; // bits: 1000 0001 = -1*2^7 + 1*2^0 
 
-Overflow and underflow happen when you are out of bits, when you try to represent things smaller than -2^N-1 or greater than (2^N-1)-1. The trouble is that there are no actual rules for this, signed overflow is actual Undefined Behaviour!
+Overflow and underflow happen when you are out of bits, when you try to represent things smaller than -2^N-1^ or greater than (2^N-1^)-1. The trouble is that there are no actual rules for this, signed overflow is actual _Undefined Behaviour_!
 
 [source]
 int sum(int x, int y)
@@ -50,25 +49,26 @@ int sum(int x, int y)
 	return x + y;
 }
 
-If the result is greater than INT_MAX then who knows what will happen calling this function: it could work somehow, it could crash, it could reveal the location of Noah's Ark! Actually some compilers knowingly take advantage of this for optimizations: they assume overflow won't happen and they can then more easily transform operations around.
+If the result is greater than `INT_MAX` then who knows what will happen calling this function: it could work somehow, it could crash, it could reveal the location of Noah's Ark! Actually some compilers knowingly take advantage of this for optimizations: they assume overflow won't happen and they can then more easily transform operations around.
 
-Don't make a mix of it!
-But wait, the real problems begin when you combine unsigned and signed in the same expressions - be it arithmetic or comparisons.
+==== Don't make a mix of it
+
+Just wait, the real problems begin when you combine `unsigned` and `signed` in the same expressions - be it arithmetic or comparisons.
 
 [source]
 int x = -1;
 unsigned y = 1;
 bool weird = x < y; // wanna bet what the answer is?
 
-This is all due to complicated conversion rules inherited from C and integer promotion. Usually things will get promoted to unsigned in ways that you might not expect and create hidden gotchas. During expression evaluation, smaller (aka narrower) types are promoted to larger (as in wider) ones to avoid overflow and to generally be faster. Follow these links for horror stories examples. 
+This is all due to complicated conversion rules inherited from C and integer promotion. Usually things will get promoted to `unsigned` in ways that you might not expect and create hidden gotchas. During expression evaluation, smaller (aka narrower) types are promoted to larger (as in wider) ones to avoid overflow and to generally be faster.
 
-Normally programmers know the types they are working with so you might think mixing is not that common but working with API's quickly muddies the water. The most infamous is size_t, the type used in a lot of Standard Library stuff. It's actually the type returned by the sizeof operator and it's unsigned by definition.
+Normally programmers know the types they are working with so you might think mixing is not that common but working with API's quickly muddies the waters. The most infamous is `size_t`, the type used in a lot of Standard Library stuff. It's actually the type returned by the `sizeof` operator and it's unsigned by definition.
 
-Conclusions
+==== Conclusions
 
-* Avoid mixing signed and unsigned – the conversion rules are counter-intuitive and potentially problematic. Manually convert with casts when necessary
-* If you choose signed (and sometimes you have to: 3D points, coordinates etc) keep in mind the overflow possibilities – when multiplying large values for ex
-* Unsigned is safer behaviour wise if you mind the less than 0 traps
+* Avoid mixing `signed` and `unsigned` - the conversion rules are counter-intuitive and potentially problematic. Manually convert with casts when necessary
+* If you choose `signed` (and sometimes you have to: 3D points, coordinates etc) keep in mind the overflow possibilities - when multiplying large values for ex.
+* `unsigned` is safer behaviour wise if you mind the less than 0 traps
 
 Until next time, +
 Valentin
