@@ -4,7 +4,7 @@ include::style.inline.txt[]
 
 As an experiment I tried to see if the usual Unreal Engine 4 containers `TArray`, `TDoubleLinkList`, `TMap` etc work with STL algorithms like `std::sort` and `std::find_if`. Spoiler alert: not really!
 
-First off, what does it take for a specific container to be eligible as input to STL algorithm? It needs to provide iterator support: have either `.begin()` and `.end()` member function or equivalent global functions. Obviously iterator classes need to exists which in essence means structures that support traversal operations like \+\+, \+= as well as dereferencing operators. UE4 implemented some of these because they support the C\+\+11 range-for and that basically forces you to have begin(), end() and ++.
+First off, what does it take for a specific container to be eligible as input to STL algorithm? It needs to provide iterator support: have either `.begin()` and `.end()` member function or equivalent global functions. Obviously iterator classes need to exists which in essence means structures that support traversal operations like \+\+, \+= as well as dereferencing operators. UE4 implemented some of these because they support the C\+\+11 range-for and that basically forces you to have `begin()`, `end()` and ++.
 
 The problem is that the support is bare bones, not much more than the mentioned requirements for ranged for. The couple of iterator classes that exist (`TIndexedContainerIterator`, `TCheckedPointerIterator`, etc) are not complete so while this will work:
 
@@ -21,12 +21,12 @@ It will fail with some cryptic template message that ultimately means Epic didn'
 
 === Improve code readability by leveraging the type system
 
-We should always strive to write descriptive and intuitive interfaces and function signatures. For example what does this do?
+We should always strive to write descriptive and intuitive interfaces and function signatures. For example, what does this do?
 
 [source]
 void f(int, int);
 
-Contrived example? Not far for production code sometimes... Ok we can do better:
+Contrived example? Not far from production code sometimes... Ok we can do better:
 
 [source]
 void draw_rectangle(int, int);
@@ -41,7 +41,7 @@ That's better right? Yes, but there are problems elsewhere as well, let's now lo
 [source]
 draw_rectangle(5, 6);
 
-Without knowing the function signature would you be able to judge what those number mean? Usually yes, but how about if we mess the order? The `6` was supposed to be width, not the height! The compiler cannot help you with this one.
+Without knowing the function signature would you be able to judge what those numbers mean? Usually yes, but how about if we mess the order? The `6` was supposed to be the width, not the height! The compiler cannot help you with this one.
 
 Another bad example is:
 
@@ -128,7 +128,7 @@ MyVector v(5, MyVector::Reserve());
 
 Those types are just unused dummies with the sole purpose to help overload resolution. So the general idea here is to not propagate "naked" int, float, arrays etc everywhere, but instead try to wrap them in things that make semantic sense. Being explicit (without going into verbose) is always a good thing.
 
-Another example: wrapping pointers in a simple class that expresses (and optionally checks) that the pointer cannot be null:
+Another example: wrapping a pointer in a simple class that expresses (and optionally checks) that it should always be valid:
 
 [source]
 void do_work(not_null<char *> data);
