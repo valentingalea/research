@@ -158,4 +158,4 @@ struct Player {
 I hope this speaks for itself as to the advantages it offers.
 
 Until next time, +
-Valentin
+Valentin Galea

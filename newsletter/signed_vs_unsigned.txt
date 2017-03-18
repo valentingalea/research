@@ -71,4 +71,4 @@ Normally programmers know the types they are working with so you might think mix
 * `unsigned` is safer behaviour wise if you mind the less than 0 traps
 
 Until next time, +
-Valentin
+Valentin Galea

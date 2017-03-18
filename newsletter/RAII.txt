@@ -156,4 +156,4 @@ void do_work()
 A system like this is actually quite easy to implement; for a nice 10 lines of code version see http://the-witness.net/news/2012/11/scopeexit-in-c11/[the one from The Witness/Braid guys]. A more involved, "official" implementation is maintained https://github.com/facebook/folly/blob/master/folly/ScopeGuard.h[by Facebook].
 
 Until next time, +
-Valentin
+Valentin Galea

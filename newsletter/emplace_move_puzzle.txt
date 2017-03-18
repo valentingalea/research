@@ -104,4 +104,4 @@ struct Widget
 Better yet: when possible don't write anything! Use the http://en.cppreference.com/w/cpp/language/rule_of_three[Rule of 0].
 
 Until next time, +
-Valentin
+Valentin Galea
