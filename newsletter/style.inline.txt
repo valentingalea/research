@@ -4,6 +4,18 @@
 pre {
 	background-color: #F2F2F0;
 	color: #3b3b3b;
+	
+	padding: 10px;
+
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;	
+}
+
+.node-unpublished {
+	background: none!important;
 }
 </style>
 ++++++++++++++++++++++++++++++++++++++
