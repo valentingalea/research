@@ -1,0 +1,80 @@
+Hi all,
+
+let's kick things off for this edition with some big news:
+
+=== C++17 is final
+
+The International Organization for Standardization (ISO) C\++ committee has announced the C++17 standard is complete. All that remains now is that our beloved Visual Studio implements it! In fairness they are off for a great start: the new 2017 edition is out and it implements quite a number of the new stuff, with more coming in the future updates. Grab the latest (Update 1) https://www.visualstudio.com/vs/cplusplus/[here].
+
+Let's quickly over over some of the new features - the more interesting one for game dev:
+
+==== `if` statement with initializer
+
+It is possible now to have initializers in 'if' and 'switch' statements!
+
+[source]
+if (init; condition)
+switch (init; condition)
+
+This should make easier a technique that people working with UE4 code surely have came across - and they either hated it or loved it:
+
+[source]
+if (auto world = GetWorld()) ...
+
+At first this looks like a typo, but is actually legitimate and contains an implicit boolean check. We can make that check more explicit:
+
+[source]
+if (auto world = GetWorld(); world != nullptr) ...
+
+Of course this is useful for more involved cases, and it also makes sure the new declared variable is properly scoped:
+
+[source]
+if (auto cam = CameraManager->ViewTarget.Target; cam->HasActorBegunPlay())
+	// ... variable exist here
+else
+	// ... and only here
+	
+==== Structured bindings
+
+This is basically syntactic sugar that should make returning multiple values from functions more attractive and easier. In a nutshell:
+
+[source]
+tuple<T1, T2, T3> func(/*...*/) { /*...*/ return { a, b, c }; }
+auto [x, y, z] = func(); // x has type T1, y has type T2, z has type T3
+
+In case you don't use tuple, it works for regular structures as well:
+
+[source]
+-------------------------------------------------------------------------------
+struct mystruct { 
+	int i; 
+	string s;
+	double d;
+};
+mystruct s = { 1, "xyzzy"s, 3.14 };
+
+auto [x, y, z] = s; // types are: int, string, double
+-------------------------------------------------------------------------------
+
+It also works with arrays:
+
+[source]
+int array[] = { 5, 7, 8, 9 };
+auto [x, y, z, w] = array;
+
+One thing to note is that these new auto variables are always references!
+
+==== Lots of libray additions
+
+We get:
+
+* Filesystem - portable interaction with directories and files (listing directory contents, moving files, etc.)
+* Parallelism - a lot of the std:: algorithms can take an extra argument that can specify multithreaded execution policy
+* `string_view` - working with strings and char pointers but not owning them. Very useful for when you mainly you pass along and reference strings
+* `optional` and `variant` - we talked about these in a previous newsletter
+* `any` - a generalization of variant, you can now store `std::vector` of multiple item types
+* new memory resources and a polymorphic allocator - this will only be of interest to Core-Tech
+* `std::byte` - finally, right?
+
+Until next time,
+Valentin
