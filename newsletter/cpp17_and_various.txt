@@ -4,9 +4,9 @@ let's kick things off for this edition with some big news:
 
 === C++17 is final
 
-The International Organization for Standardization (ISO) C\++ committee has announced the C++17 standard is complete. All that remains now is that our beloved Visual Studio implements it! In fairness they are off for a great start: the new 2017 edition is out and it implements quite a number of the new stuff, with more coming in the future updates. Grab the latest (Update 1) https://www.visualstudio.com/vs/cplusplus/[here].
+The International Organization for Standardization (ISO) C\++ committee has announced the C++17 standard is complete. All that remains now is that our beloved Visual Studio implements it! In fairness they are off to a great start: the new 2017 edition is out and it implements quite a number of new features, with more coming in the future updates. Grab the latest (Update 1) https://www.visualstudio.com/vs/cplusplus/[here].
 
-Let's quickly over over some of the new features - the more interesting one for game dev:
+Let's quickly over over some of the new stuff - the more interesting things for game dev:
 
 ==== `if` statement with initializer
 
@@ -51,9 +51,9 @@ struct mystruct {
 	string s;
 	double d;
 };
-mystruct s = { 1, "xyzzy"s, 3.14 };
+auto func() { return { 1, "xyzzy"s, 3.14 }; }
 
-auto [x, y, z] = s; // types are: int, string, double
+auto [x, y, z] = func(); // types are: int, string, double
 -------------------------------------------------------------------------------
 
 It also works with arrays:
@@ -75,6 +75,31 @@ We get:
 * `any` - a generalization of variant, you can now store `std::vector` of multiple item types
 * new memory resources and a polymorphic allocator - this will only be of interest to Core-Tech
 * `std::byte` - finally, right?
+
+Courotines and modules didn't make it in, but they are available as previews in Visual Studio 2015 and 2017 for anyone who is interested.
+
+Let's switch gears and cover some general topics that I came across during day to day work in the last month or so.
+
+=== Implementing relational operators
+
+TODO:
+
+=== Singletons
+
+You should try hard to avoid using the singleton (anti)pattern. If you really must do - this is the best way to achieve it:
+
+[source]
+Singleton& instance()
+{
+	static Singleton s;
+	return s;
+}
+
+This was first shown by Scott Meyers and since C++11 it's thread-safe. Don't mess around with global variables, pointers and such - you will open the door to a lot of gotchas.
+
+=== Agreggate initialisation
+
+TODO:
 
 Until next time,
 Valentin
