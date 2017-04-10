@@ -80,9 +80,45 @@ Courotines and modules didn't make it in, but they are available as previews in 
 
 Let's switch gears and cover some general topics that I came across during day to day work in the last month or so.
 
-=== Implementing relational operators
+=== Implementing arithmetic and relational operators
+
+Most often than not, there comes the need to have user define operators. These can be aritmethic, relational (for ex. equality tests for custom objects), array access, pointer manipulation, boolean etc.
+
+There are two kinds of operators: unary (like `=`, `&`, `+=` etc) and binary (like in `==`, `+`, `/`) etc. The diffence is down to how many inputs they take when evaluating an expression.
+
+We will concentrate only on the binary ones. These can be implemented both as member functions of their underlying type:
+
+[source]
+-------------------------------------------------------------------------------
+struct Point
+{
+	float x, y;
+	
+	// method 1
+	Point operator+(const Point &rhs);
+	
+	// method 2
+	friend Point operator+(const Point &lhs, const Point &rhs);
+};
+-------------------------------------------------------------------------------
+
+or as free functions:
+
+[source]
+struct Point
+{
+	float x, y;	
+};
+
+// method 3
+Point operator+(const Point &lhs, const Point &rhs);
 
 TODO:
+* explain the difference - symetry
+* explain friend and why it matters
+* gotchas like short circuit
+* why the lhs non const?
+* how arithmetic is based on += etc and relational on == and <
 
 === Singletons
 
@@ -95,11 +131,7 @@ Singleton& instance()
 	return s;
 }
 
-This was first shown by Scott Meyers and since C++11 it's thread-safe. Don't mess around with global variables, pointers and such - you will open the door to a lot of gotchas.
-
-=== Agreggate initialisation
-
-TODO:
+This was first shown by Scott Meyers and since C++11 it's thread-safe by default. Don't mess around with global variables, pointers and such - you will open the door to a lot of gotchas.
 
 Until next time,
 Valentin
