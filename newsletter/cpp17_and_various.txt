@@ -1,12 +1,14 @@
+include::style.inline.txt[]
+
 Hi all,
 
 let's kick things off for this edition with some big news:
 
 === C++17 is final
 
-The International Organization for Standardization (ISO) C\++ committee has announced the C++17 standard is complete. All that remains now is that our beloved Visual Studio implements it! In fairness they are off to a great start: the new 2017 edition is out and it implements quite a number of new features, with more coming in the future updates. Grab the latest (Update 1) https://www.visualstudio.com/vs/cplusplus/[here].
+The International Organization for Standardization (ISO) C\++ committee has announced the C++17 standard is complete. All that remains now is that our beloved Visual Studio implements it! In fairness they are off to a great start: the new 2017 edition is out and it covers quite a number of the new features, with more coming in the future updates. Grab the latest (Update 1) https://www.visualstudio.com/vs/cplusplus/[here].
 
-Let's quickly over over some of the new stuff - the more interesting things for game dev:
+Let's quickly go over some of the new stuff - the more interesting things for game dev:
 
 ==== `if` statement with initializer
 
@@ -16,12 +18,12 @@ It is possible now to have initializers in 'if' and 'switch' statements!
 if (init; condition)
 switch (init; condition)
 
-This should make easier a technique that people working with UE4 code surely have came across - and they either hated it or loved it:
+This should make easier a technique that people working with UE4 code surely have come across - and they either hated it or loved it:
 
 [source]
 if (auto world = GetWorld()) ...
 
-At first this looks like a typo, but is actually legitimate and contains an implicit boolean check. We can make that check more explicit:
+At first, this looks like a typo, but is actually legitimate and contains an implicit boolean check. We can make that check more explicit:
 
 [source]
 if (auto world = GetWorld(); world != nullptr) ...
@@ -33,7 +35,7 @@ if (auto cam = CameraManager->ViewTarget.Target; cam->HasActorBegunPlay())
 	// ... variable exist here
 else
 	// ... and only here
-	
+
 ==== Structured bindings
 
 This is basically syntactic sugar that should make returning multiple values from functions more attractive and easier. In a nutshell:
@@ -72,19 +74,19 @@ We get:
 * Parallelism - a lot of the std:: algorithms can take an extra argument that can specify multithreaded execution policy
 * `string_view` - working with strings and char pointers but not owning them. Very useful for when you mainly you pass along and reference strings
 * `optional` and `variant` - we talked about these in a previous newsletter
-* `any` - a generalization of variant, you can now store `std::vector` of multiple item types
+* `any` - a generalisation of variant, you can now store `std::vector` of multiple item types
 * new memory resources and a polymorphic allocator - this will only be of interest to Core-Tech
 * `std::byte` - finally, right?
 
 Courotines and modules didn't make it in, but they are available as previews in Visual Studio 2015 and 2017 for anyone who is interested.
 
-Let's switch gears and cover some general topics that I came across during day to day work in the last month or so.
+Let's switch Gears and cover some general topics that I came across during day to day work in the last month or so.
 
 === Implementing arithmetic and relational operators
 
-Most often than not, there comes the need to have user define operators. These can be aritmethic, relational (for ex. equality tests for custom objects), array access, pointer manipulation, boolean etc.
+Most often than not, there comes the need to have user defined operators. These can be arithmetic, relational (for ex. equality tests for custom objects), array access, pointer manipulation, boolean etc.
 
-There are two kinds of operators: unary (like `=`, `&`, `+=` etc) and binary (like in `==`, `+`, `/`) etc. The diffence is down to how many inputs they take when evaluating an expression.
+There are two kinds of operators: unary (like `=`, `&`, `+=` etc) and binary (like in `==`, `+`, `/`) etc. The difference is down to how many inputs they take when evaluating an expression.
 
 We will concentrate only on the binary ones. These can be implemented both as member functions of their underlying type:
 
@@ -93,32 +95,50 @@ We will concentrate only on the binary ones. These can be implemented both as me
 struct Point
 {
 	float x, y;
-	
+
 	// method 1
-	Point operator+(const Point &rhs);
-	
+	Point operator+(const Point &rhs) { /*...*/ }
+
 	// method 2
-	friend Point operator+(const Point &lhs, const Point &rhs);
+	friend Point operator+(const Point &lhs, const Point &rhs) { /*...*/ }
 };
 -------------------------------------------------------------------------------
 
 or as free functions:
 
 [source]
+-------------------------------------------------------------------------------
 struct Point
 {
-	float x, y;	
+	float x, y;
 };
 
 // method 3
 Point operator+(const Point &lhs, const Point &rhs);
+-------------------------------------------------------------------------------
 
-TODO:
-* explain the difference - symetry
-* explain friend and why it matters
-* gotchas like short circuit
-* why the lhs non const?
-* how arithmetic is based on += etc and relational on == and <
+You might wonder what's the difference between method 1 and 2, and also what's the meaning of the `friend` keyword. First of, in method 1 you have the left side always fixed to the same type, whereas in the other you are free to mix things up, even having different argument types to the operator, thus allowing more usage cases.
+
+The `friend` specifier normally allows a function to access private members of a class, which in this example is not really needed, but it's useful. Also by declaring like that - in the class body - the operator non-member function is implicitly `inline`.
+
+Method 3 then is not that different, it's just outside the scope of the class, being a "true" non-member (the body can be declared elsewhere). It can be `friend`-ed as well and participates in all overload lookups.
+
+You can implement a lot of the binary ops via their equivalent unary ones. For example, `+` can be very easy piggybacked on top of `+=` and so on.
+
+The same stands for the relational operators. Pretty much all of them can be derived just from `==` and `<` like so:
+
+[source]
+-------------------------------------------------------------------------------
+bool operator< (const X& lhs, const X& rhs){ /* do actual comparison */ }
+bool operator> (const X& lhs, const X& rhs){ return rhs < lhs; }
+bool operator<=(const X& lhs, const X& rhs){ return !(lhs > rhs); }
+bool operator>=(const X& lhs, const X& rhs){ return !(lhs < rhs); }
+/* etc... */
+
+bool operator==(const X& lhs, const X& rhs){ /* do actual comparison */ }
+bool operator!=(const X& lhs, const X& rhs){ return !(lhs == rhs); }
+/* etc... */
+-------------------------------------------------------------------------------
 
 === Singletons
 
@@ -133,5 +153,5 @@ Singleton& instance()
 
 This was first shown by Scott Meyers and since C++11 it's thread-safe by default. Don't mess around with global variables, pointers and such - you will open the door to a lot of gotchas.
 
-Until next time,
+Until next time, +
 Valentin
