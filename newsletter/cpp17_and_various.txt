@@ -8,7 +8,7 @@ let's kick things off for this edition with some big news:
 
 The International Organization for Standardization (ISO) C\++ committee has announced the C++17 standard is complete. All that remains now is that our beloved Visual Studio implements it! In fairness they are off to a great start: the new 2017 edition is out and it covers quite a number of the new features, with more coming in the future updates. Grab the latest (Update 1) https://www.visualstudio.com/vs/cplusplus/[here].
 
-Let's quickly go over some of the new stuff - the more interesting things for game dev:
+I'll quickly go over some of the new stuff - the more interesting things for game dev:
 
 ==== `if` statement with initializer
 
@@ -23,7 +23,7 @@ This should make easier a technique that people working with UE4 code surely hav
 [source]
 if (auto world = GetWorld()) ...
 
-At first, this looks like a typo, but is actually legitimate and contains an implicit boolean check. We can make that check more explicit:
+At first, this looks like a typo, but is actually legitimate and contains an implicit boolean check. We can now make that check more explicit:
 
 [source]
 if (auto world = GetWorld(); world != nullptr) ...
@@ -66,19 +66,19 @@ auto [x, y, z, w] = array;
 
 One thing to note is that these new auto variables are always references!
 
-==== Lots of libray additions
+==== Lots of library additions
 
 We get:
 
 * Filesystem - portable interaction with directories and files (listing directory contents, moving files, etc.)
-* Parallelism - a lot of the std:: algorithms can take an extra argument that can specify multithreaded execution policy
+* Parallelism - a lot of the `std::` algorithms can take an extra argument that can specify multithreaded execution policy
 * `string_view` - working with strings and char pointers but not owning them. Very useful for when you mainly you pass along and reference strings
 * `optional` and `variant` - we talked about these in a previous newsletter
 * `any` - a generalisation of variant, you can now store `std::vector` of multiple item types
 * new memory resources and a polymorphic allocator - this will only be of interest to Core-Tech
 * `std::byte` - finally, right?
 
-Courotines and modules didn't make it in, but they are available as previews in Visual Studio 2015 and 2017 for anyone who is interested.
+Coroutines and modules didn't make it in, but they are available as previews in Visual Studio 2015 and 2017 for anyone who is interested.
 
 Let's switch Gears and cover some general topics that I came across during day to day work in the last month or so.
 
@@ -117,7 +117,7 @@ struct Point
 Point operator+(const Point &lhs, const Point &rhs);
 -------------------------------------------------------------------------------
 
-You might wonder what's the difference between method 1 and 2, and also what's the meaning of the `friend` keyword. First of, in method 1 you have the left side always fixed to the same type, whereas in the other you are free to mix things up, even having different argument types to the operator, thus allowing more usage cases.
+You might wonder what's the difference between method 1 and 2, and also what's the meaning of the `friend` keyword. First off, in method 1 you have the left side always fixed to the same type, whereas in the other you are free to mix things up, even having different argument types to the operator, thus allowing more usage cases.
 
 The `friend` specifier normally allows a function to access private members of a class, which in this example is not really needed, but it's useful. Also by declaring like that - in the class body - the operator non-member function is implicitly `inline`.
 
@@ -142,7 +142,7 @@ bool operator!=(const X& lhs, const X& rhs){ return !(lhs == rhs); }
 
 === Singletons
 
-You should try hard to avoid using the singleton (anti)pattern. If you really must do - this is the best way to achieve it:
+You should try hard to avoid using the singleton (anti)pattern. Who am I kidding – we use it all the time! :( Still, this is one of the best way to implement it:
 
 [source]
 Singleton& instance()
