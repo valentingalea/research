@@ -1,0 +1,184 @@
+= The Badlands of C++ : Professional Game Development
+
+Who am I
+--------
+TODO: logos for Asphalt, Splinter Cell, Transformers, Gears of War (both)
+
+What I won't talk about
+-----------------------
+* Scripting languages / visual scripting
+- normally AAA games supplement the C++ with a simpler language for gameplay and level scripting: Lua, Python or bespoke
+- worse: visual scripting spaghetti
+* Tools
+- these can be written in C++, but a lot of them are in C# or Python
+* Build / Package of game data
+- a nightmare on its own
+
+It's a secret
+-------------
+TODO: image: zelda it's a secret
+
+For obvioulsy reason, AAA development is covered in secrecy, source code included.
+
+`id software` notably broke the trend and released the source code of all their _Doom_ and _Quake_ games.
+
+The rest of the industry didn't follow suit. Even `id` stopped after being aquired by the publisher Bethesda.
+
+Some of the modern AAA game engines like _Unreal Engine 4_ and _CryEngine_ changed their licensing and the're open now.
+
+TODO: disclamer: only what I know / why only show Unreal
+
+A glimpse of good
+-----------------
+TODO: source snippets from Doom 3
+
+A glimpse of bad
+----------------
+TODO: https://twitter.com/FioraAeterna/status/839174643218960384
+
+TODO: ask John for worse UE4
+
+LOC
+---
+AAA studios can be hundreds of people across various continents, that very rarely share resources, so the amount of code quickly skyrockets.
+
+Factor in the _legacy_ of francize games and sequels.
+
+TODO: some examples https://youtu.be/qYN6eduU06s?t=166 - where to find others?
+
+Philosophy
+----------
+Games need to run on
+
+* at least 30 Fps - 33Hz per frame
+* 60 FPS or more being very desirable (obligatory for multiplayer) - 16Hz per frame
+
+Everything is centered around achieving the frame time and optimizations.
+
+Stability can be sacrificed. Concern for uptime limited.
+
+Platform
+--------
+By far and large Windows centric development - even for consoles.
+
+Microsoft Visual Studio is overwhelmingly used. Sometimes very old versions.
+
+GCC rarely - for servers.
+TODO: clang for PS4?
+
+Platform (2)
+------------
+Because of this compilation can be dreadfully slow. 
+
+End result usually a single executable - size is ridiculous.
+
+TODO: unity builds
+
+TODO: distributed compilation: FastBuild or Incredibuild
+
+Flavours of C++
+---------------
+Tradionally was very C++98 but by now C++11 is baseline.
+
+C++14 in some select corners. The major engines help with this. UE4 is C++14
+
+TODO: plug for Splash
+
+(Anti)Templates
+---------------
+Generally there is a tendency to look down on templates. Changed now that compilers are better and features improved.
+
+Template-metaprogramming still is seen as black magic and highly discurouged.
+
+Because of project size, you can find isolated islands where they thrive.
+
+Some people will use macros where template function will be perfect adequate - TODO: show example
+
+OOP is king
+-----------
+All game code is universially OOP driven with polymorphism being lingua-franca.
+
+TODO: talk about 'Entity', 'Nodes' or 'Object's
+TODO: Components
+
+Alternatives to OOP
+-------------------
+Functional style 'monad' continuations are emerging
+
+TODO: more about ppl? and TCAsync
+
+STL
+---
+Very low adoption. Biggest reason is the allocators. TODO: expand on idea
+
+Bespoke containers as overwhelming alternative.
+
+EASTL as better alternative: TODO: expand and link
+
+TODO: SG14 ref
+
+STL (2)
+-------
+very rare use of algorithms. True generic programming - in Alex Stepanov way - rarely used. Smaller titles or gameplay code can use it.
+
+Every studio/engine reinvents the string wheel (no std::string) - In fairness prev impl were bad and specific needs for localisation
+
+Boost
+-----
+Very frowned upon and sometimes even laughed at - due to increase in compilation and difficulty to integrate.
+
+TODO: https://twitter.com/mitsuhiko/status/834550427488247809
+
+Exceptions
+----------
+Almost never used due to speed concerns.
+
+Usually (and always during dev) a hard exit is requested on error.
+
+That means errors in constructors cannot be handled. Usual solution is to have 'Create'/'Instantiate'/'Begin' etc
+
+RTTI
+----
+never used
+
+very rare use of dynamic_cast
+
+TODO: more
+
+Reflection
+----------
+A lot of games need a reflection sytem due to close live link with editors/tools.
+
+Custom, individual solutions - usually macro bases mini IDL's
+
+TODO: http://donw.io/post/reflection-cpp-1/
+
+TODO: show UE
+
+Patterns
+--------
+Singleton is the tool of choice TODO: expand
+
+TODO: Policies
+
+TODO: what others?
+
+Coding style
+------------
+Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)
+
+CamelCase rules the nation.
+
+K&R style of braces very frowned upon.
+
+Cutting corners
+---------------
+In the search for speed some dirty tricks are sometimes pulled.
+
+TODO: show some E3 hacks
+
+Closing
+-------
+TODO: some sort of conclusion
+
+TODO: We hire & promotion
