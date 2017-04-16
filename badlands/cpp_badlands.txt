@@ -2,7 +2,9 @@
 
 Who am I
 --------
-TODO: logos for Asphalt, Splinter Cell, Transformers, Gears of War (both)
+Valentin Galea - `@valentin_galea` - more than 10 years doing indie, mobile, AAA games
+
+image:img/vanity_plate.png["Games worked on", align="center"]
 
 What I won't talk about
 -----------------------
@@ -16,27 +18,34 @@ What I won't talk about
 
 It's a secret
 -------------
-TODO: image: zelda it's a secret
+image:img/zelda_secret.gif["Secret", align="center"]
 
 For obvioulsy reason, AAA development is covered in secrecy, source code included.
 
+It's a secret (2)
+-----------------
 `id software` notably broke the trend and released the source code of all their _Doom_ and _Quake_ games.
 
 The rest of the industry didn't follow suit. Even `id` stopped after being aquired by the publisher Bethesda.
 
+It's a secret (3)
+-----------------
 Some of the modern AAA game engines like _Unreal Engine 4_ and _CryEngine_ changed their licensing and the're open now.
 
-TODO: disclamer: only what I know / why only show Unreal
+.Disclamer
+For these reason I can talk only from my direct experience, and focus on UE4.
 
 A glimpse of good
 -----------------
-TODO: source snippets from Doom 3
+.Source code snippet from _Doom 3_
+image:img/doom3.png["Doom 3 src", align="center"]
 
 A glimpse of bad
 ----------------
-TODO: https://twitter.com/FioraAeterna/status/839174643218960384
+.Source code snippet from _CryEngine_
+image:img/cryengine.jpg["CryEngine 3 src", align="center"]
 
-TODO: ask John for worse UE4
+TODO: ask John for worst UE4
 
 LOC
 ---
@@ -61,10 +70,17 @@ Platform
 --------
 By far and large Windows centric development - even for consoles.
 
-Microsoft Visual Studio is overwhelmingly used. Sometimes very old versions.
+.Microsoft Visual Studio
+- is overwhelmingly used, almost de facto standard
+- sometimes very old versions
+- before C++11 lots of code depended on MSVC compiler quirks
 
-GCC rarely - for servers.
-TODO: clang for PS4?
+.GCC
+- more rarely used, on dedicated servers for ex.
+- some console compilers based on it (TODO: verify)
+
+.clang
+TODO: get info
 
 Platform (2)
 ------------
