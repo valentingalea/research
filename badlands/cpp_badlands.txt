@@ -4,7 +4,7 @@ Who am I
 --------
 Valentin Galea - `@valentin_galea` - more than 10 years doing indie, mobile, AAA games
 
-image:img/vanity_plate.png["Games worked on", align="center"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
 What I won't talk about
 -----------------------
@@ -18,7 +18,7 @@ What I won't talk about
 
 It's a secret
 -------------
-image:img/zelda_secret.gif["Secret", align="center"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
 
 For obvioulsy reason, AAA development is covered in secrecy, source code included.
 
@@ -38,12 +38,12 @@ For these reason I can talk only from my direct experience, and focus on UE4.
 A glimpse of good
 -----------------
 .Source code snippet from _Doom 3_
-image:img/doom3.png["Doom 3 src", align="center"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
 
 A glimpse of bad
 ----------------
 .Source code snippet from _CryEngine_
-image:img/cryengine.jpg["CryEngine 3 src", align="center"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
 
 TODO: ask John for worst UE4
 
@@ -66,31 +66,48 @@ Everything is centered around achieving the frame time and optimizations.
 
 Stability can be sacrificed. Concern for uptime limited.
 
-Platform
---------
+Platform - Compiler
+-------------------
 By far and large Windows centric development - even for consoles.
 
-.Microsoft Visual Studio
+.MSVC
 - is overwhelmingly used, almost de facto standard
-- sometimes very old versions
-- before C++11 lots of code depended on MSVC compiler quirks
+- sometimes quite old versions, by now 2013+
+- before C++11 lots of code depended on Microsoft quirks (SPEAKER: 2 phase lookup etc)
 
 .GCC
-- more rarely used, on dedicated servers for ex.
-- some console compilers based on it (TODO: verify)
+- rarely used on PC : mainly dedicated servers, or the odd Linux port
+- prev gen consoles had vendor specific variants (the switch to GPL v3 killed that) 
 
 .clang
-TODO: get info
+- Playstation 4 uses it exclusively (with LLVM backend)
 
-Platform (2)
-------------
-Because of this compilation can be dreadfully slow. 
+Platform - IDE
+--------------
+Again Microsoft drives it:
+
+.Visual Studio
+- used everywhere: PC, Xbox One, PS4
+- most used extention: Visual Assist X - only way to cope with code completion
+
+.Others
+- SN Systems: proprietary EDG front end for Sony until PS4
+- Metroworks CodeWarrior for Nintendo consoles
+- XCode - No :)
+
+Platform (continued)
+--------------------
+Compilation usually is dreadfully slow.
+
+Optimizations are on by default, rarely debug builds are interactive. TODO: various tricks
 
 End result usually a single executable - size is ridiculous.
 
-TODO: unity builds
+TODO: unity builds 
 
 TODO: distributed compilation: FastBuild or Incredibuild
+
+TODO: LTO (no much gains)
 
 Flavours of C++
 ---------------
