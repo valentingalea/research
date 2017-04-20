@@ -6,6 +6,11 @@ Valentin Galea - `@valentin_galea` - more than 10 years doing indie, mobile, AAA
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
+What I will talk about
+----------------------
+TODO: define AAA, put screenshots
+TODO: define indie, put screenshots
+
 What I won't talk about
 -----------------------
 * Scripting languages / visual scripting
@@ -15,6 +20,8 @@ What I won't talk about
 - these can be written in C++, but a lot of them are in C# or Python
 * Build / Package of game data
 - a nightmare on its own
+* Mobile game development
+- usually not in C++
 
 It's a secret
 -------------
@@ -45,7 +52,7 @@ A glimpse of bad
 .Source code snippet from _CryEngine_
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
 
-TODO: ask John for worst UE4
+TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
 
 LOC
 ---
