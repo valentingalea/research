@@ -6,26 +6,28 @@ Valentin Galea - `@valentin_galea` - more than 10 years doing mobile, indie and 
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
+Currently at Splash Damage, here in London.
+
 What I will talk about
 ----------------------
 [quote, Wikipedia]
 AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
 
-image:img/AAA.jpg["AAA games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="720"]
 
 What I will talk about (continued)
 ----------------------------------
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
-image:img/indie.jpg["indie games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/indie.jpg["indie games", align="center", width="720"]
 
 What I will talk about (continued)
 ----------------------------------
 [quote, Wikipedia]
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
-image:img/mobile.jpg["mobile games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="720"]
 
 What I will talk about (continued)
 ----------------------------------
@@ -56,7 +58,7 @@ image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/i
 For obvioulsy reason, AAA development is covered in secrecy, source code included.
 
 It's a secret (2)
------------------
+-----------
 `id software` notably broke the trend and released the source code of all their _Doom_ and _Quake_ games.
 
 The rest of the industry didn't follow suit. Even `id` stopped after being aquired by the publisher Bethesda.
@@ -66,7 +68,7 @@ It's a secret (3)
 Some of the modern AAA game engines like _Unreal Engine 4_ and _CryEngine_ changed their licensing and the're open now.
 
 .Disclamer
-For these reason I can talk only from my direct experience, and focus on UE4.
+For these reason I can talk only from my direct experience, and focus on `UE4`.
 
 A glimpse of good
 -----------------
@@ -78,26 +80,22 @@ A glimpse of bad
 .Source code snippet from _CryEngine_
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
 
-TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
-
-LOC
----
-AAA studios can be hundreds of people across various continents, that very rarely share resources, so the amount of code quickly skyrockets.
-
-Factor in the _legacy_ of francize games and sequels.
-
-TODO: some examples https://youtu.be/qYN6eduU06s?t=166 - where to find others?
+//TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
 
 Philosophy
 ----------
-Games need to run on
+Games need to run
 
-* at least 30 Fps - 33Hz per frame
-* 60 FPS or more being very desirable (obligatory for multiplayer) - 16Hz per frame
+* at least 30 Fps - 33 ms per frame
+* 60+ FPS very desirable (obligatory for multiplayer) - 16 ms per frame
 
-Everything is centered around achieving the frame time and optimizations.
+Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.
 
-Stability can be sacrificed. Concern for uptime limited.
+Stability can sometimes be sacrificed. (SPEAKER: a crash is forgiven if it doesn't corrupt the save data!)
+
+Concern for uptime is limited.
+
+Low latency but throughput more important - got to push millions of pixels to the screen!
 
 Platform - Compiler
 -------------------
@@ -110,7 +108,7 @@ By far and large Windows centric development - even for consoles.
 
 .GCC
 - rarely used on PC : mainly dedicated servers, or the odd Linux port
-- prev gen consoles had vendor specific variants (the switch to GPL v3 killed that) 
+- prev gen consoles had vendor specific variants
 
 .clang
 - Playstation 4 uses it exclusively (with LLVM backend)
@@ -121,113 +119,188 @@ Again Microsoft drives it:
 
 .Visual Studio
 - used everywhere: PC, Xbox One, PS4
-- most used extention: Visual Assist X - only way to cope with code completion
+- most common extention: Visual Assist X - only way to cope with code completion
 
 .Others
 - SN Systems: proprietary EDG front end for Sony until PS4
 - Metroworks CodeWarrior for Nintendo consoles
 - XCode - No :)
 
-Platform (continued)
---------------------
-Compilation usually is dreadfully slow.
+Project size/LOC
+----------------
+AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.
 
-Optimizations are on by default, rarely debug builds are interactive. TODO: various tricks
+Factor in the _legacy_ of francize games and sequels.
 
-End result usually a single executable - size is ridiculous.
+[quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
+_______
+Assassin's Creed Unity:
 
-TODO: unity builds 
+* 6.5 M C++ LOC for entire team code.
+* 9 M more C++ LOC from outside project.
 
-TODO: distributed compilation: FastBuild or Incredibuild
+Rainbow Six: Siege:
 
-TODO: LTO (no much gains)
+* 3.5 M C++ LOC for engine code from game team.
+* 4.5 M C++ LOC from Technology Group.
+_______
+
+Compilation
+-----------
+Compilation and linking are usually dreadfully slow.
+
+Optimizations are on by default, rarely debug builds are interactive.
+
+Various tricks:
+
+* `#pragma optimize` on/off "islands"
+* only specific modules are debug
+* mastery of reading optimized disassembly :)
+
+End result usually a single executable - size is ridiculous!
+
+Compilation (continued)
+-----------------------
+Some mitigation methods:
+
+.Unity builds
+Combine all or lots of source files into a couple of gigantic .cpp units
+
+.Distributed compilation
+Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
+
+.Throw hardware at it
+In a studio, programmers are spoiled: fastest CPU's, multiple SSD's etc
 
 Flavours of C++
 ---------------
-Tradionally was very C++98 but by now C++11 is baseline.
+Tradionally was very C\+\+98 but by now C++11 is baseline.
 
-C++14 in some select corners. The major engines help with this. UE4 is C++14
+C++14 in some select corners. The major engines help with this - `UE4` enables it by default.
 
-TODO: plug for Splash
+Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow.
 
-(Anti)Templates
----------------
-Generally there is a tendency to look down on templates. Changed now that compilers are better and features improved.
+At Splash Damage, we try to counter this by:
+
+* running a series of internal talks like "C++11/14 for game dev"
+* I run a newsletter about best practices and modern C++
+
+Templates
+---------
+Generally there is a tendency to look down on templates. Changing now that compilers are better and features improved.
 
 Template-metaprogramming still is seen as black magic and highly discurouged.
 
 Because of project size, you can find isolated islands where they thrive.
 
-Some people will use macros where template function will be perfect adequate - TODO: show example
+Some people will still use macros where `template` or `constexpr` functions will be perfectly adequate (SPEAKER: ugly ex I remember: overload eq ops for hashmap keys)
 
 OOP is king
 -----------
-All game code is universially OOP driven with polymorphism being lingua-franca.
+All game code is universally OOP driven, with polymorphism being lingua-franca. "What is a v-table?" is the most asked interview question!
 
-TODO: talk about 'Entity', 'Nodes' or 'Object's
-TODO: Components
+That's because Entity-Component-Systems are prevalent in gameplay code. Everything is a hierachy of `Entity`, `Node` or `Object`'s.
+
+Components do virtual `Update`, `Tick`, `Pump` or `Think`!
+
+Communication happens either via tight coupling or delegate/event systems (usually heavily macro'ed!) 
 
 Alternatives to OOP
 -------------------
-Functional style 'monad' continuations are emerging
+Functional style 'monad' continuations are emerging.
 
-TODO: more about ppl? and TCAsync
+Lots of systems like IO, saving/loading, rendering, services management are multithreaded - various paradigms:
+
+* home-grown async task libraries
+* Parallel Patterns Library (PPL) from Microsoft
+* Threading Building Blocks from Intel
+* very rarely the standard `future` and `promise` - usually every game engine has own equivalents
 
 STL
 ---
-Very low adoption. Biggest reason is the allocators. TODO: expand on idea
+Very low adoption. No game I know shipped with STL containers. Bespoke alternatives overwhelmingly used, due to:
 
-Bespoke containers as overwhelming alternative.
+* specific allocation needs (and poor support for allocators pre C++11)
+* associated (or percieved) bloat
 
-EASTL as better alternative: TODO: expand and link
+.EASTL from Electronic Arts
+A video game specific implementation of STL +
+https://github.com/electronicarts/EASTL
 
-TODO: SG14 ref
+.SG14 group
+Video games and embedded programming sub-group within the ISO C++ Standard's Study Group +
+Tries to propose new, optimized containers, data structures even language changes.
 
-STL (2)
--------
-very rare use of algorithms. True generic programming - in Alex Stepanov way - rarely used. Smaller titles or gameplay code can use it.
+STL (continued)
+---------------
+Very rare use of `algorithm`. True generic programming - in Alex Stepanov way - not used. (SPEAKER: mention Sean Parent's talk)
 
-Every studio/engine reinvents the string wheel (no std::string) - In fairness prev impl were bad and specific needs for localisation
+Every studio/engine reinvents the string wheel (so no `std::string`):
+
+* previous implementations were bad or made awkward choices (SPEAKER: copy on write on GCC)
+* specific localization needs - ties with game data
+
+The `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's.
 
 Boost
 -----
 Very frowned upon and sometimes even laughed at - due to increase in compilation and difficulty to integrate.
 
-TODO: https://twitter.com/mitsuhiko/status/834550427488247809
+TODO: image crop of: https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
+
+Sometimes cherry pick libraries with the `bcp` tool.
 
 Exceptions
 ----------
-Almost never used due to speed concerns.
+Almost never used due to speed penalties of `throw`-ing and `catch`-ing.
 
-Usually (and always during dev) a hard exit is requested on error.
+Usually (and always during dev time) a hard exit is requested on error.
 
-That means errors in constructors cannot be handled. Usual solution is to have 'Create'/'Instantiate'/'Begin' etc
+That means errors in constructors cannot be handled. Usual solution is to have 'Create'/'Instantiate'/'Begin' etc (SPEAKER: this is also due to GC and serialization)
+
+That's why people don't care or don't know about `noexcept`.
 
 RTTI
 ----
-never used
+Seldom used - normally turned off by default because it bloats the modules size.	
 
-very rare use of dynamic_cast
-
-TODO: more
+Very rare use of `dynamic_cast` - usually reimplemented manually via custom reflection.
 
 Reflection
 ----------
-A lot of games need a reflection sytem due to close live link with editors/tools.
+A lot of games have an involved reflection sytem due to:
 
-Custom, individual solutions - usually macro bases mini IDL's
+* close live link with editors/tools: values inspection, code hot reload
+* serialization for loading/saving; versioning
+* network replication, RPC's
+* garbage collection
 
-TODO: http://donw.io/post/reflection-cpp-1/
+Custom, individual solutions:
 
-TODO: show UE
+* pre-processor based decorations that both annnote code and generate registration calls
+* template metaprogramming for same purpose
+* mini IDL's that generate additional cpp/h files
+
+Reflection (continued)
+---------------------
+Some examples:
+
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.png["reflection", align="center"]
+
+TODO: more
 
 Patterns
 --------
-Singleton is the tool of choice TODO: expand
+Common patterns use:
 
-TODO: Policies
+.Singleton
+Anti-pattern of choice. Spreads like plague because lots of systems usually have only 1 active representation: _Camera_, _Player_, _AI Manager_ etc
 
-TODO: what others?
+.Policy based design
+Example of usage: container allocators, rendering & drawing, game object composition 
+
+.Visitor
+To implement double dispatch.
 
 Coding style
 ------------
@@ -235,13 +308,9 @@ Every studio has a set of guidelines or a complete style. Some of them recommend
 
 CamelCase rules the nation.
 
-K&R style of braces very frowned upon.
+Namespaces are not prefered; instead everything has a game specific prefix: _CShooterComponent_, _CShooterObject_, _TShooterItem_ etc
 
-Cutting corners
----------------
-In the search for speed some dirty tricks are sometimes pulled.
-
-TODO: show some E3 hacks
+K&R (or "egyptian") style of braces very frowned upon - Allman is almost always used.
 
 Closing
 -------
