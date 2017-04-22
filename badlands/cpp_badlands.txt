@@ -2,14 +2,42 @@
 
 Who am I
 --------
-Valentin Galea - `@valentin_galea` - more than 10 years doing indie, mobile, AAA games
+Valentin Galea - `@valentin_galea` - more than 10 years doing mobile, indie and AAA games
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
 What I will talk about
 ----------------------
-TODO: define AAA, put screenshots
-TODO: define indie, put screenshots
+[quote, Wikipedia]
+AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
+
+image:img/AAA.jpg["AAA games", align="center", width="720"]
+
+What I will talk about (continued)
+----------------------------------
+[quote, Wikipedia]
+indie games [...] created without the financial support of a publisher
+
+image:img/indie.jpg["indie games", align="center", width="720"]
+
+What I will talk about (continued)
+----------------------------------
+[quote, Wikipedia]
+mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
+
+image:img/mobile.jpg["mobile games", align="center", width="720"]
+
+What I will talk about (continued)
+----------------------------------
+Most about AAA games because
+
+* have the most experience with
+* they are the most process driven
+* use C++ in very special and quirly ways (the purpose of the talk)
+
+Indie games dev shares some elements with the above
+
+Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++
 
 What I won't talk about
 -----------------------
@@ -20,8 +48,6 @@ What I won't talk about
 - these can be written in C++, but a lot of them are in C# or Python
 * Build / Package of game data
 - a nightmare on its own
-* Mobile game development
-- usually not in C++
 
 It's a secret
 -------------
