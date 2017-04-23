@@ -20,7 +20,7 @@ What I will talk about (continued)
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/indie.jpg["indie games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="720"]
 
 What I will talk about (continued)
 ----------------------------------
@@ -35,7 +35,7 @@ Most about AAA games because
 
 * have the most experience with
 * they are the most process driven
-* use C++ in very special and quirly ways (the purpose of the talk)
+* use C++ in very special and quirky ways (the purpose of the talk)
 
 Indie games dev shares some elements with the above
 
@@ -55,20 +55,20 @@ It's a secret
 -------------
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
 
-For obvioulsy reason, AAA development is covered in secrecy, source code included.
+For obviously reason, AAA development is covered in secrecy, source code included.
 
 It's a secret (2)
------------
+-----------------
 `id software` notably broke the trend and released the source code of all their _Doom_ and _Quake_ games.
 
-The rest of the industry didn't follow suit. Even `id` stopped after being aquired by the publisher Bethesda.
+The rest of the industry didn't follow suit. Even `id` stopped after being acquired by the publisher Bethesda.
 
 It's a secret (3)
 -----------------
-Some of the modern AAA game engines like _Unreal Engine 4_ and _CryEngine_ changed their licensing and the're open now.
+Some of the modern AAA game engines like _Unreal Engine 4_ and _CryEngine_ changed their licensing and they’re now open.
 
-.Disclamer
-For these reason I can talk only from my direct experience, and focus on `UE4`.
+.Disclaimer
+For these reason, I can talk only from my direct experience, and focus on `UE4`.
 
 A glimpse of good
 -----------------
@@ -115,11 +115,11 @@ By far and large Windows centric development - even for consoles.
 
 Platform - IDE
 --------------
-Again Microsoft drives it:
+Again, Microsoft drives it:
 
 .Visual Studio
 - used everywhere: PC, Xbox One, PS4
-- most common extention: Visual Assist X - only way to cope with code completion
+- most common extension: Visual Assist X - only way to cope with code completion
 
 .Others
 - SN Systems: proprietary EDG front end for Sony until PS4
@@ -172,9 +172,9 @@ Use solution like `FastBuild` or `Incredibuild` to effectively create compilatio
 .Throw hardware at it
 In a studio, programmers are spoiled: fastest CPU's, multiple SSD's etc
 
-Flavours of C++
+Flavors of C++
 ---------------
-Tradionally was very C\+\+98 but by now C++11 is baseline.
+Traditionally was very C\+\+98 but by now C++11 is baseline.
 
 C++14 in some select corners. The major engines help with this - `UE4` enables it by default.
 
@@ -187,9 +187,9 @@ At Splash Damage, we try to counter this by:
 
 Templates
 ---------
-Generally there is a tendency to look down on templates. Changing now that compilers are better and features improved.
+Generally, there is a tendency to look down on templates. Changing now that compilers are better and features improved.
 
-Template-metaprogramming still is seen as black magic and highly discurouged.
+Template-metaprogramming still is seen as black magic and highly discouraged.
 
 Because of project size, you can find isolated islands where they thrive.
 
@@ -221,7 +221,7 @@ STL
 Very low adoption. No game I know shipped with STL containers. Bespoke alternatives overwhelmingly used, due to:
 
 * specific allocation needs (and poor support for allocators pre C++11)
-* associated (or percieved) bloat
+* associated (or perceived) bloat
 
 .EASTL from Electronic Arts
 A video game specific implementation of STL +
@@ -268,7 +268,7 @@ Very rare use of `dynamic_cast` - usually reimplemented manually via custom refl
 
 Reflection
 ----------
-A lot of games have an involved reflection sytem due to:
+A lot of games have an involved reflection system due to:
 
 * close live link with editors/tools: values inspection, code hot reload
 * serialization for loading/saving; versioning
@@ -277,7 +277,7 @@ A lot of games have an involved reflection sytem due to:
 
 Custom, individual solutions:
 
-* pre-processor based decorations that both annnote code and generate registration calls
+* pre-processor based decorations that both annotate code and generate registration calls
 * template metaprogramming for same purpose
 * mini IDL's that generate additional cpp/h files
 
@@ -285,9 +285,19 @@ Reflection (continued)
 ---------------------
 Some examples:
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.png["reflection", align="center"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG["reflection", align="center"]
 
 TODO: more
+
+Coding style
+------------
+Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)
+
+CamelCase rules the nation.
+
+Namespaces are not preferred; instead everything has a game specific prefix: _CShooterComponent_, _CShooterObject_, _TShooterItem_ etc
+
+K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used.
 
 Patterns
 --------
@@ -302,18 +312,11 @@ Example of usage: container allocators, rendering & drawing, game object composi
 .Visitor
 To implement double dispatch.
 
-Coding style
-------------
-Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)
-
-CamelCase rules the nation.
-
-Namespaces are not prefered; instead everything has a game specific prefix: _CShooterComponent_, _CShooterObject_, _TShooterItem_ etc
-
-K&R (or "egyptian") style of braces very frowned upon - Allman is almost always used.
-
 Closing
 -------
-TODO: some sort of conclusion
+There you have it - a short survey of C++ in game development!
 
-TODO: We hire & promotion
+`@valentin_galea`
+
+Splash Damage is hiring! +
+http://www.splashdamage.com/careers
