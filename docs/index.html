@@ -3749,10 +3749,75 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <div class="sect1 slide">
 <h1 id="_who_am_i">Who am I</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Valentin Galea - <code>@valentin_galea</code> - more than 10 years doing indie, mobile, AAA games</p></div>
+<div class="paragraph"><p>Valentin Galea - <code>@valentin_galea</code> - more than 10 years doing mobile, indie and AAA games</p></div>
 <div class="paragraph"><p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png" alt="Games worked on" />
 </span></p></div>
+<div class="paragraph"><p>Currently at Splash Damage, here in London.</p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_what_i_will_talk_about">What I will talk about</h1>
+<div class="sectionbody">
+<div class="quoteblock">
+<div class="content">AAA games [&#8230;] informal classification used for video games with the highest development budgets and levels of promotion</div>
+<div class="attribution">
+&#8212; Wikipedia
+</div></div>
+<div class="paragraph"><p><span class="image">
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg" alt="AAA games" width="720" />
+</span></p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_what_i_will_talk_about_continued">What I will talk about (continued)</h1>
+<div class="sectionbody">
+<div class="quoteblock">
+<div class="content">indie games [&#8230;] created without the financial support of a publisher</div>
+<div class="attribution">
+&#8212; Wikipedia
+</div></div>
+<div class="paragraph"><p><span class="image">
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg" alt="indie games" width="720" />
+</span></p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_what_i_will_talk_about_continued_2">What I will talk about (continued)</h1>
+<div class="sectionbody">
+<div class="quoteblock">
+<div class="content">mobile games [&#8230;] played on a feature phone, smartphone, smartwatch, PDA, tablet computer</div>
+<div class="attribution">
+&#8212; Wikipedia
+</div></div>
+<div class="paragraph"><p><span class="image">
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg" alt="mobile games" width="720" />
+</span></p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_what_i_will_talk_about_continued_3">What I will talk about (continued)</h1>
+<div class="sectionbody">
+<div class="paragraph"><p>Most about AAA games because</p></div>
+<ul class="">
+<li>
+<span>
+have the most experience with
+</span>
+</li>
+<li>
+<span>
+they are the most process driven
+</span>
+</li>
+<li>
+<span>
+use C++ in very special and quirky ways (the purpose of the talk)
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>Indie games dev shares some elements with the above</p></div>
+<div class="paragraph"><p>Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -3809,21 +3874,21 @@ a nightmare on its own
 <div class="paragraph"><p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif" alt="Secret" />
 </span></p></div>
-<div class="paragraph"><p>For obvioulsy reason, AAA development is covered in secrecy, source code included.</p></div>
+<div class="paragraph"><p>For obviously reason, AAA development is covered in secrecy, source code included.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_it_8217_s_a_secret_2">It&#8217;s a secret (2)</h1>
 <div class="sectionbody">
 <div class="paragraph"><p><code>id software</code> notably broke the trend and released the source code of all their <em>Doom</em> and <em>Quake</em> games.</p></div>
-<div class="paragraph"><p>The rest of the industry didn&#8217;t follow suit. Even <code>id</code> stopped after being aquired by the publisher Bethesda.</p></div>
+<div class="paragraph"><p>The rest of the industry didn&#8217;t follow suit. Even <code>id</code> stopped after being acquired by the publisher Bethesda.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_it_8217_s_a_secret_3">It&#8217;s a secret (3)</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Some of the modern AAA game engines like <em>Unreal Engine 4</em> and <em>CryEngine</em> changed their licensing and the&#8217;re open now.</p></div>
-<div class="paragraph"><div class="title">Disclamer</div><p>For these reason I can talk only from my direct experience, and focus on UE4.</p></div>
+<div class="paragraph"><p>Some of the modern AAA game engines like <em>Unreal Engine 4</em> and <em>CryEngine</em> changed their licensing and they’re now open.</p></div>
+<div class="paragraph"><div class="title">Disclaimer</div><p>For these reason, I can talk only from my direct experience, and focus on <code>UE4</code>.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -3840,35 +3905,28 @@ a nightmare on its own
 <div class="paragraph"><div class="title">Source code snippet from <em>CryEngine</em></div><p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg" alt="CryEngine 3 src" />
 </span></p></div>
-<div class="paragraph"><p>TODO: ask John for worst UE4</p></div>
-</div>
-</div>
-<div class="sect1 slide">
-<h1 id="_loc">LOC</h1>
-<div class="sectionbody">
-<div class="paragraph"><p>AAA studios can be hundreds of people across various continents, that very rarely share resources, so the amount of code quickly skyrockets.</p></div>
-<div class="paragraph"><p>Factor in the <em>legacy</em> of francize games and sequels.</p></div>
-<div class="paragraph"><p>TODO: some examples <a href="https://youtu.be/qYN6eduU06s?t=166">https://youtu.be/qYN6eduU06s?t=166</a> - where to find others?</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_philosophy">Philosophy</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Games need to run on</p></div>
+<div class="paragraph"><p>Games need to run</p></div>
 <ul class="">
 <li>
 <span>
-at least 30 Fps - 33Hz per frame
+at least 30 Fps - 33 ms per frame
 </span>
 </li>
 <li>
 <span>
-60 FPS or more being very desirable (obligatory for multiplayer) - 16Hz per frame
+60+ FPS very desirable (obligatory for multiplayer) - 16 ms per frame
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>Everything is centered around achieving the frame time and optimizations.</p></div>
-<div class="paragraph"><p>Stability can be sacrificed. Concern for uptime limited.</p></div>
+<div class="paragraph"><p>Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.</p></div>
+<div class="paragraph"><p>Stability can sometimes be sacrificed. (SPEAKER: a crash is forgiven if it doesn&#8217;t corrupt the save data!)</p></div>
+<div class="paragraph"><p>Concern for uptime is limited.</p></div>
+<div class="paragraph"><p>Low latency but throughput more important - got to push millions of pixels to the screen!</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -3900,7 +3958,7 @@ rarely used on PC : mainly dedicated servers, or the odd Linux port
 </li>
 <li>
 <span>
-prev gen consoles had vendor specific variants (the switch to GPL v3 killed that)
+prev gen consoles had vendor specific variants
 </span>
 </li>
 </ul>
@@ -3916,7 +3974,7 @@ Playstation 4 uses it exclusively (with LLVM backend)
 <div class="sect1 slide">
 <h1 id="_platform_ide">Platform - IDE</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Again Microsoft drives it:</p></div>
+<div class="paragraph"><p>Again, Microsoft drives it:</p></div>
 <div class="title">Visual Studio</div><ul class="">
 <li>
 <span>
@@ -3925,7 +3983,7 @@ used everywhere: PC, Xbox One, PS4
 </li>
 <li>
 <span>
-most used extention: Visual Assist X - only way to cope with code completion
+most common extension: Visual Assist X - only way to cope with code completion
 </span>
 </li>
 </ul>
@@ -3949,102 +4007,267 @@ XCode - No :)
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_platform_continued">Platform (continued)</h1>
+<h1 id="_project_size_loc">Project size/LOC</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Compilation usually is dreadfully slow.</p></div>
-<div class="paragraph"><p>Optimizations are on by default, rarely debug builds are interactive. TODO: various tricks</p></div>
-<div class="paragraph"><p>End result usually a single executable - size is ridiculous.</p></div>
-<div class="paragraph"><p>TODO: unity builds</p></div>
-<div class="paragraph"><p>TODO: distributed compilation: FastBuild or Incredibuild</p></div>
-<div class="paragraph"><p>TODO: LTO (no much gains)</p></div>
+<div class="paragraph"><p>AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.</p></div>
+<div class="paragraph"><p>Factor in the <em>legacy</em> of francize games and sequels.</p></div>
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>Assassin&#8217;s Creed Unity:</p></div>
+<ul class="">
+<li>
+<span>
+6.5 M C++ LOC for entire team code.
+</span>
+</li>
+<li>
+<span>
+9 M more C++ LOC from outside project.
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>Rainbow Six: Siege:</p></div>
+<ul class="">
+<li>
+<span>
+3.5 M C++ LOC for engine code from game team.
+</span>
+</li>
+<li>
+<span>
+4.5 M C++ LOC from Technology Group.
+</span>
+</li>
+</ul>
+</div>
+<div class="attribution">
+&#8212; CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"
+</div></div>
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_flavours_of_c">Flavours of C++</h1>
+<h1 id="_compilation">Compilation</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Tradionally was very C<code>98 but by now C</code>11 is baseline.</p></div>
-<div class="paragraph"><p>C<code>14 in some select corners. The major engines help with this. UE4 is C</code>14</p></div>
-<div class="paragraph"><p>TODO: plug for Splash</p></div>
+<div class="paragraph"><p>Compilation and linking are usually dreadfully slow.</p></div>
+<div class="paragraph"><p>Optimizations are on by default, rarely debug builds are interactive.</p></div>
+<div class="paragraph"><p>Various tricks:</p></div>
+<ul class="">
+<li>
+<span>
+<code>#pragma optimize</code> on/off "islands"
+</span>
+</li>
+<li>
+<span>
+only specific modules are debug
+</span>
+</li>
+<li>
+<span>
+mastery of reading optimized disassembly :)
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>End result usually a single executable - size is ridiculous!</p></div>
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_anti_templates">(Anti)Templates</h1>
+<h1 id="_compilation_continued">Compilation (continued)</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Generally there is a tendency to look down on templates. Changed now that compilers are better and features improved.</p></div>
-<div class="paragraph"><p>Template-metaprogramming still is seen as black magic and highly discurouged.</p></div>
+<div class="paragraph"><p>Some mitigation methods:</p></div>
+<div class="paragraph"><div class="title">Unity builds</div><p>Combine all or lots of source files into a couple of gigantic .cpp units</p></div>
+<div class="paragraph"><div class="title">Distributed compilation</div><p>Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms</p></div>
+<div class="paragraph"><div class="title">Throw hardware at it</div><p>In a studio, programmers are spoiled: fastest CPU&#8217;s, multiple SSD&#8217;s etc</p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_flavors_of_c">Flavors of C++</h1>
+<div class="sectionbody">
+<div class="paragraph"><p>Traditionally was very C++98 but by now C++11 is baseline.</p></div>
+<div class="paragraph"><p>C++14 in some select corners. The major engines help with this - <code>UE4</code> enables it by default.</p></div>
+<div class="paragraph"><p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow.</p></div>
+<div class="paragraph"><p>At Splash Damage, we try to counter this by:</p></div>
+<ul class="">
+<li>
+<span>
+running a series of internal talks like "C++11/14 for game dev"
+</span>
+</li>
+<li>
+<span>
+I run a newsletter about best practices and modern C++
+</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_templates">Templates</h1>
+<div class="sectionbody">
+<div class="paragraph"><p>Generally, there is a tendency to look down on templates. Changing now that compilers are better and features improved.</p></div>
+<div class="paragraph"><p>Template-metaprogramming still is seen as black magic and highly discouraged.</p></div>
 <div class="paragraph"><p>Because of project size, you can find isolated islands where they thrive.</p></div>
-<div class="paragraph"><p>Some people will use macros where template function will be perfect adequate - TODO: show example</p></div>
+<div class="paragraph"><p>Some people will still use macros where <code>template</code> or <code>constexpr</code> functions will be perfectly adequate (SPEAKER: ugly ex I remember: overload eq ops for hashmap keys)</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_oop_is_king">OOP is king</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>All game code is universially OOP driven with polymorphism being lingua-franca.</p></div>
-<div class="paragraph"><p>TODO: talk about <em>Entity</em>, <em>Nodes</em> or 'Object&#8217;s
-TODO: Components</p></div>
+<div class="paragraph"><p>All game code is universally OOP driven, with polymorphism being lingua-franca. "What is a v-table?" is the most asked interview question!</p></div>
+<div class="paragraph"><p>That&#8217;s because Entity-Component-Systems are prevalent in gameplay code. Everything is a hierachy of <code>Entity</code>, <code>Node</code> or <code>Object</code>'s.</p></div>
+<div class="paragraph"><p>Components do virtual <code>Update</code>, <code>Tick</code>, <code>Pump</code> or <code>Think</code>!</p></div>
+<div class="paragraph"><p>Communication happens either via tight coupling or delegate/event systems (usually heavily macro&#8217;ed!)</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_alternatives_to_oop">Alternatives to OOP</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Functional style <em>monad</em> continuations are emerging</p></div>
-<div class="paragraph"><p>TODO: more about ppl? and TCAsync</p></div>
+<div class="paragraph"><p>Functional style <em>monad</em> continuations are emerging.</p></div>
+<div class="paragraph"><p>Lots of systems like IO, saving/loading, rendering, services management are multithreaded - various paradigms:</p></div>
+<ul class="">
+<li>
+<span>
+home-grown async task libraries
+</span>
+</li>
+<li>
+<span>
+Parallel Patterns Library (PPL) from Microsoft
+</span>
+</li>
+<li>
+<span>
+Threading Building Blocks from Intel
+</span>
+</li>
+<li>
+<span>
+very rarely the standard <code>future</code> and <code>promise</code> - usually every game engine has own equivalents
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_stl">STL</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Very low adoption. Biggest reason is the allocators. TODO: expand on idea</p></div>
-<div class="paragraph"><p>Bespoke containers as overwhelming alternative.</p></div>
-<div class="paragraph"><p>EASTL as better alternative: TODO: expand and link</p></div>
-<div class="paragraph"><p>TODO: SG14 ref</p></div>
+<div class="paragraph"><p>Very low adoption. No game I know shipped with STL containers. Bespoke alternatives overwhelmingly used, due to:</p></div>
+<ul class="">
+<li>
+<span>
+specific allocation needs (and poor support for allocators pre C++11)
+</span>
+</li>
+<li>
+<span>
+associated (or perceived) bloat
+</span>
+</li>
+</ul>
+<div class="paragraph"><div class="title">EASTL from Electronic Arts</div><p>A video game specific implementation of STL<br />
+<a href="https://github.com/electronicarts/EASTL">https://github.com/electronicarts/EASTL</a></p></div>
+<div class="paragraph"><div class="title">SG14 group</div><p>Video games and embedded programming sub-group within the ISO C++ Standard&#8217;s Study Group<br />
+Tries to propose new, optimized containers, data structures even language changes.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_stl_2">STL (2)</h1>
+<h1 id="_stl_continued">STL (continued)</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>very rare use of algorithms. True generic programming - in Alex Stepanov way - rarely used. Smaller titles or gameplay code can use it.</p></div>
-<div class="paragraph"><p>Every studio/engine reinvents the string wheel (no std::string) - In fairness prev impl were bad and specific needs for localisation</p></div>
+<div class="paragraph"><p>Very rare use of <code>algorithm</code>. True generic programming - in Alex Stepanov way - not used. (SPEAKER: mention Sean Parent&#8217;s talk)</p></div>
+<div class="paragraph"><p>Every studio/engine reinvents the string wheel (so no <code>std::string</code>):</p></div>
+<ul class="">
+<li>
+<span>
+previous implementations were bad or made awkward choices (SPEAKER: copy on write on GCC)
+</span>
+</li>
+<li>
+<span>
+specific localization needs - ties with game data
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>The <code>Iterator</code> concept is copied and reimplemented - if nothing else just to enable ranged-for&#8217;s.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_boost">Boost</h1>
 <div class="sectionbody">
 <div class="paragraph"><p>Very frowned upon and sometimes even laughed at - due to increase in compilation and difficulty to integrate.</p></div>
-<div class="paragraph"><p>TODO: <a href="https://twitter.com/mitsuhiko/status/834550427488247809">https://twitter.com/mitsuhiko/status/834550427488247809</a></p></div>
+<div class="paragraph"><p>TODO: image crop of: <a href="https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg">https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg</a></p></div>
+<div class="paragraph"><p>Sometimes cherry pick libraries with the <code>bcp</code> tool.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_exceptions">Exceptions</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Almost never used due to speed concerns.</p></div>
-<div class="paragraph"><p>Usually (and always during dev) a hard exit is requested on error.</p></div>
-<div class="paragraph"><p>That means errors in constructors cannot be handled. Usual solution is to have <em>Create</em>/<em>Instantiate</em>/<em>Begin</em> etc</p></div>
+<div class="paragraph"><p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing.</p></div>
+<div class="paragraph"><p>Usually (and always during dev time) a hard exit is requested on error.</p></div>
+<div class="paragraph"><p>That means errors in constructors cannot be handled. Usual solution is to have <em>Create</em>/<em>Instantiate</em>/<em>Begin</em> etc (SPEAKER: this is also due to GC and serialization)</p></div>
+<div class="paragraph"><p>That&#8217;s why people don&#8217;t care or don&#8217;t know about <code>noexcept</code>.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_rtti">RTTI</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>never used</p></div>
-<div class="paragraph"><p>very rare use of dynamic_cast</p></div>
-<div class="paragraph"><p>TODO: more</p></div>
+<div class="paragraph"><p>Seldom used - normally turned off by default because it bloats the modules size.</p></div>
+<div class="paragraph"><p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via custom reflection.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_reflection">Reflection</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>A lot of games need a reflection sytem due to close live link with editors/tools.</p></div>
-<div class="paragraph"><p>Custom, individual solutions - usually macro bases mini IDL&#8217;s</p></div>
-<div class="paragraph"><p>TODO: <a href="http://donw.io/post/reflection-cpp-1/">http://donw.io/post/reflection-cpp-1/</a></p></div>
-<div class="paragraph"><p>TODO: show UE</p></div>
+<div class="paragraph"><p>A lot of games have an involved reflection system due to:</p></div>
+<ul class="">
+<li>
+<span>
+close live link with editors/tools: values inspection, code hot reload
+</span>
+</li>
+<li>
+<span>
+serialization for loading/saving; versioning
+</span>
+</li>
+<li>
+<span>
+network replication, RPC&#8217;s
+</span>
+</li>
+<li>
+<span>
+garbage collection
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>Custom, individual solutions:</p></div>
+<ul class="">
+<li>
+<span>
+pre-processor based decorations that both annotate code and generate registration calls
+</span>
+</li>
+<li>
+<span>
+template metaprogramming for same purpose
+</span>
+</li>
+<li>
+<span>
+mini IDL&#8217;s that generate additional cpp/h files
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_patterns">Patterns</h1>
+<h1 id="_reflection_continued">Reflection (continued)</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Singleton is the tool of choice TODO: expand</p></div>
-<div class="paragraph"><p>TODO: Policies</p></div>
-<div class="paragraph"><p>TODO: what others?</p></div>
+<div class="paragraph"><p>Some examples:</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG" alt="reflection" />
+</span></p></div>
+<div class="paragraph"><p>TODO: more</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4052,21 +4275,26 @@ TODO: Components</p></div>
 <div class="sectionbody">
 <div class="paragraph"><p>Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)</p></div>
 <div class="paragraph"><p>CamelCase rules the nation.</p></div>
-<div class="paragraph"><p>K&amp;R style of braces very frowned upon.</p></div>
+<div class="paragraph"><p>Namespaces are not preferred; instead everything has a game specific prefix: <em>CShooterComponent</em>, <em>CShooterObject</em>, <em>TShooterItem</em> etc</p></div>
+<div class="paragraph"><p>K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost always used.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_cutting_corners">Cutting corners</h1>
+<h1 id="_patterns">Patterns</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>In the search for speed some dirty tricks are sometimes pulled.</p></div>
-<div class="paragraph"><p>TODO: show some E3 hacks</p></div>
+<div class="paragraph"><p>Common patterns use:</p></div>
+<div class="paragraph"><div class="title">Singleton</div><p>Anti-pattern of choice. Spreads like plague because lots of systems usually have only 1 active representation: <em>Camera</em>, <em>Player</em>, <em>AI Manager</em> etc</p></div>
+<div class="paragraph"><div class="title">Policy based design</div><p>Example of usage: container allocators, rendering &amp; drawing, game object composition</p></div>
+<div class="paragraph"><div class="title">Visitor</div><p>To implement double dispatch.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_closing">Closing</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>TODO: some sort of conclusion</p></div>
-<div class="paragraph"><p>TODO: We hire &amp; promotion</p></div>
+<div class="paragraph"><p>There you have it - a short survey of C++ in game development!</p></div>
+<div class="paragraph"><p><code>@valentin_galea</code></p></div>
+<div class="paragraph"><p>Splash Damage is hiring!<br />
+<a href="http://www.splashdamage.com/careers">http://www.splashdamage.com/careers</a></p></div>
 </div>
 </div>
 </body>
