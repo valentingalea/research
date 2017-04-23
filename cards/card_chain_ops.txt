@@ -1,0 +1,28 @@
+Chain Operations In Pipelines
+-----------------------------
+
+Write programs by putting together highly composable parts, combining in flexible ways the possible actions that can work on a particular type of data.
+
+.Word frequency counter
+[source]
+data
+	| transform([] (char c) {
+		return isalnum(c) ? c : '\n';
+	})
+	| transform(tolower)
+	| split ('\n')
+	| sort
+	| group_by(equal_to<>())
+	| transform([] (const auto &grp) {
+		return make_pair(
+			count(grp), *grp.cbegin ());
+	})
+	| sort
+	| reverse
+	| take(n);
+
+'''
+[bibliography]
+- https://en.wikipedia.org/wiki/Monad_(functional_programming)
+- Functional reactive programming in C\++ Ivan Cukic Meeting C++ 2016
+// https://www.youtube.com/watch?v=a2MmURgc6cU&list=PLsvF5XSgex0nuJkFTyimVFcwzixh_hOzC&index=17
