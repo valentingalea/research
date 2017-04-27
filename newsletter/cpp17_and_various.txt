@@ -1,8 +1,6 @@
 include::style.inline.txt[]
 
-Hi all,
-
-let's kick things off for this edition with some big news:
+Hi, let's kick things off for this post with some big news:
 
 === C++17 is final
 
@@ -80,7 +78,7 @@ We get:
 
 Coroutines and modules didn't make it in, but they are available as previews in Visual Studio 2015 and 2017 for anyone who is interested.
 
-Let's switch Gears and cover some general topics that I came across during day to day work in the last month or so.
+Let's switch gears and cover some general topics that I came across during day to day work in the last month or so.
 
 === Implementing arithmetic and relational operators
 
@@ -142,7 +140,7 @@ bool operator!=(const X& lhs, const X& rhs){ return !(lhs == rhs); }
 
 === Singletons
 
-You should try hard to avoid using the singleton (anti)pattern. Who am I kidding – we use it all the time! :( Still, this is one of the best way to implement it:
+You should try hard to avoid using the singleton (anti)pattern. Who am I kidding - we use it all the time! :( Still, this is one of the best way to implement it:
 
 [source]
 Singleton& instance()
