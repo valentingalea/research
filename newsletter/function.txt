@@ -1,8 +1,12 @@
 include::style.inline.txt[]
 
-Hi, my name is Valentin Galea and I'm a Senior Core-Tech programmer here at Splash. Within our company the concept of Mastery is a very important one and we always strive to improve each other's skills by having internal presentations and team lunches, going to conferences etc.
+Hi, I'm Valentin Galea, Senior Core-Tech programmer here at Splash Damage.
 
-C\++ is our bread and butter as programmers, so for a while now we are running a small newsletter about coding practices and more advanced C++ knowledge. We thought it would be fun and useful if we share it with the whole world. Bellow you will find one of the first editions, almost unabridged from when it was originally sent by email. Enjoy!
+One of the core values of the studio is Mastery, and we always strive to improve each other's skills by having internal presentations, team learning lunches, going to conferences etc.
+
+As programmers C\++ is our bread and butter, so monthly we run a small newsletter about coding practices and more advanced C++ knowledge. We want to take this one step further and share it with you!
+
+Bellow you will find one of the first editions, almost unabridged from when it was originally sent by email. Enjoy!
 
 === This week's story: A tale of std::function
 
@@ -115,6 +119,12 @@ struct Function<Ret(Args...)>
 };
 -------------------------------------------------------------------------------
 
+=== C++17
+
+The class template of `std::function` allowed for some custom allocator support. With time, this proved unusable - the semantics were unclear, and there were technical issues with storing an allocator in a type-erased context and then recovering that allocator later during copy assignment for example.
+
+The new C++17 standard removes all this.
+
 === The Unreal way
 
 I mentioned this was a project using UE4. It maintains some game-specific alternatives to STL so it turns out there is already a `TFunction`!
@@ -126,10 +136,6 @@ It seems quite well done and more importantly has some nice allocator optimisati
 The C++ standardisation committee is organised in several subcommittees, one of which is SG14. It deals with embedded and video games programming - https://groups.google.com/a/isocpp.org/forum/#!forum/sg14 Several members are programmers from AAA games companies like ours.
 
 Case in point: there is a discussion there about this very same topic I addressed here: they call it basic_function or inplace_function and if they succeed, sometimes in the future it will be included in C++! See everything about it here: https://groups.google.com/a/isocpp.org/forum/#!topic/sg14/1Sw_qEdIYes
-
-=== Next time
-
-Future editions lined up include talks about how to improve code readibilty, the new 'std::optional' and 'std::variant' additions to the standard, and the always good practice of RAII.
 
 Until next time, +
 Valentin Galea
