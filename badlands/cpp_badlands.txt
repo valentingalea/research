@@ -223,17 +223,11 @@ Very low adoption. No game I know shipped with STL containers. Bespoke alternati
 * specific allocation needs (and poor support for allocators pre C++11)
 * associated (or perceived) bloat
 
-.EASTL from Electronic Arts
-A video game specific implementation of STL +
-https://github.com/electronicarts/EASTL
-
-.SG14 group
-Video games and embedded programming sub-group within the ISO C++ Standard's Study Group +
-Tries to propose new, optimized containers, data structures even language changes.
+TODO: expand more on reasons
 
 STL (continued)
 ---------------
-Very rare use of `algorithm`. True generic programming - in Alex Stepanov way - not used. (SPEAKER: mention Sean Parent's talk)
+Very rare use of `algorithm`. True generic programming - in Alex Stepanov way - not used.
 
 Every studio/engine reinvents the string wheel (so no `std::string`):
 
@@ -242,13 +236,29 @@ Every studio/engine reinvents the string wheel (so no `std::string`):
 
 The `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's.
 
+[EA]STL
+-------
+.EASTL from Electronic Arts
+A video game specific implementation of STL +
+https://github.com/electronicarts/EASTL
+
+TODO: talk more about it
+
+STL - SG14
+----------
+.SG14 group
+Video games and embedded programming sub-group within the ISO C++ Standard's Study Group +
+Tries to propose new, optimized containers, data structures even language changes.
+
+TODO: quick enum of the papers in-flight
+
 Boost
 -----
 Very frowned upon and sometimes even laughed at - due to increase in compilation and difficulty to integrate.
 
 TODO: image crop of: https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
 
-Sometimes cherry pick libraries with the `bcp` tool.
+TODO: the `bcp` tool.
 
 Exceptions
 ----------
