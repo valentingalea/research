@@ -1,0 +1,55 @@
+No Raw Loops (example)
+----------------------
+
+Showcase of algorithm with different ouput type than the input.
+
+.Custom back inserter iterator (potentially reusable)
+[source]
+-------------------------------------------------------------------------------
+template<typename Container>
+struct conditional_inserter :
+	iterator<
+		output_iterator_tag,
+		typename Container::value_type,
+		typename Container::difference_type
+	>
+{
+	using self = conditional_inserter<Container>;
+
+	Container *c = nullptr;
+	conditional_inserter(Container &_c) : c(&_c) {}
+
+	self& operator=(const typename Container::value_type& value) {
+		if (value > 3) { // conditional - could be generalized as Predicate
+			c->push_back(value);
+		}
+		return *this;
+	}
+	self& operator*() {
+		return *this;
+	}
+	self& operator++() {
+		return *this;
+	}
+};
+
+template<typename Container>
+auto make_conditional_inserter(Container &c)
+{
+	return conditional_inserter<Container>(c);
+}
+-------------------------------------------------------------------------------
+
+.Usage
+[source]
+-------------------------------------------------------------------------------
+	vector<string> in = { "hello", "world", "not", "x" };
+	vector<int> out;
+
+	auto str_length = [](auto &&i)
+	{
+		return i.length();
+	};
+
+	transform(begin(in), end(in), make_conditional_inserter(out), str_length);
+-------------------------------------------------------------------------------
