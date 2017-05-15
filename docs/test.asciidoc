@@ -1,0 +1,30 @@
+No Raw Loops
+------------
+
+Seek to extract functionality into STL (or custom) algorithms.
+
+TODO: maybe show Seasoning before/after style (6:00)
+TODO: but name the predicate/lamba (from Fewer Bugs)
+
+.Insertion sort
+[source]
+for (auto i = start; i != end; ++i)
+    std::rotate(std::upper_bound(start, i, *i), i, std::next(i));
+
+.Slide a selection (TODO: picture)
+[source]
+template <typename It> 
+auto slide(It f, It l, randIter p) -> std::pair<It, It>
+{
+    if (p < f) return { p, std::rotate(p, f, l) };
+    if (l < p) return { std::rotate(f, l, p), p };
+    return { f, l };
+}
+
+'''
+[bibliography]
+- Sean Parent 'C++ Seasoning'
+// https://channel9.msdn.com/Events/GoingNative/2013/Cpp-Seasoning
+- 'Top 5 Beautiful C++ std Algorithms Examples'
+// http://www.bfilipek.com/2014/12/top-5-beautiful-c-std-algorithms.html
+// http://stackoverflow.com/questions/24650626/how-to-implement-classic-sorting-algorithms-in-modern-c/24650627#24650627
