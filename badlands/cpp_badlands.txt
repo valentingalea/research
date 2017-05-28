@@ -1,12 +1,15 @@
-= The Badlands of C++ : Professional Game Development
+= The Badlands of C++: Professional Game Development
+
+:author: Valentin Galea
+:email: @valentin_galea
 
 Who am I
 --------
-Valentin Galea - `@valentin_galea` - more than 10 years doing mobile, indie and AAA games
+Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] - more than 10 years doing mobile, indie and AAA games
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
-Currently at Splash Damage, here in London.
+Currently at Splash Damage in London, UK.
 
 What I will talk about
 ----------------------
@@ -31,67 +34,100 @@ image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/i
 
 What I will talk about (continued)
 ----------------------------------
-Most about AAA games because
+Most about AAA games because:
 
+[role="incremental"]
 * have the most experience with
 * they are the most process driven
 * use C++ in very special and quirky ways (the purpose of the talk)
 
-Indie games dev shares some elements with the above
+[role="incremental"]
+Indie games dev shares some elements with the above, but is in general more straighforward.
 
-Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++
+[role="incremental"]
+Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++.
 
 What I won't talk about
 -----------------------
-* Scripting languages / visual scripting
-- normally AAA games supplement the C++ with a simpler language for gameplay and level scripting: Lua, Python or bespoke
-- worse: visual scripting spaghetti
-* Tools
-- these can be written in C++, but a lot of them are in C# or Python
-* Build / Package of game data
-- a nightmare on its own
+[role="incremental"]
+- Scripting languages
+* normally AAA games supplement the C++ with another language for gameplay and level scripting
+** Lua, Python, etc
+** custom made: UnrealScript, DSL's, etc
+- Visual scripting spaghetti
+* UE4 "blueprints" ^https://docs.unrealengine.com/latest/INT/Engine/Blueprints/[1]^
+* Guerilla Games Nodegraph system ^https://www.guerrilla-games.com/read/tools-for-the-job-part-1-the-nodegraph-system[2]^
+
+[role="incremental"]
+- Tools
+* these can be written in C++, but a lot of them are in C# or Python
+
+[role="incremental"]
+- Build / Package of game data
+* a nightmare on its own
 
 It's a secret
 -------------
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
 
-For obviously reason, AAA development is covered in secrecy, source code included.
+For various reasons, AAA development is covered in secrecy, source code included.
 
 It's a secret (2)
 -----------------
+Some of these reasons:
+
+- IP principles and copyright
+- "first to market" desire and competition
+- multiple stakeholders involved
+
+[role="incremental"]
 `id software` notably broke the trend and released the source code of all their _Doom_ and _Quake_ games.
 
+[role="incremental"]
 The rest of the industry didn't follow suit. Even `id` stopped after being acquired by the publisher Bethesda.
 
 It's a secret (3)
 -----------------
-Some of the modern AAA game engines like _Unreal Engine 4_ and _CryEngine_ changed their licensing and they’re now open.
+Some of the modern AAA game engines changed their licensing and they’re now open.
 
+- Unreal Engine 4 https://www.unrealengine.com/ue4-on-github
+- CryEngine https://github.com/CRYTEK/CRYENGINE
+
+[role="incremental"]
+Sometimes internal libraries are released and shared with the outside world +
+- some examples later
+
+[role="incremental"]
 .Disclaimer
-For these reason, I can talk only from my direct experience, and focus on `UE4`.
+For all these reason, I can talk only from my direct experience, and focus on `UE4`.
 
 A glimpse of good
 -----------------
-.Source code snippet from _Doom 3_
+Source code snippet from _Doom 3_
+
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
+
+//TODO: more examples
 
 A glimpse of bad
 ----------------
-.Source code snippet from _CryEngine_
+Source code snippet from _CryEngine_
+
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
 
 //TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
 
 Philosophy
 ----------
-Games need to run
+Games need to run:
 
 * at least 30 Fps - 33 ms per frame
 * 60+ FPS very desirable (obligatory for multiplayer) - 16 ms per frame
 
 Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.
 
-Stability can sometimes be sacrificed. (SPEAKER: a crash is forgiven if it doesn't corrupt the save data!)
+Stability can sometimes be sacrificed. 
+//SPEAKER: a crash is forgiven if it doesn't corrupt the save data
 
 Concern for uptime is limited.
 
@@ -104,7 +140,7 @@ By far and large Windows centric development - even for consoles.
 .MSVC
 - is overwhelmingly used, almost de facto standard
 - sometimes quite old versions, by now 2013+
-- before C++11 lots of code depended on Microsoft quirks (SPEAKER: 2 phase lookup etc)
+- before C++11 lots of code depended on Microsoft quirks //SPEAKER: 2 phase lookup etc
 
 .GCC
 - rarely used on PC : mainly dedicated servers, or the odd Linux port
@@ -119,7 +155,9 @@ Again, Microsoft drives it:
 
 .Visual Studio
 - used everywhere: PC, Xbox One, PS4
-- most common extension: Visual Assist X - only way to cope with code completion
+- used with extensions:
+* proprietary profilers & debuggers 
+* help with code completion & formatting: Visual Assist X, Resharper
 
 .Others
 - SN Systems: proprietary EDG front end for Sony until PS4
@@ -165,6 +203,10 @@ Some mitigation methods:
 
 .Unity builds
 Combine all or lots of source files into a couple of gigantic .cpp units
+
+- improves speeds due to less churn on #include's and file I/O 
+- can create hidden dependencies gotchas as opposed to normal pipeline 
+- can hurt iteration (usual mitigation: extract out specific .cpp) 
 
 .Distributed compilation
 Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
