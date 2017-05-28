@@ -3,6 +3,9 @@
 :author: Valentin Galea
 :email: @valentin_galea
 
+//TODO: intro image of badlands geography with some cpp overlay
+//TODO: fixed vertical spacing?
+
 Who am I
 --------
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] - more than 10 years doing mobile, indie and AAA games
@@ -11,29 +14,51 @@ image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/i
 
 Currently at Splash Damage in London, UK.
 
-What I will talk about
-----------------------
+Agenda
+------
+
+- Types of video games
+- The industry
+- Philosophy
+	* Good & bad
+	* What games require
+	* Projects size
+- Platform
+	* Compilers & IDE's
+- Flavours of C++
+	* Coding styles
+- OOP
+	* Alternatives
+- Templates
+- STL & Boost
+- Exceptions
+- Reflection & RTTI
+- Patterns
+- Conclusion
+
+Types of games - AAA
+--------------------
 [quote, Wikipedia]
 AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="720"]
 
-What I will talk about (continued)
-----------------------------------
+Types of games - indie
+----------------------
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="720"]
 
-What I will talk about (continued)
-----------------------------------
+Types of games - mobile
+-----------------------
 [quote, Wikipedia]
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="720"]
 
-What I will talk about (continued)
-----------------------------------
+What I will talk about
+----------------------
 Most about AAA games because:
 
 [role="incremental"]
@@ -66,14 +91,14 @@ What I won't talk about
 - Build / Package of game data
 * a nightmare on its own
 
-It's a secret
--------------
+The industry - It's a secret
+----------------------------
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
 
 For various reasons, AAA development is covered in secrecy, source code included.
 
-It's a secret (2)
------------------
+The industry (2)
+----------------
 Some of these reasons:
 
 - IP principles and copyright
@@ -86,20 +111,23 @@ Some of these reasons:
 [role="incremental"]
 The rest of the industry didn't follow suit. Even `id` stopped after being acquired by the publisher Bethesda.
 
-It's a secret (3)
------------------
-Some of the modern AAA game engines changed their licensing and they’re now open.
+The industry (3)
+----------------
+Some modern AAA game engines changed their licensing and they’re now open.
 
 - Unreal Engine 4 https://www.unrealengine.com/ue4-on-github
 - CryEngine https://github.com/CRYTEK/CRYENGINE
 
 [role="incremental"]
-Sometimes internal libraries are released and shared with the outside world +
-- some examples later
+Studios sometimes release internal libraries for general use +
+- examples later
 
 [role="incremental"]
-.Disclaimer
-For all these reason, I can talk only from my direct experience, and focus on `UE4`.
+Disclaimer::
+- Everything here based on my experience so far, YMMV!
+- I will unfairly pick on Epic's UE4
+* I work day to day with it
+* It does a lot of C++ questionable things 
 
 A glimpse of good
 -----------------
@@ -132,6 +160,7 @@ void idPhysics_RigidBody::Integrate( float deltaTime, rigidBodyPState_t &next ) 
 }
 -------------------------------------------------------------------------------
 
+//TODO: a diff snippet (maybe .h decls)
 //TODO: more examples
 
 A glimpse of bad
@@ -176,6 +205,27 @@ Concern for uptime is limited.
 
 Low latency but throughput more important - got to push millions of pixels to the screen!
 
+Project size/LOC
+----------------
+AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.
+
+Factor in the _legacy_ of francize games and sequels.
+
+[quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
+_______
+Assassin's Creed Unity:
+
+* 6.5 M C++ LOC for entire team code.
+* 9 M more C++ LOC from outside project.
+
+Rainbow Six: Siege:
+
+* 3.5 M C++ LOC for engine code from game team.
+* 4.5 M C++ LOC from Technology Group.
+_______
+
+//TODO: obtain GOW4 numbers
+
 Platform - Compiler
 -------------------
 By far and large Windows centric development - even for consoles.
@@ -206,25 +256,6 @@ Again, Microsoft drives it:
 - SN Systems: proprietary EDG front end for Sony until PS4
 - Metroworks CodeWarrior for Nintendo consoles
 - XCode - No :)
-
-Project size/LOC
-----------------
-AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.
-
-Factor in the _legacy_ of francize games and sequels.
-
-[quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
-_______
-Assassin's Creed Unity:
-
-* 6.5 M C++ LOC for entire team code.
-* 9 M more C++ LOC from outside project.
-
-Rainbow Six: Siege:
-
-* 3.5 M C++ LOC for engine code from game team.
-* 4.5 M C++ LOC from Technology Group.
-_______
 
 Compilation
 -----------
@@ -268,17 +299,17 @@ Due to differences in people's experience, personality and time availability, ad
 At Splash Damage, we try to counter this by:
 
 * running a series of internal talks like "C++11/14 for game dev"
-* I run a newsletter about best practices and modern C++
+* newsletter about best practices and modern C++
 
-Templates
----------
-Generally, there is a tendency to look down on templates. Changing now that compilers are better and features improved.
+Coding style
+------------
+Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)
 
-Template-metaprogramming still is seen as black magic and highly discouraged.
+CamelCase rules the nation.
 
-Because of project size, you can find isolated islands where they thrive.
+Namespaces are not preferred; instead everything has a game specific prefix: _CShooterComponent_, _CShooterObject_, _TShooterItem_ etc
 
-Some people will still use macros where `template` or `constexpr` functions will be perfectly adequate (SPEAKER: ugly ex I remember: overload eq ops for hashmap keys)
+K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used.
 
 OOP is king
 -----------
@@ -300,6 +331,16 @@ Lots of systems like IO, saving/loading, rendering, services management are mult
 * Parallel Patterns Library (PPL) from Microsoft
 * Threading Building Blocks from Intel
 * very rarely the standard `future` and `promise` - usually every game engine has own equivalents
+
+Templates
+---------
+Generally, there is a tendency to look down on templates. Changing now that compilers are better and features improved.
+
+Template-metaprogramming still is seen as black magic and highly discouraged.
+
+Because of project size, you can find isolated islands where they thrive.
+
+Some people will still use macros where `template` or `constexpr` functions will be perfectly adequate //SPEAKER: ugly ex I remember: overload eq ops for hashmap keys
 
 STL
 ---
@@ -383,16 +424,6 @@ Some examples:
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG["reflection", align="center"]
 
 TODO: more
-
-Coding style
-------------
-Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)
-
-CamelCase rules the nation.
-
-Namespaces are not preferred; instead everything has a game specific prefix: _CShooterComponent_, _CShooterObject_, _TShooterItem_ etc
-
-K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used.
 
 Patterns
 --------
