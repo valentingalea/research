@@ -388,6 +388,32 @@ TODO: the `bcp` tool.
 
 Exceptions
 ----------
+Short tutorial:
+
+[source]
+---------------------------------------
+#include <stdexcept>
+
+int func()
+{
+    throw std::exception();
+}
+---------------------------------------
+
+Compiled with `/O2` optimisations on VS 2017.
+
+Let's see disassembly: https://godbolt.org/g/wQXmTi
+
+Exceptions (continued)
+----------------------
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/exception_1.png["asm", align="center"]
+
+Exceptions (continued)
+----------------------
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/exception_2.png["asm", align="center"]
+
+Exceptions (continued)
+----------------------
 Almost never used due to speed penalties of `throw`-ing and `catch`-ing.
 
 Usually (and always during dev time) a hard exit is requested on error.
