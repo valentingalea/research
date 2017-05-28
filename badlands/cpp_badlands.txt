@@ -105,7 +105,32 @@ A glimpse of good
 -----------------
 Source code snippet from _Doom 3_
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
+//image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
+[source]
+-------------------------------------------------------------------------------
+void idPhysics_RigidBody::Integrate( float deltaTime, rigidBodyPState_t &next ) {
+	idVec3 position;
+
+	position = current.i.position;
+	current.i.position += centerOfMass * current.i.orientation;
+
+	current.i.orientation.TransposeSelf();
+
+	integrator->Evaluate( (float *) &current.i, (float *) &next.i, 0, deltaTime );
+	next.i.orientation.OrthoNormalizeSelf();
+
+	// apply gravity
+	next.i.linearMomentum += deltaTime * gravityVector * mass;
+
+	current.i.orientation.TransposeSelf();
+	next.i.orientation.TransposeSelf();
+
+	current.i.position = position;
+	next.i.position -= centerOfMass * next.i.orientation;
+
+	next.atRest = current.atRest;
+}
+-------------------------------------------------------------------------------
 
 //TODO: more examples
 
@@ -113,7 +138,25 @@ A glimpse of bad
 ----------------
 Source code snippet from _CryEngine_
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
+//image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
+[source]
+-------------------------------------------------------------------------------
+//if ((vrel-=g_ContactsRB[i].friction)<-e) {
+if (max((vrel-=g_ContactsRB[i].friction)+e, g_ContactsRB[i].Pn*g_ContactsRB[i].K(1,0)-g_ContactsRB[i].K(0,2)-1e-6f)<0) {
+	dPn = -vrel*g_ContactsRB[i].K(0,1);
+	dPn = min(dPn, dPn*(1.0f-g_ContactsRB[i].K(1,0)) + (g_ContactsRB[i].K(0,2)*1.001f-g_ContactsRB[i].Pn)*g_ContactsRB[i].K(1,0));
+	g_ContactsRB[i].Pn += dPn;
+	dP = g_ContactsRB[i].n*dPn; 
+	hbody0->v += dP*hbody0->Minv; hbody0->w += hbody0->Iinv*(dp=r0^dP); hbody0->L += dp;
+	dP = g_ContactsRB[i].vreq*(dPn*g_ContactsRB[i].K(0,0));
+	hbody1->v += dP*hbody1->Minv; hbody1->w += hbody1->Iinv*(dp=r1^dP); hbody1->L += dp;
+	for(j=0; j<g_pContacts[i]->iCount; j++)	{
+		body_helper *hbody = g_Bodies+prope[j].iBody;
+		dP = prope[j].P*dPn;
+		hbody->v += dP*hbody->Minv; hbody->w += hbody->Iinv*(dp=prope[j].r^dP); hbody->L += dp;
+	}
+	bBounced++;	nBounces++;
+-------------------------------------------------------------------------------
 
 //TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
 
