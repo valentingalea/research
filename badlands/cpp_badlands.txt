@@ -3,8 +3,11 @@
 :author: Valentin Galea
 :email: @valentin_galea
 
-//TODO: intro image of badlands geography with some cpp overlay
-//TODO: fixed vertical spacing?
+TODO: conside exporting to reveal.js with http://asciidocfx.com/
+
+TODO: intro image of badlands geography with some cpp logo overlay
+
+TODO: fixed vertical spacing?
 
 Who am I
 --------
@@ -49,6 +52,8 @@ Types of games - indie
 indie games [...] created without the financial support of a publisher
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="720"]
+
+TODO: fix alignment of these imgs
 
 Types of games - mobile
 -----------------------
@@ -160,8 +165,8 @@ void idPhysics_RigidBody::Integrate( float deltaTime, rigidBodyPState_t &next ) 
 }
 -------------------------------------------------------------------------------
 
-//TODO: a diff snippet (maybe .h decls)
-//TODO: more examples
+TODO: a diff snippet (maybe .h decls)
+TODO: more examples
 
 A glimpse of bad
 ----------------
@@ -187,7 +192,7 @@ if (max((vrel-=g_ContactsRB[i].friction)+e, g_ContactsRB[i].Pn*g_ContactsRB[i].K
 	bBounced++;	nBounces++;
 -------------------------------------------------------------------------------
 
-//TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
+TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
 
 Philosophy
 ----------
@@ -198,12 +203,13 @@ Games need to run:
 
 Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.
 
-Stability can sometimes be sacrificed. 
-//SPEAKER: a crash is forgiven if it doesn't corrupt the save data
+Stability can sometimes be sacrificed. A crash may be forgiven if it doesn't corrupt the save data.
 
 Concern for uptime is limited.
 
 Low latency but throughput more important - got to push millions of pixels to the screen!
+
+TODO: re-layout & add transitions
 
 Project size/LOC
 ----------------
@@ -224,7 +230,7 @@ Rainbow Six: Siege:
 * 4.5 M C++ LOC from Technology Group.
 _______
 
-//TODO: obtain GOW4 numbers
+TODO: obtain GOW4 numbers
 
 Platform - Compiler
 -------------------
@@ -321,16 +327,23 @@ Components do virtual `Update`, `Tick`, `Pump` or `Think`!
 
 Communication happens either via tight coupling or delegate/event systems (usually heavily macro'ed!) 
 
+TODO: more detail / re-layout
+
 Alternatives to OOP
 -------------------
-Functional style 'monad' continuations are emerging.
+Need for multithreading continuously growing:
 
-Lots of systems like IO, saving/loading, rendering, services management are multithreaded - various paradigms:
+* I/O systems, loading & saving
+* Rendering, Animation, Navigation, etc decoupled from gameplay
+* Online sub-systems and services
 
-* home-grown async task libraries
+New paradigms are emerging:
+
+- Functional style 'monad' continuations - `.Then()`, `.With()` etc
+- "Job-ifying" 
 * Parallel Patterns Library (PPL) from Microsoft
 * Threading Building Blocks from Intel
-* very rarely the standard `future` and `promise` - usually every game engine has own equivalents
+- Seldom the standard `future` and `promise` - usually every game engine has own equivalents
 
 Templates
 ---------
@@ -342,6 +355,8 @@ Because of project size, you can find isolated islands where they thrive.
 
 Some people will still use macros where `template` or `constexpr` functions will be perfectly adequate //SPEAKER: ugly ex I remember: overload eq ops for hashmap keys
 
+TODO: rewrite & expand
+
 STL
 ---
 Very low adoption. No game I know shipped with STL containers. Bespoke alternatives overwhelmingly used, due to:
@@ -350,6 +365,7 @@ Very low adoption. No game I know shipped with STL containers. Bespoke alternati
 * associated (or perceived) bloat
 
 TODO: expand more on reasons
+TODO: more about allocators
 
 STL (continued)
 ---------------
@@ -368,7 +384,7 @@ The `Iterator` concept is copied and reimplemented - if nothing else just to ena
 A video game specific implementation of STL +
 https://github.com/electronicarts/EASTL
 
-TODO: talk more about it
+TODO: more detail
 
 STL - SG14
 ----------
@@ -382,13 +398,14 @@ Boost
 -----
 Very frowned upon and sometimes even laughed at - due to increase in compilation and difficulty to integrate.
 
+TODO: more detail +
 TODO: image crop of: https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
 
 TODO: the `bcp` tool.
 
 Exceptions
 ----------
-Short tutorial:
+TODO: introduce better
 
 [source]
 ---------------------------------------
@@ -449,7 +466,8 @@ Some examples:
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG["reflection", align="center"]
 
-TODO: more
+TODO: more examples & details
+TODO: turn from pic to src
 
 Patterns
 --------
@@ -464,11 +482,12 @@ Example of usage: container allocators, rendering & drawing, game object composi
 .Visitor
 To implement double dispatch.
 
+TODO: expand into dedicated slides
+
 Closing
 -------
 There you have it - a short survey of C++ in game development!
 
 `@valentin_galea`
 
-Splash Damage is hiring! +
-http://www.splashdamage.com/careers
+TODO: a more clear conclusion & take away points
