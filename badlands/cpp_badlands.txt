@@ -3,12 +3,6 @@
 :author: Valentin Galea
 :email: @valentin_galea
 
-TODO: conside exporting to reveal.js with http://asciidocfx.com/
-
-TODO: intro image of badlands geography with some cpp logo overlay
-
-TODO: fixed vertical spacing?
-
 Who am I
 --------
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] - more than 10 years doing mobile, indie and AAA games
@@ -491,3 +485,7 @@ There you have it - a short survey of C++ in game development!
 `@valentin_galea`
 
 TODO: a more clear conclusion & take away points
+
+//TODO: intro image of badlands geography with some cpp logo overlay
+
+//TODO: fixed vertical spacing?
