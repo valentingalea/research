@@ -4350,6 +4350,34 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 </div>
 </div>
 <div class="sect1 slide">
+<h1 id="_fighting_the_compiler">Fighting the compiler</h1>
+<div class="sectionbody">
+<div class="paragraph"><div class="title">Head no warning!</div><p>A couple of favorites that are always off:</p></div>
+<ul class="">
+<li>
+<span>
+signed/unsigned mismatch
+</span>
+</li>
+<li>
+<span>
+conversion from <code>T1</code> to <code>T2</code> requires a narrowing conversion
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>TODO: more from <a href="https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h">https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h</a>
+TODO: from UE4</p></div>
+<div class="paragraph"><div class="title">Use the __force!</div><p>Eternal hope that magically sprinkling inline will makes things faster - it won&#8217;t!</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">inline</span></span><span style="color: #990000">,</span> __inline<span style="color: #990000">,</span> __forceinline
+TODO<span style="color: #990000">:</span> gcc <span style="color: #990000">&amp;</span> clang</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1 slide">
 <h1 id="_flavors_of_c">Flavors of C++</h1>
 <div class="sectionbody">
 <div class="paragraph"><p>Traditionally was very C++98 but by now C++11 is baseline.</p></div>
@@ -4373,10 +4401,29 @@ newsletter about best practices and modern C++
 <div class="sect1 slide">
 <h1 id="_coding_style">Coding style</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)</p></div>
-<div class="paragraph"><p>CamelCase rules the nation.</p></div>
-<div class="paragraph"><p>Namespaces are not preferred; instead everything has a game specific prefix: <em>CShooterComponent</em>, <em>CShooterObject</em>, <em>TShooterItem</em> etc</p></div>
-<div class="paragraph"><p>K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost always used.</p></div>
+<div class="paragraph"><p>Every studio has a set of guidelines or a complete style guide.<br />
+Some of them recommend things that would really upset a C++ purist!</p></div>
+<div class="paragraph"><p>Namespaces are not preferred;<br />
+Instead everything has a game specific prefix:<br />
+<code>CShooterComponent</code>, <code>TShooterItem</code>, <code>EShooterState</code> etc.</p></div>
+<div class="paragraph"><p>Trivia:</p></div>
+<ul class="">
+<li>
+<span>
+CamelCase rules the nation
+</span>
+</li>
+<li>
+<span>
+K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost always used
+</span>
+</li>
+<li>
+<span>
+<code>auto</code> kills friendships
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">

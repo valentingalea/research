@@ -288,6 +288,24 @@ Use solution like `FastBuild` or `Incredibuild` to effectively create compilatio
 .Throw hardware at it
 In a studio, programmers are spoiled: fastest CPU's, multiple SSD's etc
 
+Fighting the compiler
+---------------------
+.Head no warning!
+A couple of favorites that are always off:
+
+* signed/unsigned mismatch
+* conversion from `T1` to `T2` requires a narrowing conversion
+
+TODO: more from https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h
+TODO: from UE4
+
+.Use the __force!
+Eternal hope that magically sprinkling inline will makes things faster - it won't!
+
+[source]
+inline, __inline, __forceinline
+TODO: gcc & clang
+
 Flavors of C++
 ---------------
 Traditionally was very C\+\+98 but by now C++11 is baseline.
@@ -303,13 +321,18 @@ At Splash Damage, we try to counter this by:
 
 Coding style
 ------------
-Every studio has a set of guidelines or a complete style. Some of them recommend things that would really upset a C++ purist. (TODO: expand more)
+Every studio has a set of guidelines or a complete style guide. +
+Some of them recommend things that would really upset a C++ purist!
 
-CamelCase rules the nation.
+Namespaces are not preferred; +
+Instead everything has a game specific prefix: +
+`CShooterComponent`, `TShooterItem`, `EShooterState` etc.
 
-Namespaces are not preferred; instead everything has a game specific prefix: _CShooterComponent_, _CShooterObject_, _TShooterItem_ etc
+Trivia:
 
-K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used.
+* CamelCase rules the nation
+* K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used
+* `auto` kills friendships
 
 OOP is king
 -----------
