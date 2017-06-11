@@ -8,6 +8,8 @@ python ..\..\asciidoc\asciidoc.py ^
 -a tabsize=4 ^
 --theme=volnitsky ^
 --backend slidy ^
+-a duration=30 ^
+-a copyright="Valentin Galea" ^
 --verbose ^
 --out-file=%ROOT%\..\docs\badlands\index.html ^
 "%ROOT%\cpp_badlands.txt"
