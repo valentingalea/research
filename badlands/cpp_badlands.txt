@@ -5,7 +5,8 @@
 
 Who am I
 --------
-Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] - more than 10 years doing mobile, indie and AAA games
+Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
+more than 10 years doing mobile, indie and AAA games
 
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
@@ -38,14 +39,14 @@ Types of games - AAA
 [quote, Wikipedia]
 AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="1024"]
 
 Types of games - indie
 ----------------------
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="1024"]
 
 TODO: fix alignment of these imgs
 
@@ -54,7 +55,7 @@ Types of games - mobile
 [quote, Wikipedia]
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="720"]
+image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="1024"]
 
 What I will talk about
 ----------------------

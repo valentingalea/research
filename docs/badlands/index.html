@@ -4,7 +4,9 @@
 <head>
 <title>The Badlands of C++: Professional Game Development</title>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="copyright" content="Copyright &#169; Valentin Galea" />
 <meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="duration" content="30" />
 <style type="text/css">
 /*
  * AsciiDoc 'volnitsky' theme for xhtml11 and html5 backends.
@@ -3749,7 +3751,8 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <div class="sect1 slide">
 <h1 id="_who_am_i">Who am I</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a> - more than 10 years doing mobile, indie and AAA games</p></div>
+<div class="paragraph"><p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
+more than 10 years doing mobile, indie and AAA games</p></div>
 <div class="paragraph"><p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png" alt="Games worked on" />
 </span></p></div>
@@ -3870,7 +3873,7 @@ Conclusion
 &#8212; Wikipedia
 </div></div>
 <div class="paragraph"><p><span class="image">
-<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg" alt="AAA games" width="720" />
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg" alt="AAA games" width="1024" />
 </span></p></div>
 </div>
 </div>
@@ -3883,7 +3886,7 @@ Conclusion
 &#8212; Wikipedia
 </div></div>
 <div class="paragraph"><p><span class="image">
-<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg" alt="indie games" width="720" />
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg" alt="indie games" width="1024" />
 </span></p></div>
 <div class="paragraph"><p>TODO: fix alignment of these imgs</p></div>
 </div>
@@ -3897,7 +3900,7 @@ Conclusion
 &#8212; Wikipedia
 </div></div>
 <div class="paragraph"><p><span class="image">
-<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg" alt="mobile games" width="720" />
+<img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg" alt="mobile games" width="1024" />
 </span></p></div>
 </div>
 </div>
@@ -4152,20 +4155,40 @@ http://www.gnu.org/software/src-highlite -->
 <ul class="">
 <li>
 <span>
-at least 30 Fps - 33 ms per frame
+at least <em>30 FPS</em> - <em>33 ms</em> per frame
 </span>
 </li>
 <li>
 <span>
-60+ FPS very desirable (obligatory for multiplayer) - 16 ms per frame
+<em>60+ FPS</em> very desirable (obligatory for good multiplayer) - <em>16 ms</em> per frame
 </span>
 </li>
 </ul>
 <div class="paragraph"><p>Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.</p></div>
-<div class="paragraph"><p>Stability can sometimes be sacrificed. A crash may be forgiven if it doesn&#8217;t corrupt the save data.</p></div>
-<div class="paragraph"><p>Concern for uptime is limited.</p></div>
-<div class="paragraph"><p>Low latency but throughput more important - got to push millions of pixels to the screen!</p></div>
-<div class="paragraph"><p>TODO: re-layout &amp; add transitions</p></div>
+<div class="title">Tradeoffs</div><ul class="">
+<li>
+<span>
+Stability can be sacrificed.
+</span>
+<ul class="">
+<li>
+<span>
+a crash forgiven if it doesn&#8217;t corrupt the save/user data.
+</span>
+</li>
+<li>
+<span>
+limited concern for uptime (unless server)
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+<em>low latency</em> but <em>throughput</em> more important - got to push millions of pixels to the screen!
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4205,7 +4228,7 @@ at least 30 Fps - 33 ms per frame
 <div class="attribution">
 &#8212; CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"
 </div></div>
-<div class="paragraph"><p>TODO: obtain GOW4 numbers</p></div>
+<div class="paragraph"><p>TODO: obtain GOW4 numbers &amp; split into more slides</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4347,6 +4370,7 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 </ul>
 <div class="paragraph"><div class="title">Distributed compilation</div><p>Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms</p></div>
 <div class="paragraph"><div class="title">Throw hardware at it</div><p>In a studio, programmers are spoiled: fastest CPU&#8217;s, multiple SSD&#8217;s etc</p></div>
+<div class="paragraph"><p>TODO: split into sep. slides - opportunity to add pics</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4396,6 +4420,7 @@ newsletter about best practices and modern C++
 </span>
 </li>
 </ul>
+<div class="paragraph"><p>TODO: split into list &amp; maybe remove Splash section</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4403,11 +4428,26 @@ newsletter about best practices and modern C++
 <div class="sectionbody">
 <div class="paragraph"><p>Every studio has a set of guidelines or a complete style guide.<br />
 Some of them recommend things that would really upset a C++ purist!</p></div>
-<div class="paragraph"><p>Namespaces are not preferred;<br />
-Instead everything has a game specific prefix:<br />
-<code>CShooterComponent</code>, <code>TShooterItem</code>, <code>EShooterState</code> etc.</p></div>
-<div class="paragraph"><p>Trivia:</p></div>
+<div class="title">Namespaces</div><ul class="">
+<li>
+<span>
+not preferred (with exceptions: anonymous to force internal linkage)
+</span>
+</li>
+<li>
+<span>
+Instead everything has a game specific prefix:
+</span>
 <ul class="">
+<li>
+<span>
+<code>CShooterComponent</code>, <code>TShooterItem</code>, <code>EShooterState</code> etc
+</span>
+</li>
+</ul>
+</li>
+</ul>
+<div class="title">Trivia</div><ul class="">
 <li>
 <span>
 CamelCase rules the nation
@@ -4420,7 +4460,7 @@ K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost alw
 </li>
 <li>
 <span>
-<code>auto</code> kills friendships
+<code>auto</code> destroys friendships
 </span>
 </li>
 </ul>
@@ -4429,11 +4469,53 @@ K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost alw
 <div class="sect1 slide">
 <h1 id="_oop_is_king">OOP is king</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>All game code is universally OOP driven, with polymorphism being lingua-franca. "What is a v-table?" is the most asked interview question!</p></div>
-<div class="paragraph"><p>That&#8217;s because Entity-Component-Systems are prevalent in gameplay code. Everything is a hierachy of <code>Entity</code>, <code>Node</code> or <code>Object</code>'s.</p></div>
-<div class="paragraph"><p>Components do virtual <code>Update</code>, <code>Tick</code>, <code>Pump</code> or <code>Think</code>!</p></div>
-<div class="paragraph"><p>Communication happens either via tight coupling or delegate/event systems (usually heavily macro&#8217;ed!)</p></div>
-<div class="paragraph"><p>TODO: more detail / re-layout</p></div>
+<div class="paragraph"><p>All game code is universally OOP driven.</p></div>
+<div class="title">Polymorphism</div><ul class="">
+<li>
+<span>
+the preferred default technique
+</span>
+</li>
+<li>
+<span>
+"What is a v-table?" - most asked interview question!
+</span>
+</li>
+</ul>
+<div class="title">ECS</div><ul class="">
+<li>
+<span>
+Entity-Component-Systems are prevalent in gameplay code
+</span>
+</li>
+<li>
+<span>
+Everything hierachy of <code>Entity</code>, <code>Node</code> or <code>Object</code>'s
+</span>
+</li>
+<li>
+<span>
+Components do virtual <code>Update</code>, <code>Tick</code>, <code>Draw</code> or <code>Render</code>
+</span>
+</li>
+<li>
+<span>
+usually AOS rather than SOA
+</span>
+</li>
+</ul>
+<div class="title">Communication</div><ul class="">
+<li>
+<span>
+normally just tight coupling
+</span>
+</li>
+<li>
+<span>
+delegate/event systems (heavily macro&#8217;ed! for "usability"!)
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4457,8 +4539,7 @@ Online sub-systems and services
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>New paradigms are emerging:</p></div>
-<ul class="">
+<div class="title">New paradigms emerging</div><ul class="">
 <li>
 <span>
 Functional style <em>monad</em> continuations - <code>.Then()</code>, <code>.With()</code> etc
@@ -4492,21 +4573,86 @@ Seldom the standard <code>future</code> and <code>promise</code> - usually every
 <div class="sect1 slide">
 <h1 id="_templates">Templates</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Generally, there is a tendency to look down on templates. Changing now that compilers are better and features improved.</p></div>
-<div class="paragraph"><p>Template-metaprogramming still is seen as black magic and highly discouraged.</p></div>
-<div class="paragraph"><p>Because of project size, you can find isolated islands where they thrive.</p></div>
-<div class="paragraph"><p>Some people will still use macros where <code>template</code> or <code>constexpr</code> functions will be perfectly adequate //SPEAKER: ugly ex I remember: overload eq ops for hashmap keys</p></div>
-<div class="paragraph"><p>TODO: rewrite &amp; expand</p></div>
+<div class="paragraph"><p>Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers.</p></div>
+<div class="title">Normal usage</div><ul class="">
+<li>
+<span>
+container work obviously
+</span>
+</li>
+<li>
+<span>
+policy design: allocator, rendering, etc
+</span>
+</li>
+<li>
+<span>
+variadic templates used to be emulated with "up to 11 arguments" horible macros
+</span>
+</li>
+</ul>
+<div class="title">Metaprogramming</div><ul class="">
+<li>
+<span>
+seen as black magic and highly discouraged
+</span>
+</li>
+<li>
+<span>
+due to project size - isolated islands where it thrives
+</span>
+</li>
+<li>
+<span>
+sometimes custom reduced specific <code>enable_if</code>, <code>void_t</code>, traits etc
+</span>
+</li>
+</ul>
+<div class="paragraph"><div class="title">Macros == poor man&#8217;s templates</div><p>Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p></div>
+<ul class="">
+<li>
+<span>
+<code>min()</code> and <code>max()</code>
+</span>
+</li>
+<li>
+<span>
+generic relational operator declarations
+</span>
+</li>
+<li>
+<span>
+hash functions declarations
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_stl">STL</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Very low adoption. No game I know shipped with STL containers. Bespoke alternatives overwhelmingly used, due to:</p></div>
+<div class="paragraph"><p>Adoption generally low.</p></div>
 <ul class="">
 <li>
 <span>
-specific allocation needs (and poor support for allocators pre C++11)
+console games never ship with STL containers
+</span>
+</li>
+<li>
+<span>
+used more in PC-only/indie
+</span>
+</li>
+<li>
+<span>
+iostreams are the devil&#8217;s work!
+</span>
+</li>
+</ul>
+<div class="title">Bespoke alternatives - because</div><ul class="">
+<li>
+<span>
+specific allocation needs (and poor allocator model pre C++17)
 </span>
 </li>
 <li>
@@ -4514,20 +4660,27 @@ specific allocation needs (and poor support for allocators pre C++11)
 associated (or perceived) bloat
 </span>
 </li>
+<li>
+<span>
+slow or cumbersome debugging
+</span>
+</li>
+<li>
+<span>
+not everyone is willing to follow STL coding style and naming
+</span>
+</li>
 </ul>
-<div class="paragraph"><p>TODO: expand more on reasons
-TODO: more about allocators</p></div>
 </div>
 </div>
 <div class="sect1 slide">
 <h1 id="_stl_continued">STL (continued)</h1>
 <div class="sectionbody">
-<div class="paragraph"><p>Very rare use of <code>algorithm</code>. True generic programming - in Alex Stepanov way - not used.</p></div>
-<div class="paragraph"><p>Every studio/engine reinvents the string wheel (so no <code>std::string</code>):</p></div>
+<div class="paragraph"><p><code>std::string</code> - best example:</p></div>
 <ul class="">
 <li>
 <span>
-previous implementations were bad or made awkward choices (SPEAKER: copy on write on GCC)
+every studio/engine reinvents the string wheel
 </span>
 </li>
 <li>
@@ -4535,8 +4688,24 @@ previous implementations were bad or made awkward choices (SPEAKER: copy on writ
 specific localization needs - ties with game data
 </span>
 </li>
+<li>
+<span>
+previous STL implementations made awkward choices (Ex: copy on write on older GCC)
+</span>
+</li>
+<li>
+<span>
+no need for streams: C printf style prefered, I/O handled in bulk elsewhere
+</span>
+</li>
 </ul>
-<div class="paragraph"><p>The <code>Iterator</code> concept is copied and reimplemented - if nothing else just to enable ranged-for&#8217;s.</p></div>
+<div class="title">iterator</div><ul class="">
+<li>
+<span>
+the <code>Iterator</code> concept is copied and reimplemented - if nothing else just to enable ranged-for&#8217;s.
+</span>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect1 slide">
