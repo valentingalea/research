@@ -192,18 +192,16 @@ Philosophy
 ----------
 Games need to run:
 
-* at least 30 Fps - 33 ms per frame
-* 60+ FPS very desirable (obligatory for multiplayer) - 16 ms per frame
+* at least _30 FPS_ - _33 ms_ per frame
+* _60+ FPS_ very desirable (obligatory for good multiplayer) - _16 ms_ per frame
 
 Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.
 
-Stability can sometimes be sacrificed. A crash may be forgiven if it doesn't corrupt the save data.
-
-Concern for uptime is limited.
-
-Low latency but throughput more important - got to push millions of pixels to the screen!
-
-TODO: re-layout & add transitions
+.Tradeoffs
+- Stability can be sacrificed.
+* a crash forgiven if it doesn't corrupt the save/user data.
+* limited concern for uptime (unless server)
+- _low latency_ but _throughput_ more important - got to push millions of pixels to the screen!
 
 Project size/LOC
 ----------------
@@ -224,7 +222,7 @@ Rainbow Six: Siege:
 * 4.5 M C++ LOC from Technology Group.
 _______
 
-TODO: obtain GOW4 numbers
+TODO: obtain GOW4 numbers & split into more slides
 
 Platform - Compiler
 -------------------
@@ -288,6 +286,8 @@ Use solution like `FastBuild` or `Incredibuild` to effectively create compilatio
 .Throw hardware at it
 In a studio, programmers are spoiled: fastest CPU's, multiple SSD's etc
 
+TODO: split into sep. slides - opportunity to add pics
+
 Fighting the compiler
 ---------------------
 .Head no warning!
@@ -319,6 +319,8 @@ At Splash Damage, we try to counter this by:
 * running a series of internal talks like "C++11/14 for game dev"
 * newsletter about best practices and modern C++
 
+TODO: split into list & maybe remove Splash section
+
 Coding style
 ------------
 Every studio has a set of guidelines or a complete style guide. +
@@ -336,15 +338,21 @@ Trivia:
 
 OOP is king
 -----------
-All game code is universally OOP driven, with polymorphism being lingua-franca. "What is a v-table?" is the most asked interview question!
+All game code is universally OOP driven.
 
-That's because Entity-Component-Systems are prevalent in gameplay code. Everything is a hierachy of `Entity`, `Node` or `Object`'s.
+.Polymorphism
+* the preferred default technique
+* "What is a v-table?" - most asked interview question!
 
-Components do virtual `Update`, `Tick`, `Pump` or `Think`!
+.ECS
+* Entity-Component-Systems are prevalent in gameplay code
+* Everything hierachy of `Entity`, `Node` or `Object`'s
+* Components do virtual `Update`, `Tick`, `Draw` or `Render`
+* usually AOS rather than SOA
 
-Communication happens either via tight coupling or delegate/event systems (usually heavily macro'ed!) 
-
-TODO: more detail / re-layout
+.Communication
+* normally just tight coupling
+* delegate/event systems (heavily macro'ed! for "usability"!) 
 
 Alternatives to OOP
 -------------------
@@ -354,8 +362,7 @@ Need for multithreading continuously growing:
 * Rendering, Animation, Navigation, etc decoupled from gameplay
 * Online sub-systems and services
 
-New paradigms are emerging:
-
+.New paradigms emerging
 - Functional style 'monad' continuations - `.Then()`, `.With()` etc
 - "Job-ifying" 
 * Parallel Patterns Library (PPL) from Microsoft
@@ -364,36 +371,49 @@ New paradigms are emerging:
 
 Templates
 ---------
-Generally, there is a tendency to look down on templates. Changing now that compilers are better and features improved.
+Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers.
 
-Template-metaprogramming still is seen as black magic and highly discouraged.
+.Normal usage
+* container work obviously
+* policy design: allocator, rendering, etc
+* variadic templates used to be emulated with "up to 11 arguments" horible macros
 
-Because of project size, you can find isolated islands where they thrive.
+.Metaprogramming
+* seen as black magic and highly discouraged
+* due to project size - isolated islands where it thrives
+* sometimes custom reduced specific `enable_if`, `void_t`, traits etc
 
-Some people will still use macros where `template` or `constexpr` functions will be perfectly adequate //SPEAKER: ugly ex I remember: overload eq ops for hashmap keys
-
-TODO: rewrite & expand
+.Macros == poor man's templates
+Still a tendecy to use macros where `template` or `constexpr` functions would be more adequate:
+* `min()` and `max()`
+* generic relational operator declarations
+* hash functions declarations
 
 STL
 ---
-Very low adoption. No game I know shipped with STL containers. Bespoke alternatives overwhelmingly used, due to:
+Adoption generally low.
 
-* specific allocation needs (and poor support for allocators pre C++11)
+* console games never ship with STL containers
+* used more in PC-only/indie
+* iostreams are the devil's work!
+
+.Bespoke alternatives - because
+* specific allocation needs (and poor allocator model pre C++17)
 * associated (or perceived) bloat
-
-TODO: expand more on reasons
-TODO: more about allocators
+* slow or cumbersome debugging
+* not everyone is willing to follow STL coding style and naming
 
 STL (continued)
 ---------------
-Very rare use of `algorithm`. True generic programming - in Alex Stepanov way - not used.
+`std::string` - best example:
 
-Every studio/engine reinvents the string wheel (so no `std::string`):
-
-* previous implementations were bad or made awkward choices (SPEAKER: copy on write on GCC)
+* every studio/engine reinvents the string wheel
 * specific localization needs - ties with game data
+* previous STL implementations made awkward choices (Ex: copy on write on older GCC)
+* no need for streams: C printf style prefered, I/O handled in bulk elsewhere
 
-The `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's.
+.iterator
+* the `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's.
 
 [EA]STL
 -------
