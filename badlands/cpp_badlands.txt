@@ -326,15 +326,15 @@ Coding style
 Every studio has a set of guidelines or a complete style guide. +
 Some of them recommend things that would really upset a C++ purist!
 
-Namespaces are not preferred; +
-Instead everything has a game specific prefix: +
-`CShooterComponent`, `TShooterItem`, `EShooterState` etc.
+.Namespaces
+* not preferred (with exceptions: anonymous to force internal linkage)
+* Instead everything has a game specific prefix:
+** `CShooterComponent`, `TShooterItem`, `EShooterState` etc
 
-Trivia:
-
+.Trivia
 * CamelCase rules the nation
 * K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used
-* `auto` kills friendships
+* `auto` destroys friendships
 
 OOP is king
 -----------
@@ -385,6 +385,7 @@ Generally, there is a tendency to downplay templates. Changing now with modern s
 
 .Macros == poor man's templates
 Still a tendecy to use macros where `template` or `constexpr` functions would be more adequate:
+
 * `min()` and `max()`
 * generic relational operator declarations
 * hash functions declarations
