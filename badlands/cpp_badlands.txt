@@ -435,12 +435,23 @@ TODO: quick enum of the papers in-flight
 
 Boost
 -----
-Very frowned upon and sometimes even laughed at - due to increase in compilation and difficulty to integrate.
+Very frowned upon and sometimes even forbidden.
 
-TODO: more detail +
-TODO: image crop of: https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
+.Reasons
+- clash of cultures:
+* Boost is "academic" and research driven
+* game dev is pragmatic and get-it-done
+- historically didn't play well with MSVC
+* still doesn't: `boost::hana` (but getting very close)
+- by now best libraries made it into the standard
+- difficulty to integrate & setup
 
-TODO: the `bcp` tool.
+.bcp
+Last point made easier by the `bcp` tool: +
+allows to extract-out features with no dependencies
+
+TODO: Carmack tweet
+TODO: tweet https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
 
 Exceptions
 ----------
