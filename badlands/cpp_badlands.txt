@@ -160,25 +160,37 @@ TODO: retake picture (line number and frame)
 
 Philosophy
 ----------
-Games need to run:
+Games need to run...
 
+[role="incremental"]
 * at least _30 FPS_ - _33 ms_ per frame
 * _60+ FPS_ very desirable (obligatory for good multiplayer) - _16 ms_ per frame
 
-Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.
+[role="incremental"]
+Everything is centered around achieving this frame time while pushing the graphics and gameplay
 
-.Tradeoffs
-- Stability can be sacrificed.
-* a crash forgiven if it doesn't corrupt the save/user data.
+[role="incremental"]
+Tradeoffs...
+
+[role="incremental"]
+- Stability can be sacrificed:
+* a crash forgiven if it doesn't corrupt the save/user data
 * limited concern for uptime (unless server)
 - _low latency_ but _throughput_ more important - got to push millions of pixels to the screen!
 
 Project size/LOC
 ----------------
-AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.
+AAA studios...
 
-Factor in the _legacy_ of francize games and sequels.
+[role="incremental"]
+- hundreds of people across various continents
+- lots of wheel reinventions
+- `legacy` of francize games and sequels
 
+[role="incremental"]
+...so amount of code quickly skyrockets:
+
+[role="incremental"]
 [quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
 _______
 Assassin's Creed Unity:
@@ -192,23 +204,23 @@ Rainbow Six: Siege:
 * 4.5 M C++ LOC from Technology Group.
 _______
 
-TODO: obtain GOW4 numbers & split into more slides
+TODO: find more examples
 
 Platform - Compiler
 -------------------
-By far and large Windows centric development - even for consoles.
+By far and large Windows centric development - even for consoles
 
 .MSVC
 - is overwhelmingly used, almost de facto standard
 - sometimes quite old versions, by now 2013+
-- before C++11 lots of code depended on Microsoft quirks //SPEAKER: 2 phase lookup etc
+- before C++11 lots of code depended on Microsoft quirks
 
 .GCC
 - rarely used on PC : mainly dedicated servers, or the odd Linux port
 - prev gen consoles had vendor specific variants
 
 .clang
-- Playstation 4 uses it exclusively (with LLVM backend)
+- Playstation 4(R) uses it exclusively (with LLVM backend)
 
 Platform - IDE
 --------------
@@ -217,7 +229,7 @@ Again, Microsoft drives it:
 .Visual Studio
 - used everywhere: PC, Xbox One, PS4
 - used with extensions:
-* proprietary profilers & debuggers 
+* proprietary profilers & debuggers (TODO: examples)
 * help with code completion & formatting: Visual Assist X, Resharper
 
 .Others
