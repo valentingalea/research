@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>The Badlands of C++: Professional Game Development</title>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="copyright" content="Copyright &#169; Valentin Galea" />
-<meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="copyright" content="Valentin Galea" />
+<meta name="generator" content="AsciiDoc 8.6.9 / slidy2 backend 1.0.4" />
 <meta name="duration" content="30" />
+<title>The Badlands of C++: Professional Game Development</title>
 <style type="text/css">
 /*
  * AsciiDoc 'volnitsky' theme for xhtml11 and html5 backends.
@@ -446,6 +446,8 @@ th.tableblock.valign-bottom, td.tableblock.valign-bottom {
 }
 
 
+</style>
+<style type="text/css">
 /* slidy.css
 
    Copyright (c) 2005-2010 W3C (MIT, ERCIM, Keio), All Rights Reserved.
@@ -499,7 +501,6 @@ div.initial_prompt {
   width: 90%;
   background-color: rgb(200,200,200);
   opacity: 0.35;
-  background-color: rgb(200,200,200, 0.35);
   cursor: pointer;
 }
 
@@ -892,7 +893,68 @@ li {
   margin-bottom: 0.5em;
 }
 
-
+/* jmi hack */
+@media screen {
+  body.single_slide .invisible { opacity: 0.15; visibility: visible; }
+  /*img.invisible { opacity: 0.1; visibility: visible; } */
+  img.invisible { visibility: hidden !important }
+}
+a {text-decoration: underline;}
+</style>
+<style type="text/css" title="slidy_color_set_none">
+/* empty color set styles */
+</style>
+<style type="text/css" title="slidy_color_set_yellow">
+/* rainbow color styles */
+body { background-color: #ffffaa;}
+a:link, a:visited, a:hover, a:active { color: blue; text-decoration: underline }
+a:hover { color: red; text-decoration: underline }
+div.slide { color: black;}
+div.slide h1,h2,h3,h4,h5,h6 { color: orange;}
+em { color: green;}
+tt { color: green;}
+div.sidebarblock, div.literalblock, div.listingblock, div.exampleblock, div.title { color: red;}
+div.quoteblock, div.verseblock {  color: black; }
+div.admonitionblock { color: red;}
+</style>
+<style type="text/css" title="slidy_color_set_green">
+/* blue color styles */
+body { background-color: #449900;}
+a:link, a:visited, a:hover, a:active { color: fuchsia; text-decoration: underline }
+a:hover { color: red; text-decoration: underline }
+div.slide { color: yellow;}
+div.slide h1,h2,h3,h4,h5,h6 { color: lime;}
+em { color: orange;}
+tt { color: orange;}
+div.sidebarblock, div.literalblock, div.listingblock, div.exampleblock, div.title { color: #44ff00;}
+div.quoteblock, div.verseblock {  color: black; }
+div.admonitionblock { color: #88ff55;}
+</style>
+<style type="text/css" title="slidy_color_set_blue">
+/* blue color styles */
+body { background-color: navy;}
+a:link, a:visited, a:hover, a:active { color: yellow; text-decoration: underline }
+a:hover { color: red; text-decoration: underline }
+div.slide { background-color: navy; color: aqua;}
+div.slide h1,h2,h3,h4,h5,h6 { color: aqua;}
+em { color: blue;}
+tt { color: blue;}
+div.sidebarblock, div.literalblock, div.listingblock, div.exampleblock, div.title { color: teal;}
+div.admonitionblock { color: teal;}
+</style>
+<style type="text/css" title="slidy_color_set_black">
+/* black color set styles */
+body { background-color: black !important; }
+a:link, a:visited, a:hover, a:active { color: gray; text-decoration: underline }
+a:hover { color: red; text-decoration: underline }
+div.slide { color: silver !important; }
+span, caption, th { color: silver !important; }
+div.slide h1,h2,h3,h4,h5,h6 { color: white;}
+em, strong { color: #999999;}
+tt { color: blue;}
+div.sidebarblock, div.literalblock, div.listingblock, div.exampleblock, div.title { color: black; }
+div.admonitionblock, div.quoteblock, div.verseblock {  color: white; }
+div.cover.slide, div.cover.slide h1 { background-color: black; }
 </style>
 <script type="text/javascript">
 /*<![CDATA[*/
@@ -904,6 +966,11 @@ li {
 
    http://www.w3.org/Consortium/Legal/copyright-documents
    http://www.w3.org/Consortium/Legal/copyright-software
+
+   Defines single name "w3c_slidy" in global namespace
+   Adds event handlers without trampling on any others
+
+   JMI: Dynamic features added
 */
 
 // the slidy object implementation
@@ -948,6 +1015,24 @@ var w3c_slidy = {
   help_page: "http://www.w3.org/Talks/Tools/Slidy2/help/help.html",
   help_text: "Navigate with mouse click, space bar, Cursor Left/Right, " +
              "or Pg Up and Pg Dn. Use S and B to change font size.",
+// jmi
+  help_keymap:
+    "PGDN\t: nextSlide\n" +
+     "PGUP\t: previousSlide\n" +
+     "HOME\t: firstSlide\n" +
+     "END  \t: lastSlide\n" +
+     "SPACE\t: nextContent\n" +
+     "->  \t: nextContent\n" +
+     "<-  \t: previousContent\n" +
+     "A   \t: toggleAllSlides\n" +
+     "F   \t: toggleFooter\n" +
+     "K   \t: toggleMouseClick\n" +
+     "I   \t: toggleIncremental\n" +
+     "L   \t: toggleColorSet\n" +
+     "T, C\t: tableOfContents\n" +
+     "B   \t: biggerFontSize\n" +
+     "S   \t: smallerFontSize\n" +
+     "M   \t: key mapping\n",
 
   size_index: 0,
   size_adjustment: 0,
@@ -963,6 +1048,9 @@ var w3c_slidy = {
   // object elements. The work around is to save width/height attributes
   // and then to recompute absolute width/height dimensions on resizing
    objects: [],
+
+//jmi
+incremental_display: true,
 
   // attach initialiation event handlers
   set_up: function () {
@@ -990,7 +1078,7 @@ var w3c_slidy = {
   init: function () {
     //alert("slidy starting test 10");
     document.body.style.visibility = "visible";
-    w3c_slidy_i18n.init();
+    this.init_localization();
     this.add_toolbar();
     this.wrap_implicit_slides();
     this.collect_slides();
@@ -1005,6 +1093,9 @@ var w3c_slidy = {
     this.hide_image_toolbar();  // suppress IE image toolbar popup
     this.init_outliner();  // activate fold/unfold support
     this.title = document.title;
+    // jmi
+    this.color_sets = new Array();
+    this.init_color_sets();
 
     // work around for opera bug
     this.is_xhtml = (document.body.tagName == "BODY" ? false : true);
@@ -1048,8 +1139,9 @@ var w3c_slidy = {
     this.add_listener(window, "scroll", this.scrolled);
     this.add_listener(window, "unload", this.unloaded);
 
-    if (!document.body.onclick)
-      document.body.onclick = function () { };
+    // this seems to be a debugging hack
+    //if (!document.body.onclick)
+    //  document.body.onclick = function () { };
 
     this.single_slide_view();
 
@@ -1075,7 +1167,7 @@ var w3c_slidy = {
 
     var heading = this.create_element("div");
     this.add_class(heading, "toc-heading");
-    heading.innerHTML = "Table of Contents".localize();
+    heading.innerHTML = this.localize("Table of Contents");
 
     toc.appendChild(heading);
     var previous = null;
@@ -1096,7 +1188,7 @@ var w3c_slidy = {
       var name = document.createTextNode(this.slide_name(i));
       a.appendChild(name);
       a.onclick = w3c_slidy.toc_click;
-      a.onkeydown = w3c_slidy.toc_keydown;
+      a.onkeydown = w3c_slidy.toc_key_down;
       a.previous = previous;
 
       if (previous)
@@ -1127,7 +1219,7 @@ var w3c_slidy = {
       e||(e=window.event);
 
       if (w3c_slidy.selected_text_len <= 0)
-         w3c_slidy.hide_table_of_contents();
+         w3c_slidy.hide_table_of_contents(true);
 
       w3c_slidy.stop_propagation(e);
 
@@ -1157,16 +1249,16 @@ var w3c_slidy = {
       setTimeout(w3c_slidy.ie_hack, 100);
   },
 
-  hide_table_of_contents: function () {
+  hide_table_of_contents: function (focus) {
     w3c_slidy.add_class(w3c_slidy.toc, "hidden");
 
-    if (!w3c_slidy.opera)
+    if (focus && !w3c_slidy.opera)
       w3c_slidy.help_anchor.focus();
   },
 
   toggle_table_of_contents: function () {
     if (w3c_slidy.is_shown_toc())
-      w3c_slidy.hide_table_of_contents();
+      w3c_slidy.hide_table_of_contents(true);
     else
       w3c_slidy.show_table_of_contents();
   },
@@ -1207,14 +1299,14 @@ var w3c_slidy = {
       }
     }
 
-    w3c_slidy.hide_table_of_contents(e);
+    w3c_slidy.hide_table_of_contents(true);
     if (w3c_slidy.ie7) w3c_slidy.ie_hack();
     w3c_slidy.stop_propagation(e);
     return w3c_slidy.cancel(e);
   },
 
   // called onkeydown for toc entry
-  toc_keydown: function (event) {
+  toc_key_down: function (event) {
     var key;
 
     if (!event)
@@ -1267,7 +1359,7 @@ var w3c_slidy = {
         }
       }
 
-      w3c_slidy.hide_table_of_contents();
+      w3c_slidy.hide_table_of_contents(true);
 
       if (self.ie7)
        w3c_slidy.ie_hack();
@@ -1646,7 +1738,7 @@ var w3c_slidy = {
       p1.innerHTML = "Tap footer to move to next slide";
     else
       p1.innerHTML = "Space or Right Arrow to move to next " +
-                     "slide, click help below for more details";
+                     "slide, M to see keys mapping, click help below for more details";
 
     this.add_listener(prompt, "click", function (e) {
       document.body.removeChild(prompt);
@@ -1679,7 +1771,7 @@ var w3c_slidy = {
        right.setAttribute("style", "float: right; text-align: right");
 
        counter = this.create_element("span")
-       counter.innerHTML = "slide".localize() + " n/m";
+       counter.innerHTML = this.localize("slide") + " n/m";
        right.appendChild(counter);
        this.toolbar.appendChild(right);
 
@@ -1693,8 +1785,8 @@ var w3c_slidy = {
 
        var help = this.create_element("a");
        help.setAttribute("href", this.help_page);
-       help.setAttribute("title", this.help_text.localize());
-       help.innerHTML = "help?".localize();
+       help.setAttribute("title", this.localize(this.help_text));
+       help.innerHTML = this.localize("help?");
        left.appendChild(help);
        this.help_anchor = help;  // save for focus hack
 
@@ -1703,8 +1795,8 @@ var w3c_slidy = {
 
        var contents = this.create_element("a");
        contents.setAttribute("href", "javascript:w3c_slidy.toggle_table_of_contents()");
-       contents.setAttribute("title", "table of contents".localize());
-       contents.innerHTML = "contents?".localize();
+       contents.setAttribute("title", this.localize("table of contents"));
+       contents.innerHTML = this.localize("contents?");
        left.appendChild(contents);
 
        var gap2 = document.createTextNode(" ");
@@ -1752,8 +1844,8 @@ var w3c_slidy = {
 
        var help = this.create_element("a");
        help.setAttribute("href", this.help_page);
-       help.setAttribute("title", this.help_text.localize());
-       help.innerHTML = "help?".localize();
+       help.setAttribute("title", this.localize(this.help_text));
+       help.innerHTML = this.localize("help?");
        this.toolbar.appendChild(help);
        this.help_anchor = help;  // save for focus hack
 
@@ -1762,8 +1854,8 @@ var w3c_slidy = {
 
        var contents = this.create_element("a");
        contents.setAttribute("href", "javascript:toggleTableOfContents()");
-       contents.setAttribute("title", "table of contents".localize());
-       contents.innerHTML = "contents?".localize();
+       contents.setAttribute("title", this.localize("table of contents".localize));
+       contents.innerHTML = this.localize("contents?");
        this.toolbar.appendChild(contents);
 
        var gap2 = document.createTextNode(" ");
@@ -1791,7 +1883,7 @@ var w3c_slidy = {
        counter.style.color = "red";
        counter.style.background = "rgb(240,240,240)";
 
-       counter.innerHTML = "slide".localize() + " n/m";
+       counter.innerHTML = this.localize("slide") + " n/m";
        this.toolbar.appendChild(counter);
      }
 
@@ -1964,8 +2056,11 @@ var w3c_slidy = {
           self.set_location();
         }
       }
-      else if (this.target == null)
-        location.href = this.href;
+      else
+        w3c_slidy.stop_propagation(event);
+
+//      else if (this.target == null)
+//        location.href = this.href;
 
       this.blur();
       self.disable_slide_click = true;
@@ -1986,7 +2081,7 @@ var w3c_slidy = {
   // either directly or indirectly for use of w3c_slidy vs this
   show_slide_number: function () {
     var timer = w3c_slidy.get_timer();
-    w3c_slidy.slide_number_element.innerHTML = timer + "slide".localize() + " " +
+    w3c_slidy.slide_number_element.innerHTML = timer + w3c_slidy.localize("slide") + " " +
            (w3c_slidy.slide_number + 1) + "/" + w3c_slidy.slides.length;
   },
 
@@ -2084,13 +2179,7 @@ var w3c_slidy = {
       window.location.hash = hash;
 
     var doc = document.getElementById("historyFrame").contentWindow.document;
-    doc.open("javascript:'<html></html>'");
-    // PWL modified this string literal to break the close script tag
-    // which otherwise gets parsed when incorporated
-    doc.write("<html><head><script type=\"text/javascript\">window.parent.w3c_slidy.on_frame_loaded('"+
-      (hash) + "');</" + "script></head><body>hello mum</body></html>");
-    doc.close();
-    },
+  },
 
   // find current slide based upon location
   // first find target anchor and then look
@@ -2186,6 +2275,9 @@ var w3c_slidy = {
     {
       var slide;
 
+//jmi
+if (!w3c_slidy.incremental_display) {incremental = false;}
+
       if ((incremental || w3c_slidy.slide_number == 0) && w3c_slidy.last_shown != null)
       {
         w3c_slidy.last_shown = w3c_slidy.hide_previous_item(w3c_slidy.last_shown);
@@ -2215,6 +2307,8 @@ var w3c_slidy = {
     if (!w3c_slidy.view_all)
     {
       var slide, last = w3c_slidy.last_shown;
+//jmi
+if (!w3c_slidy.incremental_display) {incremental = false;}
 
       if (incremental || w3c_slidy.slide_number == w3c_slidy.slides.length - 1)
          w3c_slidy.last_shown = w3c_slidy.reveal_next_item(w3c_slidy.last_shown);
@@ -2755,7 +2849,7 @@ var w3c_slidy = {
 
   //  See e.g. http://www.quirksmode.org/js/events/keys.html for keycodes
   key_down: function (event) {
-    var key;
+    var key, target, tag;
 
     w3c_slidy.key_wanted = true;
 
@@ -2764,9 +2858,15 @@ var w3c_slidy = {
 
     // kludge around NS/IE differences
     if (window.event)
+    {
       key = window.event.keyCode;
+      target = window.event.srcElement;
+    }
     else if (event.which)
+    {
       key = event.which;
+      target = event.target;
+    }
     else
       return true; // Yikes! unknown browser
 
@@ -2774,6 +2874,12 @@ var w3c_slidy = {
     // as for alt on Opera and Konqueror
     if (!key)
        return true;
+
+    // avoid interfering with keystroke
+    // behavior for non-slidy chrome elements
+    if (!w3c_slidy.slidy_chrome(target) &&
+        w3c_slidy.special_element(target))
+      return true;
 
     // check for concurrent control/command/alt key
     // but are these only present on mouse events?
@@ -2784,7 +2890,7 @@ var w3c_slidy = {
     // dismiss table of contents if visible
     if (w3c_slidy.is_shown_toc() && key != 9 && key != 16 && key != 38 && key != 40)
     {
-      w3c_slidy.hide_table_of_contents();
+      w3c_slidy.hide_table_of_contents(true);
 
       if (key == 27 || key == 84 || key == 67)
         return w3c_slidy.cancel(event);
@@ -2894,7 +3000,7 @@ var w3c_slidy = {
       var alert_msg = (w3c_slidy.mouse_click_enabled ?
                 "enabled" : "disabled") +  " mouse click advance";
 
-      alert(alert_msg.localize());
+      alert(w3c_slidy.localize(alert_msg));
       return w3c_slidy.cancel(event);
     }
     else if (key == 84 || key == 67)  // T or C for table of contents
@@ -2909,8 +3015,31 @@ var w3c_slidy = {
       window.location = w3c_slidy.help_page;
       return w3c_slidy.cancel(event);
     }
-    //else alert("key code is "+ key);
-
+//jmi
+    else if (key == 73) // I to toggle incremental display
+    {
+      var slide = w3c_slidy.slides[w3c_slidy.slide_number];
+      w3c_slidy.hide_slide(slide);
+      if (w3c_slidy.incremental_display) { w3c_slidy.set_visibility_all_incremental("visible"); }
+      w3c_slidy.incremental_display = !w3c_slidy.incremental_display ;
+      w3c_slidy.last_shown = null ;
+      w3c_slidy.set_visibility_all_incremental("hidden");
+      //this.set_eos_status(true);
+      w3c_slidy.show_slide(slide);
+      return w3c_slidy.cancel(event);
+    }
+    else if (key == 76) // L to toggle color-set
+    {
+      w3c_slidy.toggle_color_set();
+      return w3c_slidy.cancel(event);
+    }
+    else if (key == 77) // display help_keymap
+    {
+      alert(w3c_slidy.help_keymap);
+      return w3c_slidy.cancel(event);
+    }
+//jmi end
+     //else alert("key code is "+ key);
     return true;
   },
 
@@ -3113,6 +3242,9 @@ var w3c_slidy = {
   // a parent element with attribute class="incremental"
   set_visibility_all_incremental: function (value) {
     var node = this.next_incremental_item(null);
+
+//jmi
+if (!w3c_slidy.incremental_display) {value = "visible";}
 
     if (value == "hidden")
     {
@@ -3332,14 +3464,9 @@ var w3c_slidy = {
       // all browsers agree on 2 for right button
       rightclick = (e.button == 2);
     }
-    else leftclick = true;
-/*
-    alert("you clicked over a " + target.nodeName + " element\n" +
-    "w3c_slidy.mouse_click_enabled = " + w3c_slidy.mouse_click_enabled + "\n" +
-    "leftclick = " + leftclick + "\n" +
-    "selected text length = " + w3c_slidy.selected_text_len);
-    //alert("selected text length = " + w3c_slidy.selected_text_len);
-*/
+    else
+      leftclick = true;
+
     if (w3c_slidy.selected_text_len > 0)
     {
       w3c_slidy.stop_propagation(e);
@@ -3349,21 +3476,14 @@ var w3c_slidy = {
     }
 
     // dismiss table of contents
-    w3c_slidy.hide_table_of_contents();
+    w3c_slidy.hide_table_of_contents(false);
 
     // check if target is something that probably want's clicks
     // e.g. a, embed, object, input, textarea, select, option
     var tag = target.nodeName.toLowerCase();
 
     if (w3c_slidy.mouse_click_enabled && leftclick &&
-        tag != "a" &&
-        tag != "embed" &&
-        tag != "object" &&
-        tag != "video" &&
-        tag != "input" &&
-        tag != "textarea" &&
-        tag != "select" &&
-        tag != "option" &&
+        !w3c_slidy.special_element(target) &&
         !target.onclick)
     {
       w3c_slidy.next_slide(true);
@@ -3372,6 +3492,38 @@ var w3c_slidy = {
       e.returnValue = false;
       return false;
     }
+
+    return true;
+  },
+
+  special_element: function (e) {
+    var tag = e.nodeName.toLowerCase();
+
+    return e.onkeydown ||
+      e.onclick ||
+      tag == "a" ||
+      tag == "embed" ||
+      tag == "object" ||
+      tag == "video" ||
+      tag == "audio" ||
+      tag == "input" ||
+      tag == "textarea" ||
+      tag == "select" ||
+      tag == "option";
+  },
+
+  slidy_chrome: function (el) {
+    while (el)
+    {
+      if (el == w3c_slidy.toc ||
+          el == w3c_slidy.toolbar ||
+          w3c_slidy.has_class(el, "outline"))
+        return true;
+
+      el = el.parentNode;
+    }
+
+    return false;
   },
 
   get_key: function (e)
@@ -3445,13 +3597,43 @@ var w3c_slidy = {
 
     w3c_slidy.key_wanted = false;
     return false;
-  }
-};
+  },
+// jmi
+  init_color_sets: function(){
+   if (this.color_sets.length == 0){
+     // initialize color_sets array
+     var tmp = document.styleSheets;
+     var j = 0;
+     for (var i=0;i<tmp.length;i++) {
+       var css_name = null ;
+       if (tmp[i].title) {
+	css_name = tmp[i].title ;
+       }
+       if ((tmp[i].href) && (tmp[i].href.indexOf('.css') != -1)) {
+	css_name = tmp[i].href.substring(tmp[i].href.lastIndexOf('/')+1,tmp[i].href.indexOf('.css')) ;
+       }
+	if ((css_name) && (css_name.indexOf('color_set') > 0)) {
+         this.color_sets[j] = tmp[i];
+         this.color_sets[j++].disabled = true;
+	}
+     }
+     if (this.color_sets.length > 0){ this.color_sets[0].disabled = false; }
+   }
+  },
+  toggle_color_set: function(){
+   // toggle to the next color_set
+   if (this.color_sets.length > 0){
+    var i = 0;
+    while ((i < this.color_sets.length) && (this.color_sets[i].disabled == true)) { i = i + 1 ; }
+    if (i == this.color_sets.length) { i = i - 1; }
+    this.color_sets[i].disabled = true ;
+    this.color_sets[(i + 1) % (this.color_sets.length)].disabled = false ;
+   }
+  },
 
 // for each language define an associative array
 // and also the help text which is longer
 
-var w3c_slidy_i18n = {
   strings_es: {
     "slide":"pág.",
     "help?":"Ayuda",
@@ -3543,7 +3725,7 @@ var w3c_slidy_i18n = {
   help_fr:
     "Naviguez avec la souris, la barre d'espace, les flèches " +
     "gauche/droite ou les touches Pg Up, Pg Dn. Utilisez " +
-    "les touches S et B pour modifier la taille de la police.",
+    "les touches S et B pour modifier la taille de la police, M pour l'association des touches.",
 
   strings_hu: {
     "slide":"oldal",
@@ -3640,28 +3822,67 @@ var w3c_slidy_i18n = {
     "vänster- och högerpiltangenterna eller tangenterna Pg Up, Pg Dn. " +
     "Använd tangenterna S och B för att ändra textens storlek.",
 
-// each such language array is declared in the localize array
-// which is set on string prototype and used as in "foo".localize();
-  localize: {
-    "es":this.strings_es,
-    "ca":this.strings_ca,
-    "cs":this.strings_cs,
-    "nl":this.strings_nl,
-    "de":this.strings_de,
-    "pl":this.strings_pl,
-    "fr":this.strings_fr,
-    "hu":this.strings_hu,
-    "it":this.strings_it,
-    "el":this.strings_el,
-    "jp":this.strings_ja,
-    "zh":this.strings_zh,
-    "ru":this.strings_ru,
-    "sv":this.strings_sv
+  strings: { },
+
+  localize: function (src) {
+    if (src == "")
+      return src;
+
+     // try full language code, e.g. en-US
+     var s, lookup = w3c_slidy.strings[w3c_slidy.lang];
+
+     if (lookup)
+     {
+       s = lookup[src];
+
+       if (s)
+        return s;
+     }
+
+     // strip country code suffix, e.g.
+     // try en if undefined for en-US
+     var lg = w3c_slidy.lang.split("-");
+
+     if (lg.length > 1)
+     {
+       lookup = w3c_slidy.strings[lg[0]];
+
+       if (lookup)
+       {
+         s = lookup[src];
+
+         if (s)
+          return s;
+       }
+     }
+
+     // otherwise string as is
+     return src;
   },
 
-  init: function () {
-    var i18n = w3c_slidy_i18n;
+  init_localization: function () {
+    var i18n = w3c_slidy;
     var help_text = w3c_slidy.help_text;
+
+    // each such language array is declared in the localize array
+    // this is used as in  w3c_slidy.localize("foo");
+    this.strings = {
+      "es":this.strings_es,
+      "ca":this.strings_ca,
+      "cs":this.strings_cs,
+      "nl":this.strings_nl,
+      "de":this.strings_de,
+      "pl":this.strings_pl,
+      "fr":this.strings_fr,
+      "hu":this.strings_hu,
+      "it":this.strings_it,
+      "el":this.strings_el,
+      "jp":this.strings_ja,
+      "zh":this.strings_zh,
+      "ru":this.strings_ru,
+      "sv":this.strings_sv
+    },
+
     i18n.strings_es[help_text] = i18n.help_es;
     i18n.strings_ca[help_text] = i18n.help_ca;
     i18n.strings_cs[help_text] = i18n.help_cs;
@@ -3684,44 +3905,18 @@ var w3c_slidy_i18n = {
 
     if (!w3c_slidy.lang)
       w3c_slidy.lang = "en";
-
-    // add localize method to all strings
-    // for use as in "contents".localize()
-   String.prototype.localize = function() {
-     if (this == "")
-       return this;
-
-     // try full language code, e.g. en-US
-     var s, lookup = w3c_slidy_i18n.localize[w3c_slidy.lang];
-
-     if (lookup)
-     {
-       s = lookup[this];
-
-       if (s)
-        return s;
-     }
-
-     // strip country code suffix, e.g.
-     // try en if undefined for en-US
-     var lg = w3c_slidy.lang.split("-");
-
-     if (lg.length > 1)
-     {
-       lookup = w3c_slidy_i18n.localize[lg[0]];
-
-       if (lookup)
-       {
-         s = lookup[this];
-
-         if (s)
-          return s;
-       }
-     }
-
-     // otherwise string as is
-     return this;
-   };
+  },
+  // JMI
+  slidefootnotes: function () {
+    if (slidefootnotes) {
+    var spans = document.getElementsByTagName("span");
+    for (var i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnote") {
+        document.write("<p>"+spans[i].innerHTML+"</p>");
+        spans[i].className = "footnotedone";
+      }
+    }
+    }
   }
 };
 
@@ -3745,22 +3940,44 @@ setTimeout(w3c_slidy.hide_slides, 50);
 </script>
 </head>
 <body class="article">
-<div id="header" class="slide">
+<div id="header" class="slide backgr_intro">
 <h1>The Badlands of C++: Professional Game Development</h1>
+<span id="author">Valentin Galea</span><br />
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_who_am_i">Who am I</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
-more than 10 years doing mobile, indie and AAA games</p></div>
-<div class="paragraph"><p><span class="image">
+<div class="background backgr_intro" style="opacity: .9; position: absolute; left: 15%; top: 10%;">
+<div class="imageblock">
+<div class="content">
+<img src="img/intro.jpg" alt="backgr" />
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
+more than 10 years doing mobile, indie and AAA games</p>
+</div>
+<div class="imageblock" style="text-align:center;">
+<div class="content">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png" alt="Games worked on" />
-</span></p></div>
-<div class="paragraph"><p>Currently at Splash Damage in London, UK.</p></div>
 </div>
 </div>
-<div class="sect1 slide">
+<div class="paragraph">
+<p>Currently at Splash Damage in London, UK.</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_agenda">Agenda</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Agenda";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <ul class="">
 <li>
@@ -3862,10 +4079,13 @@ Conclusion
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_types_of_games_aaa">Types of games - AAA</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Types of games - AAA";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="quoteblock">
 <div class="content">AAA games [&#8230;] informal classification used for video games with the highest development budgets and levels of promotion</div>
@@ -3877,10 +4097,13 @@ Conclusion
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg" alt="AAA games" width="1024" />
 </div>
 </div>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_types_of_games_indie">Types of games - indie</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Types of games - indie";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="quoteblock">
 <div class="content">indie games [&#8230;] created without the financial support of a publisher</div>
@@ -3892,11 +4115,16 @@ Conclusion
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg" alt="indie games" width="1024" />
 </div>
 </div>
-<div class="paragraph"><p>TODO: fix alignment of these imgs</p></div>
+<div class="paragraph">
+<p>TODO: fix alignment of these imgs</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_types_of_games_mobile">Types of games - mobile</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Types of games - mobile";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="quoteblock">
 <div class="content">mobile games [&#8230;] played on a feature phone, smartphone, smartwatch, PDA, tablet computer</div>
@@ -3908,12 +4136,17 @@ Conclusion
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg" alt="mobile games" width="1024" />
 </div>
 </div>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_what_i_will_talk_about">What I will talk about</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="What I will talk about";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Most about AAA games because:</p></div>
+<div class="paragraph">
+<p>Most about AAA games because:</p>
+</div>
 <ul class=" incremental">
 <li>
 <span>
@@ -3931,12 +4164,19 @@ use C++ in very special and quirky ways (the purpose of the talk)
 </span>
 </li>
 </ul>
-<div class="paragraph incremental"><p>Indie games dev shares some elements with the above, but is in general more straighforward.</p></div>
-<div class="paragraph incremental"><p>Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++.</p></div>
+<div class="paragraph incremental">
+<p>Indie games dev shares some elements with the above, but is in general more straighforward.</p>
 </div>
+<div class="paragraph incremental">
+<p>Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++.</p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_what_i_won_8217_t_talk_about">What I won&#8217;t talk about</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="What I won&#8217;t talk about";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <ul class=" incremental">
 <li>
@@ -4005,23 +4245,33 @@ a nightmare on its own
 </ul>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_the_industry_it_8217_s_a_secret">The industry - It&#8217;s a secret</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="The industry - It&#8217;s a secret";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="imageblock" style="text-align:center;">
 <div class="content">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif" alt="Secret" />
 </div>
 </div>
-<div class="paragraph"><p>For various reasons, AAA development is covered in secrecy, source code included.</p></div>
+<div class="paragraph">
+<p>For various reasons, AAA development is covered in secrecy, source code included.</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_the_industry_2">The industry (2)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="The industry (2)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Some of these reasons:</p></div>
+<div class="paragraph">
+<p>Some of these reasons:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4039,14 +4289,23 @@ multiple stakeholders involved
 </span>
 </li>
 </ul>
-<div class="paragraph incremental"><p><code>id software</code> notably broke the trend and released the source code of all their <em>Doom</em> and <em>Quake</em> games.</p></div>
-<div class="paragraph incremental"><p>The rest of the industry didn&#8217;t follow suit. Even <code>id</code> stopped after being acquired by the publisher Bethesda.</p></div>
+<div class="paragraph incremental">
+<p><code>id software</code> notably broke the trend and released the source code of all their <em>Doom</em> and <em>Quake</em> games.</p>
 </div>
+<div class="paragraph incremental">
+<p>The rest of the industry didn&#8217;t follow suit. Even <code>id</code> stopped after being acquired by the publisher Bethesda.</p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_the_industry_3">The industry (3)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="The industry (3)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Some modern AAA game engines changed their licensing and they’re now open.</p></div>
+<div class="paragraph">
+<p>Some modern AAA game engines changed their licensing and they’re now open.</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4059,8 +4318,10 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 </span>
 </li>
 </ul>
-<div class="paragraph incremental"><p>Studios sometimes release internal libraries for general use<br />
-- examples later</p></div>
+<div class="paragraph incremental">
+<p>Studios sometimes release internal libraries for general use<br />
+- examples later</p>
+</div>
 <div class="dlist incremental"><dl class=" incremental">
 <dt class="hdlist1">
 Disclaimer
@@ -4092,12 +4353,17 @@ It does a lot of C++ questionable things
 </ul>
 </dd>
 </dl></div>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_a_glimpse_of_good">A glimpse of good</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="A glimpse of good";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Source code snippet from <em>Doom 3</em></p></div>
+<div class="paragraph">
+<p>Source code snippet from <em>Doom 3</em></p>
+</div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
@@ -4125,14 +4391,21 @@ http://www.gnu.org/software/src-highlite -->
 
     next<span style="color: #990000">.</span>atRest <span style="color: #990000">=</span> current<span style="color: #990000">.</span>atRest<span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="paragraph"><p>TODO: a diff snippet (maybe .h decls)
-TODO: more examples</p></div>
+<div class="paragraph">
+<p>TODO: a diff snippet (maybe .h decls)
+TODO: more examples</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_a_glimpse_of_bad">A glimpse of bad</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="A glimpse of bad";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Source code snippet from <em>CryEngine</em></p></div>
+<div class="paragraph">
+<p>Source code snippet from <em>CryEngine</em></p>
+</div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
@@ -4153,13 +4426,20 @@ http://www.gnu.org/software/src-highlite -->
         hbody<span style="color: #990000">-</span><span style="color: #990000">&gt;</span>v <span style="color: #990000">+</span><span style="color: #990000">=</span> dP<span style="color: #990000">*</span>hbody<span style="color: #990000">-</span><span style="color: #990000">&gt;</span>Minv<span style="color: #990000">;</span> hbody<span style="color: #990000">-</span><span style="color: #990000">&gt;</span>w <span style="color: #990000">+</span><span style="color: #990000">=</span> hbody<span style="color: #990000">-</span><span style="color: #990000">&gt;</span>Iinv<span style="color: #990000">*</span><span style="color: #990000">(</span>dp<span style="color: #990000">=</span>prope<span style="color: #990000">[</span>j<span style="color: #990000">]</span><span style="color: #990000">.</span>r<span style="color: #990000">^</span>dP<span style="color: #990000">)</span><span style="color: #990000">;</span> hbody<span style="color: #990000">-</span><span style="color: #990000">&gt;</span>L <span style="color: #990000">+</span><span style="color: #990000">=</span> dp<span style="color: #990000">;</span>
     <span style="color: #FF0000">}</span>
     bBounced<span style="color: #990000">+</span><span style="color: #990000">+</span><span style="color: #990000">;</span> nBounces<span style="color: #990000">+</span><span style="color: #990000">+</span><span style="color: #990000">;</span></tt></pre></div></div>
-<div class="paragraph"><p>TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly</p></div>
+<div class="paragraph">
+<p>TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_philosophy">Philosophy</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Philosophy";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Games need to run:</p></div>
+<div class="paragraph">
+<p>Games need to run:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4172,7 +4452,9 @@ at least <em>30 FPS</em> - <em>33 ms</em> per frame
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.</p></div>
+<div class="paragraph">
+<p>Everything is centered around achieving this frame time while pushing the limit graphics and gameplay wise.</p>
+</div>
 <div class="title">Tradeoffs</div><ul class="">
 <li>
 <span>
@@ -4197,16 +4479,25 @@ limited concern for uptime (unless server)
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_project_size_loc">Project size/LOC</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Project size/LOC";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.</p></div>
-<div class="paragraph"><p>Factor in the <em>legacy</em> of francize games and sequels.</p></div>
+<div class="paragraph">
+<p>AAA studios can be hundreds of people across various continents, lots of wheel reinventions, so the amount of code quickly skyrockets.</p>
+</div>
+<div class="paragraph">
+<p>Factor in the <em>legacy</em> of francize games and sequels.</p>
+</div>
 <div class="quoteblock">
 <div class="content">
-<div class="paragraph"><p>Assassin&#8217;s Creed Unity:</p></div>
+<div class="paragraph">
+<p>Assassin&#8217;s Creed Unity:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4219,7 +4510,9 @@ limited concern for uptime (unless server)
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>Rainbow Six: Siege:</p></div>
+<div class="paragraph">
+<p>Rainbow Six: Siege:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4236,13 +4529,20 @@ limited concern for uptime (unless server)
 <div class="attribution">
 &#8212; CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"
 </div></div>
-<div class="paragraph"><p>TODO: obtain GOW4 numbers &amp; split into more slides</p></div>
+<div class="paragraph">
+<p>TODO: obtain GOW4 numbers &amp; split into more slides</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_platform_compiler">Platform - Compiler</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Platform - Compiler";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>By far and large Windows centric development - even for consoles.</p></div>
+<div class="paragraph">
+<p>By far and large Windows centric development - even for consoles.</p>
+</div>
 <div class="title">MSVC</div><ul class="">
 <li>
 <span>
@@ -4279,12 +4579,17 @@ Playstation 4 uses it exclusively (with LLVM backend)
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_platform_ide">Platform - IDE</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Platform - IDE";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Again, Microsoft drives it:</p></div>
+<div class="paragraph">
+<p>Again, Microsoft drives it:</p>
+</div>
 <div class="title">Visual Studio</div><ul class="">
 <li>
 <span>
@@ -4326,14 +4631,23 @@ XCode - No :)
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_compilation">Compilation</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Compilation";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Compilation and linking are usually dreadfully slow.</p></div>
-<div class="paragraph"><p>Optimizations are on by default, rarely debug builds are interactive.</p></div>
-<div class="paragraph"><p>Various tricks:</p></div>
+<div class="paragraph">
+<p>Compilation and linking are usually dreadfully slow.</p>
+</div>
+<div class="paragraph">
+<p>Optimizations are on by default, rarely debug builds are interactive.</p>
+</div>
+<div class="paragraph">
+<p>Various tricks:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4351,14 +4665,23 @@ mastery of reading optimized disassembly :)
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>End result usually a single executable - size is ridiculous!</p></div>
+<div class="paragraph">
+<p>End result usually a single executable - size is ridiculous!</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_compilation_continued">Compilation (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Compilation (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Some mitigation methods:</p></div>
-<div class="paragraph"><div class="title">Unity builds</div><p>Combine all or lots of source files into a couple of gigantic .cpp units</p></div>
+<div class="paragraph">
+<p>Some mitigation methods:</p>
+</div>
+<div class="paragraph"><div class="title">Unity builds</div>
+<p>Combine all or lots of source files into a couple of gigantic .cpp units</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4376,15 +4699,26 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 </span>
 </li>
 </ul>
-<div class="paragraph"><div class="title">Distributed compilation</div><p>Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms</p></div>
-<div class="paragraph"><div class="title">Throw hardware at it</div><p>In a studio, programmers are spoiled: fastest CPU&#8217;s, multiple SSD&#8217;s etc</p></div>
-<div class="paragraph"><p>TODO: split into sep. slides - opportunity to add pics</p></div>
+<div class="paragraph"><div class="title">Distributed compilation</div>
+<p>Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms</p>
 </div>
+<div class="paragraph"><div class="title">Throw hardware at it</div>
+<p>In a studio, programmers are spoiled: fastest CPU&#8217;s, multiple SSD&#8217;s etc</p>
 </div>
-<div class="sect1 slide">
+<div class="paragraph">
+<p>TODO: split into sep. slides - opportunity to add pics</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_fighting_the_compiler">Fighting the compiler</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Fighting the compiler";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><div class="title">Head no warning!</div><p>A couple of favorites that are always off:</p></div>
+<div class="paragraph"><div class="title">Head no warning!</div>
+<p>A couple of favorites that are always off:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4397,9 +4731,13 @@ conversion from <code>T1</code> to <code>T2</code> requires a narrowing conversi
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>TODO: more from <a href="https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h">https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h</a>
-TODO: from UE4</p></div>
-<div class="paragraph"><div class="title">Use the __force!</div><p>Eternal hope that magically sprinkling inline will makes things faster - it won&#8217;t!</p></div>
+<div class="paragraph">
+<p>TODO: more from <a href="https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h">https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h</a>
+TODO: from UE4</p>
+</div>
+<div class="paragraph"><div class="title">Use the __force!</div>
+<p>Eternal hope that magically sprinkling inline will makes things faster - it won&#8217;t!</p>
+</div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
@@ -4407,15 +4745,26 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">inline</span></span><span style="color: #990000">,</span> __inline<span style="color: #990000">,</span> __forceinline
 TODO<span style="color: #990000">:</span> gcc <span style="color: #990000">&amp;</span> clang</tt></pre></div></div>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_flavors_of_c">Flavors of C++</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Flavors of C++";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Traditionally was very C++98 but by now C++11 is baseline.</p></div>
-<div class="paragraph"><p>C++14 in some select corners. The major engines help with this - <code>UE4</code> enables it by default.</p></div>
-<div class="paragraph"><p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow.</p></div>
-<div class="paragraph"><p>At Splash Damage, we try to counter this by:</p></div>
+<div class="paragraph">
+<p>Traditionally was very C++98 but by now C++11 is baseline.</p>
+</div>
+<div class="paragraph">
+<p>C++14 in some select corners. The major engines help with this - <code>UE4</code> enables it by default.</p>
+</div>
+<div class="paragraph">
+<p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow.</p>
+</div>
+<div class="paragraph">
+<p>At Splash Damage, we try to counter this by:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4428,14 +4777,21 @@ newsletter about best practices and modern C++
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>TODO: split into list &amp; maybe remove Splash section</p></div>
+<div class="paragraph">
+<p>TODO: split into list &amp; maybe remove Splash section</p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_coding_style">Coding style</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Coding style";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Every studio has a set of guidelines or a complete style guide.<br />
-Some of them recommend things that would really upset a C++ purist!</p></div>
+<div class="paragraph">
+<p>Every studio has a set of guidelines or a complete style guide.<br />
+Some of them recommend things that would really upset a C++ purist!</p>
+</div>
 <div class="title">Namespaces</div><ul class="">
 <li>
 <span>
@@ -4472,12 +4828,17 @@ K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost alw
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_oop_is_king">OOP is king</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="OOP is king";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>All game code is universally OOP driven.</p></div>
+<div class="paragraph">
+<p>All game code is universally OOP driven.</p>
+</div>
 <div class="title">Polymorphism</div><ul class="">
 <li>
 <span>
@@ -4524,12 +4885,17 @@ delegate/event systems (heavily macro&#8217;ed! for "usability"!)
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_alternatives_to_oop">Alternatives to OOP</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Alternatives to OOP";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Need for multithreading continuously growing:</p></div>
+<div class="paragraph">
+<p>Need for multithreading continuously growing:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4576,12 +4942,17 @@ Seldom the standard <code>future</code> and <code>promise</code> - usually every
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_templates">Templates</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Templates";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers.</p></div>
+<div class="paragraph">
+<p>Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers.</p>
+</div>
 <div class="title">Normal usage</div><ul class="">
 <li>
 <span>
@@ -4616,7 +4987,9 @@ sometimes custom reduced specific <code>enable_if</code>, <code>void_t</code>, t
 </span>
 </li>
 </ul>
-<div class="paragraph"><div class="title">Macros == poor man&#8217;s templates</div><p>Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p></div>
+<div class="paragraph"><div class="title">Macros == poor man&#8217;s templates</div>
+<p>Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4634,12 +5007,17 @@ hash functions declarations
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_stl">STL</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Adoption generally low.</p></div>
+<div class="paragraph">
+<p>Adoption generally low.</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4679,12 +5057,17 @@ not everyone is willing to follow STL coding style and naming
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_stl_continued">STL (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p><code>std::string</code> - best example:</p></div>
+<div class="paragraph">
+<p><code>std::string</code> - best example:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4714,28 +5097,47 @@ the <code>Iterator</code> concept is copied and reimplemented - if nothing else 
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_ea_stl">[EA]STL</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="[EA]STL";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><div class="title">EASTL from Electronic Arts</div><p>A video game specific implementation of STL<br />
-<a href="https://github.com/electronicarts/EASTL">https://github.com/electronicarts/EASTL</a></p></div>
-<div class="paragraph"><p>TODO: more detail</p></div>
+<div class="paragraph"><div class="title">EASTL from Electronic Arts</div>
+<p>A video game specific implementation of STL<br />
+<a href="https://github.com/electronicarts/EASTL">https://github.com/electronicarts/EASTL</a></p>
 </div>
+<div class="paragraph">
+<p>TODO: more detail</p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_stl_sg14">STL - SG14</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL - SG14";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><div class="title">SG14 group</div><p>Video games and embedded programming sub-group within the ISO C++ Standard&#8217;s Study Group<br />
-Tries to propose new, optimized containers, data structures even language changes.</p></div>
-<div class="paragraph"><p>TODO: quick enum of the papers in-flight</p></div>
+<div class="paragraph"><div class="title">SG14 group</div>
+<p>Video games and embedded programming sub-group within the ISO C++ Standard&#8217;s Study Group<br />
+Tries to propose new, optimized containers, data structures even language changes.</p>
 </div>
+<div class="paragraph">
+<p>TODO: quick enum of the papers in-flight</p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_boost">Boost</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Very frowned upon and sometimes even forbidden.</p></div>
+<div class="paragraph">
+<p>Very frowned upon and sometimes even forbidden.</p>
+</div>
 <div class="title">Reasons</div><ul class="">
 <li>
 <span>
@@ -4777,16 +5179,25 @@ difficulty to integrate &amp; setup
 </span>
 </li>
 </ul>
-<div class="paragraph"><div class="title">bcp</div><p>Last point made easier by the <code>bcp</code> tool:<br />
-allows to extract-out features with no dependencies</p></div>
-<div class="paragraph"><p>TODO: Carmack tweet
-TODO: tweet <a href="https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg">https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg</a></p></div>
+<div class="paragraph"><div class="title">bcp</div>
+<p>Last point made easier by the <code>bcp</code> tool:<br />
+allows to extract-out features with no dependencies</p>
 </div>
+<div class="paragraph">
+<p>TODO: Carmack tweet
+TODO: tweet <a href="https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg">https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg</a></p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_exceptions">Exceptions</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>TODO: introduce better</p></div>
+<div class="paragraph">
+<p>TODO: introduce better</p>
+</div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
@@ -4798,46 +5209,83 @@ http://www.gnu.org/software/src-highlite -->
 <span style="color: #FF0000">{</span>
     <span style="font-weight: bold"><span style="color: #0000FF">throw</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">exception</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="paragraph"><p>Compiled with <code>/O2</code> optimisations on VS 2017.</p></div>
-<div class="paragraph"><p>Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godbolt.org/g/wQXmTi</a></p></div>
+<div class="paragraph">
+<p>Compiled with <code>/O2</code> optimisations on VS 2017.</p>
 </div>
+<div class="paragraph">
+<p>Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godbolt.org/g/wQXmTi</a></p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_exceptions_continued">Exceptions (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p><span class="image">
+<div class="paragraph">
+<p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/exception_1.png" alt="asm" />
-</span></p></div>
+</span></p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_exceptions_continued_2">Exceptions (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p><span class="image">
+<div class="paragraph">
+<p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/exception_2.png" alt="asm" />
-</span></p></div>
+</span></p>
 </div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_exceptions_continued_3">Exceptions (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing.</p></div>
-<div class="paragraph"><p>Usually (and always during dev time) a hard exit is requested on error.</p></div>
-<div class="paragraph"><p>That means errors in constructors cannot be handled. Usual solution is to have <em>Create</em>/<em>Instantiate</em>/<em>Begin</em> etc (SPEAKER: this is also due to GC and serialization)</p></div>
-<div class="paragraph"><p>That&#8217;s why people don&#8217;t care or don&#8217;t know about <code>noexcept</code>.</p></div>
+<div class="paragraph">
+<p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing.</p>
 </div>
+<div class="paragraph">
+<p>Usually (and always during dev time) a hard exit is requested on error.</p>
 </div>
-<div class="sect1 slide">
+<div class="paragraph">
+<p>That means errors in constructors cannot be handled. Usual solution is to have <em>Create</em>/<em>Instantiate</em>/<em>Begin</em> etc (SPEAKER: this is also due to GC and serialization)</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s why people don&#8217;t care or don&#8217;t know about <code>noexcept</code>.</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_rtti">RTTI</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="RTTI";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Seldom used - normally turned off by default because it bloats the modules size.</p></div>
-<div class="paragraph"><p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via custom reflection.</p></div>
+<div class="paragraph">
+<p>Seldom used - normally turned off by default because it bloats the modules size.</p>
 </div>
+<div class="paragraph">
+<p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via custom reflection.</p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_reflection">Reflection</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Reflection";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>A lot of games have an involved reflection system due to:</p></div>
+<div class="paragraph">
+<p>A lot of games have an involved reflection system due to:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4860,7 +5308,9 @@ garbage collection
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>Custom, individual solutions:</p></div>
+<div class="paragraph">
+<p>Custom, individual solutions:</p>
+</div>
 <ul class="">
 <li>
 <span>
@@ -4878,36 +5328,116 @@ mini IDL&#8217;s that generate additional cpp/h files
 </span>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_reflection_continued">Reflection (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Reflection (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Some examples:</p></div>
-<div class="paragraph"><p><span class="image">
+<div class="paragraph">
+<p>Some examples:</p>
+</div>
+<div class="paragraph">
+<p><span class="image">
 <img src="https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG" alt="reflection" />
-</span></p></div>
-<div class="paragraph"><p>TODO: more examples &amp; details
-TODO: turn from pic to src</p></div>
+</span></p>
 </div>
+<div class="paragraph">
+<p>TODO: more examples &amp; details
+TODO: turn from pic to src</p>
 </div>
-<div class="sect1 slide">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_patterns">Patterns</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Patterns";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>Common patterns use:</p></div>
-<div class="paragraph"><div class="title">Singleton</div><p>Anti-pattern of choice. Spreads like plague because lots of systems usually have only 1 active representation: <em>Camera</em>, <em>Player</em>, <em>AI Manager</em> etc</p></div>
-<div class="paragraph"><div class="title">Policy based design</div><p>Example of usage: container allocators, rendering &amp; drawing, game object composition</p></div>
-<div class="paragraph"><div class="title">Visitor</div><p>To implement double dispatch.</p></div>
-<div class="paragraph"><p>TODO: expand into dedicated slides</p></div>
+<div class="paragraph">
+<p>Common patterns use:</p>
 </div>
+<div class="paragraph"><div class="title">Singleton</div>
+<p>Anti-pattern of choice. Spreads like plague because lots of systems usually have only 1 active representation: <em>Camera</em>, <em>Player</em>, <em>AI Manager</em> etc</p>
 </div>
-<div class="sect1 slide">
+<div class="paragraph"><div class="title">Policy based design</div>
+<p>Example of usage: container allocators, rendering &amp; drawing, game object composition</p>
+</div>
+<div class="paragraph"><div class="title">Visitor</div>
+<p>To implement double dispatch.</p>
+</div>
+<div class="paragraph">
+<p>TODO: expand into dedicated slides</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_closing">Closing</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Closing";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><p>There you have it - a short survey of C++ in game development!</p></div>
-<div class="paragraph"><p><code>@valentin_galea</code></p></div>
-<div class="paragraph"><p>TODO: a more clear conclusion &amp; take away points</p></div>
+<div class="paragraph">
+<p>There you have it - a short survey of C++ in game development!</p>
+</div>
+<div class="paragraph">
+<p><code>@valentin_galea</code></p>
+</div>
+<div class="paragraph">
+<p>TODO: a more clear conclusion &amp; take away points</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_attributions">Attributions</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Attributions";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+made with <a href="http://www.methods.co.nz/asciidoc/index.html">Asciidoc</a>
+</span>
+</li>
+<li>
+<span>
+using <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2 plugin</a>
+</span>
+</li>
+<li>
+<span>
+intro background image: (CC BY-SA 3.0) modified, original <a href="https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-<em>panoramio</em>(2).jpg">here</a>
+</span>
+</li>
+</ul>
+<div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
+<div id="footer-text">
+Last updated 2017-06-14 17:42:55 GMT Summer Time
 </div>
 </div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div>
+<script type="text/javascript">
+/*<![CDATA[*/
+    // move the div class="background" elements immediately
+    // as document.body children
+    var re = new RegExp("(^| )background\W*");
+    var divs = document.body.getElementsByTagName("div");
+    for (var i = (divs.length - 1); i >= 0 ; --i)
+    {
+      div = divs.item(i);
+      if ( re.test(div.getAttribute("class")) )
+      {
+        div2 = div.cloneNode(true);
+        div.parentNode.removeChild(div);
+        document.body.appendChild(div2);
+      }
+    }
+/*]]>*/
+</script>
 </body>
 </html>

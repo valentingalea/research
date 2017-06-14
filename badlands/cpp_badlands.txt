@@ -1,20 +1,25 @@
 = The Badlands of C++: Professional Game Development
-
 :author: Valentin Galea
-:email: @valentin_galea
+:slidebackground: backgr_intro
 
+ifdef::backend-slidy2[:slidebackground!:]
 Who am I
 --------
+ifdef::backend-slidy2[]
+[backgr_intro, opacity: .9; position: absolute; left: 15%; top: 10%;]
+&&&&
+image::img/intro.jpg["backgr"]
+&&&&
+endif::backend-slidy2[]
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
 more than 10 years doing mobile, indie and AAA games
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
 
 Currently at Splash Damage in London, UK.
 
 Agenda
 ------
-
 - Types of video games
 - The industry
 - Philosophy
@@ -542,6 +547,10 @@ There you have it - a short survey of C++ in game development!
 
 TODO: a more clear conclusion & take away points
 
-//TODO: intro image of badlands geography with some cpp logo overlay
-
-//TODO: fixed vertical spacing?
+Attributions
+------------
+- made with http://www.methods.co.nz/asciidoc/index.html[Asciidoc]
+ifdef::backend-slidy2[]
+- using https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
+- intro background image: (CC BY-SA 3.0) modified, original https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-_panoramio_(2).jpg[here]
+endif::backend-slidy2[]
