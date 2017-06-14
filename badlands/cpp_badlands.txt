@@ -23,20 +23,13 @@ Agenda
 - Types of video games
 - The industry
 - Philosophy
-	* Good & bad
-	* What games require
-	* Projects size
 - Platform
-	* Compilers & IDE's
 - Flavours of C++
-	* Coding styles
-- OOP
-	* Alternatives
+- OOP & Alternatives
 - Templates
 - STL & Boost
 - Exceptions
 - Reflection & RTTI
-- Patterns
 - Conclusion
 
 Types of games - AAA
@@ -53,8 +46,6 @@ indie games [...] created without the financial support of a publisher
 
 image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="1024"]
 
-TODO: fix alignment of these imgs
-
 Types of games - mobile
 -----------------------
 [quote, Wikipedia]
@@ -64,7 +55,7 @@ image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/
 
 What I will talk about
 ----------------------
-Most about AAA games because:
+Mostly about AAA games...
 
 [role="incremental"]
 * have the most experience with
@@ -72,28 +63,39 @@ Most about AAA games because:
 * use C++ in very special and quirky ways (the purpose of the talk)
 
 [role="incremental"]
-Indie games dev shares some elements with the above, but is in general more straighforward.
+Indie games
 
 [role="incremental"]
-Mobile games are usually written in something else: Objective C, C# - but they also do idiomatic C++.
+* they share some elements with the above, but is in general more straighforward.
+
+[role="incremental"]
+Mobile games
+
+[role="incremental"]
+* usually written in something else: Objective C, C# - but they also do idiomatic C++.
 
 What I won't talk about
 -----------------------
+Scripting languages...
+
 [role="incremental"]
-- Scripting languages
-* normally AAA games supplement the C++ with another language for gameplay and level scripting
-** Lua, Python, etc
-** custom made: UnrealScript, DSL's, etc
+- normally AAA games supplement the C++ with another language for gameplay and level scripting
+* Lua, Python, etc
+* custom made: UnrealScript, DSL's, etc
 - Visual scripting spaghetti
 * UE4 "blueprints" ^https://docs.unrealengine.com/latest/INT/Engine/Blueprints/[1]^
 * Guerilla Games Nodegraph system ^https://www.guerrilla-games.com/read/tools-for-the-job-part-1-the-nodegraph-system[2]^
 
 [role="incremental"]
-- Tools
-* these can be written in C++, but a lot of them are in C# or Python
+Tools
 
 [role="incremental"]
-- Build / Package of game data
+* can be written in C++, but a lot of them are in C# or Python
+
+[role="incremental"]
+Building / Packaging game data
+
+[role="incremental"]
 * a nightmare on its own
 
 The industry - It's a secret
@@ -104,8 +106,9 @@ For various reasons, AAA development is covered in secrecy, source code included
 
 The industry (2)
 ----------------
-Some of these reasons:
+Some of these reasons...
 
+[role="incremental"]
 - IP principles and copyright
 - "first to market" desire and competition
 - multiple stakeholders involved
@@ -118,81 +121,42 @@ The rest of the industry didn't follow suit. Even `id` stopped after being acqui
 
 The industry (3)
 ----------------
-Some modern AAA game engines changed their licensing and they’re now open.
+Some modern AAA game engines changed their licensing and they’re now open...
 
 - Unreal Engine 4 https://www.unrealengine.com/ue4-on-github
 - CryEngine https://github.com/CRYTEK/CRYENGINE
 
 [role="incremental"]
 Studios sometimes release internal libraries for general use +
-- examples later
+(examples to follow)
 
 [role="incremental"]
-Disclaimer::
-- Everything here based on my experience so far, YMMV!
-- I will unfairly pick on Epic's UE4
-* I work day to day with it
-* It does a lot of C++ questionable things 
+NOTE: Everything here based on my experience so far, YMMV!
+
+[role="incremental"]
+NOTE: I will unfairly pick on Epic's UE4 :) +
+- I work day to day with it +
+- It does a lot of C++ questionable things 
 
 A glimpse of good
 -----------------
 Source code snippet from _Doom 3_
 
-//image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
-[source]
--------------------------------------------------------------------------------
-void idPhysics_RigidBody::Integrate( float deltaTime, rigidBodyPState_t &next ) {
-	idVec3 position;
-
-	position = current.i.position;
-	current.i.position += centerOfMass * current.i.orientation;
-
-	current.i.orientation.TransposeSelf();
-
-	integrator->Evaluate( (float *) &current.i, (float *) &next.i, 0, deltaTime );
-	next.i.orientation.OrthoNormalizeSelf();
-
-	// apply gravity
-	next.i.linearMomentum += deltaTime * gravityVector * mass;
-
-	current.i.orientation.TransposeSelf();
-	next.i.orientation.TransposeSelf();
-
-	current.i.position = position;
-	next.i.position -= centerOfMass * next.i.orientation;
-
-	next.atRest = current.atRest;
-}
--------------------------------------------------------------------------------
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
 
 TODO: a diff snippet (maybe .h decls)
-TODO: more examples
+
+TODO: more examples?
 
 A glimpse of bad
 ----------------
 Source code snippet from _CryEngine_
 
-//image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
-[source]
--------------------------------------------------------------------------------
-//if ((vrel-=g_ContactsRB[i].friction)<-e) {
-if (max((vrel-=g_ContactsRB[i].friction)+e, g_ContactsRB[i].Pn*g_ContactsRB[i].K(1,0)-g_ContactsRB[i].K(0,2)-1e-6f)<0) {
-	dPn = -vrel*g_ContactsRB[i].K(0,1);
-	dPn = min(dPn, dPn*(1.0f-g_ContactsRB[i].K(1,0)) + (g_ContactsRB[i].K(0,2)*1.001f-g_ContactsRB[i].Pn)*g_ContactsRB[i].K(1,0));
-	g_ContactsRB[i].Pn += dPn;
-	dP = g_ContactsRB[i].n*dPn; 
-	hbody0->v += dP*hbody0->Minv; hbody0->w += hbody0->Iinv*(dp=r0^dP); hbody0->L += dp;
-	dP = g_ContactsRB[i].vreq*(dPn*g_ContactsRB[i].K(0,0));
-	hbody1->v += dP*hbody1->Minv; hbody1->w += hbody1->Iinv*(dp=r1^dP); hbody1->L += dp;
-	for(j=0; j<g_pContacts[i]->iCount; j++)	{
-		body_helper *hbody = g_Bodies+prope[j].iBody;
-		dP = prope[j].P*dPn;
-		hbody->v += dP*hbody->Minv; hbody->w += hbody->Iinv*(dp=prope[j].r^dP); hbody->L += dp;
-	}
-	bBounced++;	nBounces++;
--------------------------------------------------------------------------------
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
 
 TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
+
+TODO: retake picture (line number and frame)
 
 Philosophy
 ----------
@@ -303,6 +267,7 @@ A couple of favorites that are always off:
 * conversion from `T1` to `T2` requires a narrowing conversion
 
 TODO: more from https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h
+
 TODO: from UE4
 
 .Use the __force!
@@ -456,6 +421,7 @@ Last point made easier by the `bcp` tool: +
 allows to extract-out features with no dependencies
 
 TODO: Carmack tweet
+
 TODO: tweet https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
 
 Exceptions
@@ -522,22 +488,8 @@ Some examples:
 image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG["reflection", align="center"]
 
 TODO: more examples & details
+
 TODO: turn from pic to src
-
-Patterns
---------
-Common patterns use:
-
-.Singleton
-Anti-pattern of choice. Spreads like plague because lots of systems usually have only 1 active representation: _Camera_, _Player_, _AI Manager_ etc
-
-.Policy based design
-Example of usage: container allocators, rendering & drawing, game object composition 
-
-.Visitor
-To implement double dispatch.
-
-TODO: expand into dedicated slides
 
 Closing
 -------
