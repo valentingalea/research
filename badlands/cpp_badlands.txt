@@ -39,14 +39,14 @@ Types of games - AAA
 [quote, Wikipedia]
 AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="1024"]
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="1024"]
 
 Types of games - indie
 ----------------------
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="1024"]
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="1024"]
 
 TODO: fix alignment of these imgs
 
@@ -55,7 +55,7 @@ Types of games - mobile
 [quote, Wikipedia]
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="1024"]
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="1024"]
 
 What I will talk about
 ----------------------
@@ -93,7 +93,7 @@ What I won't talk about
 
 The industry - It's a secret
 ----------------------------
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
+image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
 
 For various reasons, AAA development is covered in secrecy, source code included.
 
