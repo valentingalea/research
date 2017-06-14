@@ -14,7 +14,7 @@ endif::backend-slidy2[]
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
 more than 10 years doing mobile, indie and AAA games
 
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/vanity_plate.png["Games worked on", align="center"]
+image::img/vanity_plate.png["Games worked on", align="center"]
 
 Currently at Splash Damage in London, UK.
 
@@ -37,21 +37,21 @@ Types of games - AAA
 [quote, Wikipedia]
 AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
 
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/AAA.jpg["AAA games", align="center", width="1024"]
+image::img/AAA.jpg["AAA games", align="center", width="1024"]
 
 Types of games - indie
 ----------------------
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/Indie.jpg["indie games", align="center", width="1024"]
+image::img/indie.jpg["indie games", align="center", width="1024"]
 
 Types of games - mobile
 -----------------------
 [quote, Wikipedia]
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/mobile.jpg["mobile games", align="center", width="1024"]
+image::img/mobile.jpg["mobile games", align="center", width="1024"]
 
 What I will talk about
 ----------------------
@@ -100,7 +100,7 @@ Building / Packaging game data
 
 The industry - It's a secret
 ----------------------------
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/zelda_secret.gif["Secret", align="center"]
+image::img/zelda_secret.gif["Secret", align="center"]
 
 For various reasons, AAA development is covered in secrecy, source code included.
 
@@ -142,7 +142,7 @@ A glimpse of good
 -----------------
 Source code snippet from _Doom 3_
 
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/doom3.png["Doom 3 src", align="center"]
+image::img/doom3.png["Doom 3 src", align="center"]
 
 TODO: a diff snippet (maybe .h decls)
 
@@ -152,7 +152,7 @@ A glimpse of bad
 ----------------
 Source code snippet from _CryEngine_
 
-image::https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/cryengine.jpg["CryEngine 3 src", align="center"]
+image::img/cryengine.jpg["CryEngine 3 src", align="center"]
 
 TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
 
@@ -456,11 +456,11 @@ Let's see disassembly: https://godbolt.org/g/wQXmTi
 
 Exceptions (continued)
 ----------------------
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/exception_1.png["asm", align="center"]
+image:img/exception_1.png["asm", align="center"]
 
 Exceptions (continued)
 ----------------------
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/exception_2.png["asm", align="center"]
+image:img/exception_2.png["asm", align="center"]
 
 Exceptions (continued)
 ----------------------
@@ -497,7 +497,7 @@ Reflection (continued)
 ---------------------
 Some examples:
 
-image:https://raw.githubusercontent.com/valentingalea/research/master/badlands/img/reflection.PNG["reflection", align="center"]
+image:img/reflection.png["reflection", align="center"]
 
 TODO: more examples & details
 
