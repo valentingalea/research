@@ -295,10 +295,8 @@ Throw hardware at it!
 
 Fighting the compiler
 ---------------------
-Head no warning!
-
-[role="incremental"]
-Warnings are mopped under the floor - couple of favorite ones to disable:
+_Head no warning!_ +
+Warnings are mopped under the floor - couple of favorite ones to disable...
 
 [role="incremental"]
 * signed/unsigned mismatch
@@ -308,8 +306,8 @@ Warnings are mopped under the floor - couple of favorite ones to disable:
 * nonstandard extension used: nameless struct/union
 
 [role="incremental"]
-Use the __force! +
-Eternal hope that magically sprinkling `inline` will makes things faster
+_Use the __force!_ +
+Eternal hope that magically sprinkling `inline` will make things faster...
 
 [role="incremental"]
 [source]
@@ -318,62 +316,87 @@ __attribute__((always_inline))
 
 Flavors of C++
 ---------------
-Traditionally was very C\+\+98 but by now C++11 is baseline.
+Traditionally was very C++98 but by now changed...
 
-C++14 in some select corners. The major engines help with this - `UE4` enables it by default.
+[role="incremental"]
+- C++11: baseline 
+- C++14: getting good traction
+* the major engines help with this - `UE4` enables it by default
+- C++17: not yet, I predict some features will be fully embraced 
+* `if` with initializer a favorite, guaranteed RVO, `std::optional` for errors etc
 
-Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow.
+[role="incremental"]
+Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow... +
+In the past I tried to help by
 
-At Splash Damage, we try to counter this by:
-
+[role="incremental"]
 * running a series of internal talks like "C++11/14 for game dev"
 * newsletter about best practices and modern C++
-
-TODO: split into list & maybe remove Splash section
+* promoting & sharing conference talks
 
 Coding style
 ------------
 Every studio has a set of guidelines or a complete style guide. +
 Some of them recommend things that would really upset a C++ purist!
 
-.Namespaces
+[role="incremental"]
+_Example_: Namespaces
+
+[role="incremental"]
 * not preferred (with exceptions: anonymous to force internal linkage)
 * Instead everything has a game specific prefix:
 ** `CShooterComponent`, `TShooterItem`, `EShooterState` etc
 
-.Trivia
+[role="incremental"]
+_Trivia_
+
+[role="incremental"]
 * CamelCase rules the nation
 * K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used
 * `auto` destroys friendships
 
 OOP is king
 -----------
-All game code is universally OOP driven.
+All game code is universally OOP driven
 
-.Polymorphism
+[role="incremental"]
+_Polymorphism_
+
+[role="incremental"]
 * the preferred default technique
 * "What is a v-table?" - most asked interview question!
+* TODO: something more...
 
-.ECS
+[role="incremental"]
+_ECS_
+
+[role="incremental"]
 * Entity-Component-Systems are prevalent in gameplay code
 * Everything hierachy of `Entity`, `Node` or `Object`'s
 * Components do virtual `Update`, `Tick`, `Draw` or `Render`
 * usually AOS rather than SOA
 
-.Communication
+[role="incremental"]
+_Communication_
+
+[role="incremental"]
 * normally just tight coupling
 * delegate/event systems (heavily macro'ed! for "usability"!) 
 
 Alternatives to OOP
 -------------------
-Need for multithreading continuously growing:
+Need for multithreading continuously growing...
 
+[role="incremental"]
 * I/O systems, loading & saving
 * Rendering, Animation, Navigation, etc decoupled from gameplay
 * Online sub-systems and services
 
-.New paradigms emerging
-- Functional style 'monad' continuations - `.Then()`, `.With()` etc
+[role="incremental"]
+_New paradigms emerging_
+
+[role="incremental"]
+- Functional style monad continuations - `.Then()`, `.With()` etc
 - "Job-ifying" 
 * Parallel Patterns Library (PPL) from Microsoft
 * Threading Building Blocks from Intel
@@ -381,50 +404,68 @@ Need for multithreading continuously growing:
 
 Templates
 ---------
-Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers.
+Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers
 
-.Normal usage
+[role="incremental"]
+_Normal usage_
+
+[role="incremental"]
 * container work obviously
 * policy design: allocator, rendering, etc
 * variadic templates used to be emulated with "up to 11 arguments" horible macros
 
-.Metaprogramming
+[role="incremental"]
+_Metaprogramming_
+
+[role="incremental"]
 * seen as black magic and highly discouraged
 * due to project size - isolated islands where it thrives
 * sometimes custom reduced specific `enable_if`, `void_t`, traits etc
 
-.Macros == poor man's templates
+[role="incremental"]
+_Macros == poor man's templates_ +
 Still a tendecy to use macros where `template` or `constexpr` functions would be more adequate:
 
-* `min()` and `max()`
+[role="incremental"]
+* `min()` and `max()`, `abs()`, etc
 * generic relational operator declarations
-* hash functions declarations
+* hash type functions
 
 STL
 ---
-Adoption generally low.
+Adoption generally low...
 
+[role="incremental"]
 * console games never ship with STL containers
 * used more in PC-only/indie
 * iostreams are the devil's work!
 
-.Bespoke alternatives - because
-* specific allocation needs (and poor allocator model pre C++17)
+[role="incremental"]
+_Bespoke alternatives_
+
+[role="incremental"]
+* specific allocation needs (and limited allocator model pre C++17)
 * associated (or perceived) bloat
 * slow or cumbersome debugging
 * not everyone is willing to follow STL coding style and naming
 
 STL (continued)
 ---------------
-`std::string` - best example:
+`std::string` - best example...
 
+[role="incremental"]
 * every studio/engine reinvents the string wheel
 * specific localization needs - ties with game data
 * previous STL implementations made awkward choices (Ex: copy on write on older GCC)
 * no need for streams: C printf style prefered, I/O handled in bulk elsewhere
 
-.iterator
-* the `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's.
+[role="incremental"]
+_Bits & pieces_
+
+[role="incremental"]
+* the `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's
+* the STL atomics and locks are generally used as is
+* sparing use of algorithms, normally bespoke containers don't play well with them
 
 [EA]STL
 -------
