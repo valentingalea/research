@@ -4478,7 +4478,10 @@ lots of wheel reinventions
 <div class="paragraph">
 <p>By far and large Windows centric development - even for consoles</p>
 </div>
-<div class="title">MSVC</div><ul class="">
+<div class="paragraph incremental">
+<p>MSVC</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 is overwhelmingly used, almost de facto standard
@@ -4495,7 +4498,10 @@ before C++11 lots of code depended on Microsoft quirks
 </span>
 </li>
 </ul>
-<div class="title">GCC</div><ul class="">
+<div class="paragraph incremental">
+<p>GCC</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 rarely used on PC : mainly dedicated servers, or the odd Linux port
@@ -4507,7 +4513,10 @@ prev gen consoles had vendor specific variants
 </span>
 </li>
 </ul>
-<div class="title">clang</div><ul class="">
+<div class="paragraph incremental">
+<p>clang</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 Playstation 4&#174; uses it exclusively (with LLVM backend)
@@ -4523,9 +4532,12 @@ Playstation 4&#174; uses it exclusively (with LLVM backend)
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Platform - IDE";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Again, Microsoft drives it:</p>
+<p>Again, Microsoft drives it&#8230;</p>
 </div>
-<div class="title">Visual Studio</div><ul class="">
+<div class="paragraph incremental">
+<p>Visual Studio</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 used everywhere: PC, Xbox One, PS4
@@ -4549,7 +4561,10 @@ help with code completion &amp; formatting: Visual Assist X, Resharper
 </ul>
 </li>
 </ul>
-<div class="title">Others</div><ul class="">
+<div class="paragraph incremental">
+<p>Others</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 SN Systems: proprietary EDG front end for Sony until PS4
@@ -4575,15 +4590,16 @@ XCode - No :)
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Compilation";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Compilation and linking are usually dreadfully slow.</p>
+<p>Compilation and linking are usually dreadfully slow</p>
 </div>
 <div class="paragraph">
-<p>Optimizations are on by default, rarely debug builds are interactive.</p>
+<p>End result usually a single executable - size is ridiculous!</p>
 </div>
-<div class="paragraph">
-<p>Various tricks:</p>
+<div class="paragraph incremental">
+<p>Optimizations are on by default, full debug builds have crawling FPS;<br />
+Various tricks:</p>
 </div>
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
 <code>#pragma optimize</code> on/off "islands"
@@ -4600,9 +4616,6 @@ mastery of reading optimized disassembly :)
 </span>
 </li>
 </ul>
-<div class="paragraph">
-<p>End result usually a single executable - size is ridiculous!</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4612,12 +4625,17 @@ mastery of reading optimized disassembly :)
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Compilation (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Some mitigation methods:</p>
+<p>Some mitigation methods&#8230;</p>
 </div>
-<div class="paragraph"><div class="title">Unity builds</div>
-<p>Combine all or lots of source files into a couple of gigantic .cpp units</p>
+<div class="paragraph incremental">
+<p>Unity builds</p>
 </div>
-<ul class="">
+<ul class=" incremental">
+<li>
+<span>
+combine all/lots of source files into a couple of gigantic <code>.cpp</code> units
+</span>
+</li>
 <li>
 <span>
 improves speeds due to less churn on #include&#8217;s and file I/O
@@ -4634,15 +4652,31 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 </span>
 </li>
 </ul>
-<div class="paragraph"><div class="title">Distributed compilation</div>
-<p>Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms</p>
+<div class="paragraph incremental">
+<p>Distributed compilation</p>
 </div>
-<div class="paragraph"><div class="title">Throw hardware at it</div>
-<p>In a studio, programmers are spoiled: fastest CPU&#8217;s, multiple SSD&#8217;s etc</p>
+<ul class=" incremental">
+<li>
+<span>
+Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms
+</span>
+</li>
+</ul>
+<div class="paragraph incremental">
+<p>Throw hardware at it!</p>
 </div>
-<div class="paragraph">
-<p>TODO: split into sep. slides - opportunity to add pics</p>
-</div>
+<ul class=" incremental">
+<li>
+<span>
+In a studio, programmers are spoiled
+</span>
+</li>
+<li>
+<span>
+fastest CPU&#8217;s, multiple SSD&#8217;s etc
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4651,10 +4685,13 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 <h1 id="_fighting_the_compiler">Fighting the compiler</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Fighting the compiler";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><div class="title">Head no warning!</div>
-<p>A couple of favorites that are always off:</p>
+<div class="paragraph">
+<p>Head no warning!</p>
 </div>
-<ul class="">
+<div class="paragraph incremental">
+<p>Warnings are mopped under the floor - couple of favorite ones to disable:</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 signed/unsigned mismatch
@@ -4665,23 +4702,33 @@ signed/unsigned mismatch
 conversion from <code>T1</code> to <code>T2</code> requires a narrowing conversion
 </span>
 </li>
+<li>
+<span>
+conversion from <code>T1</code> to <code>T2</code>, possible loss of data
+</span>
+</li>
+<li>
+<span>
+conditional express is constant
+</span>
+</li>
+<li>
+<span>
+nonstandard extension used: nameless struct/union
+</span>
+</li>
 </ul>
-<div class="paragraph">
-<p>TODO: more from <a href="https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h">https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h</a></p>
+<div class="paragraph incremental">
+<p>Use the __force!<br />
+Eternal hope that magically sprinkling <code>inline</code> will makes things faster</p>
 </div>
-<div class="paragraph">
-<p>TODO: from UE4</p>
-</div>
-<div class="paragraph"><div class="title">Use the __force!</div>
-<p>Eternal hope that magically sprinkling inline will makes things faster - it won&#8217;t!</p>
-</div>
-<div class="listingblock">
+<div class="listingblock incremental">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">inline</span></span><span style="color: #990000">,</span> __inline<span style="color: #990000">,</span> __forceinline
-TODO<span style="color: #990000">:</span> gcc <span style="color: #990000">&amp;</span> clang</tt></pre></div></div>
+<span style="font-weight: bold"><span style="color: #000000">__attribute__</span></span><span style="color: #990000">(</span><span style="color: #990000">(</span>always_inline<span style="color: #990000">)</span><span style="color: #990000">)</span></tt></pre></div></div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5333,7 +5380,7 @@ intro background image: (CC BY-SA 3.0) modified, original <a href="https://commo
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-06-14 23:11:06 GMT Daylight Time
+Last updated 2017-06-15 14:21:26 GMT Summer Time
 </div>
 </div>
 </div></div>

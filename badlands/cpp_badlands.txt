@@ -210,84 +210,111 @@ Platform - Compiler
 -------------------
 By far and large Windows centric development - even for consoles
 
-.MSVC
+[role="incremental"]
+MSVC
+
+[role="incremental"]
 - is overwhelmingly used, almost de facto standard
 - sometimes quite old versions, by now 2013+
 - before C++11 lots of code depended on Microsoft quirks
 
-.GCC
+[role="incremental"]
+GCC
+
+[role="incremental"]
 - rarely used on PC : mainly dedicated servers, or the odd Linux port
 - prev gen consoles had vendor specific variants
 
-.clang
+[role="incremental"]
+clang
+
+[role="incremental"]
 - Playstation 4(R) uses it exclusively (with LLVM backend)
 
 Platform - IDE
 --------------
-Again, Microsoft drives it:
+Again, Microsoft drives it...
 
-.Visual Studio
+[role="incremental"]
+Visual Studio
+
+[role="incremental"]
 - used everywhere: PC, Xbox One, PS4
 - used with extensions:
 * proprietary profilers & debuggers (TODO: examples)
 * help with code completion & formatting: Visual Assist X, Resharper
 
-.Others
+[role="incremental"]
+Others
+
+[role="incremental"]
 - SN Systems: proprietary EDG front end for Sony until PS4
 - Metroworks CodeWarrior for Nintendo consoles
 - XCode - No :)
 
 Compilation
 -----------
-Compilation and linking are usually dreadfully slow.
+Compilation and linking are usually dreadfully slow
 
-Optimizations are on by default, rarely debug builds are interactive.
+End result usually a single executable - size is ridiculous!
 
+[role="incremental"]
+Optimizations are on by default, full debug builds have crawling FPS; +
 Various tricks:
 
+[role="incremental"]
 * `#pragma optimize` on/off "islands"
 * only specific modules are debug
 * mastery of reading optimized disassembly :)
 
-End result usually a single executable - size is ridiculous!
-
 Compilation (continued)
 -----------------------
-Some mitigation methods:
+Some mitigation methods...
 
-.Unity builds
-Combine all or lots of source files into a couple of gigantic .cpp units
+[role="incremental"]
+Unity builds
 
+[role="incremental"]
+- combine all/lots of source files into a couple of gigantic `.cpp` units
 - improves speeds due to less churn on #include's and file I/O 
 - can create hidden dependencies gotchas as opposed to normal pipeline 
 - can hurt iteration (usual mitigation: extract out specific .cpp) 
 
-.Distributed compilation
-Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
+[role="incremental"]
+Distributed compilation
 
-.Throw hardware at it
-In a studio, programmers are spoiled: fastest CPU's, multiple SSD's etc
+[role="incremental"]
+* Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
 
-TODO: split into sep. slides - opportunity to add pics
+[role="incremental"]
+Throw hardware at it!
+
+[role="incremental"]
+* In a studio, programmers are spoiled
+* fastest CPU's, multiple SSD's etc
 
 Fighting the compiler
 ---------------------
-.Head no warning!
-A couple of favorites that are always off:
+Head no warning!
 
+[role="incremental"]
+Warnings are mopped under the floor - couple of favorite ones to disable:
+
+[role="incremental"]
 * signed/unsigned mismatch
 * conversion from `T1` to `T2` requires a narrowing conversion
+* conversion from `T1` to `T2`, possible loss of data
+* conditional express is constant
+* nonstandard extension used: nameless struct/union
 
-TODO: more from https://github.com/CRYTEK/CRYENGINE/blob/release/Code/CryEngine/CryCommon/CryCore/Compiler/MSVCspecific.h
+[role="incremental"]
+Use the __force! +
+Eternal hope that magically sprinkling `inline` will makes things faster
 
-TODO: from UE4
-
-.Use the __force!
-Eternal hope that magically sprinkling inline will makes things faster - it won't!
-
+[role="incremental"]
 [source]
 inline, __inline, __forceinline
-TODO: gcc & clang
+__attribute__((always_inline))
 
 Flavors of C++
 ---------------
