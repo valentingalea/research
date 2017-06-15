@@ -4686,10 +4686,8 @@ fastest CPU&#8217;s, multiple SSD&#8217;s etc
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Fighting the compiler";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Head no warning!</p>
-</div>
-<div class="paragraph incremental">
-<p>Warnings are mopped under the floor - couple of favorite ones to disable:</p>
+<p><em>Head no warning!</em><br />
+Warnings are mopped under the floor - couple of favorite ones to disable&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4719,8 +4717,8 @@ nonstandard extension used: nameless struct/union
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Use the __force!<br />
-Eternal hope that magically sprinkling <code>inline</code> will makes things faster</p>
+<p><em>Use the __force!</em><br />
+Eternal hope that magically sprinkling <code>inline</code> will make things faster&#8230;</p>
 </div>
 <div class="listingblock incremental">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -4738,18 +4736,44 @@ http://www.gnu.org/software/src-highlite -->
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Flavors of C++";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Traditionally was very C++98 but by now C++11 is baseline.</p>
+<p>Traditionally was very C++98 but by now changed&#8230;</p>
 </div>
-<div class="paragraph">
-<p>C++14 in some select corners. The major engines help with this - <code>UE4</code> enables it by default.</p>
-</div>
-<div class="paragraph">
-<p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow.</p>
-</div>
-<div class="paragraph">
-<p>At Splash Damage, we try to counter this by:</p>
-</div>
+<ul class=" incremental">
+<li>
+<span>
+C++11: baseline
+</span>
+</li>
+<li>
+<span>
+C++14: getting good traction
+</span>
 <ul class="">
+<li>
+<span>
+the major engines help with this - <code>UE4</code> enables it by default
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+C++17: not yet, I predict some features will be fully embraced
+</span>
+<ul class="">
+<li>
+<span>
+<code>if</code> with initializer a favorite, guaranteed RVO, <code>std::optional</code> for errors etc
+</span>
+</li>
+</ul>
+</li>
+</ul>
+<div class="paragraph incremental">
+<p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow&#8230;<br />
+In the past I tried to help by</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 running a series of internal talks like "C++11/14 for game dev"
@@ -4760,10 +4784,12 @@ running a series of internal talks like "C++11/14 for game dev"
 newsletter about best practices and modern C++
 </span>
 </li>
+<li>
+<span>
+promoting &amp; sharing conference talks
+</span>
+</li>
 </ul>
-<div class="paragraph">
-<p>TODO: split into list &amp; maybe remove Splash section</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4776,7 +4802,10 @@ newsletter about best practices and modern C++
 <p>Every studio has a set of guidelines or a complete style guide.<br />
 Some of them recommend things that would really upset a C++ purist!</p>
 </div>
-<div class="title">Namespaces</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Example</em>: Namespaces</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 not preferred (with exceptions: anonymous to force internal linkage)
@@ -4795,7 +4824,10 @@ Instead everything has a game specific prefix:
 </ul>
 </li>
 </ul>
-<div class="title">Trivia</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Trivia</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 CamelCase rules the nation
@@ -4821,9 +4853,12 @@ K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost alw
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="OOP is king";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All game code is universally OOP driven.</p>
+<p>All game code is universally OOP driven</p>
 </div>
-<div class="title">Polymorphism</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Polymorphism</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 the preferred default technique
@@ -4834,8 +4869,16 @@ the preferred default technique
 "What is a v-table?" - most asked interview question!
 </span>
 </li>
+<li>
+<span>
+TODO: something more&#8230;
+</span>
+</li>
 </ul>
-<div class="title">ECS</div><ul class="">
+<div class="paragraph incremental">
+<p><em>ECS</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 Entity-Component-Systems are prevalent in gameplay code
@@ -4857,7 +4900,10 @@ usually AOS rather than SOA
 </span>
 </li>
 </ul>
-<div class="title">Communication</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Communication</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 normally just tight coupling
@@ -4878,9 +4924,9 @@ delegate/event systems (heavily macro&#8217;ed! for "usability"!)
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Alternatives to OOP";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Need for multithreading continuously growing:</p>
+<p>Need for multithreading continuously growing&#8230;</p>
 </div>
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
 I/O systems, loading &amp; saving
@@ -4897,10 +4943,13 @@ Online sub-systems and services
 </span>
 </li>
 </ul>
-<div class="title">New paradigms emerging</div><ul class="">
+<div class="paragraph incremental">
+<p><em>New paradigms emerging</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
-Functional style <em>monad</em> continuations - <code>.Then()</code>, <code>.With()</code> etc
+Functional style monad continuations - <code>.Then()</code>, <code>.With()</code> etc
 </span>
 </li>
 <li>
@@ -4935,9 +4984,12 @@ Seldom the standard <code>future</code> and <code>promise</code> - usually every
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Templates";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers.</p>
+<p>Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers</p>
 </div>
-<div class="title">Normal usage</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Normal usage</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 container work obviously
@@ -4954,7 +5006,10 @@ variadic templates used to be emulated with "up to 11 arguments" horible macros
 </span>
 </li>
 </ul>
-<div class="title">Metaprogramming</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Metaprogramming</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 seen as black magic and highly discouraged
@@ -4971,13 +5026,14 @@ sometimes custom reduced specific <code>enable_if</code>, <code>void_t</code>, t
 </span>
 </li>
 </ul>
-<div class="paragraph"><div class="title">Macros == poor man&#8217;s templates</div>
-<p>Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
+<div class="paragraph incremental">
+<p><em>Macros == poor man&#8217;s templates</em><br />
+Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
 </div>
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
-<code>min()</code> and <code>max()</code>
+<code>min()</code> and <code>max()</code>, <code>abs()</code>, etc
 </span>
 </li>
 <li>
@@ -4987,7 +5043,7 @@ generic relational operator declarations
 </li>
 <li>
 <span>
-hash functions declarations
+hash type functions
 </span>
 </li>
 </ul>
@@ -5000,9 +5056,9 @@ hash functions declarations
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Adoption generally low.</p>
+<p>Adoption generally low&#8230;</p>
 </div>
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
 console games never ship with STL containers
@@ -5019,10 +5075,13 @@ iostreams are the devil&#8217;s work!
 </span>
 </li>
 </ul>
-<div class="title">Bespoke alternatives - because</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Bespoke alternatives</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
-specific allocation needs (and poor allocator model pre C++17)
+specific allocation needs (and limited allocator model pre C++17)
 </span>
 </li>
 <li>
@@ -5050,9 +5109,9 @@ not everyone is willing to follow STL coding style and naming
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>std::string</code> - best example:</p>
+<p><code>std::string</code> - best example&#8230;</p>
 </div>
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
 every studio/engine reinvents the string wheel
@@ -5074,10 +5133,23 @@ no need for streams: C printf style prefered, I/O handled in bulk elsewhere
 </span>
 </li>
 </ul>
-<div class="title">iterator</div><ul class="">
+<div class="paragraph incremental">
+<p><em>Bits &amp; pieces</em></p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
-the <code>Iterator</code> concept is copied and reimplemented - if nothing else just to enable ranged-for&#8217;s.
+the <code>Iterator</code> concept is copied and reimplemented - if nothing else just to enable ranged-for&#8217;s
+</span>
+</li>
+<li>
+<span>
+the STL atomics and locks are generally used as is
+</span>
+</li>
+<li>
+<span>
+sparing use of algorithms, normally bespoke containers don&#8217;t play well with them
 </span>
 </li>
 </ul>
@@ -5380,7 +5452,7 @@ intro background image: (CC BY-SA 3.0) modified, original <a href="https://commo
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-06-15 14:21:26 GMT Summer Time
+Last updated 2017-06-15 22:46:39 GMT Daylight Time
 </div>
 </div>
 </div></div>
