@@ -30,7 +30,7 @@ Agenda
 - STL & Boost
 - Exceptions
 - Reflection & RTTI
-- Conclusion
+- Conclusions
 
 Types of games - AAA
 --------------------
@@ -55,28 +55,28 @@ image::img/mobile.jpg["mobile games", align="center", width="1024"]
 
 What I will talk about
 ----------------------
-Mostly about AAA games...
+Mostly about *AAA games*...
 
 [role="incremental"]
-* have the most experience with
+* I have the most experience with
 * they are the most process driven
 * use C++ in very special and quirky ways (the purpose of the talk)
 
 [role="incremental"]
-Indie games
+*Indie games*
 
 [role="incremental"]
 * they share some elements with the above, but is in general more straighforward.
 
 [role="incremental"]
-Mobile games
+*Mobile games*
 
 [role="incremental"]
 * usually written in something else: Objective C, C# - but they also do idiomatic C++.
 
 What I won't talk about
 -----------------------
-Scripting languages...
+*Scripting languages*...
 
 [role="incremental"]
 - normally AAA games supplement the C++ with another language for gameplay and level scripting
@@ -87,13 +87,13 @@ Scripting languages...
 * Guerilla Games Nodegraph system ^https://www.guerrilla-games.com/read/tools-for-the-job-part-1-the-nodegraph-system[2]^
 
 [role="incremental"]
-Tools
+*Tools*
 
 [role="incremental"]
 * can be written in C++, but a lot of them are in C# or Python
 
 [role="incremental"]
-Building / Packaging game data
+*Building / Packaging* game data
 
 [role="incremental"]
 * a nightmare on its own
@@ -160,7 +160,7 @@ TODO: retake picture (line number and frame)
 
 Philosophy
 ----------
-Games need to run...
+Games need to *run*...
 
 [role="incremental"]
 * at least _30 FPS_ - _33 ms_ per frame
@@ -170,13 +170,13 @@ Games need to run...
 Everything is centered around achieving this frame time while pushing the graphics and gameplay
 
 [role="incremental"]
-Tradeoffs...
+*Tradeoffs...*
 
 [role="incremental"]
 - Stability can be sacrificed:
 * a crash forgiven if it doesn't corrupt the save/user data
 * limited concern for uptime (unless server)
-- _low latency_ but _throughput_ more important - got to push millions of pixels to the screen!
+- low-latency but throughput more important - got to push millions of pixels to the screen!
 
 Project size/LOC
 ----------------
@@ -188,7 +188,7 @@ AAA studios...
 - `legacy` of francize games and sequels
 
 [role="incremental"]
-...so amount of code quickly skyrockets:
+...so amount of code quickly skyrockets...
 
 [role="incremental"]
 [quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
@@ -211,7 +211,7 @@ Platform - Compiler
 By far and large Windows centric development - even for consoles
 
 [role="incremental"]
-MSVC
+*MSVC*
 
 [role="incremental"]
 - is overwhelmingly used, almost de facto standard
@@ -219,14 +219,14 @@ MSVC
 - before C++11 lots of code depended on Microsoft quirks
 
 [role="incremental"]
-GCC
+*GCC*
 
 [role="incremental"]
 - rarely used on PC : mainly dedicated servers, or the odd Linux port
 - prev gen consoles had vendor specific variants
 
 [role="incremental"]
-clang
+*clang*
 
 [role="incremental"]
 - Playstation 4(R) uses it exclusively (with LLVM backend)
@@ -236,7 +236,7 @@ Platform - IDE
 Again, Microsoft drives it...
 
 [role="incremental"]
-Visual Studio
+*Visual Studio*
 
 [role="incremental"]
 - used everywhere: PC, Xbox One, PS4
@@ -245,7 +245,7 @@ Visual Studio
 * help with code completion & formatting: Visual Assist X, Resharper
 
 [role="incremental"]
-Others
+*Others*
 
 [role="incremental"]
 - SN Systems: proprietary EDG front end for Sony until PS4
@@ -272,7 +272,7 @@ Compilation (continued)
 Some mitigation methods...
 
 [role="incremental"]
-Unity builds
+*Unity builds*
 
 [role="incremental"]
 - combine all/lots of source files into a couple of gigantic `.cpp` units
@@ -281,13 +281,13 @@ Unity builds
 - can hurt iteration (usual mitigation: extract out specific .cpp) 
 
 [role="incremental"]
-Distributed compilation
+*Distributed compilation*
 
 [role="incremental"]
 * Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
 
 [role="incremental"]
-Throw hardware at it!
+*Throw hardware at it!*
 
 [role="incremental"]
 * In a studio, programmers are spoiled
@@ -295,7 +295,7 @@ Throw hardware at it!
 
 Fighting the compiler
 ---------------------
-_Head no warning!_ +
+*Head no warning!* +
 Warnings are mopped under the floor - couple of favorite ones to disable...
 
 [role="incremental"]
@@ -306,7 +306,7 @@ Warnings are mopped under the floor - couple of favorite ones to disable...
 * nonstandard extension used: nameless struct/union
 
 [role="incremental"]
-_Use the __force!_ +
+*Use the __force!* +
 Eternal hope that magically sprinkling `inline` will make things faster...
 
 [role="incremental"]
@@ -326,8 +326,10 @@ Traditionally was very C++98 but by now changed...
 * `if` with initializer a favorite, guaranteed RVO, `std::optional` for errors etc
 
 [role="incremental"]
-Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow... +
-In the past I tried to help by
+Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow...
+
+[role="incremental"]
+In the past I tried to help by...
 
 [role="incremental"]
 * running a series of internal talks like "C++11/14 for game dev"
@@ -340,7 +342,7 @@ Every studio has a set of guidelines or a complete style guide. +
 Some of them recommend things that would really upset a C++ purist!
 
 [role="incremental"]
-_Example_: Namespaces
+*Example*: Namespaces
 
 [role="incremental"]
 * not preferred (with exceptions: anonymous to force internal linkage)
@@ -348,7 +350,7 @@ _Example_: Namespaces
 ** `CShooterComponent`, `TShooterItem`, `EShooterState` etc
 
 [role="incremental"]
-_Trivia_
+*Trivia*
 
 [role="incremental"]
 * CamelCase rules the nation
@@ -360,7 +362,7 @@ OOP is king
 All game code is universally OOP driven
 
 [role="incremental"]
-_Polymorphism_
+*Polymorphism*
 
 [role="incremental"]
 * the preferred default technique
@@ -368,7 +370,7 @@ _Polymorphism_
 * TODO: something more...
 
 [role="incremental"]
-_ECS_
+*ECS*
 
 [role="incremental"]
 * Entity-Component-Systems are prevalent in gameplay code
@@ -377,7 +379,7 @@ _ECS_
 * usually AOS rather than SOA
 
 [role="incremental"]
-_Communication_
+*Communication*
 
 [role="incremental"]
 * normally just tight coupling
@@ -385,7 +387,7 @@ _Communication_
 
 Alternatives to OOP
 -------------------
-Need for multithreading continuously growing...
+Need for *multithreading* continuously growing...
 
 [role="incremental"]
 * I/O systems, loading & saving
@@ -393,7 +395,7 @@ Need for multithreading continuously growing...
 * Online sub-systems and services
 
 [role="incremental"]
-_New paradigms emerging_
+*New paradigms* emerging
 
 [role="incremental"]
 - Functional style monad continuations - `.Then()`, `.With()` etc
@@ -404,10 +406,10 @@ _New paradigms emerging_
 
 Templates
 ---------
-Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers
+Traditionally, there was a tendency to downplay templates - changing now with modern standards and mature compilers
 
 [role="incremental"]
-_Normal usage_
+*Normal usage*
 
 [role="incremental"]
 * container work obviously
@@ -415,7 +417,7 @@ _Normal usage_
 * variadic templates used to be emulated with "up to 11 arguments" horible macros
 
 [role="incremental"]
-_Metaprogramming_
+*Metaprogramming*
 
 [role="incremental"]
 * seen as black magic and highly discouraged
@@ -423,7 +425,7 @@ _Metaprogramming_
 * sometimes custom reduced specific `enable_if`, `void_t`, traits etc
 
 [role="incremental"]
-_Macros == poor man's templates_ +
+*Macros == poor man's templates* +
 Still a tendecy to use macros where `template` or `constexpr` functions would be more adequate:
 
 [role="incremental"]
@@ -441,7 +443,7 @@ Adoption generally low...
 * iostreams are the devil's work!
 
 [role="incremental"]
-_Bespoke alternatives_
+*Bespoke alternatives*
 
 [role="incremental"]
 * specific allocation needs (and limited allocator model pre C++17)
@@ -460,7 +462,7 @@ STL (continued)
 * no need for streams: C printf style prefered, I/O handled in bulk elsewhere
 
 [role="incremental"]
-_Bits & pieces_
+*Bits & pieces*...
 
 [role="incremental"]
 * the `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's
@@ -469,25 +471,52 @@ _Bits & pieces_
 
 [EA]STL
 -------
-.EASTL from Electronic Arts
-A video game specific implementation of STL +
-https://github.com/electronicarts/EASTL
+*EASTL from Electronic Arts* -  video game specific implementation of STL +
+Originally started 10 years ago for internal use, now open source (https://github.com/electronicarts/EASTL)
 
-TODO: more detail
+[role="incremental"]
+Normally follows the `std::` nomenclature & style +
+Differences / Changes...
+
+[role="incremental"]
+- written in a more straighforward/direct way (less general)
+* easier to debug, faster release builds
+- simplified allocator model - games specific
+* alignment aware, naming support, etc
+- intrusive containers
+- fixed_ containers (no allocation, only within provided block)
+- new containers
+* `ring_buffer`, `heap`, `priority_queue`, etc
+- smart pointers, type traits - now obsolete
 
 STL - SG14
 ----------
-.SG14 group
-Video games and embedded programming sub-group within the ISO C++ Standard's Study Group +
-Tries to propose new, optimized containers, data structures even language changes.
+Finally game dev is officially recognized in the ISO C++ Standard committee! +
 
-TODO: quick enum of the papers in-flight
+[role="incremental"]
+*SG14 group* +
+Video games and embedded programming study sub-group +
+Tries to propose new, optimized containers, data structures even language changes
+
+[role="incremental"]
+*Proposals & Papers in-flight*...
+
+[role="incremental"]
+- fixed point numeric Library
+- ring buffer
+- intrusive containers
+- "in place" alternative to `std::function`
+- likely/unlikely optimisation hints
+- bikeshedding :)
 
 Boost
 -----
-Very frowned upon and sometimes even forbidden.
+Very frowned upon and sometimes even forbidden
 
-.Reasons
+[role="incremental"]
+*Reasons*...
+
+[role="incremental"]
 - clash of cultures:
 * Boost is "academic" and research driven
 * game dev is pragmatic and get-it-done
@@ -496,7 +525,8 @@ Very frowned upon and sometimes even forbidden.
 - by now best libraries made it into the standard
 - difficulty to integrate & setup
 
-.bcp
+[role="incremental"]
+*bcp* +
 Last point made easier by the `bcp` tool: +
 allows to extract-out features with no dependencies
 
@@ -506,8 +536,12 @@ TODO: tweet https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
 
 Exceptions
 ----------
-TODO: introduce better
+Almost never used due to speed penalties of `throw`-ing and `catch`-ing
 
+[role="incremental"]
+A small demonstration...
+
+[role="incremental"]
 [source]
 ---------------------------------------
 #include <stdexcept>
@@ -518,8 +552,8 @@ int func()
 }
 ---------------------------------------
 
-Compiled with `/O2` optimisations on VS 2017.
-
+[role="incremental"]
+Compiled with `/O2` optimisations on VS 2017 +
 Let's see disassembly: https://godbolt.org/g/wQXmTi
 
 Exceptions (continued)
@@ -530,40 +564,47 @@ Exceptions (continued)
 ----------------------
 image:img/exception_2.png["asm", align="center"]
 
-Exceptions (continued)
-----------------------
-Almost never used due to speed penalties of `throw`-ing and `catch`-ing.
+Exceptions - alternatives
+-------------------------
+Handling of errors...
 
-Usually (and always during dev time) a hard exit is requested on error.
-
-That means errors in constructors cannot be handled. Usual solution is to have 'Create'/'Instantiate'/'Begin' etc (SPEAKER: this is also due to GC and serialization)
-
-That's why people don't care or don't know about `noexcept`.
+[role="incremental"]
+- usually (always during dev time) a hard exit is requested on error
+- C style last-error or status arguments
+- impossible to handle errors in constructors
+* solution is to have `Create`, `Instantiate`, `Begin` replacements
+- exceptions are still used sometimes in non critical performance code
+* online services
+* OS/system interactions
 
 RTTI
 ----
-Seldom used - normally turned off by default because it bloats the modules size.	
+Seldom used - normally turned off by default because it bloats the modules size	
 
-Very rare use of `dynamic_cast` - usually reimplemented manually via custom reflection.
+Very rare use of `dynamic_cast` - usually reimplemented manually via custom reflection...
 
 Reflection
 ----------
-A lot of games have an involved reflection system due to:
+A lot of games have an involved reflection systems...
 
-* close live link with editors/tools: values inspection, code hot reload
-* serialization for loading/saving; versioning
-* network replication, RPC's
-* garbage collection
+[role="incremental"]
+- close live-link with editors and tools
+* values inspection, code hot reload
+- serialization for loading/saving; versioning
+- network replication, RPC's
+- garbage collection
 
-Custom, individual solutions:
+[role="incremental"]
+*Custom solutions*...
 
-* pre-processor based decorations that both annotate code and generate registration calls
-* template metaprogramming for same purpose
-* mini IDL's that generate additional cpp/h files
+[role="incremental"]
+- pre-processor based decorations that both annotate code and generate registration calls
+- template metaprogramming for same purpose
+- mini IDL's that generate additional cpp/h files
 
 Reflection (continued)
 ---------------------
-Some examples:
+Example from Unreal Engine 4...
 
 image:img/reflection.png["reflection", align="center"]
 
@@ -571,13 +612,28 @@ TODO: more examples & details
 
 TODO: turn from pic to src
 
+There is more...
+----------------
+- Patterns
+* Singleton - the anti-pattern of choice
+* Policy based design
+** allocators, rendering & drawing
+- Lots of preprocessor abuse
+- Whatever I missed from codebases I never worked on
+
 Closing
 -------
 There you have it - a short survey of C++ in game development!
 
-`@valentin_galea`
+.Game programming
+- pushes practices due to video games special requirements
+- sometimes is at the forefront, sometimes way behind
+- can have beautiful C++ or make a total mess of it
+- for a time it was the ugly cousin in the basement
+* but it's way better represented now!
 
-TODO: a more clear conclusion & take away points
+Thank you! +
+`@valentin_galea`
 
 Attributions
 ------------
@@ -586,3 +642,4 @@ ifdef::backend-slidy2[]
 - using https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
 - intro background image: (CC BY-SA 3.0) modified, original https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-_panoramio_(2).jpg[here]
 endif::backend-slidy2[]
+- The Legend of Zelda(R) is property of Nintendo(R)
