@@ -3942,7 +3942,6 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <body class="article">
 <div id="header" class="slide backgr_intro">
 <h1>The Badlands of C++: Professional Game Development</h1>
-<span id="author">Valentin Galea</span><br />
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -3952,7 +3951,7 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <h1 id="_who_am_i">Who am I</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="background backgr_intro" style="opacity: .9; position: absolute; left: 15%; top: 10%;">
+<div class="background backgr_intro" style="opacity: .9; position: absolute; top: 3em; left: 1em;">
 <div class="imageblock">
 <div class="content">
 <img src="img/intro.jpg" alt="backgr" />
@@ -4032,7 +4031,7 @@ Reflection &amp; RTTI
 </li>
 <li>
 <span>
-Conclusion
+Conclusions
 </span>
 </li>
 </ul>
@@ -4099,12 +4098,12 @@ Conclusion
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="What I will talk about";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mostly about AAA games&#8230;</p>
+<p>Mostly about <strong>AAA games</strong>&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
 <span>
-have the most experience with
+I have the most experience with
 </span>
 </li>
 <li>
@@ -4119,7 +4118,7 @@ use C++ in very special and quirky ways (the purpose of the talk)
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Indie games</p>
+<p><strong>Indie games</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4129,7 +4128,7 @@ they share some elements with the above, but is in general more straighforward.
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Mobile games</p>
+<p><strong>Mobile games</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4147,7 +4146,7 @@ usually written in something else: Objective C, C# - but they also do idiomatic 
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="What I won&#8217;t talk about";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Scripting languages&#8230;</p>
+<p><strong>Scripting languages</strong>&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4186,7 +4185,7 @@ Guerilla Games Nodegraph system <sup><a href="https://www.guerrilla-games.com/re
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Tools</p>
+<p><strong>Tools</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4196,7 +4195,7 @@ can be written in C++, but a lot of them are in C# or Python
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Building / Packaging game data</p>
+<p><strong>Building / Packaging</strong> game data</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4353,7 +4352,7 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Philosophy";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Games need to run&#8230;</p>
+<p>Games need to <strong>run</strong>&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4371,7 +4370,7 @@ at least <em>30 FPS</em> - <em>33 ms</em> per frame
 <p>Everything is centered around achieving this frame time while pushing the graphics and gameplay</p>
 </div>
 <div class="paragraph incremental">
-<p>Tradeoffs&#8230;</p>
+<p><strong>Tradeoffs&#8230;</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4393,7 +4392,7 @@ limited concern for uptime (unless server)
 </li>
 <li>
 <span>
-<em>low latency</em> but <em>throughput</em> more important - got to push millions of pixels to the screen!
+low-latency but throughput more important - got to push millions of pixels to the screen!
 </span>
 </li>
 </ul>
@@ -4426,7 +4425,7 @@ lots of wheel reinventions
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>&#8230;so amount of code quickly skyrockets:</p>
+<p>&#8230;so amount of code quickly skyrockets&#8230;</p>
 </div>
 <div class="quoteblock incremental">
 <div class="content">
@@ -4479,7 +4478,7 @@ lots of wheel reinventions
 <p>By far and large Windows centric development - even for consoles</p>
 </div>
 <div class="paragraph incremental">
-<p>MSVC</p>
+<p><strong>MSVC</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4499,7 +4498,7 @@ before C++11 lots of code depended on Microsoft quirks
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>GCC</p>
+<p><strong>GCC</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4514,7 +4513,7 @@ prev gen consoles had vendor specific variants
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>clang</p>
+<p><strong>clang</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4535,7 +4534,7 @@ Playstation 4&#174; uses it exclusively (with LLVM backend)
 <p>Again, Microsoft drives it&#8230;</p>
 </div>
 <div class="paragraph incremental">
-<p>Visual Studio</p>
+<p><strong>Visual Studio</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4562,7 +4561,7 @@ help with code completion &amp; formatting: Visual Assist X, Resharper
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Others</p>
+<p><strong>Others</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4628,7 +4627,7 @@ mastery of reading optimized disassembly :)
 <p>Some mitigation methods&#8230;</p>
 </div>
 <div class="paragraph incremental">
-<p>Unity builds</p>
+<p><strong>Unity builds</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4653,7 +4652,7 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Distributed compilation</p>
+<p><strong>Distributed compilation</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4663,7 +4662,7 @@ Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effecti
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Throw hardware at it!</p>
+<p><strong>Throw hardware at it!</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4686,7 +4685,7 @@ fastest CPU&#8217;s, multiple SSD&#8217;s etc
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Fighting the compiler";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>Head no warning!</em><br />
+<p><strong>Head no warning!</strong><br />
 Warnings are mopped under the floor - couple of favorite ones to disable&#8230;</p>
 </div>
 <ul class=" incremental">
@@ -4717,7 +4716,7 @@ nonstandard extension used: nameless struct/union
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Use the __force!</em><br />
+<p><strong>Use the __force!</strong><br />
 Eternal hope that magically sprinkling <code>inline</code> will make things faster&#8230;</p>
 </div>
 <div class="listingblock incremental">
@@ -4770,8 +4769,10 @@ C++17: not yet, I predict some features will be fully embraced
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow&#8230;<br />
-In the past I tried to help by</p>
+<p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow&#8230;</p>
+</div>
+<div class="paragraph incremental">
+<p>In the past I tried to help by&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4803,7 +4804,7 @@ promoting &amp; sharing conference talks
 Some of them recommend things that would really upset a C++ purist!</p>
 </div>
 <div class="paragraph incremental">
-<p><em>Example</em>: Namespaces</p>
+<p><strong>Example</strong>: Namespaces</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4825,7 +4826,7 @@ Instead everything has a game specific prefix:
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Trivia</em></p>
+<p><strong>Trivia</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4856,7 +4857,7 @@ K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost alw
 <p>All game code is universally OOP driven</p>
 </div>
 <div class="paragraph incremental">
-<p><em>Polymorphism</em></p>
+<p><strong>Polymorphism</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4876,7 +4877,7 @@ TODO: something more&#8230;
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>ECS</em></p>
+<p><strong>ECS</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4901,7 +4902,7 @@ usually AOS rather than SOA
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Communication</em></p>
+<p><strong>Communication</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4924,7 +4925,7 @@ delegate/event systems (heavily macro&#8217;ed! for "usability"!)
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Alternatives to OOP";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Need for multithreading continuously growing&#8230;</p>
+<p>Need for <strong>multithreading</strong> continuously growing&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4944,7 +4945,7 @@ Online sub-systems and services
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>New paradigms emerging</em></p>
+<p><strong>New paradigms</strong> emerging</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4984,10 +4985,10 @@ Seldom the standard <code>future</code> and <code>promise</code> - usually every
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Templates";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Generally, there is a tendency to downplay templates. Changing now with modern standards and mature compilers</p>
+<p>Traditionally, there was a tendency to downplay templates - changing now with modern standards and mature compilers</p>
 </div>
 <div class="paragraph incremental">
-<p><em>Normal usage</em></p>
+<p><strong>Normal usage</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -5007,7 +5008,7 @@ variadic templates used to be emulated with "up to 11 arguments" horible macros
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Metaprogramming</em></p>
+<p><strong>Metaprogramming</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -5027,7 +5028,7 @@ sometimes custom reduced specific <code>enable_if</code>, <code>void_t</code>, t
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Macros == poor man&#8217;s templates</em><br />
+<p><strong>Macros == poor man&#8217;s templates</strong><br />
 Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
 </div>
 <ul class=" incremental">
@@ -5076,7 +5077,7 @@ iostreams are the devil&#8217;s work!
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Bespoke alternatives</em></p>
+<p><strong>Bespoke alternatives</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -5134,7 +5135,7 @@ no need for streams: C printf style prefered, I/O handled in bulk elsewhere
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><em>Bits &amp; pieces</em></p>
+<p><strong>Bits &amp; pieces</strong>&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -5161,13 +5162,67 @@ sparing use of algorithms, normally bespoke containers don&#8217;t play well wit
 <h1 id="_ea_stl">[EA]STL</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="[EA]STL";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><div class="title">EASTL from Electronic Arts</div>
-<p>A video game specific implementation of STL<br />
-<a href="https://github.com/electronicarts/EASTL">https://github.com/electronicarts/EASTL</a></p>
-</div>
 <div class="paragraph">
-<p>TODO: more detail</p>
+<p><strong>EASTL from Electronic Arts</strong> -  video game specific implementation of STL<br />
+Originally started 10 years ago for internal use, now open source (<a href="https://github.com/electronicarts/EASTL">https://github.com/electronicarts/EASTL</a>)</p>
 </div>
+<div class="paragraph incremental">
+<p>Normally follows the <code>std::</code> nomenclature &amp; style<br />
+Differences / Changes&#8230;</p>
+</div>
+<ul class=" incremental">
+<li>
+<span>
+written in a more straighforward/direct way (less general)
+</span>
+<ul class="">
+<li>
+<span>
+easier to debug, faster release builds
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+simplified allocator model - games specific
+</span>
+<ul class="">
+<li>
+<span>
+alignment aware, naming support, etc
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+intrusive containers
+</span>
+</li>
+<li>
+<span>
+fixed_ containers (no allocation, only within provided block)
+</span>
+</li>
+<li>
+<span>
+new containers
+</span>
+<ul class="">
+<li>
+<span>
+<code>ring_buffer</code>, <code>heap</code>, <code>priority_queue</code>, etc
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+smart pointers, type traits - now obsolete
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5176,13 +5231,49 @@ sparing use of algorithms, normally bespoke containers don&#8217;t play well wit
 <h1 id="_stl_sg14">STL - SG14</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL - SG14";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph"><div class="title">SG14 group</div>
-<p>Video games and embedded programming sub-group within the ISO C++ Standard&#8217;s Study Group<br />
-Tries to propose new, optimized containers, data structures even language changes.</p>
-</div>
 <div class="paragraph">
-<p>TODO: quick enum of the papers in-flight</p>
+<p>Finally game dev is officially recognized in the ISO C++ Standard committee!<br /></p>
 </div>
+<div class="paragraph incremental">
+<p><strong>SG14 group</strong><br />
+Video games and embedded programming study sub-group<br />
+Tries to propose new, optimized containers, data structures even language changes</p>
+</div>
+<div class="paragraph incremental">
+<p><strong>Proposals &amp; Papers in-flight</strong>&#8230;</p>
+</div>
+<ul class=" incremental">
+<li>
+<span>
+fixed point numeric Library
+</span>
+</li>
+<li>
+<span>
+ring buffer
+</span>
+</li>
+<li>
+<span>
+intrusive containers
+</span>
+</li>
+<li>
+<span>
+"in place" alternative to <code>std::function</code>
+</span>
+</li>
+<li>
+<span>
+likely/unlikely optimisation hints
+</span>
+</li>
+<li>
+<span>
+bikeshedding :)
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5192,9 +5283,12 @@ Tries to propose new, optimized containers, data structures even language change
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Very frowned upon and sometimes even forbidden.</p>
+<p>Very frowned upon and sometimes even forbidden</p>
 </div>
-<div class="title">Reasons</div><ul class="">
+<div class="paragraph incremental">
+<p><strong>Reasons</strong>&#8230;</p>
+</div>
+<ul class=" incremental">
 <li>
 <span>
 clash of cultures:
@@ -5235,8 +5329,9 @@ difficulty to integrate &amp; setup
 </span>
 </li>
 </ul>
-<div class="paragraph"><div class="title">bcp</div>
-<p>Last point made easier by the <code>bcp</code> tool:<br />
+<div class="paragraph incremental">
+<p><strong>bcp</strong><br />
+Last point made easier by the <code>bcp</code> tool:<br />
 allows to extract-out features with no dependencies</p>
 </div>
 <div class="paragraph">
@@ -5254,9 +5349,12 @@ allows to extract-out features with no dependencies</p>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO: introduce better</p>
+<p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing</p>
 </div>
-<div class="listingblock">
+<div class="paragraph incremental">
+<p>A small demonstration&#8230;</p>
+</div>
+<div class="listingblock incremental">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
 http://www.lorenzobettini.it
@@ -5267,11 +5365,9 @@ http://www.gnu.org/software/src-highlite -->
 <span style="color: #FF0000">{</span>
     <span style="font-weight: bold"><span style="color: #0000FF">throw</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">exception</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="paragraph">
-<p>Compiled with <code>/O2</code> optimisations on VS 2017.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godbolt.org/g/wQXmTi</a></p>
+<div class="paragraph incremental">
+<p>Compiled with <code>/O2</code> optimisations on VS 2017<br />
+Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godbolt.org/g/wQXmTi</a></p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5304,21 +5400,53 @@ http://www.gnu.org/software/src-highlite -->
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_exceptions_continued_3">Exceptions (continued)</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions (continued)";slidefootnotes=false;/*]]>*/</script>
+<h1 id="_exceptions_alternatives">Exceptions - alternatives</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions - alternatives";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing.</p>
+<p>Handling of errors&#8230;</p>
 </div>
-<div class="paragraph">
-<p>Usually (and always during dev time) a hard exit is requested on error.</p>
-</div>
-<div class="paragraph">
-<p>That means errors in constructors cannot be handled. Usual solution is to have <em>Create</em>/<em>Instantiate</em>/<em>Begin</em> etc (SPEAKER: this is also due to GC and serialization)</p>
-</div>
-<div class="paragraph">
-<p>That&#8217;s why people don&#8217;t care or don&#8217;t know about <code>noexcept</code>.</p>
-</div>
+<ul class=" incremental">
+<li>
+<span>
+usually (always during dev time) a hard exit is requested on error
+</span>
+</li>
+<li>
+<span>
+C style last-error or status arguments
+</span>
+</li>
+<li>
+<span>
+impossible to handle errors in constructors
+</span>
+<ul class="">
+<li>
+<span>
+solution is to have <code>Create</code>, <code>Instantiate</code>, <code>Begin</code> replacements
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+exceptions are still used sometimes in non critical performance code
+</span>
+<ul class="">
+<li>
+<span>
+online services
+</span>
+</li>
+<li>
+<span>
+OS/system interactions
+</span>
+</li>
+</ul>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5328,10 +5456,10 @@ http://www.gnu.org/software/src-highlite -->
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="RTTI";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Seldom used - normally turned off by default because it bloats the modules size.</p>
+<p>Seldom used - normally turned off by default because it bloats the modules size</p>
 </div>
 <div class="paragraph">
-<p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via custom reflection.</p>
+<p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via custom reflection&#8230;</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5342,13 +5470,20 @@ http://www.gnu.org/software/src-highlite -->
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Reflection";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A lot of games have an involved reflection system due to:</p>
+<p>A lot of games have an involved reflection systems&#8230;</p>
 </div>
+<ul class=" incremental">
+<li>
+<span>
+close live-link with editors and tools
+</span>
 <ul class="">
 <li>
 <span>
-close live link with editors/tools: values inspection, code hot reload
+values inspection, code hot reload
 </span>
+</li>
+</ul>
 </li>
 <li>
 <span>
@@ -5366,10 +5501,10 @@ garbage collection
 </span>
 </li>
 </ul>
-<div class="paragraph">
-<p>Custom, individual solutions:</p>
+<div class="paragraph incremental">
+<p><strong>Custom solutions</strong>&#8230;</p>
 </div>
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
 pre-processor based decorations that both annotate code and generate registration calls
@@ -5395,7 +5530,7 @@ mini IDL&#8217;s that generate additional cpp/h files
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Reflection (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Some examples:</p>
+<p>Example from Unreal Engine 4&#8230;</p>
 </div>
 <div class="paragraph">
 <p><span class="image">
@@ -5413,17 +5548,88 @@ mini IDL&#8217;s that generate additional cpp/h files
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_there_is_more_8230">There is more&#8230;</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="There is more&#8230;";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+Patterns
+</span>
+<ul class="">
+<li>
+<span>
+Singleton - the anti-pattern of choice
+</span>
+</li>
+<li>
+<span>
+Policy based design
+</span>
+<ul class="">
+<li>
+<span>
+allocators, rendering &amp; drawing
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<span>
+Lots of preprocessor abuse
+</span>
+</li>
+<li>
+<span>
+Whatever I missed from codebases I never worked on
+</span>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_closing">Closing</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Closing";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There you have it - a short survey of C++ in game development!</p>
 </div>
+<div class="title">Game programming</div><ul class="">
+<li>
+<span>
+pushes practices due to video games special requirements
+</span>
+</li>
+<li>
+<span>
+sometimes is at the forefront, sometimes way behind
+</span>
+</li>
+<li>
+<span>
+can have beautiful C++ or make a total mess of it
+</span>
+</li>
+<li>
+<span>
+for a time it was the ugly cousin in the basement
+</span>
+<ul class="">
+<li>
+<span>
+but it&#8217;s way better represented now!
+</span>
+</li>
+</ul>
+</li>
+</ul>
 <div class="paragraph">
-<p><code>@valentin_galea</code></p>
-</div>
-<div class="paragraph">
-<p>TODO: a more clear conclusion &amp; take away points</p>
+<p>Thank you!<br />
+<code>@valentin_galea</code></p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5449,10 +5655,15 @@ using <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2
 intro background image: (CC BY-SA 3.0) modified, original <a href="https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-<em>panoramio</em>(2).jpg">here</a>
 </span>
 </li>
+<li>
+<span>
+The Legend of Zelda&#174; is property of Nintendo&#174;
+</span>
+</li>
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-06-15 22:46:39 GMT Daylight Time
+Last updated 2017-06-17 21:08:49 GMT Daylight Time
 </div>
 </div>
 </div></div>

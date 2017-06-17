@@ -1,12 +1,11 @@
 = The Badlands of C++: Professional Game Development
-:author: Valentin Galea
 :slidebackground: backgr_intro
 
 ifdef::backend-slidy2[:slidebackground!:]
 Who am I
 --------
 ifdef::backend-slidy2[]
-[backgr_intro, opacity: .9; position: absolute; left: 15%; top: 10%;]
+[backgr_intro, opacity: .9; position: absolute; top: 3em; left: 1em;]
 &&&&
 image::img/intro.jpg["backgr"]
 &&&&
