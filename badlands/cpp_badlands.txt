@@ -607,12 +607,15 @@ TODO: show the whole pipeline
 
 There is more...
 ----------------
-- Patterns
+- Most used Patterns
 * Singleton - the anti-pattern of choice
+* Factory
+* Builder
+* Visitor (double-dispatch)
 * Policy based design
-** allocators, rendering & drawing
-- Lots of preprocessor abuse
-- Whatever I missed from codebases I never worked on
+* etc...
+- Lots and lots of preprocessor abuse
+- Whatever I missed from codebases I never worked on...
 
 Closing
 -------
