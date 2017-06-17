@@ -603,9 +603,7 @@ Example from Unreal Engine 4...
 
 image:img/reflection.png["reflection", align="center"]
 
-TODO: more examples & details
-
-TODO: turn from pic to src
+TODO: show the whole pipeline
 
 There is more...
 ----------------
@@ -621,11 +619,11 @@ Closing
 There you have it - a short survey of C++ in game development!
 
 .Game programming
-- pushes practices due to video games special requirements
+- pushes the bar due to video games hard requirements
 - sometimes is at the forefront, sometimes way behind
 - can have beautiful C++ or make a total mess of it
-- for a time it was the ugly cousin in the basement
-* but it's way better represented now!
+- for a time it was the ugly cousin in the basement of C++
+* way better represented now!
 
 Thank you! +
 `@valentin_galea`
@@ -633,8 +631,10 @@ Thank you! +
 Attributions
 ------------
 - made with http://www.methods.co.nz/asciidoc/index.html[Asciidoc]
+- uses https://www.gnu.org/software/src-highlite/[GNU Source-highlight]
 ifdef::backend-slidy2[]
-- using https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
+- uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
 - intro background image: (CC BY-SA 3.0) modified, original https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-_panoramio_(2).jpg[here]
 endif::backend-slidy2[]
 - The Legend of Zelda(R) is property of Nintendo(R)
+- all other images under Fair Use
