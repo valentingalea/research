@@ -5,7 +5,7 @@ ifdef::backend-slidy2[:slidebackground!:]
 Who am I
 --------
 ifdef::backend-slidy2[]
-[backgr_intro, opacity: .9; position: absolute; top: 3em; left: 1em;]
+[backgr_intro, position: absolute; top: 3em; left: 1em;]
 &&&&
 image::img/intro.jpg["backgr"]
 &&&&
@@ -152,6 +152,18 @@ Source code snippet from _CryEngine_
 image::img/cryengine.png["CryEngine 3 src", align="center"]
 
 TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly
+
+ifdef::backend-slidy2[]
+[backgr_1, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_1.jpg["backgr"]
+&&&&
+:slidebackground: backgr_1
+endif::backend-slidy2[]
+
+Philosophy / Platform / Compilation
+-----------------------------------
+ifdef::backend-slidy2[:slidebackground!:]
 
 Philosophy
 ----------
@@ -309,6 +321,18 @@ Eternal hope that magically sprinkling `inline` will make things faster...
 inline, __inline, __forceinline
 __attribute__((always_inline))
 
+ifdef::backend-slidy2[]
+[backgr_2, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_2.jpg["backgr"]
+&&&&
+:slidebackground: backgr_2
+endif::backend-slidy2[]
+
+Coding styles & techniques
+--------------------------
+ifdef::backend-slidy2[:slidebackground!:]
+
 Flavors of C++
 ---------------
 Traditionally was very C++98 but by now changed...
@@ -428,6 +452,18 @@ Still a tendecy to use macros where `template` or `constexpr` functions would be
 * generic relational operator declarations
 * hash type functions
 
+ifdef::backend-slidy2[]
+[backgr_3, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_3.jpg["backgr"]
+&&&&
+:slidebackground: backgr_3
+endif::backend-slidy2[]
+
+STL / Boost
+-----------
+ifdef::backend-slidy2[:slidebackground!:]
+
 STL
 ---
 Adoption generally low...
@@ -528,6 +564,18 @@ allows to extract-out features with no dependencies
 TODO: Carmack tweet
 
 TODO: tweet https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg
+
+ifdef::backend-slidy2[]
+[backgr_4, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_4.jpg["backgr"]
+&&&&
+:slidebackground: backgr_4
+endif::backend-slidy2[]
+
+Exceptions / RTTI / Reflection
+------------------------------
+ifdef::backend-slidy2[:slidebackground!:]
 
 Exceptions
 ----------
@@ -637,7 +685,12 @@ Attributions
 - uses https://www.gnu.org/software/src-highlite/[GNU Source-highlight]
 ifdef::backend-slidy2[]
 - uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
-- intro background image: (CC BY-SA 3.0) modified, original https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-_panoramio_(2).jpg[here]
+- badlands images:
+* intro: (CC BY-SA 3.0) modified from https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-_panoramio_(2).jpg[original]
+* slide 14: (CC BY-SA 4.0) https://commons.wikimedia.org/wiki/File:Big_Badlands_Overlook_PA120529.JPG[original]
+* slide 22: (CC BY-SA 4.0) https://commons.wikimedia.org/wiki/File:Changing_Scenes_Overlook_PA100156.JPG[original]
+* slide 28: public domain https://commons.wikimedia.org/wiki/File:Badlands_National_Park,_South_Dakota,_04594u.jpg[original]
+* slide 34: (CC BY-SA 2.0) https://commons.wikimedia.org/wiki/File:Prairie_Wind_Overlook_in_the_Badlands.jpg[original]
 endif::backend-slidy2[]
 - The Legend of Zelda(R) is property of Nintendo(R)
-- all other images under Fair Use
+- all other images under "Fair Use"/"Fair Dealing"
