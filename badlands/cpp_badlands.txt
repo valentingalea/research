@@ -645,13 +645,23 @@ A lot of games have an involved reflection systems...
 - template metaprogramming for same purpose
 - mini IDL's that generate additional cpp/h files
 
-Reflection (continued)
----------------------
+Reflection - UE4
+----------------
 Example from Unreal Engine 4...
 
-image:img/reflection.png["reflection", align="center"]
+image:img/ue4_reflect_editor.png["ue4 reflect", align="center"]
 
-TODO: show the whole pipeline
+Reflection - UE4
+----------------
+Class member decorations...
+
+image:img/ue4_reflect_header.png["ue4 reflect", align="center"]
+
+Reflection - UE4
+----------------
+The ugly insides...
+
+image:img/ue4_reflect_generated.png["ue4 reflect", align="center"]
 
 There is more...
 ----------------
