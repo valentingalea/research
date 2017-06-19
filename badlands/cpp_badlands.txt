@@ -65,7 +65,7 @@ Mostly about *AAA games*...
 *Indie games*
 
 [role="incremental"]
-* they share some elements with the above, but is in general more straighforward.
+* they share some elements with the above, but is in general more straightforward.
 
 [role="incremental"]
 *Mobile games*
@@ -433,7 +433,7 @@ Traditionally, there was a tendency to downplay templates - changing now with mo
 [role="incremental"]
 * container work obviously
 * policy design: allocator, rendering, etc
-* variadic templates used to be emulated with "up to 11 arguments" horible macros
+* variadic templates used to be emulated with "up to 11 arguments" horrible macros
 
 [role="incremental"]
 *Metaprogramming*
@@ -490,7 +490,7 @@ STL (continued)
 * every studio/engine reinvents the string wheel
 * specific localization needs - ties with game data
 * previous STL implementations made awkward choices (Ex: copy on write on older GCC)
-* no need for streams: C printf style prefered, I/O handled in bulk elsewhere
+* no need for streams: C printf style preferred, I/O handled in bulk elsewhere
 
 [role="incremental"]
 *Bits & pieces*...
@@ -510,7 +510,7 @@ Normally follows the `std::` nomenclature & style +
 Differences / Changes...
 
 [role="incremental"]
-- written in a more straighforward/direct way (less general)
+- written in a more straightforward/direct way (less general)
 * easier to debug, faster release builds
 - simplified allocator model - games specific
 * alignment aware, naming support, etc
@@ -537,8 +537,8 @@ Tries to propose new, optimized containers, data structures even language change
 - ring buffer
 - intrusive containers
 - "in place" alternative to `std::function`
-- likely/unlikely optimisation hints
-- bikeshedding :)
+- likely/unlikely optimization hints
+- bike shedding :)
 
 Boost
 -----
@@ -596,7 +596,7 @@ int func()
 ---------------------------------------
 
 [role="incremental"]
-Compiled with `/O2` optimisations on VS 2017 +
+Compiled with `/O2` optimizations on VS 2017 +
 Let's see disassembly: https://godbolt.org/g/wQXmTi
 
 Exceptions (continued)
