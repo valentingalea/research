@@ -133,7 +133,7 @@ Another example: wrapping a pointer in a simple class that expresses (and option
 [source]
 void do_work(not_null<char *> data);
 
-Actually this last one is https://github.com/Microsoft/GSL/blob/master/gsl/gsl#L61[a real life example] from the GSL (Guideline Support Library - a collection of helper classes to enforce https://github.com/isocpp/CppCoreGuidelines[good practice guidelines] maintained by Microsoft).
+Actually this last one is https://github.com/Microsoft/GSL/blob/master/include/gsl/gsl[a real life example] from the GSL (Guideline Support Library - a collection of helper classes to enforce https://github.com/isocpp/CppCoreGuidelines[good practice guidelines] maintained by Microsoft).
 
 That's it for now! Hope I inspired you to write more descriptive code! +
 Valentin Galea
