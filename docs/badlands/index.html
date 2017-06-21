@@ -3968,7 +3968,7 @@ more than 10 years doing mobile, indie and AAA games</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Currently at Splash Damage in London, UK.</p>
+<p>Currently at Splash Damage in London, UK</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4103,7 +4103,7 @@ Conclusions
 <ul class=" incremental">
 <li>
 <span>
-I have the most experience with
+I have the most experience with recently
 </span>
 </li>
 <li>
@@ -4123,7 +4123,7 @@ use C++ in very special and quirky ways (the purpose of the talk)
 <ul class=" incremental">
 <li>
 <span>
-they share some elements with the above, but is in general more straightforward.
+they share some elements with the above, but is in general more straightforward
 </span>
 </li>
 </ul>
@@ -4133,7 +4133,7 @@ they share some elements with the above, but is in general more straightforward.
 <ul class=" incremental">
 <li>
 <span>
-usually written in something else: Objective C, C# - but they also do idiomatic C++.
+usually written in something else: Objective C, C# - but they also do idiomatic C++
 </span>
 </li>
 </ul>
@@ -4218,7 +4218,7 @@ a nightmare on its own
 </div>
 </div>
 <div class="paragraph">
-<p>For various reasons, AAA development is covered in secrecy, source code included.</p>
+<p>For various reasons, AAA development is covered in secrecy, source code included</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4249,10 +4249,10 @@ multiple stakeholders involved
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><code>id software</code> notably broke the trend and released the source code of all their <em>Doom</em> and <em>Quake</em> games.</p>
+<p><em>id software</em> notably broke the trend and released the source code of all their <em>Doom</em> and <em>Quake</em> games</p>
 </div>
 <div class="paragraph incremental">
-<p>The rest of the industry didn&#8217;t follow suit. Even <code>id</code> stopped after being acquired by the publisher Bethesda.</p>
+<p>The rest of the industry didn&#8217;t follow suit. Even <strong>id</strong> stopped after being acquired by the publisher Bethesda</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4315,9 +4315,6 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 <img src="img/doom3.png" alt="Doom 3 src" />
 </div>
 </div>
-<div class="paragraph">
-<p>TODO: more examples?</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4333,9 +4330,6 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 <div class="content">
 <img src="img/cryengine.png" alt="CryEngine 3 src" />
 </div>
-</div>
-<div class="paragraph">
-<p>TODO: maybe show some UE4: like UEngine::Exec or FilterEdPoly</p>
 </div>
 <div class="background backgr_1" style="position: absolute; top: 1em; left: 1em;">
 <div class="imageblock">
@@ -4384,17 +4378,29 @@ at least <em>30 FPS</em> - <em>33 ms</em> per frame
 <ul class=" incremental">
 <li>
 <span>
-Stability can be sacrificed:
+stability is important
 </span>
 <ul class="">
 <li>
 <span>
-a crash forgiven if it doesn&#8217;t corrupt the save/user data
+a (rare) crash forgiven if it doesn&#8217;t corrupt the save/user data
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+limited concern for uptime
+</span>
+<ul class="">
+<li>
+<span>
+unless server
 </span>
 </li>
 <li>
 <span>
-limited concern for uptime (unless server)
+unless it leaks over time!
 </span>
 </li>
 </ul>
@@ -4472,9 +4478,6 @@ lots of wheel reinventions
 <div class="attribution">
 &#8212; CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"
 </div></div>
-<div class="paragraph">
-<p>TODO: find more examples</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4558,7 +4561,7 @@ used with extensions:
 <ul class="">
 <li>
 <span>
-proprietary profilers &amp; debuggers (TODO: examples)
+various profilers &amp; debuggers
 </span>
 </li>
 <li>
@@ -4575,7 +4578,7 @@ help with code completion &amp; formatting: Visual Assist X, Resharper
 <ul class=" incremental">
 <li>
 <span>
-SN Systems: proprietary EDG front end for Sony until PS4
+SN Systems: proprietary EDG front end for Sony until PS4; extensions/toolchain
 </span>
 </li>
 <li>
@@ -4646,8 +4649,15 @@ combine all/lots of source files into a couple of gigantic <code>.cpp</code> uni
 </li>
 <li>
 <span>
-improves speeds due to less churn on #include&#8217;s and file I/O
+improves speeds due to way less churn on #include&#8217;s
 </span>
+<ul class="">
+<li>
+<span>
+basically poor man&#8217;s modules
+</span>
+</li>
+</ul>
 </li>
 <li>
 <span>
@@ -4678,11 +4688,13 @@ Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effecti
 <span>
 In a studio, programmers are spoiled
 </span>
-</li>
+<ul class="">
 <li>
 <span>
 fastest CPU&#8217;s, multiple SSD&#8217;s etc
 </span>
+</li>
+</ul>
 </li>
 </ul>
 </div></div>
@@ -4781,12 +4793,12 @@ the major engines help with this - <code>UE4</code> enables it by default
 </li>
 <li>
 <span>
-C++17: not yet, I predict some features will be fully embraced
+C++17: not yet, I predict some features will be embraced
 </span>
 <ul class="">
 <li>
 <span>
-<code>if</code> with initializer a favorite, guaranteed RVO, <code>std::optional</code> for errors etc
+<code>if-with-initializer</code> seems a favorite, guaranteed RVO, <code>std::optional</code> for errors etc
 </span>
 </li>
 </ul>
@@ -4896,7 +4908,7 @@ the preferred default technique
 </li>
 <li>
 <span>
-TODO: something more&#8230;
+lots of codebases have a Java-style <code>Object</code> ultimate base class
 </span>
 </li>
 </ul>
@@ -4936,7 +4948,7 @@ normally just tight coupling
 </li>
 <li>
 <span>
-delegate/event systems (heavily macro&#8217;ed! for "usability"!)
+delegate/event systems (heavily macro&#8217;ed for "usability"!)
 </span>
 </li>
 </ul>
@@ -5052,8 +5064,7 @@ sometimes custom reduced specific <code>enable_if</code>, <code>void_t</code>, t
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><strong>Macros == poor man&#8217;s templates</strong><br />
-Still a tendecy to use macros where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
+<p>Still a tendecy to use <strong>macros</strong> where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -5324,6 +5335,11 @@ bike shedding :)
 <div class="paragraph">
 <p>Very frowned upon and sometimes even forbidden</p>
 </div>
+<div class="imageblock incremental" style="text-align:center;">
+<div class="content">
+<img src="img/carmack_tweet.png" alt="asm" />
+</div>
+</div>
 <div class="paragraph incremental">
 <p><strong>Reasons</strong>&#8230;</p>
 </div>
@@ -5366,19 +5382,15 @@ by now best libraries made it into the standard
 <span>
 difficulty to integrate &amp; setup
 </span>
+<ul class="">
+<li>
+<span>
+<code>bcp</code> tool makes this easier
+</span>
 </li>
 </ul>
-<div class="paragraph incremental">
-<p><strong>bcp</strong><br />
-Last point made easier by the <code>bcp</code> tool:<br />
-allows to extract-out features with no dependencies</p>
-</div>
-<div class="paragraph">
-<p>TODO: Carmack tweet</p>
-</div>
-<div class="paragraph">
-<p>TODO: tweet <a href="https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg">https://pbs.twimg.com/media/C5TrLWPWMAAQGex.jpg</a></p>
-</div>
+</li>
+</ul>
 <div class="background backgr_4" style="position: absolute; top: 1em; left: 1em;">
 <div class="imageblock">
 <div class="content">
@@ -5431,10 +5443,10 @@ Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godb
 <h1 id="_exceptions_continued">Exceptions (continued)</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p><span class="image">
+<div class="imageblock" style="text-align:center;">
+<div class="content">
 <img src="img/exception_1.png" alt="asm" />
-</span></p>
+</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5444,10 +5456,10 @@ Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godb
 <h1 id="_exceptions_continued_2">Exceptions (continued)</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Exceptions (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p><span class="image">
+<div class="imageblock" style="text-align:center;">
+<div class="content">
 <img src="img/exception_2.png" alt="asm" />
-</span></p>
+</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5463,7 +5475,7 @@ Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godb
 <ul class=" incremental">
 <li>
 <span>
-usually (always during dev time) a hard exit is requested on error
+during dev: hard exit is requested on error
 </span>
 </li>
 <li>
@@ -5485,7 +5497,7 @@ solution is to have <code>Create</code>, <code>Instantiate</code>, <code>Begin</
 </li>
 <li>
 <span>
-exceptions are still used sometimes in non critical performance code
+exceptions are still used sometimes in non critical code
 </span>
 <ul class="">
 <li>
@@ -5793,7 +5805,7 @@ all other images under "Fair Use"/"Fair Dealing"
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-06-19 23:09:02 GMT Daylight Time
+Last updated 2017-06-21 18:46:05 GMT Summer Time
 </div>
 </div>
 </div></div>
