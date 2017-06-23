@@ -4279,7 +4279,7 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 </ul>
 <div class="paragraph incremental">
 <p>Studios sometimes release internal libraries for general use<br />
-(examples to follow)</p>
+<code>EA/EASTL</code>, <code>InsomniacGames/ig-cachesim</code>, <code>Remedy-Entertainment/binderoo</code> etc</p>
 </div>
 <div class="admonitionblock incremental">
 <table><tr>
@@ -4435,7 +4435,7 @@ lots of wheel reinventions
 </li>
 <li>
 <span>
-<code>legacy</code> of francize games and sequels
+<code>legacy</code> of franchise games and sequels
 </span>
 </li>
 </ul>
@@ -4706,7 +4706,7 @@ fastest CPU&#8217;s, multiple SSD&#8217;s etc
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Fighting the compiler";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Head no warning!</strong><br />
+<p><strong>Heed no warning!</strong><br />
 Warnings are mopped under the floor - couple of favorite ones to disable&#8230;</p>
 </div>
 <ul class=" incremental">
@@ -5512,6 +5512,28 @@ OS/system interactions
 </li>
 </ul>
 </li>
+<li>
+<span>
+reputation problem feedback loop
+</span>
+<ul class="">
+<li>
+<span>
+past gen console platforms didn&#8217;t support them
+</span>
+</li>
+<li>
+<span>
+compiler support was lackluster
+</span>
+</li>
+<li>
+<span>
+dev didn&#8217;t use them
+</span>
+</li>
+</ul>
+</li>
 </ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5522,10 +5544,8 @@ OS/system interactions
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="RTTI";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Seldom used - normally turned off by default because it bloats the modules size</p>
-</div>
-<div class="paragraph">
-<p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via custom reflection&#8230;</p>
+<p>Seldom used - normally turned off by default because it bloats the modules size
+Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via COM style interfaces</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5536,7 +5556,7 @@ OS/system interactions
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Reflection";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A lot of games have an involved reflection systems&#8230;</p>
+<p>A lot of games have involved reflection systems&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
@@ -5573,7 +5593,7 @@ garbage collection
 <ul class=" incremental">
 <li>
 <span>
-pre-processor based decorations that both annotate code and generate registration calls
+preprocessor based decorations that both annotate code and generate registration calls
 </span>
 </li>
 <li>
@@ -5584,6 +5604,16 @@ template metaprogramming for same purpose
 <li>
 <span>
 mini IDL&#8217;s that generate additional cpp/h files
+</span>
+</li>
+<li>
+<span>
+processing intermediate compiler data (ex: .PDB file)
+</span>
+</li>
+<li>
+<span>
+actually modifiying the compiler, if access to it
 </span>
 </li>
 </ul>
@@ -5734,7 +5764,8 @@ way better represented now!
 </ul>
 <div class="paragraph">
 <p>Thank you!<br />
-<code>@valentin_galea</code></p>
+<code>@valentin_galea</code><br />
+<a href="https://github.com/valentingalea/research/tree/master/badlands">https://github.com/valentingalea/research/tree/master/badlands</a></p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5805,7 +5836,7 @@ all other images under "Fair Use"/"Fair Dealing"
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-06-21 18:46:05 GMT Summer Time
+Last updated 2017-06-23 14:48:16 GMT Summer Time
 </div>
 </div>
 </div></div>

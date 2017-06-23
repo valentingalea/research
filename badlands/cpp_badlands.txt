@@ -127,7 +127,7 @@ Some modern AAA game engines changed their licensing and they’re now open...
 
 [role="incremental"]
 Studios sometimes release internal libraries for general use +
-(examples to follow)
+`EA/EASTL`, `InsomniacGames/ig-cachesim`, `Remedy-Entertainment/binderoo` etc
 
 [role="incremental"]
 NOTE: Everything here based on my experience so far, YMMV!
@@ -190,7 +190,7 @@ AAA studios...
 [role="incremental"]
 - hundreds of people across various continents
 - lots of wheel reinventions
-- `legacy` of francize games and sequels
+- `legacy` of franchise games and sequels
 
 [role="incremental"]
 ...so amount of code quickly skyrockets...
@@ -299,7 +299,7 @@ Some mitigation methods...
 
 Fighting the compiler
 ---------------------
-*Head no warning!* +
+*Heed no warning!* +
 Warnings are mopped under the floor - couple of favorite ones to disable...
 
 [role="incremental"]
@@ -683,7 +683,8 @@ There you have it - a short survey of C++ in game development!
 * way better represented now!
 
 Thank you! +
-`@valentin_galea`
+`@valentin_galea` +
+https://github.com/valentingalea/research/tree/master/badlands
 
 Attributions
 ------------
