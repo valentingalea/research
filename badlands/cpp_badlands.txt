@@ -610,16 +610,19 @@ Handling of errors...
 - exceptions are still used sometimes in non critical code
 * online services
 * OS/system interactions
+- reputation problem feedback loop
+* past gen console platforms didn't support them
+* compiler support was lackluster
+* dev didn't use them
 
 RTTI
 ----
 Seldom used - normally turned off by default because it bloats the modules size	
-
-Very rare use of `dynamic_cast` - usually reimplemented manually via custom reflection...
+Very rare use of `dynamic_cast` - usually reimplemented manually via COM style interfaces
 
 Reflection
 ----------
-A lot of games have an involved reflection systems...
+A lot of games have involved reflection systems...
 
 [role="incremental"]
 - close live-link with editors and tools
@@ -632,9 +635,11 @@ A lot of games have an involved reflection systems...
 *Custom solutions*...
 
 [role="incremental"]
-- pre-processor based decorations that both annotate code and generate registration calls
+- preprocessor based decorations that both annotate code and generate registration calls
 - template metaprogramming for same purpose
 - mini IDL's that generate additional cpp/h files
+- processing intermediate compiler data (ex: .PDB file)
+- actually modifiying the compiler, if access to it
 
 Reflection - UE4
 ----------------
