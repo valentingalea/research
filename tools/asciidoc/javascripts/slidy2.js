@@ -1936,28 +1936,28 @@ if (!w3c_slidy.incremental_display) {incremental = false;}
         return w3c_slidy.cancel(event);
     }
 
-    if (key == 34) // Page Down
-    {
-      if (w3c_slidy.view_all)
-        return true;
+    // if (key == 34) // Page Down
+    // {
+    //   if (w3c_slidy.view_all)
+    //     return true;
 
-      w3c_slidy.next_slide(false);
-      return w3c_slidy.cancel(event);
-    }
-    else if (key == 33) // Page Up
-    {
-      if (w3c_slidy.view_all)
-        return true;
+    //   w3c_slidy.next_slide(false);
+    //   return w3c_slidy.cancel(event);
+    // }
+    // else if (key == 33) // Page Up
+    // {
+    //   if (w3c_slidy.view_all)
+    //     return true;
 
-      w3c_slidy.previous_slide(false);
-      return w3c_slidy.cancel(event);
-    }
-    else if (key == 32) // space bar
+    //   w3c_slidy.previous_slide(false);
+    //   return w3c_slidy.cancel(event);
+    // }
+    if (key == 32) // space bar
     {
       w3c_slidy.next_slide(true);
       return w3c_slidy.cancel(event);
     }
-    else if (key == 37) // Left arrow
+    else if (key == 37 || key == 33) // Left arrow or Page Up
     {
       w3c_slidy.previous_slide(!event.shiftKey);
       return w3c_slidy.cancel(event);
@@ -1972,7 +1972,7 @@ if (!w3c_slidy.incremental_display) {incremental = false;}
       w3c_slidy.last_slide();
       return w3c_slidy.cancel(event);
     }
-    else if (key == 39) // Right arrow
+    else if (key == 39 || key == 34) // Right arrow or Page Down
     {
       w3c_slidy.next_slide(!event.shiftKey);
       return w3c_slidy.cancel(event);
