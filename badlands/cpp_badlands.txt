@@ -306,7 +306,7 @@ Warnings are mopped under the floor - couple of favorite ones to disable...
 - signed/unsigned mismatch
 - conversion from `T1` to `T2` requires a narrowing conversion
 - conversion from `T1` to `T2`, possible loss of data
-- conditional express is constant
+- conditional *expression* is constant
 - nonstandard extension used: nameless struct/union
 
 [role="incremental"]
@@ -617,7 +617,8 @@ Handling of errors...
 
 RTTI
 ----
-Seldom used - normally turned off by default because it bloats the modules size	
+Seldom used - normally turned off by default because it bloats the modules size
+
 Very rare use of `dynamic_cast` - usually reimplemented manually via COM style interfaces
 
 Reflection
