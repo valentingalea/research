@@ -133,9 +133,9 @@ Studios sometimes release internal libraries for general use +
 NOTE: Everything here based on my experience so far, YMMV!
 
 [role="incremental"]
-NOTE: I will unfairly pick on Epic's UE4 :) +
-- I work day to day with it +
-- It does a lot of C++ questionable things 
+NOTE: I will unfairly concentrate on Epic's UE4 :) +
+* I worked with it for the past years +
+* It does a lot of C++ questionable things 
 
 A glimpse of good
 -----------------
@@ -170,7 +170,11 @@ Games need to *run*...
 - _60+ FPS_ very desirable (obligatory for good multiplayer) - _16 ms_ per frame
 
 [role="incremental"]
-Everything is centered around achieving this frame time while pushing the graphics and gameplay
+Everything is centered around achieving this - while...
+
+[role="incremental"]
+- pushing the graphics and gameplay
+- maintaining low-latency
 
 [role="incremental"]
 *Tradeoffs...*
@@ -181,7 +185,7 @@ Everything is centered around achieving this frame time while pushing the graphi
 - limited concern for uptime
 * unless server
 * unless it leaks over time!
-- low-latency but throughput more important - got to push millions of pixels to the screen!
+- low-latency but throughput also important - got to push millions of pixels to the screen!
 
 Project size/LOC
 ----------------
@@ -253,7 +257,7 @@ Again, Microsoft drives it...
 [role="incremental"]
 - SN Systems: proprietary EDG front end for Sony until PS4; extensions/toolchain
 - Metroworks CodeWarrior for Nintendo consoles
-- XCode - No :)
+- XCode - Just say No :)
 
 Compilation
 -----------
@@ -268,7 +272,7 @@ Various tricks:
 [role="incremental"]
 - `#pragma optimize` on/off "islands"
 - only specific modules are debug
-- mastery of reading optimized disassembly :)
+- mastery of reading optimized disassembly
 
 Compilation (continued)
 -----------------------
@@ -282,20 +286,20 @@ Some mitigation methods...
 - improves speeds due to way less churn on #include's
 * basically poor man's modules
 - can create hidden dependencies gotchas as opposed to normal pipeline 
-- can hurt iteration (usual mitigation: extract out specific .cpp) 
+- can hurt iteration (usual mitigation: extract out specific .cpp)
+
+[role="incremental"]
+*Various techniques*
+
+[role="incremental"]
+- "include what you use" parser tools
+- template explicit instantiation & similar to reduce symbol count for linking
 
 [role="incremental"]
 *Distributed compilation*
 
 [role="incremental"]
 - Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
-
-[role="incremental"]
-*Throw hardware at it!*
-
-[role="incremental"]
-- In a studio, programmers are spoiled
-* fastest CPU's, multiple SSD's etc
 
 Fighting the compiler
 ---------------------
@@ -306,7 +310,7 @@ Warnings are mopped under the floor - couple of favorite ones to disable...
 - signed/unsigned mismatch
 - conversion from `T1` to `T2` requires a narrowing conversion
 - conversion from `T1` to `T2`, possible loss of data
-- conditional *expression* is constant
+- conditional <expression> is constant
 - nonstandard extension used: nameless struct/union
 
 [role="incremental"]
@@ -345,11 +349,11 @@ Traditionally was very C++98 but by now changed...
 Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow...
 
 [role="incremental"]
-In the past I tried to help by...
+Personal way to help...
 
 [role="incremental"]
-- running a series of internal talks like "C++11/14 for game dev"
-- newsletter about best practices and modern C++
+- running a series of internal talks "C++11/14 for game dev"
+- http://www.splashdamage.com/blog/1254/introducing-our-c-tech-bloga[newsletter] about best practices and modern C++ 
 - promoting & sharing conference talks
 
 Coding style
@@ -375,14 +379,14 @@ Some of them recommend things that would really upset a C++ purist!
 
 OOP is king
 -----------
-All game code is universally OOP driven
+Preferred technique for game code - with some studios resisting!
 
 [role="incremental"]
 *Polymorphism*
 
 [role="incremental"]
 - the preferred default technique
-- "What is a v-table?" - most asked interview question!
+- "What is a v-table?" - common interview question
 - lots of codebases have a Java-style `Object` ultimate base class
 
 [role="incremental"]
@@ -392,14 +396,14 @@ All game code is universally OOP driven
 - Entity-Component-Systems are prevalent in gameplay code
 - Everything hierachy of `Entity`, `Node` or `Object`'s
 - Components do virtual `Update`, `Tick`, `Draw` or `Render`
-- usually AOS rather than SOA
 
 [role="incremental"]
-*Communication*
+*Common communication methods*
 
 [role="incremental"]
 - normally just tight coupling
-- delegate/event systems (heavily macro'ed for "usability"!) 
+- delegate/event systems (heavily macro'ed for "usability"!)
+- typed/untyped message queues 
 
 Alternatives to OOP
 -------------------
@@ -411,14 +415,16 @@ Need for *multithreading* continuously growing...
 - Online sub-systems and services
 
 [role="incremental"]
-*New paradigms* emerging
+*New/old paradigms*
 
 [role="incremental"]
-- Functional style monad continuations - `.Then()`, `.With()` etc
+- Functional style
+* monad continuations - `.Then()`, `.With()` etc
+* seeking to minimize state, pursue purity
 - "Job-ifying" 
 * Parallel Patterns Library (PPL) from Microsoft
 * Threading Building Blocks from Intel
-- Seldom the standard `future` and `promise` - usually every game engine has own equivalents
+* Seldom the standard `future` and `promise` - usually every game engine has own equivalents
 
 Templates
 ---------
@@ -441,12 +447,8 @@ Traditionally, there was a tendency to downplay templates - changing now with mo
 - sometimes custom reduced specific `enable_if`, `void_t`, traits etc
 
 [role="incremental"]
-Still a tendecy to use *macros* where `template` or `constexpr` functions would be more adequate:
-
-[role="incremental"]
-- `min()` and `max()`, `abs()`, etc
-- generic relational operator declarations
-- hash type functions
+.Poor man's templates
+Still a tendecy to use *macros* where `template` or `constexpr` functions would be more adequate
 
 ifdef::backend-slidy2[]
 [backgr_3, position: absolute; top: 1em; left: 1em;]
@@ -465,8 +467,8 @@ STL
 Adoption generally low...
 
 [role="incremental"]
-- console games never ship with STL containers
-- used more in PC-only/indie
+- console games seldom ship with STL containers
+- more usage in PC-only/indie
 - iostreams are the devil's work!
 
 [role="incremental"]
@@ -529,7 +531,7 @@ Tries to propose new, optimized containers, data structures even language change
 *Proposals & Papers in-flight*...
 
 [role="incremental"]
-- fixed point numeric Library
+- fixed point numeric library
 - ring buffer
 - intrusive containers
 - "in place" alternative to `std::function`
@@ -538,12 +540,13 @@ Tries to propose new, optimized containers, data structures even language change
 
 Boost
 -----
-Very frowned upon and sometimes even forbidden
+Very frowned upon and highly discouraged...
 
 [role="incremental"]
 image::img/carmack_tweet.png["asm", align="center"]
 
-[role="incremental"]
+Boost (continued)
+-----------------
 *Reasons*...
 
 [role="incremental"]
@@ -555,6 +558,7 @@ image::img/carmack_tweet.png["asm", align="center"]
 - by now best libraries made it into the standard
 - difficulty to integrate & setup
 * `bcp` tool makes this easier
+- slow compilation times
 
 ifdef::backend-slidy2[]
 [backgr_4, position: absolute; top: 1em; left: 1em;]
@@ -573,7 +577,7 @@ Exceptions
 Almost never used due to speed penalties of `throw`-ing and `catch`-ing
 
 [role="incremental"]
-A small demonstration...
+A small (not totally fair) demonstration...
 
 [role="incremental"]
 [source]
@@ -662,6 +666,7 @@ image:img/ue4_reflect_generated.png["ue4 reflect", align="center"]
 
 There is more...
 ----------------
+[role="incremental"]
 - Most used Patterns
 * Singleton - the anti-pattern of choice
 * Factory
@@ -676,15 +681,15 @@ Closing
 -------
 There you have it - a short survey of C++ in game development!
 
-.Game programming
-- pushes the bar due to video games hard requirements
-- sometimes is at the forefront, sometimes way behind
-- can have beautiful C++ or make a total mess of it
-- for a time it was the ugly cousin in the basement of C++
-* way better represented now!
+[role="incremental"]
+- game dev pushes the bar due to video games hard requirements
+- for a time looked at as the ugly cousin in the basement of C++
+- coming back strong
+* better represented now in the C++ ecosystem
 
+[role="incremental"]
 Thank you! +
-`@valentin_galea` +
+https://twitter.com/valentin_galea[@valentin_galea] +
 https://github.com/valentingalea/research/tree/master/badlands
 
 Attributions

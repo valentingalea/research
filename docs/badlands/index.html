@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="copyright" content="Valentin Galea" />
 <meta name="generator" content="AsciiDoc 8.6.9 / slidy2 backend 1.0.4" />
-<meta name="duration" content="30" />
+<meta name="duration" content="45" />
 <title>The Badlands of C++: Professional Game Development</title>
 <style type="text/css">
 /*
@@ -4294,9 +4294,9 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 <td class="icon">
 <div class="title">Note</div>
 </td>
-<td class="content">I will unfairly pick on Epic&#8217;s UE4 :)<br />
-- I work day to day with it<br />
-- It does a lot of C++ questionable things</td>
+<td class="content">I will unfairly concentrate on Epic&#8217;s UE4 :)<br />
+* I worked with it for the past years<br />
+* It does a lot of C++ questionable things</td>
 </tr></table>
 </div>
 </div></div>
@@ -4370,8 +4370,20 @@ at least <em>30 FPS</em> - <em>33 ms</em> per frame
 </li>
 </ul>
 <div class="paragraph incremental">
-<p>Everything is centered around achieving this frame time while pushing the graphics and gameplay</p>
+<p>Everything is centered around achieving this - while&#8230;</p>
 </div>
+<ul class=" incremental">
+<li>
+<span>
+pushing the graphics and gameplay
+</span>
+</li>
+<li>
+<span>
+maintaining low-latency
+</span>
+</li>
+</ul>
 <div class="paragraph incremental">
 <p><strong>Tradeoffs&#8230;</strong></p>
 </div>
@@ -4407,7 +4419,7 @@ unless it leaks over time!
 </li>
 <li>
 <span>
-low-latency but throughput more important - got to push millions of pixels to the screen!
+low-latency but throughput also important - got to push millions of pixels to the screen!
 </span>
 </li>
 </ul>
@@ -4588,7 +4600,7 @@ Metroworks CodeWarrior for Nintendo consoles
 </li>
 <li>
 <span>
-XCode - No :)
+XCode - Just say No :)
 </span>
 </li>
 </ul>
@@ -4623,7 +4635,7 @@ only specific modules are debug
 </li>
 <li>
 <span>
-mastery of reading optimized disassembly :)
+mastery of reading optimized disassembly
 </span>
 </li>
 </ul>
@@ -4671,6 +4683,21 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 </li>
 </ul>
 <div class="paragraph incremental">
+<p><strong>Various techniques</strong></p>
+</div>
+<ul class=" incremental">
+<li>
+<span>
+"include what you use" parser tools
+</span>
+</li>
+<li>
+<span>
+template explicit instantiation &amp; similar to reduce symbol count for linking
+</span>
+</li>
+</ul>
+<div class="paragraph incremental">
 <p><strong>Distributed compilation</strong></p>
 </div>
 <ul class=" incremental">
@@ -4678,23 +4705,6 @@ can hurt iteration (usual mitigation: extract out specific .cpp)
 <span>
 Use solution like <code>FastBuild</code> or <code>Incredibuild</code> to effectively create compilation farms
 </span>
-</li>
-</ul>
-<div class="paragraph incremental">
-<p><strong>Throw hardware at it!</strong></p>
-</div>
-<ul class=" incremental">
-<li>
-<span>
-In a studio, programmers are spoiled
-</span>
-<ul class="">
-<li>
-<span>
-fastest CPU&#8217;s, multiple SSD&#8217;s etc
-</span>
-</li>
-</ul>
 </li>
 </ul>
 </div></div>
@@ -4727,7 +4737,7 @@ conversion from <code>T1</code> to <code>T2</code>, possible loss of data
 </li>
 <li>
 <span>
-conditional express is constant
+conditional &lt;expression&gt; is constant
 </span>
 </li>
 <li>
@@ -4804,17 +4814,17 @@ C++17: not yet, I predict some features will be embraced
 <p>Due to differences in people&#8217;s experience, personality and time availability, adoption of the various new features and techniques is slow&#8230;</p>
 </div>
 <div class="paragraph incremental">
-<p>In the past I tried to help by&#8230;</p>
+<p>Personal way to help&#8230;</p>
 </div>
 <ul class=" incremental">
 <li>
 <span>
-running a series of internal talks like "C++11/14 for game dev"
+running a series of internal talks "C++11/14 for game dev"
 </span>
 </li>
 <li>
 <span>
-newsletter about best practices and modern C++
+<a href="http://www.splashdamage.com/blog/1254/introducing-our-c-tech-bloga">newsletter</a> about best practices and modern C++
 </span>
 </li>
 <li>
@@ -4886,7 +4896,7 @@ K&amp;R (or "Egyptian") style of braces very frowned upon - Allman is almost alw
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="OOP is king";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All game code is universally OOP driven</p>
+<p>Preferred technique for game code - with some studios resisting!</p>
 </div>
 <div class="paragraph incremental">
 <p><strong>Polymorphism</strong></p>
@@ -4899,7 +4909,7 @@ the preferred default technique
 </li>
 <li>
 <span>
-"What is a v-table?" - most asked interview question!
+"What is a v-table?" - common interview question
 </span>
 </li>
 <li>
@@ -4927,14 +4937,9 @@ Everything hierachy of <code>Entity</code>, <code>Node</code> or <code>Object</c
 Components do virtual <code>Update</code>, <code>Tick</code>, <code>Draw</code> or <code>Render</code>
 </span>
 </li>
-<li>
-<span>
-usually AOS rather than SOA
-</span>
-</li>
 </ul>
 <div class="paragraph incremental">
-<p><strong>Communication</strong></p>
+<p><strong>Common communication methods</strong></p>
 </div>
 <ul class=" incremental">
 <li>
@@ -4945,6 +4950,11 @@ normally just tight coupling
 <li>
 <span>
 delegate/event systems (heavily macro&#8217;ed for "usability"!)
+</span>
+</li>
+<li>
+<span>
+typed/untyped message queues
 </span>
 </li>
 </ul>
@@ -4977,13 +4987,25 @@ Online sub-systems and services
 </li>
 </ul>
 <div class="paragraph incremental">
-<p><strong>New paradigms</strong> emerging</p>
+<p><strong>New/old paradigms</strong></p>
 </div>
 <ul class=" incremental">
 <li>
 <span>
-Functional style monad continuations - <code>.Then()</code>, <code>.With()</code> etc
+Functional style
 </span>
+<ul class="">
+<li>
+<span>
+monad continuations - <code>.Then()</code>, <code>.With()</code> etc
+</span>
+</li>
+<li>
+<span>
+seeking to minimize state, pursue purity
+</span>
+</li>
+</ul>
 </li>
 <li>
 <span>
@@ -5000,12 +5022,12 @@ Parallel Patterns Library (PPL) from Microsoft
 Threading Building Blocks from Intel
 </span>
 </li>
-</ul>
-</li>
 <li>
 <span>
 Seldom the standard <code>future</code> and <code>promise</code> - usually every game engine has own equivalents
 </span>
+</li>
+</ul>
 </li>
 </ul>
 </div></div>
@@ -5059,26 +5081,9 @@ sometimes custom reduced specific <code>enable_if</code>, <code>void_t</code>, t
 </span>
 </li>
 </ul>
-<div class="paragraph incremental">
-<p>Still a tendecy to use <strong>macros</strong> where <code>template</code> or <code>constexpr</code> functions would be more adequate:</p>
+<div class="paragraph incremental"><div class="title">Poor man&#8217;s templates</div>
+<p>Still a tendecy to use <strong>macros</strong> where <code>template</code> or <code>constexpr</code> functions would be more adequate</p>
 </div>
-<ul class=" incremental">
-<li>
-<span>
-<code>min()</code> and <code>max()</code>, <code>abs()</code>, etc
-</span>
-</li>
-<li>
-<span>
-generic relational operator declarations
-</span>
-</li>
-<li>
-<span>
-hash type functions
-</span>
-</li>
-</ul>
 <div class="background backgr_3" style="position: absolute; top: 1em; left: 1em;">
 <div class="imageblock">
 <div class="content">
@@ -5108,12 +5113,12 @@ hash type functions
 <ul class=" incremental">
 <li>
 <span>
-console games never ship with STL containers
+console games seldom ship with STL containers
 </span>
 </li>
 <li>
 <span>
-used more in PC-only/indie
+more usage in PC-only/indie
 </span>
 </li>
 <li>
@@ -5291,7 +5296,7 @@ Tries to propose new, optimized containers, data structures even language change
 <ul class=" incremental">
 <li>
 <span>
-fixed point numeric Library
+fixed point numeric library
 </span>
 </li>
 <li>
@@ -5329,14 +5334,22 @@ bike shedding :)
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Very frowned upon and sometimes even forbidden</p>
+<p>Very frowned upon and highly discouraged&#8230;</p>
 </div>
 <div class="imageblock incremental" style="text-align:center;">
 <div class="content">
 <img src="img/carmack_tweet.png" alt="asm" />
 </div>
 </div>
-<div class="paragraph incremental">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_boost_continued">Boost (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
 <p><strong>Reasons</strong>&#8230;</p>
 </div>
 <ul class=" incremental">
@@ -5386,6 +5399,11 @@ difficulty to integrate &amp; setup
 </li>
 </ul>
 </li>
+<li>
+<span>
+slow compilation times
+</span>
+</li>
 </ul>
 <div class="background backgr_4" style="position: absolute; top: 1em; left: 1em;">
 <div class="imageblock">
@@ -5414,7 +5432,7 @@ difficulty to integrate &amp; setup
 <p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing</p>
 </div>
 <div class="paragraph incremental">
-<p>A small demonstration&#8230;</p>
+<p>A small (not totally fair) demonstration&#8230;</p>
 </div>
 <div class="listingblock incremental">
 <div class="content"><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;stdexcept&gt;</span>
@@ -5536,8 +5554,10 @@ dev didn&#8217;t use them
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="RTTI";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Seldom used - normally turned off by default because it bloats the modules size
-Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via COM style interfaces</p>
+<p>Seldom used - normally turned off by default because it bloats the modules size</p>
+</div>
+<div class="paragraph">
+<p>Very rare use of <code>dynamic_cast</code> - usually reimplemented manually via COM style interfaces</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5665,7 +5685,7 @@ actually modifiying the compiler, if access to it
 <h1 id="_there_is_more_8230">There is more&#8230;</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="There is more&#8230;";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<ul class="">
+<ul class=" incremental">
 <li>
 <span>
 Most used Patterns
@@ -5725,38 +5745,33 @@ Whatever I missed from codebases I never worked on&#8230;
 <div class="paragraph">
 <p>There you have it - a short survey of C++ in game development!</p>
 </div>
-<div class="title">Game programming</div><ul class="">
+<ul class=" incremental">
 <li>
 <span>
-pushes the bar due to video games hard requirements
+game dev pushes the bar due to video games hard requirements
 </span>
 </li>
 <li>
 <span>
-sometimes is at the forefront, sometimes way behind
+for a time looked at as the ugly cousin in the basement of C++
 </span>
 </li>
 <li>
 <span>
-can have beautiful C++ or make a total mess of it
-</span>
-</li>
-<li>
-<span>
-for a time it was the ugly cousin in the basement of C++
+coming back strong
 </span>
 <ul class="">
 <li>
 <span>
-way better represented now!
+better represented now in the C++ ecosystem
 </span>
 </li>
 </ul>
 </li>
 </ul>
-<div class="paragraph">
+<div class="paragraph incremental">
 <p>Thank you!<br />
-<code>@valentin_galea</code><br />
+<a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
 <a href="https://github.com/valentingalea/research/tree/master/badlands">https://github.com/valentingalea/research/tree/master/badlands</a></p>
 </div>
 </div></div>
@@ -5828,7 +5843,7 @@ all other images under "Fair Use"/"Fair Dealing"
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-06-24 13:50:44 BST
+Last updated 2017-07-02 16:20:01 BST
 </div>
 </div>
 </div></div>
