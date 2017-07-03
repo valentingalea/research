@@ -141,13 +141,13 @@ A glimpse of good
 -----------------
 Source code snippet from _Doom 3_
 
-image::img/doom3.png["Doom 3 src", align="center"]
+image::img/doom3.png["Doom 3 src", align="center", width="100%"]
 
 A glimpse of bad
 ----------------
 Source code snippet from _CryEngine_
 
-image::img/cryengine.png["CryEngine 3 src", align="center"]
+image::img/cryengine.png["CryEngine 3 src", align="center", width="100%"]
 
 ifdef::backend-slidy2[]
 [backgr_1, position: absolute; top: 1em; left: 1em;]

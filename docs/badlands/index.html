@@ -4312,7 +4312,7 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 </div>
 <div class="imageblock" style="text-align:center;">
 <div class="content">
-<img src="img/doom3.png" alt="Doom 3 src" />
+<img src="img/doom3.png" alt="Doom 3 src" width="100%" />
 </div>
 </div>
 </div></div>
@@ -4328,7 +4328,7 @@ CryEngine <a href="https://github.com/CRYTEK/CRYENGINE">https://github.com/CRYTE
 </div>
 <div class="imageblock" style="text-align:center;">
 <div class="content">
-<img src="img/cryengine.png" alt="CryEngine 3 src" />
+<img src="img/cryengine.png" alt="CryEngine 3 src" width="100%" />
 </div>
 </div>
 <div class="background backgr_1" style="position: absolute; top: 1em; left: 1em;">
@@ -4751,8 +4751,12 @@ nonstandard extension used: nameless struct/union
 Eternal hope that magically sprinkling <code>inline</code> will make things faster&#8230;</p>
 </div>
 <div class="listingblock incremental">
-<div class="content"><span style="font-weight: bold"><span style="color: #0000FF">inline</span></span><span style="color: #990000">,</span> __inline<span style="color: #990000">,</span> __forceinline
-<span style="font-weight: bold"><span style="color: #000000">__attribute__</span></span><span style="color: #990000">((</span>always_inline<span style="color: #990000">))</span></div></div>
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">inline</span></span><span style="color: #990000">,</span> __inline<span style="color: #990000">,</span> __forceinline
+<span style="font-weight: bold"><span style="color: #000000">__attribute__</span></span><span style="color: #990000">(</span><span style="color: #990000">(</span>always_inline<span style="color: #990000">)</span><span style="color: #990000">)</span></tt></pre></div></div>
 <div class="background backgr_2" style="position: absolute; top: 1em; left: 1em;">
 <div class="imageblock">
 <div class="content">
@@ -5435,12 +5439,16 @@ slow compilation times
 <p>A small (not totally fair) demonstration&#8230;</p>
 </div>
 <div class="listingblock incremental">
-<div class="content"><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;stdexcept&gt;</span>
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;stdexcept&gt;</span>
 
-<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">func</span></span><span style="color: #990000">()</span>
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">func</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span>
 <span style="color: #FF0000">{</span>
-    <span style="font-weight: bold"><span style="color: #0000FF">throw</span></span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">exception</span></span><span style="color: #990000">();</span>
-<span style="color: #FF0000">}</span></div></div>
+    <span style="font-weight: bold"><span style="color: #0000FF">throw</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">exception</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="paragraph incremental">
 <p>Compiled with <code>/O2</code> optimizations on VS 2017<br />
 Let&#8217;s see disassembly: <a href="https://godbolt.org/g/wQXmTi">https://godbolt.org/g/wQXmTi</a></p>
@@ -5843,7 +5851,7 @@ all other images under "Fair Use"/"Fair Dealing"
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2017-07-02 16:20:01 BST
+Last updated 2017-07-03 21:44:35 GMT Daylight Time
 </div>
 </div>
 </div></div>
