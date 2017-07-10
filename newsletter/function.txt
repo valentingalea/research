@@ -1,14 +1,12 @@
 include::style.inline.txt[]
 
-Hi, I'm Valentin Galea, Senior Core-Tech programmer here at Splash Damage.
+=== Introducing the C++ Tech Blog
 
-One of the core values of the studio is Mastery, and we always strive to improve each other's skills by having internal presentations, team learning lunches, going to conferences etc.
+Hi, I’m Valentin Galea, Senior Core-Tech programmer here at Splash Damage.
 
-As programmers C\++ is our bread and butter, so monthly we run a small newsletter about coding practices and more advanced C++ knowledge. We want to take this one step further and share it with you!
+Bellow you'll find the first edition of our C++ newsletter, almost unabridged from when it was originally sent by email. Enjoy!
 
-Bellow you will find one of the first editions, almost unabridged from when it was originally sent by email. Enjoy!
-
-=== This week's story: A tale of std::function
+=== Advanced C++: A Tale Of std::function
 
 Some time ago whilst working on one of our projects I needed a system that does a sort of "delayed function execution". Essentially I wanted that when some function were called, instead of doing their logic, I would "record" their arguments and push them in a queue so that at a later point in time I would call them. The project uses Unreal Engine 4 compiled with the latest Visual Studio 2015, so I had all C++11/14 at my disposal!
 
@@ -16,20 +14,18 @@ Indeed in C++11 and beyond there is already support for doing something like thi
 
 [source]
 -------------------------------------------------------------------------------
-bool FSlateApplication::ProcessMouseMoveEvent( FPointerEvent& MouseEvent, bool bIsSynthetic )
+if (ShouldDelayInput())
 {
-	if (ShouldDelayInput())
-	{
-		std::function<void(FSlateApplication &)> func =
-		[=](FSlateApplication &app) mutable {
-				 app.ProcessMouseMoveEvent(MouseEvent, bIsSynthetic);
+	std::function<void(FancyApplication &)> func =
+		[=](FancyApplication &app) mutable {
+				 app.ProcessMouseMoveEvent(MouseEvent);
 		});
-		MyFancyQueue.push(func);
+	FancyQueue.Push(func);
 
-		return false;
-	}
+	return false;
+}
 
-	// rest of the code...
+// rest of the code...
 -------------------------------------------------------------------------------
 
 Notice how I capture by-copy everything - that's the key aspect of what I wanted: delegates with state.
@@ -60,7 +56,8 @@ Like any programmer worth its salt I went and reinvented the wheel and implement
 
 The biggest change is that it doesn't allocate any memory, instead it has a small fixed buffer and it works within the confines of that. If you try to push bigger stuff it will statically assert so the user has a chance to adjust.
 
-Here is the full source code - it is somewhat of a toy example - but still usable, it retains the generic programming aspect of the original:
+Here is the source code: +
+NOTE: this is for illustrative purposes only, not a full production ready version - use with caution!
 
 [source]
 -------------------------------------------------------------------------------
@@ -131,11 +128,15 @@ I mentioned this was a project using UE4. It maintains some game-specific altern
 
 It seems quite well done and more importantly has some nice allocator optimisations: it will first use a small buffer like mine (up to 32 bytes) and after that cascade to a more general allocator. For more detail see _Function.h_ in the UE4 public repository.
 
-=== Closing notes
+=== SG14
 
 The C++ standardisation committee is organised in several subcommittees, one of which is SG14. It deals with embedded and video games programming - https://groups.google.com/a/isocpp.org/forum/#!forum/sg14 Several members are programmers from AAA games companies like ours.
 
 Case in point: there is a discussion there about this very same topic I addressed here: they call it basic_function or inplace_function and if they succeed, sometimes in the future it will be included in C++! See everything about it here: https://groups.google.com/a/isocpp.org/forum/#!topic/sg14/1Sw_qEdIYes
+
+=== Closing notes
+
+We managed to cover, at least in passing, some of the important aspects of `std::function` and equivalent functional objects. I'm available for questions over at our forums, so head over http://forums.warchest.com/showthread.php/58409-Introducing-our-C-tech-blog?p=565825#post565825[there] to pick my brain.
 
 Until next time, +
 Valentin Galea
