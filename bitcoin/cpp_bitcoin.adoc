@@ -1,0 +1,11 @@
+= Bitcoin Code Review: How C++ Powers The Biggest Cryptocurrency
+
+Who Am I
+--------
+TODO:
+
+Agenda
+------
+TODO:
+
+
