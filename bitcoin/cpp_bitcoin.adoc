@@ -71,6 +71,24 @@ C++ - Overview
 --------------
 TODO:
 
+Modern C++
+----------
+Occurrences of C++11/14/17 specific keywords in all the files (659)
+
+[width="80%",options="header"]
+|=================================================
+|                    | Bitcoin | Ripple | Ethereum
+| Files              | 659     | 3672   | 477
+| `auto`             | 12%     | 36%    | 36%
+| `std::move`        | 7%      | 13%    | 7%
+| `override`         | 6%      | 19%    | 13%
+| `static_assert`    | 2%      | 3%     | 4%
+| lambda expressions | 2%      | 11%    | 13%
+| `std::enable_if`   | none    | 1%     | one file
+|=================================================
+
+// lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
+
 Serialization
 -------------
 Objects need to travel across the network or be disk loaded/saved.
