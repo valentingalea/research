@@ -2,10 +2,75 @@
 
 Who Am I
 --------
-TODO:
+Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
+more than 10 years doing mobile, indie and AAA games
+
+image::img/vanity_plate.png["Games worked on", align="center"]
+
+Currently at Splash Damage in London, UK
+
+Disclaimer
+----------
+- Games coder
+- I bought some Bitcoin in the 2017 craze
+- I analyzed a bunch of time the source code
+
+Therefore I am perfectly suited to give this talk! :)
+
+Seriously though, this is recreational only and offers no endorsements or investment advice!
 
 Agenda
 ------
+From Keep:
+
+- intro & quick history of bitcoin
+- ‎quick explanation of the blockchain and how it operates
+- ‎bitcoin core and its role
+- ‎general architecture of it
+- ‎C++ stats and overview
+- ‎specific design idioms
+- ‎usage of STL
+- ‎usage of Boost
+- ‎custom data structures
+- ‎serialization
+
+TODO: redo at end
+
+Bitcoin - Summary
+-----------------
+- First cryptocurrency, most well known
+- Leading the digital currency revolution
+- Meteoric rise as of 2017, along with others
+
+TODO: coinmarketcap screenshot
+
+Bitcoin - History
+-----------------
+- Introduced by the unknown Satoshi Nakamoto in 2009
+* in the paper "Bitcoin: A Peer-to-Peer Electronic Cash System"
+* a reference C++ implementation 
+- Fully open source
+* _bitcoin.org_ project 
+* https://github.com/bitcoin/bitcoin
+- Satoshi disappeared around 2010, other devs continued
+* active communities both on the dev and user suited
+- It inspired and allowed the birth of other crypto currencies
+- Evolved economically
+* from everyday people running the software on their PC's
+* to large conglomerate mining pools in China!
+
+Bitcoin - What is It
+--------------------
+TODO: explanation of what it solves: double spending and etc
+
+Blockchain
+----------
+TODO: 
+
+C++ - Overview
+--------------
 TODO:
 
-
+Modern C++
+----------
+TODO: count `auto` and stuff

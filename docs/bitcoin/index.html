@@ -3952,7 +3952,47 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who Am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO:</p>
+<p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
+more than 10 years doing mobile, indie and AAA games</p>
+</div>
+<div class="imageblock" style="text-align:center;">
+<div class="content">
+<img src="img/vanity_plate.png" alt="Games worked on" />
+</div>
+</div>
+<div class="paragraph">
+<p>Currently at Splash Damage in London, UK</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_disclaimer">Disclaimer</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Disclaimer";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+Games coder
+</span>
+</li>
+<li>
+<span>
+I bought some Bitcoin in the 2017 craze
+</span>
+</li>
+<li>
+<span>
+I analyzed a bunch of time the source code
+</span>
+</li>
+</ul>
+<div class="paragraph">
+<p>Therefore I am perfectly suited to give this talk! :)</p>
+</div>
+<div class="paragraph">
+<p>Seriously though, this is recreational only and offers no endorsements or investment advice!</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -3963,11 +4003,216 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Agenda";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
+<p>From Keep:</p>
+</div>
+<ul class="">
+<li>
+<span>
+intro &amp; quick history of bitcoin
+</span>
+</li>
+<li>
+<span>
+‎quick explanation of the blockchain and how it operates
+</span>
+</li>
+<li>
+<span>
+‎bitcoin core and its role
+</span>
+</li>
+<li>
+<span>
+‎general architecture of it
+</span>
+</li>
+<li>
+<span>
+‎C++ stats and overview
+</span>
+</li>
+<li>
+<span>
+‎specific design idioms
+</span>
+</li>
+<li>
+<span>
+‎usage of STL
+</span>
+</li>
+<li>
+<span>
+‎usage of Boost
+</span>
+</li>
+<li>
+<span>
+‎custom data structures
+</span>
+</li>
+<li>
+<span>
+‎serialization
+</span>
+</li>
+</ul>
+<div class="paragraph">
+<p>TODO: redo at end</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_summary">Bitcoin - Summary</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - Summary";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+First cryptocurrency, most well known
+</span>
+</li>
+<li>
+<span>
+Leading the digital currency revolution
+</span>
+</li>
+<li>
+<span>
+Meteoric rise as of 2017, along with others
+</span>
+</li>
+</ul>
+<div class="paragraph">
+<p>TODO: coinmarketcap screenshot</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_history">Bitcoin - History</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - History";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+Introduced by the unknown Satoshi Nakamoto in 2009
+</span>
+<ul class="">
+<li>
+<span>
+in the paper "Bitcoin: A Peer-to-Peer Electronic Cash System"
+</span>
+</li>
+<li>
+<span>
+a reference C++ implementation
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+Fully open source
+</span>
+<ul class="">
+<li>
+<span>
+<em>bitcoin.org</em> project
+</span>
+</li>
+<li>
+<span>
+<a href="https://github.com/bitcoin/bitcoin">https://github.com/bitcoin/bitcoin</a>
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+Satoshi disappeared around 2010, other devs continued
+</span>
+<ul class="">
+<li>
+<span>
+active communities both on the dev and user suited
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+It inspired and allowed the birth of other crypto currencies
+</span>
+</li>
+<li>
+<span>
+Evolved economically
+</span>
+<ul class="">
+<li>
+<span>
+from everyday people running the software on their PC&#8217;s
+</span>
+</li>
+<li>
+<span>
+to large conglomerate mining pools in China!
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_what_is_it">Bitcoin - What is It</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What is It";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: explanation of what it solves: double spending and etc</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_blockchain">Blockchain</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Blockchain";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
 <p>TODO:</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_overview">C++ - Overview</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - Overview";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO:</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_modern_c">Modern C++</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Modern C++";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: count <code>auto</code> and stuff</p>
 </div>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-11 10:01:40 GMT
+Last updated 2018-01-14 14:38:06 GMT Standard Time
 </div>
 </div>
 </div></div>
