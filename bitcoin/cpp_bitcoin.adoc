@@ -71,23 +71,187 @@ C++ - Overview
 --------------
 TODO:
 
-Modern C++
-----------
-Occurrences of C++11/14/17 specific keywords in all the files (659)
+Serialization
+-------------
+Objects need to travel across the network or be disk loaded/saved.
 
-[width="80%",options="header"]
-|=================================================
-|                    | Bitcoin | Ripple | Ethereum
-| Files              | 659     | 3672   | 477
-| `auto`             | 12%     | 36%    | 36%
-| `std::move`        | 7%      | 13%    | 7%
-| `override`         | 6%      | 19%    | 13%
-| `static_assert`    | 2%      | 3%     | 4%
-| lambda expressions | 2%      | 11%    | 13%
-| `std::enable_if`   | none    | 1%     | one file
-|=================================================
+To facilitate this, every class can declare which members gets serialized. This is achieved via a usual combination of lots of templated helper functions and macro glue!
 
-// lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
+[source]
+-------------------------------------------------------------------------------
+class CBlockFileInfo
+{
+public:
+    unsigned int nBlocks;      //!< number of blocks stored in file
+    unsigned int nSize;        //!< number of used bytes of block file
+    /* ... */
+    uint64_t nTimeLast;        //!< latest time of block in file
+
+    ADD_SERIALIZE_METHODS;
+
+    template <typename Stream, typename Operation>
+    inline void SerializationOp(Stream& s, Operation ser_action) {
+        READWRITE(VARINT(nBlocks));
+        READWRITE(VARINT(nSize));
+        /* ... */
+        READWRITE(VARINT(nTimeLast));
+    }
+-------------------------------------------------------------------------------
+
+Serialization - ADD macro
+-------------------------
+
+[source]
+-------------------------------------------------------------------------------
+/** 
+ * Implement three methods for serializable objects. These are actually wrappers over
+ * "SerializationOp" template, which implements the body of each class' serialization
+ * code. Adding "ADD_SERIALIZE_METHODS" in the body of the class causes these wrappers to be
+ * added as members. 
+ */
+#define ADD_SERIALIZE_METHODS                                         \
+    template<typename Stream>                                         \
+    void Serialize(Stream& s) const {                                 \
+        NCONST_PTR(this)->SerializationOp(s, CSerActionSerialize());  \
+    }                                                                 \
+    template<typename Stream>                                         \
+    void Unserialize(Stream& s) {                                     \
+        SerializationOp(s, CSerActionUnserialize());                  \
+    }
+-------------------------------------------------------------------------------
+
+Serialization - Template helpers
+--------------------------------
+Basic types:
+
+[source]
+-------------------------------------------------------------------------------
+template<typename Stream> inline void Serialize(Stream& s, char a    ) { ser_writedata8(s, a); } // TODO Get rid of bare char
+template<typename Stream> inline void Serialize(Stream& s, int8_t a  ) { ser_writedata8(s, a); }
+template<typename Stream> inline void Serialize(Stream& s, uint8_t a ) { ser_writedata8(s, a); }
+/* ... */
+template<typename Stream> inline void Serialize(Stream& s, uint64_t a) { ser_writedata64(s, a); }
+template<typename Stream> inline void Serialize(Stream& s, float a   ) { ser_writedata32(s, ser_float_to_uint32(a)); }
+template<typename Stream> inline void Serialize(Stream& s, double a  ) { ser_writedata64(s, ser_double_to_uint64(a)); }
+
+template<typename Stream> inline void Unserialize(Stream& s, char& a    ) { a = ser_readdata8(s); } // TODO Get rid of bare char
+template<typename Stream> inline void Unserialize(Stream& s, int8_t& a  ) { a = ser_readdata8(s); }
+template<typename Stream> inline void Unserialize(Stream& s, uint8_t& a ) { a = ser_readdata8(s); }
+/* ... */
+template<typename Stream> inline void Unserialize(Stream& s, uint64_t& a) { a = ser_readdata64(s); }
+template<typename Stream> inline void Unserialize(Stream& s, float& a   ) { a = ser_uint32_to_float(ser_readdata32(s)); }
+template<typename Stream> inline void Unserialize(Stream& s, double& a  ) { a = ser_uint64_to_double(ser_readdata64(s)); }
+-------------------------------------------------------------------------------
+
+Serialization - Template helpers - std::pair
+--------------------------------------------
+[source]
+template<typename Stream, typename K, typename T>
+void Serialize(Stream& os, const std::pair<K, T>& item)
+{
+    Serialize(os, item.first);
+    Serialize(os, item.second);
+}
+
+[source]
+template<typename Stream, typename K, typename T>
+void Unserialize(Stream& is, std::pair<K, T>& item)
+{
+    Unserialize(is, item.first);
+    Unserialize(is, item.second);
+}
+
+Serialization - Template helpers - std::map
+--------------------------------------------
+
+[source]
+template<typename Stream, typename K, typename T, typename Pred, typename A>
+void Serialize(Stream& os, const std::map<K, T, Pred, A>& m)
+{
+    WriteCompactSize(os, m.size());
+    for (const auto& entry : m)
+        Serialize(os, entry);
+}
+
+[source]
+template<typename Stream, typename K, typename T, typename Pred, typename A>
+void Unserialize(Stream& is, std::map<K, T, Pred, A>& m)
+{
+    m.clear();
+    unsigned int nSize = ReadCompactSize(is);
+    typename std::map<K, T, Pred, A>::iterator mi = m.begin();
+    for (unsigned int i = 0; i < nSize; i++)
+    {
+        std::pair<K, T> item;
+        Unserialize(is, item);
+        mi = m.insert(mi, item);
+    }
+}
+
+Serialization - Template helpers - std::vector
+----------------------------------------------
+
+[source]
+template<typename Stream, typename T, typename A, typename V>
+void Serialize_impl(Stream& os, const std::vector<T, A>& v, const V&)
+{
+    WriteCompactSize(os, v.size());
+    for (typename std::vector<T, A>::const_iterator vi = v.begin(); vi != v.end(); ++vi)
+        ::Serialize(os, (*vi));
+}
+
+[source]
+template<typename Stream, typename T, typename A, typename V>
+void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
+{
+    v.clear();
+    unsigned int nSize = ReadCompactSize(is);
+    unsigned int i = 0;
+    unsigned int nMid = 0;
+    while (nMid < nSize)
+    {
+        nMid += 5000000 / sizeof(T);
+        if (nMid > nSize)
+            nMid = nSize;
+        v.resize(nMid);
+        for (; i < nMid; i++)
+            Unserialize(is, v[i]);
+    }
+}
+
+Serialization - Macro magic
+---------------------------
+Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place.
+
+[source]
+#define READWRITE(obj)      (::SerReadWrite(s, (obj), ser_action))
+#define READWRITEMANY(...)  (::SerReadWriteMany(s, ser_action, __VA_ARGS__))
+
+It will all boil down to the various templates detailed before.
+
+Some other macro type wrappers:
+
+- `VARINT` -> `CVarInt<I>` - Variable-length integers, stores numbers independent of C++ underlying type
+- `FLATDATA` -> `CFlatData` - a wrapper for POD's and arrays
+
+Serialization - Trivia
+----------------------
+
+- members are not always serialized in the order they are declared
+- if the template function helpers don't match anything, it will revert calling a class member serialize function 
+- deserialization can be done by the constructor as well using tag dispatch
+- a cheeky hack:
+
+[source]
+/**
+ * Used to bypass the rule against non-const reference to temporary
+ * where it makes sense with wrappers such as CFlatData or CTxDB
+ */
+template<typename T>
+inline T& REF(const T& val)
+{
+    return const_cast<T&>(val);
+}
 
 The End
 -------
