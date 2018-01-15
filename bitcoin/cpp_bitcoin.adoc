@@ -73,7 +73,7 @@ TODO:
 
 Modern C++
 ----------
-Occurrences of C++11/14/17 specific keywords in all the files (659)
+Occurrences of C++11/14 specific constructs in all the files
 
 [width="80%",options="header"]
 |==========================================================
