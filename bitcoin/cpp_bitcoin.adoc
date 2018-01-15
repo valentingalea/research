@@ -76,16 +76,16 @@ Modern C++
 Occurrences of C++11/14/17 specific keywords in all the files (659)
 
 [width="80%",options="header"]
-|=================================================
-|                    | Bitcoin | Ripple | Ethereum
-| Files              | 659     | 3672   | 477
-| `auto`             | 12%     | 36%    | 36%
-| `std::move`        | 7%      | 13%    | 7%
-| `override`         | 6%      | 19%    | 13%
-| `static_assert`    | 2%      | 3%     | 4%
-| lambda expressions | 2%      | 11%    | 13%
-| `std::enable_if`   | none    | 1%     | one file
-|=================================================
+|==========================================================
+|                    | Bitcoin | Ripple | Ethereum | UE4
+| Files              | 659     | 3672   | 477      | 19299
+| `auto`             | 12%     | 36%    | 36%      | 13%
+| `std::move`        | 7%      | 13%    | 7%       | 2%
+| `override`         | 6%      | 19%    | 13%      | 34%
+| `static_assert`    | 2%      | 3%     | 4%       | 1%
+| lambda expressions | 2%      | 11%    | 13%      | 6%
+| `std::enable_if`   | none    | 1%     | one file | .2%
+|==========================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
 
