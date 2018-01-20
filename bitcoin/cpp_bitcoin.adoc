@@ -67,6 +67,9 @@ Blockchain
 ----------
 TODO: 
 
+Bitcoin Core
+------------
+
 C++ - Overview
 --------------
 TODO:
@@ -88,6 +91,12 @@ Occurrences of C++11/14 specific constructs in all the files
 |==========================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
+
+STL
+---
+
+Boost
+-----
 
 Serialization
 -------------
@@ -271,12 +280,6 @@ inline T& REF(const T& val)
     return const_cast<T&>(val);
 }
 
-STL
----
-
-Boost
------
-
 Custom Data Structures
 ----------------------
 
@@ -322,3 +325,11 @@ According to the `README`: "[it] minimizes template use (contra json_spirit)".
 The End
 -------
 TODO:
+
+Attributions
+------------
+- made with http://www.methods.co.nz/asciidoc/index.html[Asciidoc]
+- uses https://www.gnu.org/software/src-highlite/[GNU Source-highlight]
+ifdef::backend-slidy2[]
+- uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
+endif::backend-slidy2[]
