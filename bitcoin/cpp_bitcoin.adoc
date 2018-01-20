@@ -69,6 +69,20 @@ TODO:
 
 Bitcoin Core
 ------------
+- The _reference implementation_ of the bitcoin system
+- originally started by Satoshi as companion to his paper
+- implements all aspects of the system: transactions, validation, network peer to peer, etc
+- GUI written in QT
+  * CLI interface as well
+- has wallet to "store" bitcoin but it's not recommended to use
+- PoW algorithms and it can mine but again not recommended
+
+The focus of this talk
+
+Bitcoin Core - diagram
+----------------------
+image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png["bitcoin core diagram"]
+//, width="1024"
 
 C++ - Overview
 --------------
@@ -333,3 +347,4 @@ Attributions
 ifdef::backend-slidy2[]
 - uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
 endif::backend-slidy2[]
+- https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture
