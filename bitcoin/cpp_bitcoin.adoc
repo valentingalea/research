@@ -271,6 +271,46 @@ inline T& REF(const T& val)
     return const_cast<T&>(val);
 }
 
+STL
+---
+
+Boost
+-----
+
+Custom Data Structures
+----------------------
+
+prevector
+---------
+Drop in replacement for `std::vector` that stores the first N elements in-place.
+
+An interesting mix of the standard array and a dynamic vector.
+
+[source]
+union direct_or_indirect {
+    char direct[sizeof(T) * N];
+    struct {
+        size_type capacity;
+        char* indirect;
+    };
+} _union;
+
+- elements must be POD that can be `realloc`-ed
+- written in STL style, has internal `iterator` and the reverse, const variants
+- support for move semantics by just `std::swap`-ing the union 
+
+prevector - usage
+-----------------
+Only usage case is for storing the transaction script opcodes where apparently:
+
+[source]
+/**
+ * We use a prevector for the script to reduce the considerable memory overhead
+ *  of vectors in cases where they normally contain a small number of small elements.
+ * Tests in October 2015 showed use of this reduced dbcache memory usage by 23%
+ *  and made an initial sync 13% faster.
+ */
+
 The End
 -------
 TODO:
