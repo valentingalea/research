@@ -4193,12 +4193,122 @@ to large conglomerate mining pools in China!
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_bitcoin_core">Bitcoin Core</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png" alt="bitcoin core diagram" />
+</div>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_core_continued">Bitcoin Core (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+The <em>reference implementation</em> of the bitcoin system
+</span>
+</li>
+<li>
+<span>
+originally started by Satoshi as companion to his paper
+</span>
+</li>
+<li>
+<span>
+implements all aspects of the system: transactions, validation, network peer to peer, etc
+</span>
+</li>
+<li>
+<span>
+GUI written in QT
+</span>
+<ul class="">
+<li>
+<span>
+CLI interface as well
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+has wallet to "store" bitcoin but it&#8217;s not recommended to use
+</span>
+</li>
+<li>
+<span>
+PoW algorithms and it can mine but again not recommended
+</span>
+</li>
+<li>
+<span>
+lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
+</span>
+</li>
+</ul>
+<div class="paragraph">
+<p>The focus of this talk</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_core_diagram">Bitcoin Core - diagram</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core - diagram";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png" alt="bitcoin core diagram" />
+</div>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_c_overview">C++ - Overview</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - Overview";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p>TODO:</p>
-</div>
+<ul class="">
+<li>
+<span>
+<a href="https://github.com/bitcoin/bitcoin">https://github.com/bitcoin/bitcoin</a>, 15K commits since 2010, 60+ devs at peek (TODO: maybe pic of Github)
+</span>
+</li>
+<li>
+<span>
+classic C++ structured, not much polymorphism, primarily relies on STL and Boost
+</span>
+</li>
+<li>
+<span>
+relatively flat structure, most things are split in a .h/.cpp pair
+</span>
+</li>
+<li>
+<span>
+well commented - in Doxygen format
+</span>
+</li>
+<li>
+<span>
+MIT license
+</span>
+</li>
+<li>
+<span>
+multiplatform - with macro magic compatibility glue layer
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4208,23 +4318,25 @@ to large conglomerate mining pools in China!
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Modern C++";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Occurrences of C++11/14/17 specific keywords in all the files (659)</p>
+<p>Occurrences of C++11/14 specific constructs in all the files</p>
 </div>
 <div class="tableblock">
 <table rules="all"
 width="80%"
 frame="border"
 cellspacing="0" cellpadding="4">
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
 <thead>
 <tr>
 <th align="left" valign="top">                    </th>
 <th align="left" valign="top"> Bitcoin </th>
 <th align="left" valign="top"> Ripple </th>
-<th align="left" valign="top"> Ethereum</th>
+<th align="left" valign="top"> Ethereum </th>
+<th align="left" valign="top"> UE4</th>
 </tr>
 </thead>
 <tbody>
@@ -4233,45 +4345,121 @@ cellspacing="0" cellpadding="4">
 <td align="left" valign="top"><p class="table">659</p></td>
 <td align="left" valign="top"><p class="table">3672</p></td>
 <td align="left" valign="top"><p class="table">477</p></td>
+<td align="left" valign="top"><p class="table">19299</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>auto</code></p></td>
 <td align="left" valign="top"><p class="table">12%</p></td>
 <td align="left" valign="top"><p class="table">36%</p></td>
 <td align="left" valign="top"><p class="table">36%</p></td>
+<td align="left" valign="top"><p class="table">13%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>std::move</code></p></td>
 <td align="left" valign="top"><p class="table">7%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
 <td align="left" valign="top"><p class="table">7%</p></td>
+<td align="left" valign="top"><p class="table">2%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>override</code></p></td>
 <td align="left" valign="top"><p class="table">6%</p></td>
 <td align="left" valign="top"><p class="table">19%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
+<td align="left" valign="top"><p class="table">34%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>static_assert</code></p></td>
 <td align="left" valign="top"><p class="table">2%</p></td>
 <td align="left" valign="top"><p class="table">3%</p></td>
 <td align="left" valign="top"><p class="table">4%</p></td>
+<td align="left" valign="top"><p class="table">1%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">lambda expressions</p></td>
 <td align="left" valign="top"><p class="table">2%</p></td>
 <td align="left" valign="top"><p class="table">11%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
+<td align="left" valign="top"><p class="table">6%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>std::enable_if</code></p></td>
 <td align="left" valign="top"><p class="table">none</p></td>
 <td align="left" valign="top"><p class="table">1%</p></td>
 <td align="left" valign="top"><p class="table">one file</p></td>
+<td align="left" valign="top"><p class="table">.2%</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_stl">STL</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+<code>std::vector</code> major work horse
+</span>
+<ul class="">
+<li>
+<span>
+used in 1/3 of files
+</span>
+</li>
+<li>
+<span>
+used vanilla, with no custom allocation
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+<code>std::string</code> gets major usage as well
+</span>
+</li>
+<li>
+<span>
+<code>std::runtime_error</code>
+</span>
+<ul class="">
+<li>
+<span>
+primary exception handler
+</span>
+</li>
+</ul>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_stl_allocators">STL - Allocators</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL - Allocators";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: secure_allocator</p>
+</div>
+<div class="paragraph">
+<p>TODO: zero_after_free_allocator</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_boost">Boost</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO:</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4563,15 +4751,181 @@ http://www.gnu.org/software/src-highlite -->
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_custom_data_structures">Custom Data Structures</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Custom Data Structures";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_prevector">prevector</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="prevector";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Drop in replacement for <code>std::vector</code> that stores the first N elements in-place.</p>
+</div>
+<div class="paragraph">
+<p>An interesting mix of the standard array and a dynamic vector.</p>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">union</span></span> direct_or_indirect <span style="color: #FF0000">{</span>
+    <span style="color: #009900">char</span> direct<span style="color: #990000">[</span><span style="font-weight: bold"><span style="color: #0000FF">sizeof</span></span><span style="color: #990000">(</span>T<span style="color: #990000">)</span> <span style="color: #990000">*</span> N<span style="color: #990000">]</span><span style="color: #990000">;</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">struct</span></span> <span style="color: #FF0000">{</span>
+        size_type capacity<span style="color: #990000">;</span>
+        <span style="color: #009900">char</span><span style="color: #990000">*</span> indirect<span style="color: #990000">;</span>
+    <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span> _union<span style="color: #990000">;</span></tt></pre></div></div>
+<ul class="">
+<li>
+<span>
+elements must be POD that can be <code>realloc</code>-ed
+</span>
+</li>
+<li>
+<span>
+written in STL style, has internal <code>iterator</code> and the reverse, const variants
+</span>
+</li>
+<li>
+<span>
+support for move semantics by just <code>std::swap</code>-ing the union
+</span>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_prevector_usage">prevector - usage</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="prevector - usage";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Only usage case is for storing the transaction script opcodes where apparently:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>We use a prevector for the script to reduce the considerable memory overhead
+of vectors in cases where they normally contain a small number of small elements.
+Tests in October 2015 showed use of this reduced dbcache memory usage by 23%
+and made an initial sync 13% faster.</tt></pre>
+</div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_univalue">UniValue</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="UniValue";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Variant like structure that represents a JSON object value. JSON is used everywhere as a communication layer between all the sub-systems.</p>
+</div>
+<div class="paragraph">
+<p>Stores key/values as a vector of <code>std::string</code>.</p>
+</div>
+<div class="paragraph">
+<p>According to the <code>README</code>: "[it] minimizes template use (contra json_spirit)".</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_cuckoocache">CuckooCache</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="CuckooCache";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unique Set data structure based on the principles of the cuckoo hash map.</p>
+</div>
+<div class="paragraph">
+<p>Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a <code>boost::unique_set</code> as optimization in Oct 2016.</p>
+</div>
+<div class="paragraph">
+<p>Elements are stored in <code>std::vector</code> and a series of hash function spread them around. A form of GC is employed on <code>insert</code> to keep erase constant time and thread safe.</p>
+</div>
+<div class="paragraph">
+<p>TODO: some sort of diagram</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_cuckoocache_hashing">CuckooCache - Hashing</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="CuckooCache - Hashing";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>8 way hashing is used to better distribute elements in buckets.</p>
+</div>
+<div class="paragraph">
+<p>An interesting technique is used to avoid the need of a modulus when mapping a random 32 bit number to a fixed N: <a href="https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/">https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/</a></p>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span>array<span style="color: #990000">&lt;</span>uint32_t<span style="color: #990000">,</span> <span style="color: #993399">8</span><span style="color: #990000">&gt;</span> <span style="font-weight: bold"><span style="color: #000000">compute_hashes</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> Element<span style="color: #990000">&amp;</span> e<span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span>
+<span style="color: #FF0000">{</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #FF0000">{</span><span style="color: #FF0000">{</span><span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">0</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">1</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">2</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">3</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">4</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">5</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">6</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
+                <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">7</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_the_end">The End</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="The End";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
 <p>TODO:</p>
 </div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_attributions">Attributions</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Attributions";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+made with <a href="http://www.methods.co.nz/asciidoc/index.html">Asciidoc</a>
+</span>
+</li>
+<li>
+<span>
+uses <a href="https://www.gnu.org/software/src-highlite/">GNU Source-highlight</a>
+</span>
+</li>
+<li>
+<span>
+uses <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2 plugin</a>
+</span>
+</li>
+<li>
+<span>
+<a href="https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture">https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture</a>
+</span>
+</li>
+</ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-14 19:54:08 GMT Standard Time
+Last updated 2018-01-21 19:07:22 GMT Standard Time
 </div>
 </div>
 </div></div>
