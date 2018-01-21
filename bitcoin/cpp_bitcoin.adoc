@@ -341,6 +341,35 @@ Stores key/values as a vector of `std::string`.
 
 According to the `README`: "[it] minimizes template use (contra json_spirit)".
 
+CuckooCache
+-----------
+Unique Set data structure based on the principles of the cuckoo hash map.
+
+Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a `boost::unique_set` as optimization in Oct 2016.
+
+Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time and thread safe.
+
+TODO: some sort of diagram
+
+CuckooCache - Hashing
+---------------------
+8 way hashing is used to better distribute elements in buckets.
+
+An interesting technique is used to avoid the need of a modulus when mapping a random 32 bit number to a fixed N: https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
+
+[source]
+inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
+{
+    return {{(uint32_t)((hash_function.template operator()<0>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<1>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<2>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<3>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<4>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<5>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<6>(e) * (uint64_t)size) >> 32),
+                (uint32_t)((hash_function.template operator()<7>(e) * (uint64_t)size) >> 32)}};
+}
+
 The End
 -------
 TODO:
