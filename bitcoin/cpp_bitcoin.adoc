@@ -69,6 +69,11 @@ TODO:
 
 Bitcoin Core
 ------------
+//image::http://insidebitcoins.com/wp-content/uploads/2017/09/bitcoincore.orgfee-selector-c412ffa4f66084eb673c0b26b74dc23914b49727.png["bitcoin core screenshot"]
+image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png["bitcoin core diagram"]
+
+Bitcoin Core (continued)
+------------------------
 - The _reference implementation_ of the bitcoin system
 - originally started by Satoshi as companion to his paper
 - implements all aspects of the system: transactions, validation, network peer to peer, etc
