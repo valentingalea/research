@@ -119,9 +119,22 @@ Occurrences of C++11/14 specific constructs in all the files
 
 STL
 ---
+- `std::vector` major work horse
+ * used in 1/3 of files
+ * used vanilla, with no custom allocation
+- `std::string` gets major usage as well
+- `std::runtime_error`
+ * primary exception handler
+
+STL - Allocators
+----------------
+TODO: secure_allocator
+
+TODO: zero_after_free_allocator
 
 Boost
 -----
+TODO:
 
 Serialization
 -------------
