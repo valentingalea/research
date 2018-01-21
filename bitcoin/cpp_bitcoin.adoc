@@ -81,6 +81,7 @@ Bitcoin Core (continued)
   * CLI interface as well
 - has wallet to "store" bitcoin but it's not recommended to use
 - PoW algorithms and it can mine but again not recommended
+- lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
 
 The focus of this talk
 
@@ -91,7 +92,12 @@ image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/
 
 C++ - Overview
 --------------
-TODO:
+- https://github.com/bitcoin/bitcoin, 15K commits since 2010, 60+ devs at peek (TODO: maybe pic of Github)
+- classic C++ structured, not much polymorphism, primarily relies on STL and Boost
+- relatively flat structure, most things are split in a .h/.cpp pair
+- well commented - in Doxygen format
+- MIT license
+- multiplatform - with macro magic compatibility glue layer
 
 Modern C++
 ----------
