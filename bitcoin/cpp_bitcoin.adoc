@@ -360,6 +360,14 @@ Stores key/values as a vector of `std::string`.
 
 According to the `README`: "[it] minimizes template use (contra json_spirit)".
 
+CVarInt
+-------
+Variable Length Encoded integer
+
+TODO: https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding
+
+TODO: a table/diagram with the bytes?
+
 CuckooCache
 -----------
 Unique Set data structure based on the principles of the cuckoo hash map.
