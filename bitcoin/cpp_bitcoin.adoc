@@ -138,9 +138,15 @@ No custom memory management allocator is used. Instead custom allocators are use
 
 Boost
 -----
-Used in about 20% of the files.
+Present in about 20% of the files.
 
-TODO:
+A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard - ex: `call_once`, `thread`, `mutex`, `filesystem`, `chrono`, etc
+
+`multi_index` is used to manage the transaction data (sort by hash, fees and time for ex).
+
+`signals` and `bind` prevalent in the Qt UI code.
+
+Testing handled with the Boost Unit Test framework.
 
 Serialization
 -------------
