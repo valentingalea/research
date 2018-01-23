@@ -119,6 +119,7 @@ Occurrences of C++11/14 specific constructs in all the files
 
 STL
 ---
+- used in 60% of the files
 - `std::vector` major work horse
  * used in 1/3 of files
  * used vanilla, with no custom allocation
@@ -128,12 +129,17 @@ STL
 
 STL - Allocators
 ----------------
-TODO: secure_allocator
+No custom memory management allocator is used. Instead custom allocators are used to enforce security:
 
-TODO: zero_after_free_allocator
+- `zero_after_free_allocator`
+ * simple `std::allocator` wrapper that 0's the memory when it gets released so it's harder to snoop
+- `secure_allocator`
+ * 0's the released memory but it also keeps it locked and not paged to disk, to discourage attacks
 
 Boost
 -----
+Used in about 20% of the files.
+
 TODO:
 
 Serialization
