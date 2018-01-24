@@ -99,7 +99,15 @@ image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/
 
 C++ - Overview
 --------------
-- https://github.com/bitcoin/bitcoin, 15K commits since 2010, 60+ devs at peek (TODO: maybe pic of Github)
+- https://github.com/bitcoin/bitcoin
+ * 16K commits since 2009
+ * 500+ contributors, 60+ peek
+
+TODO: pic from github
+TODO: LOC
+
+C++ (continued)
+---------------
 - classic C++ structured, not much polymorphism, primarily relies on STL and Boost
 - relatively flat structure, most things are split in a .h/.cpp pair
 - well commented - in Doxygen format
@@ -123,6 +131,10 @@ Occurrences of C++11/14 specific constructs in all the files
 |==========================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
+
+Deterministic Build
+-------------------
+TODO: https://gitian.org/
 
 STL
 ---
