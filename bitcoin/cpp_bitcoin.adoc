@@ -387,6 +387,17 @@ TODO: https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding
 
 TODO: a table/diagram with the bytes?
 
+std::map variations
+-------------------
+A couple of small convenience driven modifications:
+
+- `indirectmap`
+ * stores pointers to elements but offers utility member functions that work with the element type directly
+- `limitedmap`
+ * map that only stores the N highest values inserted
+ 
+TODO: search for usage
+
 CuckooCache
 -----------
 Unique Set data structure based on the principles of the cuckoo hash map.
