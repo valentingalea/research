@@ -1,7 +1,14 @@
 = Bitcoin Code Review: How C++ Powers The Biggest Cryptocurrency
+:slidebackground: splash
 
+:slidebackground!:
 Who Am I
 --------
+[splash, position: absolute; top: 3em; left: 0em;]
+&&&&
+image::img/splash.png["bitcoin logo"]
+&&&&
+
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
 more than 10 years doing mobile, indie and AAA games
 

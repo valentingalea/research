@@ -3940,7 +3940,7 @@ setTimeout(w3c_slidy.hide_slides, 50);
 </script>
 </head>
 <body class="article">
-<div id="header" class="slide">
+<div id="header" class="slide splash">
 <h1>Bitcoin Code Review: How C++ Powers The Biggest Cryptocurrency</h1>
 </div>
 </div></div>
@@ -3951,6 +3951,13 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <h1 id="_who_am_i">Who Am I</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who Am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
+<div class="background splash" style="position: absolute; top: 3em; left: 0em;">
+<div class="imageblock">
+<div class="content">
+<img src="img/splash.png" alt="bitcoin logo" />
+</div>
+</div>
+</div>
 <div class="paragraph">
 <p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
 more than 10 years doing mobile, indie and AAA games</p>
@@ -4403,6 +4410,11 @@ cellspacing="0" cellpadding="4">
 <ul class="">
 <li>
 <span>
+used in 60% of the files
+</span>
+</li>
+<li>
+<span>
 <code>std::vector</code> major work horse
 </span>
 <ul class="">
@@ -4445,11 +4457,34 @@ primary exception handler
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL - Allocators";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO: secure_allocator</p>
+<p>No custom memory management allocator is used. Instead custom allocators are used to enforce security:</p>
 </div>
-<div class="paragraph">
-<p>TODO: zero_after_free_allocator</p>
-</div>
+<ul class="">
+<li>
+<span>
+<code>zero_after_free_allocator</code>
+</span>
+<ul class="">
+<li>
+<span>
+simple <code>std::allocator</code> wrapper that 0&#8217;s the memory when it gets released so it&#8217;s harder to snoop
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+<code>secure_allocator</code>
+</span>
+<ul class="">
+<li>
+<span>
+0&#8217;s the released memory but it also keeps it locked and not paged to disk, to discourage attacks
+</span>
+</li>
+</ul>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4459,7 +4494,19 @@ primary exception handler
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO:</p>
+<p>Present in about 20% of the files.</p>
+</div>
+<div class="paragraph">
+<p>A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard - ex: <code>call_once</code>, <code>thread</code>, <code>mutex</code>, <code>filesystem</code>, <code>chrono</code>, etc</p>
+</div>
+<div class="paragraph">
+<p><code>multi_index</code> is used to manage the transaction data (sort by hash, fees and time for ex).</p>
+</div>
+<div class="paragraph">
+<p><code>signals</code> and <code>bind</code> prevalent in the Qt UI code.</p>
+</div>
+<div class="paragraph">
+<p>Testing handled with the Boost Unit Test framework.</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4837,6 +4884,23 @@ and made an initial sync 13% faster.</tt></pre>
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_cvarint">CVarInt</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="CVarInt";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Variable Length Encoded integer</p>
+</div>
+<div class="paragraph">
+<p>TODO: <a href="https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding">https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding</a></p>
+</div>
+<div class="paragraph">
+<p>TODO: a table/diagram with the bytes?</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_cuckoocache">CuckooCache</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="CuckooCache";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
@@ -4925,7 +4989,7 @@ uses <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2 
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-21 19:07:22 GMT Standard Time
+Last updated 2018-01-24 23:01:02 GMT Standard Time
 </div>
 </div>
 </div></div>
