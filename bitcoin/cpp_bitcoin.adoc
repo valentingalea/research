@@ -4,7 +4,7 @@
 :slidebackground!:
 Who Am I
 --------
-[splash, position: absolute; top: 3em; left: 0em;]
+[splash]
 &&&&
 image::img/splash.png["bitcoin logo"]
 &&&&
@@ -20,7 +20,7 @@ Disclaimer
 ----------
 - Games coder
 - I bought some Bitcoin in the 2017 craze
-- I analyzed a bunch of times the source code
+- I analyzed a bunch of time the source code
 
 Therefore I am perfectly suited to give this talk! :)
 
@@ -134,13 +134,7 @@ Occurrences of C++11/14 specific constructs in all the files
 
 Deterministic Build
 -------------------
-In order to increase the confidence of packaged binaries they are built deterministically.
-
-That means that the source code is handled in such a way that it always produces the same binary no matter the triggering conditons/environment.
-
-People are encouraged to build their own using a controlled environment (usually a VM with special scripts) rather than rely on packaged distributions in the wild.
-
-More info: https://gitian.org/
+TODO: https://gitian.org/
 
 STL
 ---

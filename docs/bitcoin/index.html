@@ -3951,7 +3951,7 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <h1 id="_who_am_i">Who Am I</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who Am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="background splash" style="position: absolute; top: 3em; left: 0em;">
+<div class="background splash" style="opacity: 0.4; position: absolute; left: 10%; top: 10%;">
 <div class="imageblock">
 <div class="content">
 <img src="img/splash.png" alt="bitcoin logo" />
@@ -4287,9 +4287,35 @@ lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, e
 <ul class="">
 <li>
 <span>
-<a href="https://github.com/bitcoin/bitcoin">https://github.com/bitcoin/bitcoin</a>, 15K commits since 2010, 60+ devs at peek (TODO: maybe pic of Github)
+<a href="https://github.com/bitcoin/bitcoin">https://github.com/bitcoin/bitcoin</a>
+</span>
+<ul class="">
+<li>
+<span>
+16K commits since 2009
 </span>
 </li>
+<li>
+<span>
+500+ contributors, 60+ peek
+</span>
+</li>
+</ul>
+</li>
+</ul>
+<div class="paragraph">
+<p>TODO: pic from github
+TODO: LOC</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_continued">C++ (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
 <li>
 <span>
 classic C++ structured, not much polymorphism, primarily relies on STL and Boost
@@ -4398,6 +4424,17 @@ cellspacing="0" cellpadding="4">
 </tr>
 </tbody>
 </table>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_deterministic_build">Deterministic Build</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Deterministic Build";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: <a href="https://gitian.org/">https://gitian.org/</a></p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4901,6 +4938,46 @@ and made an initial sync 13% faster.</tt></pre>
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_std_map_variations">std::map variations</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="std::map variations";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A couple of small convenience driven modifications:</p>
+</div>
+<ul class="">
+<li>
+<span>
+<code>indirectmap</code>
+</span>
+<ul class="">
+<li>
+<span>
+stores pointers to elements but offers utility member functions that work with the element type directly
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+<code>limitedmap</code>
+</span>
+<ul class="">
+<li>
+<span>
+map that only stores the N highest values inserted
+</span>
+</li>
+</ul>
+</li>
+</ul>
+<div class="paragraph">
+<p>TODO: search for usage</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_cuckoocache">CuckooCache</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="CuckooCache";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
@@ -4989,7 +5066,7 @@ uses <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2 
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-24 23:01:02 GMT Standard Time
+Last updated 2018-01-25 23:41:28 GMT Standard Time
 </div>
 </div>
 </div></div>
