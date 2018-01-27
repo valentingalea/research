@@ -102,17 +102,17 @@ C++ - Overview
 - https://github.com/bitcoin/bitcoin
  * 16K commits since 2009
  * 500+ contributors, 60+ peek
+ * approx. 100k SLOC ^https://www.quora.com/How-many-lines-of-code-is-the-Bitcoin-blockchain-network-infrastructure-written-in[1]^
 
-TODO: pic from github
-TODO: LOC
+image::img/bitcoin_contrib.png["contrib graph"]
 
 C++ (continued)
 ---------------
 - classic C++ structured, not much polymorphism, primarily relies on STL and Boost
 - relatively flat structure, most things are split in a .h/.cpp pair
 - well commented - in Doxygen format
-- MIT license
 - multiplatform - with macro magic compatibility glue layer
+- MIT license
 
 Modern C++
 ----------
