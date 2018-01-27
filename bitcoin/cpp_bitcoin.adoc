@@ -134,7 +134,13 @@ Occurrences of C++11/14 specific constructs in all the files
 
 Deterministic Build
 -------------------
-TODO: https://gitian.org/
+In order to increase the confidence of packaged binaries they are built deterministically.
+
+That means that the source code is handled in such a way that it always produces the same binary no matter the triggering conditions/environment.
+
+People are encouraged to build their own using a controlled environment (usually a VM with special scripts) rather than rely on packaged distributions in the wild.
+
+More info: https://gitian.org/
 
 STL
 ---
