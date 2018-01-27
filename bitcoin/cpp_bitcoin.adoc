@@ -169,7 +169,7 @@ C++ - `class` Design (continued)
     }
 ---------------------------------------
 
-* not that much used, seem relic from Satoshi days
+* not that much used, seems relic from Satoshi days
 * in some instances not all members are cleared
 
 Modern C++
@@ -189,6 +189,18 @@ Occurrences of C++11/14 specific constructs in all the files
 |=====================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
+
+C++ Extensions
+--------------
+.clang
+- Thread Safety Analysis
+ * attribute decorations for static analysis of race conditions
+ * `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
+ * macro wrappers for compatibility; low usage in general
+ * see more: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
+
+.GCC
+- Just a couple of `__attribute__` for various hints 
 
 Deterministic Build
 -------------------
