@@ -125,6 +125,8 @@ Straightforward C++ `class` design, with little polymorphism
 
 Templates usually only for container-like things, or helper functions; No TMP
 
+RAII used for wrappers over synchronization primitives and files.
+
 TRIVIA: A `Null`-ify technique is used to complement constructors:
 
 [source]
@@ -413,6 +415,14 @@ inline T& REF(const T& val)
 
 Custom Data Structures
 ----------------------
+
+I/O
+---
+- `CDataStream` - relatively thin abstraction over a secure `std::vector` of bytes
+ * used as the backbone of serialization
+- `CAutoFile` - non-refcounted RAII wrapper for FILE*
+- `CBufferedFile` - same as above
+ * also provides ring buffer support
 
 prevector
 ---------
