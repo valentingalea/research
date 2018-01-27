@@ -149,6 +149,7 @@ STL
  * used in 1/3 of files
  * used vanilla, with no custom allocation
 - `std::string` gets major usage as well
+- the various flavours of `map` see good usage
 - `std::runtime_error`
  * primary exception handler
 
@@ -411,10 +412,10 @@ A couple of small convenience driven modifications:
 
 - `indirectmap`
  * stores pointers to elements but offers utility member functions that work with the element type directly
+ * one time usage in the mempool
 - `limitedmap`
  * map that only stores the N highest values inserted
- 
-TODO: search for usage
+ * one time usage as a sort of priority queue
 
 CuckooCache
 -----------
