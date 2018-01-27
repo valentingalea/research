@@ -92,7 +92,7 @@ Bitcoin Core (continued)
 
 The focus of this talk
 
-Bitcoin Core - diagram
+Bitcoin Core - Diagram
 ----------------------
 image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png["bitcoin core diagram"]
 //, width="1024"
@@ -106,13 +106,67 @@ C++ - Overview
 
 image::img/bitcoin_contrib.png["contrib graph"]
 
-C++ (continued)
+C++ - Structure
 ---------------
-- classic C++ structured, not much polymorphism, primarily relies on STL and Boost
-- relatively flat structure, most things are split in a .h/.cpp pair
-- well commented - in Doxygen format
+- relatively flat structure, most things are split in a `.h/.cpp` pair
+- initially a lot of functionality was buried into a giant `main.cpp` file
+ * with time that has been refactored out
+- primarily relies on `STL` and `Boost` and some other embedded libs like:
+ * `Qt` for UI
+ * `leveldb` for key-value storage
+ * `secp256k1` for low-level crypto ops
+- quite well commented - in Doxygen format
 - multiplatform - with macro magic compatibility glue layer
 - MIT license
+
+C++ - `class` Design
+--------------------
+Straightforward C++ `class` design, with little polymorphism
+
+Templates usually only for container-like things, or helper functions; No TMP
+
+A `Null`-ify technique is used to complement constructors:
+
+[source]
+---------------------------------------
+class CBlockHeader
+{
+public:
+    int32_t nVersion;
+    uint256 hashPrevBlock;
+    uint256 hashMerkleRoot;
+    uint32_t nTime;
+    uint32_t nBits;
+    uint32_t nNonce;
+
+    CBlockHeader()
+    {
+        SetNull();
+    }
+---------------------------------------
+
+C++ - `class` Design (continued)
+--------------------------------
+[source]
+---------------------------------------
+    void SetNull()
+    {
+        nVersion = 0;
+        hashPrevBlock.SetNull();
+        hashMerkleRoot.SetNull();
+        nTime = 0;
+        nBits = 0;
+        nNonce = 0;
+    }
+
+    bool IsNull() const
+    {
+        return (nBits == 0);
+    }
+---------------------------------------
+
+* not that much used, seem relic from Satoshi days
+* in some instances not all members are cleared
 
 Modern C++
 ----------
@@ -425,7 +479,7 @@ Used to avoid double checking transactions - once for the mempool and the other 
 
 Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time and thread safe.
 
-TODO: some sort of diagram
+TODO: some sort of diagram / more explanation?
 
 CuckooCache - Hashing
 ---------------------
