@@ -14,17 +14,19 @@ more than 10 years doing mobile, indie and AAA games
 
 image::img/vanity_plate.png["Games worked on", align="center"]
 
-Currently at Splash Damage in London, UK
+Currently at _Splash Damage_ in London, UK
 
 Disclaimer
 ----------
 - Games coder
 - I bought some Bitcoin in the 2017 craze
-- I analyzed a bunch of time the source code
+- I analyzed a bunch of times the source code
 
 Therefore I am perfectly suited to give this talk! :)
 
-Seriously though, this is recreational only and offers no endorsements or investment advice!
+- No investment advice!
+- No technical how-to!
+- Just C++ trivia!
 
 Agenda
 ------
