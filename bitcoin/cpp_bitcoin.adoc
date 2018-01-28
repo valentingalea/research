@@ -30,20 +30,13 @@ Therefore I am perfectly suited to give this talk! :)
 
 Agenda
 ------
-From Keep:
-
-- intro & quick history of bitcoin
-- ‎quick explanation of the blockchain and how it operates
-- ‎bitcoin core and its role
-- ‎general architecture of it
-- ‎C++ stats and overview
-- ‎specific design idioms
-- ‎usage of STL
-- ‎usage of Boost
-- ‎custom data structures
-- ‎serialization
-
-TODO: redo at end
+- Bitcoin overview and history
+- Blockchain tech
+- ‎Bitcoin Core
+- ‎C++ overview and stats 
+- ‎Usage of STL and Boost
+- Serialization
+- Data structures
 
 Bitcoin - Summary
 -----------------
