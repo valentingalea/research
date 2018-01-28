@@ -4,15 +4,15 @@
 :slidebackground!:
 Who Am I
 --------
-[splash]
+[splash, position: absolute; top: 3em; left: 0em]
 &&&&
-image::img/splash.png["bitcoin logo"]
+image::img/splash.png["splash"]
 &&&&
 
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
 more than 10 years doing mobile, indie and AAA games
 
-image::img/vanity_plate.png["Games worked on", align="center"]
+image::../badlands/img/vanity_plate.png["Games worked on"]
 
 Currently at _Splash Damage_ in London, UK
 
@@ -601,4 +601,4 @@ ifdef::backend-slidy2[]
 - uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
 endif::backend-slidy2[]
 - bitcoin price graph https://www.buybitcoinworldwide.com/price/
-- https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture
+- "Mastering Bitcoin" https://github.com/bitcoinbook/bitcoinbook
