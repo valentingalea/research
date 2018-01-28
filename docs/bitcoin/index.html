@@ -3951,10 +3951,10 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <h1 id="_who_am_i">Who Am I</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who Am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="background splash" style="opacity: 0.4; position: absolute; left: 10%; top: 10%;">
+<div class="background splash" style="position: absolute; top: 3em; left: 0em">
 <div class="imageblock">
 <div class="content">
-<img src="img/splash.png" alt="bitcoin logo" />
+<img src="img/splash.png" alt="splash" />
 </div>
 </div>
 </div>
@@ -3962,13 +3962,13 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
 more than 10 years doing mobile, indie and AAA games</p>
 </div>
-<div class="imageblock" style="text-align:center;">
+<div class="imageblock">
 <div class="content">
-<img src="img/vanity_plate.png" alt="Games worked on" />
+<img src="../badlands/img/vanity_plate.png" alt="Games worked on" />
 </div>
 </div>
 <div class="paragraph">
-<p>Currently at Splash Damage in London, UK</p>
+<p>Currently at <em>Splash Damage</em> in London, UK</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -3991,16 +3991,30 @@ I bought some Bitcoin in the 2017 craze
 </li>
 <li>
 <span>
-I analyzed a bunch of time the source code
+I analyzed a bunch of times the source code
 </span>
 </li>
 </ul>
 <div class="paragraph">
 <p>Therefore I am perfectly suited to give this talk! :)</p>
 </div>
-<div class="paragraph">
-<p>Seriously though, this is recreational only and offers no endorsements or investment advice!</p>
-</div>
+<ul class="">
+<li>
+<span>
+No investment advice!
+</span>
+</li>
+<li>
+<span>
+No technical how-to!
+</span>
+</li>
+<li>
+<span>
+Just C++ trivia!
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4009,64 +4023,43 @@ I analyzed a bunch of time the source code
 <h1 id="_agenda">Agenda</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Agenda";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p>From Keep:</p>
-</div>
 <ul class="">
 <li>
 <span>
-intro &amp; quick history of bitcoin
+Bitcoin overview and history
 </span>
 </li>
 <li>
 <span>
-‎quick explanation of the blockchain and how it operates
+Blockchain tech
 </span>
 </li>
 <li>
 <span>
-‎bitcoin core and its role
+‎Bitcoin Core
 </span>
 </li>
 <li>
 <span>
-‎general architecture of it
+‎C++ overview and stats
 </span>
 </li>
 <li>
 <span>
-‎C++ stats and overview
+‎Usage of STL and Boost
 </span>
 </li>
 <li>
 <span>
-‎specific design idioms
+Serialization
 </span>
 </li>
 <li>
 <span>
-‎usage of STL
-</span>
-</li>
-<li>
-<span>
-‎usage of Boost
-</span>
-</li>
-<li>
-<span>
-‎custom data structures
-</span>
-</li>
-<li>
-<span>
-‎serialization
+Data structures
 </span>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: redo at end</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4092,8 +4085,58 @@ Meteoric rise as of 2017, along with others
 </span>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: coinmarketcap screenshot</p>
+<div class="imageblock">
+<div class="content">
+<img src="img/bitcoin_price.png" alt="price graph" />
+</div>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_what_is_it">Bitcoin - What is It</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What is It";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+decentralized, peer-to-peer digital currency
+</span>
+</li>
+<li>
+<span>
+invented the public distributed ledger - the <em>blockchain</em>
+</span>
+</li>
+<li>
+<span>
+solves the "double spending" problem
+</span>
+</li>
+<li>
+<span>
+achieves secure transactions in an insecure environment
+</span>
+</li>
+<li>
+<span>
+utilizes a proof-of-work algorithm ("mining") to help achieve all this
+</span>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_overview">Bitcoin - Overview</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - Overview";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0201.png" alt="network" />
+</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4178,17 +4221,6 @@ to large conglomerate mining pools in China!
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_bitcoin_what_is_it">Bitcoin - What is It</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What is It";slidefootnotes=false;/*]]>*/</script>
-<div class="sectionbody">
-<div class="paragraph">
-<p>TODO: explanation of what it solves: double spending and etc</p>
-</div>
-</div></div>
-<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
-</div><div class="slide">
-
-<div class="sect1">
 <h1 id="_blockchain">Blockchain</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Blockchain";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
@@ -4268,8 +4300,8 @@ lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, e
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_bitcoin_core_diagram">Bitcoin Core - diagram</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core - diagram";slidefootnotes=false;/*]]>*/</script>
+<h1 id="_bitcoin_core_diagram">Bitcoin Core - Diagram</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core - Diagram";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -4300,35 +4332,75 @@ lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, e
 500+ contributors, 60+ peek
 </span>
 </li>
+<li>
+<span>
+approx. 100k SLOC <sup><a href="https://www.quora.com/How-many-lines-of-code-is-the-Bitcoin-blockchain-network-infrastructure-written-in">1</a></sup>
+</span>
+</li>
 </ul>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: pic from github
-TODO: LOC</p>
+<div class="imageblock">
+<div class="content">
+<img src="img/bitcoin_contrib.png" alt="contrib graph" />
+</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_c_continued">C++ (continued)</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ (continued)";slidefootnotes=false;/*]]>*/</script>
+<h1 id="_c_structure">C++ - Structure</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - Structure";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <ul class="">
 <li>
 <span>
-classic C++ structured, not much polymorphism, primarily relies on STL and Boost
+relatively flat structure, most things are split in a <code>.h/.cpp</code> pair
 </span>
 </li>
 <li>
 <span>
-relatively flat structure, most things are split in a .h/.cpp pair
+initially a lot of functionality was buried into a giant <code>main.cpp</code> file
+</span>
+<ul class="">
+<li>
+<span>
+with time that has been refactored out
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+primarily relies on <code>STL</code> and <code>Boost</code> and some other embedded libs like:
+</span>
+<ul class="">
+<li>
+<span>
+<code>Qt</code> for UI
 </span>
 </li>
 <li>
 <span>
-well commented - in Doxygen format
+<code>leveldb</code> for key-value storage
+</span>
+</li>
+<li>
+<span>
+<code>secp256k1</code> for low-level crypto ops
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+quite well commented - in Doxygen format
+</span>
+</li>
+<li>
+<span>
+multiplatform - with macro magic compatibility glue layer
 </span>
 </li>
 <li>
@@ -4336,9 +4408,90 @@ well commented - in Doxygen format
 MIT license
 </span>
 </li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_code_class_code_design">C++ - <code>class</code> Design</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - <code>class</code> Design";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Straightforward C++ <code>class</code> design, with little polymorphism</p>
+</div>
+<div class="paragraph">
+<p>Templates usually only for container-like things, or helper functions; No TMP</p>
+</div>
+<div class="paragraph">
+<p>RAII used for wrappers over synchronization primitives and files.</p>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_code_class_code_design_continued">C++ - <code>class</code> Design (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - <code>class</code> Design (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <code>Null</code>-ify technique is used to complement constructors:</p>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> CBlockHeader
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+    int32_t nVersion<span style="color: #990000">;</span>
+    uint256 hashPrevBlock<span style="color: #990000">;</span>
+    uint256 hashMerkleRoot<span style="color: #990000">;</span>
+    uint32_t nTime<span style="color: #990000">;</span>
+    uint32_t nBits<span style="color: #990000">;</span>
+    uint32_t nNonce<span style="color: #990000">;</span>
+
+    <span style="font-weight: bold"><span style="color: #000000">CBlockHeader</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span>
+    <span style="color: #FF0000">{</span>
+        <span style="font-weight: bold"><span style="color: #000000">SetNull</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+    <span style="color: #FF0000">}</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_code_class_code_design_continued_2">C++ - <code>class</code> Design (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - <code>class</code> Design (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>    <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">SetNull</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span>
+    <span style="color: #FF0000">{</span>
+        nVersion <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+        hashPrevBlock<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">SetNull</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+        hashMerkleRoot<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">SetNull</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+        nTime <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+        nBits <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+        nNonce <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+    <span style="color: #FF0000">}</span>
+
+    <span style="color: #009900">bool</span> <span style="font-weight: bold"><span style="color: #000000">IsNull</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span>
+    <span style="color: #FF0000">{</span>
+        <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">(</span>nBits <span style="color: #990000">=</span><span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+    <span style="color: #FF0000">}</span></tt></pre></div></div>
+<ul class="">
 <li>
 <span>
-multiplatform - with macro magic compatibility glue layer
+not that much used, seems relic from Satoshi days
+</span>
+</li>
+<li>
+<span>
+in some instances not all members are cleared
 </span>
 </li>
 </ul>
@@ -4358,18 +4511,16 @@ multiplatform - with macro magic compatibility glue layer
 width="80%"
 frame="border"
 cellspacing="0" cellpadding="4">
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
 <thead>
 <tr>
 <th align="left" valign="top">                    </th>
 <th align="left" valign="top"> Bitcoin </th>
 <th align="left" valign="top"> Ripple </th>
-<th align="left" valign="top"> Ethereum </th>
-<th align="left" valign="top"> UE4</th>
+<th align="left" valign="top"> Ethereum</th>
 </tr>
 </thead>
 <tbody>
@@ -4378,49 +4529,42 @@ cellspacing="0" cellpadding="4">
 <td align="left" valign="top"><p class="table">659</p></td>
 <td align="left" valign="top"><p class="table">3672</p></td>
 <td align="left" valign="top"><p class="table">477</p></td>
-<td align="left" valign="top"><p class="table">19299</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>auto</code></p></td>
 <td align="left" valign="top"><p class="table">12%</p></td>
 <td align="left" valign="top"><p class="table">36%</p></td>
 <td align="left" valign="top"><p class="table">36%</p></td>
-<td align="left" valign="top"><p class="table">13%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>std::move</code></p></td>
 <td align="left" valign="top"><p class="table">7%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
 <td align="left" valign="top"><p class="table">7%</p></td>
-<td align="left" valign="top"><p class="table">2%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>override</code></p></td>
 <td align="left" valign="top"><p class="table">6%</p></td>
 <td align="left" valign="top"><p class="table">19%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
-<td align="left" valign="top"><p class="table">34%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>static_assert</code></p></td>
 <td align="left" valign="top"><p class="table">2%</p></td>
 <td align="left" valign="top"><p class="table">3%</p></td>
 <td align="left" valign="top"><p class="table">4%</p></td>
-<td align="left" valign="top"><p class="table">1%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">lambda expressions</p></td>
 <td align="left" valign="top"><p class="table">2%</p></td>
 <td align="left" valign="top"><p class="table">11%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
-<td align="left" valign="top"><p class="table">6%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>std::enable_if</code></p></td>
 <td align="left" valign="top"><p class="table">none</p></td>
 <td align="left" valign="top"><p class="table">1%</p></td>
 <td align="left" valign="top"><p class="table">one file</p></td>
-<td align="left" valign="top"><p class="table">.2%</p></td>
 </tr>
 </tbody>
 </table>
@@ -4430,11 +4574,64 @@ cellspacing="0" cellpadding="4">
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_c_extensions">C++ Extensions</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ Extensions";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="title">clang</div><ul class="">
+<li>
+<span>
+Thread Safety Analysis
+</span>
+<ul class="">
+<li>
+<span>
+attribute decorations for static analysis of race conditions
+</span>
+</li>
+<li>
+<span>
+<code>GUARDED_BY(x)</code>, <code>SCOPED_LOCKABLE</code>, <code>SHARED_LOCKS_REQUIRED</code> etc
+</span>
+</li>
+<li>
+<span>
+macro wrappers for compatibility; low usage in general
+</span>
+</li>
+<li>
+<span>
+see more: <a href="https://clang.llvm.org/docs/ThreadSafetyAnalysis.html">https://clang.llvm.org/docs/ThreadSafetyAnalysis.html</a>
+</span>
+</li>
+</ul>
+</li>
+</ul>
+<div class="title">GCC</div><ul class="">
+<li>
+<span>
+Just a couple of <code>__attribute__</code> for various hints
+</span>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_deterministic_build">Deterministic Build</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Deterministic Build";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO: <a href="https://gitian.org/">https://gitian.org/</a></p>
+<p>In order to increase the confidence of packaged binaries they are built deterministically.</p>
+</div>
+<div class="paragraph">
+<p>That means that the source code is handled in such a way that it always produces the same binary no matter the triggering conditions/environment.</p>
+</div>
+<div class="paragraph">
+<p>People are encouraged to build their own using a controlled environment (usually a VM with special scripts) rather than rely on packaged distributions in the wild.</p>
+</div>
+<div class="paragraph">
+<p>More info: <a href="https://gitian.org/">https://gitian.org/</a></p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4470,6 +4667,11 @@ used vanilla, with no custom allocation
 <li>
 <span>
 <code>std::string</code> gets major usage as well
+</span>
+</li>
+<li>
+<span>
+the various flavours of <code>map</code> see good usage
 </span>
 </li>
 <li>
@@ -4797,11 +4999,6 @@ http://www.gnu.org/software/src-highlite -->
 <ul class="">
 <li>
 <span>
-members are not always serialized in the order they are declared
-</span>
-</li>
-<li>
-<span>
 if the template function helpers don&#8217;t match anything, it will revert calling a class member serialize function
 </span>
 </li>
@@ -4830,6 +5027,13 @@ http://www.gnu.org/software/src-highlite -->
 <span style="color: #FF0000">{</span>
     <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #0000FF">const_cast</span></span><span style="color: #990000">&lt;</span>T<span style="color: #990000">&amp;</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>val<span style="color: #990000">)</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
+<ul class="">
+<li>
+<span>
+"makes sense" refers to pass-thru structs like <code>CFlatData</code> that only stores begin/end pointers and is constructed in-place
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4838,6 +5042,45 @@ http://www.gnu.org/software/src-highlite -->
 <h1 id="_custom_data_structures">Custom Data Structures</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Custom Data Structures";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_i_o">I/O</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="I/O";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+<code>CDataStream</code> - relatively thin abstraction over a secure <code>std::vector</code> of bytes
+</span>
+<ul class="">
+<li>
+<span>
+used as the backbone of serialization
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+<code>CAutoFile</code> - non-refcounted RAII wrapper for FILE*
+</span>
+</li>
+<li>
+<span>
+<code>CBufferedFile</code> - same as above
+</span>
+<ul class="">
+<li>
+<span>
+also provides ring buffer support
+</span>
+</li>
+</ul>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4925,14 +5168,53 @@ and made an initial sync 13% faster.</tt></pre>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="CVarInt";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Variable Length Encoded integer</p>
+<p>A quite simple form of encoding integers depending on their numeric range, in order to save on space/bandwidth</p>
 </div>
-<div class="paragraph">
-<p>TODO: <a href="https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding">https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding</a></p>
+<div class="tableblock">
+<table rules="all"
+width="50%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Range               </th>
+<th align="left" valign="top"> Encoding in bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">0 .. 252</p></td>
+<td align="left" valign="top"><p class="table">??</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">253 .. 2<sup>16</sup> - 1</p></td>
+<td align="left" valign="top"><p class="table">0xFD ?? ??</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">2<sup>16</sup> .. 2<sup>32</sup> – 1</p></td>
+<td align="left" valign="top"><p class="table">0xFE ?? ?? ?? ??</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">2<sup>32</sup> .. 2<sup>64</sup> – 1</p></td>
+<td align="left" valign="top"><p class="table">0xFF ?? ?? ?? ?? ?? ?? ?? ??</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="paragraph">
-<p>TODO: a table/diagram with the bytes?</p>
-</div>
+<ul class="">
+<li>
+<span>
+good for things that have low values most of the time, for everything else it wastes bytes
+</span>
+</li>
+<li>
+<span>
+there are other better techniques - see <a href="https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding/">https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding/</a>
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4955,6 +5237,11 @@ and made an initial sync 13% faster.</tt></pre>
 stores pointers to elements but offers utility member functions that work with the element type directly
 </span>
 </li>
+<li>
+<span>
+one time usage in the mempool
+</span>
+</li>
 </ul>
 </li>
 <li>
@@ -4967,12 +5254,14 @@ stores pointers to elements but offers utility member functions that work with t
 map that only stores the N highest values inserted
 </span>
 </li>
+<li>
+<span>
+one time usage as a sort of priority queue
+</span>
+</li>
 </ul>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: search for usage</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4991,7 +5280,7 @@ map that only stores the N highest values inserted
 <p>Elements are stored in <code>std::vector</code> and a series of hash function spread them around. A form of GC is employed on <code>insert</code> to keep erase constant time and thread safe.</p>
 </div>
 <div class="paragraph">
-<p>TODO: some sort of diagram</p>
+<p>TODO: some sort of diagram / more explanation?</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5023,6 +5312,79 @@ http://www.gnu.org/software/src-highlite -->
                 <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">6</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
                 <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">7</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_memusage">memusage</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="memusage";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A sort of generalized <code>sizeof</code> to measure dynamic memory usage for structures</p>
+</div>
+<div class="paragraph">
+<p>Consists of a large overload set for the function <code>DynamicUsage&lt;T&gt;</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">/**</span></span><span style="font-style: italic"><span style="color: #9A1900"> Dynamic memory usage for built-in types is zero. </span></span><span style="font-style: italic"><span style="color: #9A1900">*/</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">static</span></span> <span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> size_t <span style="font-weight: bold"><span style="color: #000000">DynamicUsage</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> int8_t<span style="color: #990000">&amp;</span> v<span style="color: #990000">)</span> <span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="color: #FF0000">}</span>
+<span style="font-weight: bold"><span style="color: #0000FF">static</span></span> <span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> size_t <span style="font-weight: bold"><span style="color: #000000">DynamicUsage</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> uint8_t<span style="color: #990000">&amp;</span> v<span style="color: #990000">)</span> <span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="color: #FF0000">}</span>
+<span style="font-style: italic"><span style="color: #9A1900">/*</span></span><span style="font-style: italic"><span style="color: #9A1900"> ... </span></span><span style="font-style: italic"><span style="color: #9A1900">*/</span></span></tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span><span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> X<span style="color: #990000">&gt;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">static</span></span> <span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> size_t <span style="font-weight: bold"><span style="color: #000000">DynamicUsage</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span>vector<span style="color: #990000">&lt;</span>X<span style="color: #990000">&gt;</span><span style="color: #990000">&amp;</span> v<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">MallocUsage</span></span><span style="color: #990000">(</span>v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">capacity</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="font-weight: bold"><span style="color: #0000FF">sizeof</span></span><span style="color: #990000">(</span>X<span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span>
+<span style="font-style: italic"><span style="color: #9A1900">/*</span></span><span style="font-style: italic"><span style="color: #9A1900"> ... </span></span><span style="font-style: italic"><span style="color: #9A1900">*/</span></span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_memusage_continued">memusage (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="memusage (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For STL types they shadow the underlying type structures:</p>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span><span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> X<span style="color: #990000">&gt;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">struct</span></span> stl_tree_node
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+    <span style="color: #009900">int</span> color<span style="color: #990000">;</span>
+    <span style="color: #009900">void</span><span style="color: #990000">*</span> parent<span style="color: #990000">;</span>
+    <span style="color: #009900">void</span><span style="color: #990000">*</span> left<span style="color: #990000">;</span>
+    <span style="color: #009900">void</span><span style="color: #990000">*</span> right<span style="color: #990000">;</span>
+    X x<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">template</span></span><span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> X<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> Y<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> Z<span style="color: #990000">&gt;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">static</span></span> <span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> size_t <span style="font-weight: bold"><span style="color: #000000">DynamicUsage</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span>map<span style="color: #990000">&lt;</span>X<span style="color: #990000">,</span> Y<span style="color: #990000">,</span> Z<span style="color: #990000">&gt;</span><span style="color: #990000">&amp;</span> m<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">MallocUsage</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">sizeof</span></span><span style="color: #990000">(</span>stl_tree_node<span style="color: #990000">&lt;</span>std<span style="color: #990000">:</span><span style="color: #990000">:</span>pair<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> X<span style="color: #990000">,</span> Y<span style="color: #990000">&gt;</span> <span style="color: #990000">&gt;</span><span style="color: #990000">)</span><span style="color: #990000">)</span> <span style="color: #990000">*</span> m<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<ul class="">
+<li>
+<span>
+<code>MallocUsage</code> is just a small utility function that accounts for alignment
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5060,13 +5422,18 @@ uses <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2 
 </li>
 <li>
 <span>
-<a href="https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture">https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture</a>
+bitcoin price graph <a href="https://www.buybitcoinworldwide.com/price/">https://www.buybitcoinworldwide.com/price/</a>
+</span>
+</li>
+<li>
+<span>
+"Mastering Bitcoin" <a href="https://github.com/bitcoinbook/bitcoinbook">https://github.com/bitcoinbook/bitcoinbook</a>
 </span>
 </li>
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-25 23:41:28 GMT Standard Time
+Last updated 2018-01-28 12:26:55 GMT Standard Time
 </div>
 </div>
 </div></div>

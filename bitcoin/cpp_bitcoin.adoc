@@ -4,44 +4,39 @@
 :slidebackground!:
 Who Am I
 --------
-[splash]
+[splash, position: absolute; top: 3em; left: 0em]
 &&&&
-image::img/splash.png["bitcoin logo"]
+image::img/splash.png["splash"]
 &&&&
 
 Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
 more than 10 years doing mobile, indie and AAA games
 
-image::img/vanity_plate.png["Games worked on", align="center"]
+image::../badlands/img/vanity_plate.png["Games worked on"]
 
-Currently at Splash Damage in London, UK
+Currently at _Splash Damage_ in London, UK
 
 Disclaimer
 ----------
 - Games coder
 - I bought some Bitcoin in the 2017 craze
-- I analyzed a bunch of time the source code
+- I analyzed a bunch of times the source code
 
 Therefore I am perfectly suited to give this talk! :)
 
-Seriously though, this is recreational only and offers no endorsements or investment advice!
+- No investment advice!
+- No technical how-to!
+- Just C++ trivia!
 
 Agenda
 ------
-From Keep:
-
-- intro & quick history of bitcoin
-- ‎quick explanation of the blockchain and how it operates
-- ‎bitcoin core and its role
-- ‎general architecture of it
-- ‎C++ stats and overview
-- ‎specific design idioms
-- ‎usage of STL
-- ‎usage of Boost
-- ‎custom data structures
-- ‎serialization
-
-TODO: redo at end
+- Bitcoin overview and history
+- Blockchain tech
+- ‎Bitcoin Core
+- ‎C++ overview and stats 
+- ‎Usage of STL and Boost
+- Serialization
+- Data structures
 
 Bitcoin - Summary
 -----------------
@@ -49,7 +44,19 @@ Bitcoin - Summary
 - Leading the digital currency revolution
 - Meteoric rise as of 2017, along with others
 
-TODO: coinmarketcap screenshot
+image::img/bitcoin_price.png["price graph"]
+
+Bitcoin - What is It
+--------------------
+- decentralized, peer-to-peer digital currency
+- invented the public distributed ledger - the _blockchain_
+- solves the "double spending" problem
+- achieves secure transactions in an insecure environment
+- utilizes a proof-of-work algorithm ("mining") to help achieve all this
+
+Bitcoin - Overview
+------------------
+image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0201.png["network"]
 
 Bitcoin - History
 -----------------
@@ -65,10 +72,6 @@ Bitcoin - History
 - Evolved economically
 * from everyday people running the software on their PC's
 * to large conglomerate mining pools in China!
-
-Bitcoin - What is It
---------------------
-TODO: explanation of what it solves: double spending and etc
 
 Blockchain
 ----------
@@ -92,7 +95,7 @@ Bitcoin Core (continued)
 
 The focus of this talk
 
-Bitcoin Core - diagram
+Bitcoin Core - Diagram
 ----------------------
 image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png["bitcoin core diagram"]
 //, width="1024"
@@ -102,39 +105,115 @@ C++ - Overview
 - https://github.com/bitcoin/bitcoin
  * 16K commits since 2009
  * 500+ contributors, 60+ peek
+ * approx. 100k SLOC ^https://www.quora.com/How-many-lines-of-code-is-the-Bitcoin-blockchain-network-infrastructure-written-in[1]^
 
-TODO: pic from github
-TODO: LOC
+image::img/bitcoin_contrib.png["contrib graph"]
 
-C++ (continued)
+C++ - Structure
 ---------------
-- classic C++ structured, not much polymorphism, primarily relies on STL and Boost
-- relatively flat structure, most things are split in a .h/.cpp pair
-- well commented - in Doxygen format
-- MIT license
+- relatively flat structure, most things are split in a `.h/.cpp` pair
+- initially a lot of functionality was buried into a giant `main.cpp` file
+ * with time that has been refactored out
+- primarily relies on `STL` and `Boost` and some other embedded libs like:
+ * `Qt` for UI
+ * `leveldb` for key-value storage
+ * `secp256k1` for low-level crypto ops
+- quite well commented - in Doxygen format
 - multiplatform - with macro magic compatibility glue layer
+- MIT license
+
+C++ - `class` Design
+--------------------
+Straightforward C++ `class` design, with little polymorphism
+
+Templates usually only for container-like things, or helper functions; No TMP
+
+RAII used for wrappers over synchronization primitives and files.
+
+C++ - `class` Design (continued)
+--------------------------------
+A `Null`-ify technique is used to complement constructors:
+
+[source]
+---------------------------------------
+class CBlockHeader
+{
+public:
+    int32_t nVersion;
+    uint256 hashPrevBlock;
+    uint256 hashMerkleRoot;
+    uint32_t nTime;
+    uint32_t nBits;
+    uint32_t nNonce;
+
+    CBlockHeader()
+    {
+        SetNull();
+    }
+---------------------------------------
+
+C++ - `class` Design (continued)
+--------------------------------
+[source]
+---------------------------------------
+    void SetNull()
+    {
+        nVersion = 0;
+        hashPrevBlock.SetNull();
+        hashMerkleRoot.SetNull();
+        nTime = 0;
+        nBits = 0;
+        nNonce = 0;
+    }
+
+    bool IsNull() const
+    {
+        return (nBits == 0);
+    }
+---------------------------------------
+
+* not that much used, seems relic from Satoshi days
+* in some instances not all members are cleared
 
 Modern C++
 ----------
 Occurrences of C++11/14 specific constructs in all the files
 
 [width="80%",options="header"]
-|==========================================================
-|                    | Bitcoin | Ripple | Ethereum | UE4
-| Files              | 659     | 3672   | 477      | 19299
-| `auto`             | 12%     | 36%    | 36%      | 13%
-| `std::move`        | 7%      | 13%    | 7%       | 2%
-| `override`         | 6%      | 19%    | 13%      | 34%
-| `static_assert`    | 2%      | 3%     | 4%       | 1%
-| lambda expressions | 2%      | 11%    | 13%      | 6%
-| `std::enable_if`   | none    | 1%     | one file | .2%
-|==========================================================
+|=====================================================
+|                    | Bitcoin | Ripple | Ethereum 
+| Files              | 659     | 3672   | 477      
+| `auto`             | 12%     | 36%    | 36%      
+| `std::move`        | 7%      | 13%    | 7%       
+| `override`         | 6%      | 19%    | 13%      
+| `static_assert`    | 2%      | 3%     | 4%       
+| lambda expressions | 2%      | 11%    | 13%      
+| `std::enable_if`   | none    | 1%     | one file 
+|=====================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
 
+C++ Extensions
+--------------
+.clang
+- Thread Safety Analysis
+ * attribute decorations for static analysis of race conditions
+ * `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
+ * macro wrappers for compatibility; low usage in general
+ * see more: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
+
+.GCC
+- Just a couple of `__attribute__` for various hints 
+
 Deterministic Build
 -------------------
-TODO: https://gitian.org/
+In order to increase the confidence of packaged binaries they are built deterministically.
+
+That means that the source code is handled in such a way that it always produces the same binary no matter the triggering conditions/environment.
+
+People are encouraged to build their own using a controlled environment (usually a VM with special scripts) rather than rely on packaged distributions in the wild.
+
+More info: https://gitian.org/
 
 STL
 ---
@@ -143,6 +222,7 @@ STL
  * used in 1/3 of files
  * used vanilla, with no custom allocation
 - `std::string` gets major usage as well
+- the various flavours of `map` see good usage
 - `std::runtime_error`
  * primary exception handler
 
@@ -333,7 +413,6 @@ Some other macro type wrappers:
 Serialization - Trivia
 ----------------------
 
-- members are not always serialized in the order they are declared
 - if the template function helpers don't match anything, it will revert calling a class member serialize function 
 - deserialization can be done by the constructor as well using tag dispatch
 - a cheeky hack:
@@ -349,8 +428,18 @@ inline T& REF(const T& val)
     return const_cast<T&>(val);
 }
 
+* "makes sense" refers to pass-thru structs like `CFlatData` that only stores begin/end pointers and is constructed in-place
+
 Custom Data Structures
 ----------------------
+
+I/O
+---
+- `CDataStream` - relatively thin abstraction over a secure `std::vector` of bytes
+ * used as the backbone of serialization
+- `CAutoFile` - non-refcounted RAII wrapper for FILE*
+- `CBufferedFile` - same as above
+ * also provides ring buffer support
 
 prevector
 ---------
@@ -393,11 +482,19 @@ According to the `README`: "[it] minimizes template use (contra json_spirit)".
 
 CVarInt
 -------
-Variable Length Encoded integer
+A quite simple form of encoding integers depending on their numeric range, in order to save on space/bandwidth
 
-TODO: https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding
+[width="50%",options="header"]
+|====================================================================
+| Range               | Encoding in bytes
+|     0 .. 252        | ??
+|   253 .. 2^16^ - 1  | 0xFD ?? ??
+| 2^16^ .. 2^32^ – 1  | 0xFE ?? ?? ?? ??
+| 2^32^ .. 2^64^ – 1  | 0xFF ?? ?? ?? ?? ?? ?? ?? ??
+|====================================================================
 
-TODO: a table/diagram with the bytes?
+- good for things that have low values most of the time, for everything else it wastes bytes
+- there are other better techniques - see https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding/
 
 std::map variations
 -------------------
@@ -405,10 +502,10 @@ A couple of small convenience driven modifications:
 
 - `indirectmap`
  * stores pointers to elements but offers utility member functions that work with the element type directly
+ * one time usage in the mempool
 - `limitedmap`
  * map that only stores the N highest values inserted
- 
-TODO: search for usage
+ * one time usage as a sort of priority queue
 
 CuckooCache
 -----------
@@ -418,7 +515,7 @@ Used to avoid double checking transactions - once for the mempool and the other 
 
 Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time and thread safe.
 
-TODO: some sort of diagram
+TODO: some sort of diagram / more explanation?
 
 CuckooCache - Hashing
 ---------------------
@@ -439,6 +536,52 @@ inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
                 (uint32_t)((hash_function.template operator()<7>(e) * (uint64_t)size) >> 32)}};
 }
 
+memusage
+--------
+A sort of generalized `sizeof` to measure dynamic memory usage for structures
+
+Consists of a large overload set for the function `DynamicUsage<T>`:
+
+[source]
+/** Dynamic memory usage for built-in types is zero. */
+static inline size_t DynamicUsage(const int8_t& v) { return 0; }
+static inline size_t DynamicUsage(const uint8_t& v) { return 0; }
+/* ... */
+
+[source]
+template<typename X>
+static inline size_t DynamicUsage(const std::vector<X>& v)
+{
+    return MallocUsage(v.capacity() * sizeof(X));
+}
+/* ... */
+
+memusage (continued)
+--------------------
+For STL types they shadow the underlying type structures:
+
+[source]
+---------------------------------------
+template<typename X>
+struct stl_tree_node
+{
+private:
+    int color;
+    void* parent;
+    void* left;
+    void* right;
+    X x;
+};
+
+template<typename X, typename Y, typename Z>
+static inline size_t DynamicUsage(const std::map<X, Y, Z>& m)
+{
+    return MallocUsage(sizeof(stl_tree_node<std::pair<const X, Y> >)) * m.size();
+}
+---------------------------------------
+
+* `MallocUsage` is just a small utility function that accounts for alignment
+
 The End
 -------
 TODO:
@@ -450,4 +593,5 @@ Attributions
 ifdef::backend-slidy2[]
 - uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
 endif::backend-slidy2[]
-- https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture
+- bitcoin price graph https://www.buybitcoinworldwide.com/price/
+- "Mastering Bitcoin" https://github.com/bitcoinbook/bitcoinbook
