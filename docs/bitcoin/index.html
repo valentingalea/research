@@ -4031,11 +4031,6 @@ Bitcoin overview and history
 </li>
 <li>
 <span>
-Blockchain tech
-</span>
-</li>
-<li>
-<span>
 ‎Bitcoin Core
 </span>
 </li>
@@ -4060,6 +4055,9 @@ Data structures
 </span>
 </li>
 </ul>
+<div class="paragraph">
+<p>TODO: sync when finished</p>
+</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4095,8 +4093,8 @@ Meteoric rise as of 2017, along with others
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_bitcoin_what_is_it">Bitcoin - What is It</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What is It";slidefootnotes=false;/*]]>*/</script>
+<h1 id="_bitcoin_what_is_it">Bitcoin - What Is It</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What Is It";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <ul class="">
 <li>
@@ -4185,13 +4183,6 @@ Fully open source
 <span>
 Satoshi disappeared around 2010, other devs continued
 </span>
-<ul class="">
-<li>
-<span>
-active communities both on the dev and user suited
-</span>
-</li>
-</ul>
 </li>
 <li>
 <span>
@@ -4221,12 +4212,65 @@ to large conglomerate mining pools in China!
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_blockchain">Blockchain</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Blockchain";slidefootnotes=false;/*]]>*/</script>
+<h1 id="_bitcoin_example">Bitcoin - Example</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - Example";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p>TODO:</p>
-</div>
+<ol class="arabic">
+<li>
+<span>
+<strong>Alice</strong> wants to pay <strong>Bob</strong> 0.015 BTC
+</span>
+</li>
+<li>
+<span>
+Alice doesn&#8217;t own any bitcoin physically, her coins are scattered across the network as unspent transactions (<code>UTXO</code>)
+</span>
+</li>
+<li>
+<span>
+She does own cryptographic keys for signing and generating payment addresses
+</span>
+</li>
+<li>
+<span>
+She uses a <strong>wallet</strong> app that monitors the network, tracks her balance and creates a new transaction signed with Bob&#8217;s public key
+</span>
+</li>
+<li>
+<span>
+The wallet sends it into the p2p <strong>node network</strong> where it will float around (<code>mempool</code>)
+</span>
+</li>
+<li>
+<span>
+A <strong>miner</strong> will pick it up, include it with others in a block and it will begin <strong>Proof-Of-Work</strong> to sign the block
+</span>
+<ul class="">
+<li>
+<span>
+this usually takes 10 min, and the difficulty is adjusted by consensus to keep that true
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+When it&#8217;s successful (or when others are) the new block is broadcast to the network and added to the <strong>blockchain</strong>
+</span>
+<ul class="">
+<li>
+<span>
+fees are collected by the miner as well as newly minted BTC as reward
+</span>
+</li>
+</ul>
+</li>
+<li>
+<span>
+Bob&#8217;s wallet app sees the new confirmed transaction. Bob has now unspent coins he can redeem later!
+</span>
+</li>
+</ol>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4237,7 +4281,7 @@ to large conglomerate mining pools in China!
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png" alt="bitcoin core diagram" />
+<img src="https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png" alt="bitcoin core diagram" width="75%" />
 </div>
 </div>
 </div></div>
@@ -4251,7 +4295,7 @@ to large conglomerate mining pools in China!
 <ul class="">
 <li>
 <span>
-The <em>reference implementation</em> of the bitcoin system
+the <em>reference implementation</em> of the bitcoin system
 </span>
 </li>
 <li>
@@ -4294,19 +4338,6 @@ lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, e
 </ul>
 <div class="paragraph">
 <p>The focus of this talk</p>
-</div>
-</div></div>
-<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
-</div><div class="slide">
-
-<div class="sect1">
-<h1 id="_bitcoin_core_diagram">Bitcoin Core - Diagram</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core - Diagram";slidefootnotes=false;/*]]>*/</script>
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png" alt="bitcoin core diagram" />
-</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4752,6 +4783,19 @@ simple <code>std::allocator</code> wrapper that 0&#8217;s the memory when it get
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_bitcoin_core_architecture">Bitcoin Core - Architecture</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin Core - Architecture";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png" alt="bitcoin core diagram" width="50%" />
+</div>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_serialization">Serialization</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
@@ -5042,6 +5086,9 @@ http://www.gnu.org/software/src-highlite -->
 <h1 id="_custom_data_structures">Custom Data Structures</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Custom Data Structures";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Interesting data structures that are relatively isolated and reusable</p>
+</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5433,7 +5480,7 @@ bitcoin price graph <a href="https://www.buybitcoinworldwide.com/price/">https:/
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-28 12:26:55 GMT Standard Time
+Last updated 2018-01-28 21:46:54 GMT Standard Time
 </div>
 </div>
 </div></div>

@@ -73,6 +73,19 @@ Bitcoin - History
 * from everyday people running the software on their PC's
 * to large conglomerate mining pools in China!
 
+Bitcoin - Example
+-----------------
+1. *Alice* wants to pay *Bob* 0.015 BTC
+2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions (`UTXO`)
+3. She does own cryptographic keys for signing and generating payment addresses
+4. She uses a *wallet* app that monitors the network, tracks her balance and creates a new transaction signed with Bob's public key
+5. The wallet sends it into the p2p *node network* where it will float around (`mempool`)
+6. A *miner* will pick it up, include it with others in a block and it will begin *Proof-Of-Work* to sign the block
+ * this usually takes 10 min, and the difficulty is adjusted by consensus to keep that true
+7. When it's successful (or when others are) the new block is broadcast to the network and added to the *blockchain*
+ * fees are collected by the miner as well as newly minted BTC as reward 
+8. Bob's wallet app sees the new confirmed transaction. Bob has now unspent coins he can redeem later!
+
 Bitcoin Core
 ------------
 image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png["bitcoin core diagram", width="75%"]
