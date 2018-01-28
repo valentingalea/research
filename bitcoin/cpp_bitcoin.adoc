@@ -61,6 +61,10 @@ Bitcoin - What is It
 - achieves secure transactions in an insecure environment
 - utilizes a proof-of-work algorithm ("mining") to help achieve all this
 
+Bitcoin - Overview
+------------------
+image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0201.png["network"]
+
 Bitcoin - History
 -----------------
 - Introduced by the unknown Satoshi Nakamoto in 2009
