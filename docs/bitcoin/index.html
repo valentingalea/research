@@ -3951,10 +3951,10 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <h1 id="_who_am_i">Who Am I</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Who Am I";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="background splash" style="opacity: 0.4; position: absolute; left: 10%; top: 10%;">
+<div class="background splash" style="position: absolute; top: 3em; left: 0em">
 <div class="imageblock">
 <div class="content">
-<img src="img/splash.png" alt="bitcoin logo" />
+<img src="img/splash.png" alt="splash" />
 </div>
 </div>
 </div>
@@ -3962,9 +3962,9 @@ setTimeout(w3c_slidy.hide_slides, 50);
 <p>Valentin Galea - <a href="https://twitter.com/valentin_galea">@valentin_galea</a><br />
 more than 10 years doing mobile, indie and AAA games</p>
 </div>
-<div class="imageblock" style="text-align:center;">
+<div class="imageblock">
 <div class="content">
-<img src="img/vanity_plate.png" alt="Games worked on" />
+<img src="../badlands/img/vanity_plate.png" alt="Games worked on" />
 </div>
 </div>
 <div class="paragraph">
@@ -4023,64 +4023,43 @@ Just C++ trivia!
 <h1 id="_agenda">Agenda</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Agenda";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p>From Keep:</p>
-</div>
 <ul class="">
 <li>
 <span>
-intro &amp; quick history of bitcoin
+Bitcoin overview and history
 </span>
 </li>
 <li>
 <span>
-‎quick explanation of the blockchain and how it operates
+Blockchain tech
 </span>
 </li>
 <li>
 <span>
-‎bitcoin core and its role
+‎Bitcoin Core
 </span>
 </li>
 <li>
 <span>
-‎general architecture of it
+‎C++ overview and stats
 </span>
 </li>
 <li>
 <span>
-‎C++ stats and overview
+‎Usage of STL and Boost
 </span>
 </li>
 <li>
 <span>
-‎specific design idioms
+Serialization
 </span>
 </li>
 <li>
 <span>
-‎usage of STL
-</span>
-</li>
-<li>
-<span>
-‎usage of Boost
-</span>
-</li>
-<li>
-<span>
-‎custom data structures
-</span>
-</li>
-<li>
-<span>
-‎serialization
+Data structures
 </span>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: redo at end</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4106,8 +4085,58 @@ Meteoric rise as of 2017, along with others
 </span>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: coinmarketcap screenshot</p>
+<div class="imageblock">
+<div class="content">
+<img src="img/bitcoin_price.png" alt="price graph" />
+</div>
+</div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_what_is_it">Bitcoin - What is It</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What is It";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<ul class="">
+<li>
+<span>
+decentralized, peer-to-peer digital currency
+</span>
+</li>
+<li>
+<span>
+invented the public distributed ledger - the <em>blockchain</em>
+</span>
+</li>
+<li>
+<span>
+solves the "double spending" problem
+</span>
+</li>
+<li>
+<span>
+achieves secure transactions in an insecure environment
+</span>
+</li>
+<li>
+<span>
+utilizes a proof-of-work algorithm ("mining") to help achieve all this
+</span>
+</li>
+</ul>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bitcoin_overview">Bitcoin - Overview</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - Overview";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0201.png" alt="network" />
+</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4187,17 +4216,6 @@ to large conglomerate mining pools in China!
 </ul>
 </li>
 </ul>
-</div></div>
-<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
-</div><div class="slide">
-
-<div class="sect1">
-<h1 id="_bitcoin_what_is_it">Bitcoin - What is It</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Bitcoin - What is It";slidefootnotes=false;/*]]>*/</script>
-<div class="sectionbody">
-<div class="paragraph">
-<p>TODO: explanation of what it solves: double spending and etc</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4408,8 +4426,16 @@ MIT license
 <div class="paragraph">
 <p>RAII used for wrappers over synchronization primitives and files.</p>
 </div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_code_class_code_design_continued">C++ - <code>class</code> Design (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - <code>class</code> Design (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
 <div class="paragraph">
-<p>TRIVIA: A <code>Null</code>-ify technique is used to complement constructors:</p>
+<p>A <code>Null</code>-ify technique is used to complement constructors:</p>
 </div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -4435,7 +4461,7 @@ http://www.gnu.org/software/src-highlite -->
 </div><div class="slide">
 
 <div class="sect1">
-<h1 id="_c_code_class_code_design_continued">C++ - <code>class</code> Design (continued)</h1>
+<h1 id="_c_code_class_code_design_continued_2">C++ - <code>class</code> Design (continued)</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - <code>class</code> Design (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="listingblock">
@@ -5396,13 +5422,18 @@ uses <a href="https://github.com/mosabua/asciidoc-slidy2-backend-plugin">Slidy2 
 </li>
 <li>
 <span>
-<a href="https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture">https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture</a>
+bitcoin price graph <a href="https://www.buybitcoinworldwide.com/price/">https://www.buybitcoinworldwide.com/price/</a>
+</span>
+</li>
+<li>
+<span>
+"Mastering Bitcoin" <a href="https://github.com/bitcoinbook/bitcoinbook">https://github.com/bitcoinbook/bitcoinbook</a>
 </span>
 </li>
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-27 20:01:30 GMT Standard Time
+Last updated 2018-01-28 12:26:55 GMT Standard Time
 </div>
 </div>
 </div></div>
