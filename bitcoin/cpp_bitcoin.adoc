@@ -51,7 +51,7 @@ Bitcoin - Summary
 - Leading the digital currency revolution
 - Meteoric rise as of 2017, along with others
 
-TODO: coinmarketcap screenshot
+image::img/bitcoin_price.png["price graph"]
 
 Bitcoin - History
 -----------------
@@ -590,4 +590,5 @@ Attributions
 ifdef::backend-slidy2[]
 - uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
 endif::backend-slidy2[]
+- bitcoin price graph https://www.buybitcoinworldwide.com/price/
 - https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch03.asciidoc#bitcoin_core_architecture
