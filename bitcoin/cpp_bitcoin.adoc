@@ -53,6 +53,14 @@ Bitcoin - Summary
 
 image::img/bitcoin_price.png["price graph"]
 
+Bitcoin - What is It
+--------------------
+- decentralized, peer-to-peer digital currency
+- invented the public distributed ledger - the _blockchain_
+- solves the "double spending" problem
+- achieves secure transactions in an insecure environment
+- utilizes a proof-of-work algorithm ("mining") to help achieve all this
+
 Bitcoin - History
 -----------------
 - Introduced by the unknown Satoshi Nakamoto in 2009
@@ -67,10 +75,6 @@ Bitcoin - History
 - Evolved economically
 * from everyday people running the software on their PC's
 * to large conglomerate mining pools in China!
-
-Bitcoin - What is It
---------------------
-TODO: explanation of what it solves: double spending and etc
 
 Blockchain
 ----------
