@@ -31,12 +31,13 @@ Therefore I am perfectly suited to give this talk! :)
 Agenda
 ------
 - Bitcoin overview and history
-- Blockchain tech
 - ‎Bitcoin Core
 - ‎C++ overview and stats 
 - ‎Usage of STL and Boost
 - Serialization
 - Data structures
+
+TODO: sync when finished
 
 Bitcoin - Summary
 -----------------
@@ -46,7 +47,7 @@ Bitcoin - Summary
 
 image::img/bitcoin_price.png["price graph"]
 
-Bitcoin - What is It
+Bitcoin - What Is It
 --------------------
 - decentralized, peer-to-peer digital currency
 - invented the public distributed ledger - the _blockchain_
@@ -67,24 +68,18 @@ Bitcoin - History
 * _bitcoin.org_ project 
 * https://github.com/bitcoin/bitcoin
 - Satoshi disappeared around 2010, other devs continued
-* active communities both on the dev and user suited
 - It inspired and allowed the birth of other crypto currencies
 - Evolved economically
 * from everyday people running the software on their PC's
 * to large conglomerate mining pools in China!
 
-Blockchain
-----------
-TODO: 
-
 Bitcoin Core
 ------------
-//image::http://insidebitcoins.com/wp-content/uploads/2017/09/bitcoincore.orgfee-selector-c412ffa4f66084eb673c0b26b74dc23914b49727.png["bitcoin core screenshot"]
-image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png["bitcoin core diagram"]
+image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png["bitcoin core diagram", width="75%"]
 
 Bitcoin Core (continued)
-------------------------
-- The _reference implementation_ of the bitcoin system
+-------------------------
+- the _reference implementation_ of the bitcoin system
 - originally started by Satoshi as companion to his paper
 - implements all aspects of the system: transactions, validation, network peer to peer, etc
 - GUI written in QT
@@ -94,11 +89,6 @@ Bitcoin Core (continued)
 - lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
 
 The focus of this talk
-
-Bitcoin Core - Diagram
-----------------------
-image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png["bitcoin core diagram"]
-//, width="1024"
 
 C++ - Overview
 --------------
@@ -246,6 +236,10 @@ A lot of the usage is due to code predating C++11 adoption, before Boost constru
 `signals` and `bind` prevalent in the Qt UI code.
 
 Testing handled with the Boost Unit Test framework.
+
+Bitcoin Core - Architecture
+---------------------------
+image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png["bitcoin core diagram", width="50%"]
 
 Serialization
 -------------
@@ -432,6 +426,7 @@ inline T& REF(const T& val)
 
 Custom Data Structures
 ----------------------
+Interesting data structures that are relatively isolated and reusable
 
 I/O
 ---
