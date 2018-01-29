@@ -37,8 +37,6 @@ Agenda
 - Serialization
 - Data structures
 
-TODO: sync when finished
-
 Bitcoin - Summary
 -----------------
 - First cryptocurrency, most well known
@@ -249,10 +247,6 @@ A lot of the usage is due to code predating C++11 adoption, before Boost constru
 `signals` and `bind` prevalent in the Qt UI code.
 
 Testing handled with the Boost Unit Test framework.
-
-Bitcoin Core - Architecture
----------------------------
-image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0301.png["bitcoin core diagram", width="50%"]
 
 Serialization
 -------------
@@ -592,7 +586,7 @@ static inline size_t DynamicUsage(const std::map<X, Y, Z>& m)
 
 The End
 -------
-TODO:
+TODO: closing notes
 
 Attributions
 ------------
