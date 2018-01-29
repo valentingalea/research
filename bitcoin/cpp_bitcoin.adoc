@@ -47,6 +47,7 @@ image::img/bitcoin_price.png["price graph"]
 
 Bitcoin - What Is It
 --------------------
+[role="incremental"]
 - decentralized, peer-to-peer digital currency
 - invented the public distributed ledger - the _blockchain_
 - solves the "double spending" problem
@@ -59,6 +60,7 @@ image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/
 
 Bitcoin - History
 -----------------
+[role="incremental"]
 - Introduced by the unknown Satoshi Nakamoto in 2009
 * in the paper "Bitcoin: A Peer-to-Peer Electronic Cash System"
 * a reference C++ implementation 
@@ -73,6 +75,7 @@ Bitcoin - History
 
 Bitcoin - Example
 -----------------
+[role="incremental"]
 1. *Alice* wants to pay *Bob* 0.015 BTC
 2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions (`UTXO`)
 3. She does own cryptographic keys for signing and generating payment addresses
@@ -90,6 +93,7 @@ image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-
 
 Bitcoin Core (continued)
 -------------------------
+[role="incremental"]
 - the _reference implementation_ of the bitcoin system
 - originally started by Satoshi as companion to his paper
 - implements all aspects of the system: transactions, validation, network peer to peer, etc
@@ -99,6 +103,7 @@ Bitcoin Core (continued)
 - PoW algorithms and it can mine but again not recommended
 - lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
 
+[role="incremental"]
 The focus of this talk
 
 C++ - Overview
@@ -110,8 +115,9 @@ C++ - Overview
 
 image::img/bitcoin_contrib.png["contrib graph"]
 
-C++ - Structure
----------------
+C++ - Overview (continued)
+--------------------------
+[role="incremental"]
 - relatively flat structure, most things are split in a `.h/.cpp` pair
 - initially a lot of functionality was buried into a giant `main.cpp` file
  * with time that has been refactored out
@@ -125,11 +131,14 @@ C++ - Structure
 
 C++ - `class` Design
 --------------------
-Straightforward C++ `class` design, with little polymorphism
+Design and tone largely set by Satoshi's original implementation
 
-Templates usually only for container-like things, or helper functions; No TMP
-
-RAII used for wrappers over synchronization primitives and files.
+[role="incremental"]
+* straightforward C++ `class` design
+ - little polymorphism
+* templates usually only for container-like things or helper functions
+ - no TMP
+* RAII used for wrappers over synchronization primitives and files
 
 C++ - `class` Design (continued)
 --------------------------------
@@ -173,13 +182,15 @@ C++ - `class` Design (continued)
     }
 ---------------------------------------
 
-* not that much used, seems relic from Satoshi days
+[role="incremental"]
+* not that much used, seems relic from early days
 * in some instances not all members are cleared
 
 Modern C++
 ----------
 Occurrences of C++11/14 specific constructs in all the files
 
+[role="incremental"]
 [width="80%",options="header"]
 |=====================================================
 |                    | Bitcoin | Ripple | Ethereum 
@@ -197,6 +208,7 @@ Occurrences of C++11/14 specific constructs in all the files
 C++ Extensions
 --------------
 .clang
+[role="incremental"]
 - Thread Safety Analysis
  * attribute decorations for static analysis of race conditions
  * `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
@@ -204,21 +216,27 @@ C++ Extensions
  * see more: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
 
 .GCC
+[role="incremental"]
 - Just a couple of `__attribute__` for various hints 
 
 Deterministic Build
 -------------------
-In order to increase the confidence of packaged binaries they are built deterministically.
+In order to increase the confidence of packaged binaries they are built deterministically
 
-That means that the source code is handled in such a way that it always produces the same binary no matter the triggering conditions/environment.
+[role="incremental"]
+That means that the source code is handled in such a way that it always produces the same binary no matter the triggering conditions/environment
 
-People are encouraged to build their own using a controlled environment (usually a VM with special scripts) rather than rely on packaged distributions in the wild.
+[role="incremental"]
+People are encouraged to build their own using a controlled environment (usually a VM with special scripts) rather than rely on packaged distributions in the wild
 
+[role="incremental"]
 More info: https://gitian.org/
 
 STL
 ---
-- used in 60% of the files
+Major usage: 60% of the files
+
+[role="incremental"]
 - `std::vector` major work horse
  * used in 1/3 of files
  * used vanilla, with no custom allocation
@@ -231,6 +249,7 @@ STL - Allocators
 ----------------
 No custom memory management allocator is used. Instead custom allocators are used to enforce security:
 
+[role="incremental"]
 - `zero_after_free_allocator`
  * simple `std::allocator` wrapper that 0's the memory when it gets released so it's harder to snoop
 - `secure_allocator`
@@ -240,20 +259,33 @@ Boost
 -----
 Present in about 20% of the files.
 
+[role="incremental"]
 A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard - ex: `call_once`, `thread`, `mutex`, `filesystem`, `chrono`, etc
 
+[role="incremental"]
 `multi_index` is used to manage the transaction data (sort by hash, fees and time for ex).
 
+[role="incremental"]
 `signals` and `bind` prevalent in the Qt UI code.
 
+[role="incremental"]
 Testing handled with the Boost Unit Test framework.
 
 Serialization
 -------------
-Objects need to travel across the network or be disk loaded/saved.
 
-To facilitate this, every class can declare which members gets serialized. This is achieved via a usual combination of lots of templated helper functions and macro glue!
+Serialization - Overview
+------------------------
+Poor man's reflection to help with loading/saving/transfer of objects
 
+[role="incremental"]
+To semi-automate work, every class can declare which members gets serialized
+
+[role="incremental"]
+This is achieved via the well tested combination of lots of templated helper functions and macro glue!
+
+Serialization - Example
+-----------------------
 [source]
 -------------------------------------------------------------------------------
 class CBlockFileInfo
@@ -277,7 +309,6 @@ public:
 
 Serialization - ADD macro
 -------------------------
-
 [source]
 -------------------------------------------------------------------------------
 /** 
@@ -297,10 +328,8 @@ Serialization - ADD macro
     }
 -------------------------------------------------------------------------------
 
-Serialization - Template helpers
---------------------------------
-Basic types:
-
+Serialization - Template helpers - basic types
+----------------------------------------------
 [source]
 -------------------------------------------------------------------------------
 template<typename Stream> inline void Serialize(Stream& s, char a    ) { ser_writedata8(s, a); } // TODO Get rid of bare char
@@ -338,36 +367,8 @@ void Unserialize(Stream& is, std::pair<K, T>& item)
     Unserialize(is, item.second);
 }
 
-Serialization - Template helpers - std::map
---------------------------------------------
-
-[source]
-template<typename Stream, typename K, typename T, typename Pred, typename A>
-void Serialize(Stream& os, const std::map<K, T, Pred, A>& m)
-{
-    WriteCompactSize(os, m.size());
-    for (const auto& entry : m)
-        Serialize(os, entry);
-}
-
-[source]
-template<typename Stream, typename K, typename T, typename Pred, typename A>
-void Unserialize(Stream& is, std::map<K, T, Pred, A>& m)
-{
-    m.clear();
-    unsigned int nSize = ReadCompactSize(is);
-    typename std::map<K, T, Pred, A>::iterator mi = m.begin();
-    for (unsigned int i = 0; i < nSize; i++)
-    {
-        std::pair<K, T> item;
-        Unserialize(is, item);
-        mi = m.insert(mi, item);
-    }
-}
-
 Serialization - Template helpers - std::vector
 ----------------------------------------------
-
 [source]
 template<typename Stream, typename T, typename A, typename V>
 void Serialize_impl(Stream& os, const std::vector<T, A>& v, const V&)
@@ -398,26 +399,33 @@ void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
 
 Serialization - Macro magic
 ---------------------------
-Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place.
+Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place
 
+[role="incremental"]
 [source]
 #define READWRITE(obj)      (::SerReadWrite(s, (obj), ser_action))
 #define READWRITEMANY(...)  (::SerReadWriteMany(s, ser_action, __VA_ARGS__))
 
-It will all boil down to the various templates detailed before.
+[role="incremental"]
+It will all boil down to the various templates detailed before
 
-Some other macro type wrappers:
+[role="incremental"]
+Some other macro type wrappers
 
-- `VARINT` -> `CVarInt<I>` - Variable-length integers, stores numbers independent of C++ underlying type
-- `FLATDATA` -> `CFlatData` - a wrapper for POD's and arrays
+[role="incremental"]
+* `VARINT` -> `CVarInt<I>` - Variable-length integers, stores numbers independent of C++ underlying type
+* `FLATDATA` -> `CFlatData` - a wrapper for POD's and arrays
 
 Serialization - Trivia
 ----------------------
-
+[role="incremental"]
 - if the template function helpers don't match anything, it will revert calling a class member serialize function 
 - deserialization can be done by the constructor as well using tag dispatch
-- a cheeky hack:
 
+[role="incremental"]
+.a cheeky hack:
+
+[role="incremental"]
 [source]
 /**
  * Used to bypass the rule against non-const reference to temporary
@@ -429,7 +437,8 @@ inline T& REF(const T& val)
     return const_cast<T&>(val);
 }
 
-* "makes sense" refers to pass-thru structs like `CFlatData` that only stores begin/end pointers and is constructed in-place
+[role="incremental"]
+"makes sense" refers to pass-thru structs like `CFlatData` that only stores begin/end pointers and is constructed in-place
 
 Custom Data Structures
 ----------------------
@@ -437,6 +446,7 @@ Interesting data structures that are relatively isolated and reusable
 
 I/O
 ---
+[role="incremental"]
 - `CDataStream` - relatively thin abstraction over a secure `std::vector` of bytes
  * used as the backbone of serialization
 - `CAutoFile` - non-refcounted RAII wrapper for FILE*
@@ -445,10 +455,12 @@ I/O
 
 prevector
 ---------
-Drop in replacement for `std::vector` that stores the first N elements in-place.
+Drop in replacement for `std::vector` that stores the first N elements in-place
 
-An interesting mix of the standard array and a dynamic vector.
+[role="incremental"]
+An interesting mix of the standard array and a dynamic vector
 
+[role="incremental"]
 [source]
 union direct_or_indirect {
     char direct[sizeof(T) * N];
@@ -458,6 +470,7 @@ union direct_or_indirect {
     };
 } _union;
 
+[role="incremental"]
 - elements must be POD that can be `realloc`-ed
 - written in STL style, has internal `iterator` and the reverse, const variants
 - support for move semantics by just `std::swap`-ing the union 
@@ -466,6 +479,7 @@ prevector - usage
 -----------------
 Only usage case is for storing the transaction script opcodes where apparently:
 
+[role="incremental"]
 [quote]
 -------------------------------------------------------------------------------
 We use a prevector for the script to reduce the considerable memory overhead
@@ -476,16 +490,19 @@ and made an initial sync 13% faster.
 
 UniValue
 --------
-Variant like structure that represents a JSON object value. JSON is used everywhere as a communication layer between all the sub-systems.
+Variant like structure that represents a JSON object value. JSON is used everywhere as a communication layer between all the sub-systems
 
-Stores key/values as a vector of `std::string`.
+[role="incremental"]
+Stores key/values as a vector of `std::string`
 
-According to the `README`: "[it] minimizes template use (contra json_spirit)".
+[role="incremental"]
+According to the `README`: "[it] minimizes template use (contra json_spirit)"
 
 CVarInt
 -------
 A quite simple form of encoding integers depending on their numeric range, in order to save on space/bandwidth
 
+[role="incremental"]
 [width="50%",options="header"]
 |====================================================================
 | Range               | Encoding in bytes
@@ -495,6 +512,7 @@ A quite simple form of encoding integers depending on their numeric range, in or
 | 2^32^ .. 2^64^ – 1  | 0xFF ?? ?? ?? ?? ?? ?? ?? ??
 |====================================================================
 
+[role="incremental"]
 - good for things that have low values most of the time, for everything else it wastes bytes
 - there are other better techniques - see https://www.deadalnix.me/2017/01/08/variable-size-integer-encoding/
 
@@ -502,6 +520,7 @@ std::map variations
 -------------------
 A couple of small convenience driven modifications:
 
+[role="incremental"]
 - `indirectmap`
  * stores pointers to elements but offers utility member functions that work with the element type directly
  * one time usage in the mempool
@@ -511,20 +530,24 @@ A couple of small convenience driven modifications:
 
 CuckooCache
 -----------
-Unique Set data structure based on the principles of the cuckoo hash map.
+Unique Set data structure based on the principles of the cuckoo hash map
 
-Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a `boost::unique_set` as optimization in Oct 2016.
+[role="incremental"]
+Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a `boost::unique_set` as optimization in Oct 2016
 
-Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time and thread safe.
+[role="incremental"]
+Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time
 
 TODO: some sort of diagram / more explanation?
 
 CuckooCache - Hashing
 ---------------------
-8 way hashing is used to better distribute elements in buckets.
+8 way hashing is used to better distribute elements in buckets
 
+[role="incremental"]
 An interesting technique is used to avoid the need of a modulus when mapping a random 32 bit number to a fixed N: https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
 
+[role="incremental"]
 [source]
 inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
 {
@@ -542,14 +565,17 @@ memusage
 --------
 A sort of generalized `sizeof` to measure dynamic memory usage for structures
 
+[role="incremental"]
 Consists of a large overload set for the function `DynamicUsage<T>`:
 
+[role="incremental"]
 [source]
 /** Dynamic memory usage for built-in types is zero. */
 static inline size_t DynamicUsage(const int8_t& v) { return 0; }
 static inline size_t DynamicUsage(const uint8_t& v) { return 0; }
 /* ... */
 
+[role="incremental"]
 [source]
 template<typename X>
 static inline size_t DynamicUsage(const std::vector<X>& v)
@@ -562,6 +588,7 @@ memusage (continued)
 --------------------
 For STL types they shadow the underlying type structures:
 
+[role="incremental"]
 [source]
 ---------------------------------------
 template<typename X>
@@ -582,6 +609,7 @@ static inline size_t DynamicUsage(const std::map<X, Y, Z>& m)
 }
 ---------------------------------------
 
+[role="incremental"]
 * `MallocUsage` is just a small utility function that accounts for alignment
 
 The End
