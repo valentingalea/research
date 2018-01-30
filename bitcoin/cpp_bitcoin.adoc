@@ -77,10 +77,10 @@ Bitcoin - Example
 -----------------
 [role="incremental"]
 1. *Alice* wants to pay *Bob* 0.015 BTC
-2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions (`UTXO`)
+2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions
 3. She does own cryptographic keys for signing and generating payment addresses
 4. She uses a *wallet* app that monitors the network, tracks her balance and creates a new transaction signed with Bob's public key
-5. The wallet sends it into the p2p *node network* where it will float around (`mempool`)
+5. The wallet sends it into the p2p *node network* where it will float around
 6. A *miner* will pick it up, include it with others in a block and it will begin *Proof-Of-Work* to sign the block
  * this usually takes 10 min, and the difficulty is adjusted by consensus to keep that true
 7. When it's successful (or when others are) the new block is broadcast to the network and added to the *blockchain*
@@ -101,7 +101,7 @@ Bitcoin Core (continued)
   * CLI interface as well
 - has wallet to "store" bitcoin but it's not recommended to use
 - PoW algorithms and it can mine but again not recommended
-- lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
+- lots of other coins are adapted from it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
 
 [role="incremental"]
 The focus of this talk
@@ -215,6 +215,8 @@ C++ Extensions
  * macro wrappers for compatibility; low usage in general
  * see more: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
 
+TODO: maybe show src code
+
 .GCC
 [role="incremental"]
 - Just a couple of `__attribute__` for various hints 
@@ -251,9 +253,9 @@ No custom memory management allocator is used. Instead custom allocators are use
 
 [role="incremental"]
 - `zero_after_free_allocator`
- * simple `std::allocator` wrapper that 0's the memory when it gets released so it's harder to snoop
+ * simple `std::allocator` wrapper that zeroes the memory when it gets released so it's harder to snoop
 - `secure_allocator`
- * 0's the released memory but it also keeps it locked and not paged to disk, to discourage attacks
+ * zeroes the released memory but it also keeps it locked and not paged to disk, to discourage attacks
 
 Boost
 -----
@@ -276,13 +278,13 @@ Serialization
 
 Serialization - Overview
 ------------------------
-Poor man's reflection to help with loading/saving/transfer of objects
+A reflection mechanism that helps with loading/saving/transfer of objects
 
 [role="incremental"]
-To semi-automate work, every class can declare which members gets serialized
+To automate work, every class can declare which members gets serialized/deserialized
 
 [role="incremental"]
-This is achieved via the well tested combination of lots of templated helper functions and macro glue!
+This is implemented via a combination of `template`-ed helper functions and macro glue:
 
 Serialization - Example
 -----------------------
@@ -377,7 +379,7 @@ void Serialize_impl(Stream& os, const std::vector<T, A>& v, const V&)
     for (typename std::vector<T, A>::const_iterator vi = v.begin(); vi != v.end(); ++vi)
         ::Serialize(os, (*vi));
 }
-
+TODO: split in sep slides
 [source]
 template<typename Stream, typename T, typename A, typename V>
 void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
@@ -415,6 +417,8 @@ Some other macro type wrappers
 [role="incremental"]
 * `VARINT` -> `CVarInt<I>` - Variable-length integers, stores numbers independent of C++ underlying type
 * `FLATDATA` -> `CFlatData` - a wrapper for POD's and arrays
+
+TODO: redo this page / too messy
 
 Serialization - Trivia
 ----------------------
@@ -462,6 +466,7 @@ An interesting mix of the standard array and a dynamic vector
 
 [role="incremental"]
 [source]
+size_type _size;
 union direct_or_indirect {
     char direct[sizeof(T) * N];
     struct {
@@ -495,6 +500,8 @@ Variant like structure that represents a JSON object value. JSON is used everywh
 [role="incremental"]
 Stores key/values as a vector of `std::string`
 
+TODO: maybe example of usage
+
 [role="incremental"]
 According to the `README`: "[it] minimizes template use (contra json_spirit)"
 
@@ -506,10 +513,10 @@ A quite simple form of encoding integers depending on their numeric range, in or
 [width="50%",options="header"]
 |====================================================================
 | Range               | Encoding in bytes
-|     0 .. 252        | ??
-|   253 .. 2^16^ - 1  | 0xFD ?? ??
-| 2^16^ .. 2^32^ – 1  | 0xFE ?? ?? ?? ??
-| 2^32^ .. 2^64^ – 1  | 0xFF ?? ?? ?? ?? ?? ?? ?? ??
+|     0 .. 252        | XX
+|   253 .. 2^16^ - 1  | 0xFD XX XX
+| 2^16^ .. 2^32^ – 1  | 0xFE XX XX XX XX
+| 2^32^ .. 2^64^ – 1  | 0xFF XX XX XX XX XX XX XX XX
 |====================================================================
 
 [role="incremental"]
@@ -527,6 +534,8 @@ A couple of small convenience driven modifications:
 - `limitedmap`
  * map that only stores the N highest values inserted
  * one time usage as a sort of priority queue
+
+TODO: example of decl/usage
 
 CuckooCache
 -----------

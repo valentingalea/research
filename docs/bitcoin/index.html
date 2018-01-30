@@ -4220,7 +4220,7 @@ to large conglomerate mining pools in China!
 </li>
 <li>
 <span>
-Alice doesn&#8217;t own any bitcoin physically, her coins are scattered across the network as unspent transactions (<code>UTXO</code>)
+Alice doesn&#8217;t own any bitcoin physically, her coins are scattered across the network as unspent transactions
 </span>
 </li>
 <li>
@@ -4235,7 +4235,7 @@ She uses a <strong>wallet</strong> app that monitors the network, tracks her bal
 </li>
 <li>
 <span>
-The wallet sends it into the p2p <strong>node network</strong> where it will float around (<code>mempool</code>)
+The wallet sends it into the p2p <strong>node network</strong> where it will float around
 </span>
 </li>
 <li>
@@ -4329,7 +4329,7 @@ PoW algorithms and it can mine but again not recommended
 </li>
 <li>
 <span>
-lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
+lots of other coins are adapted from it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
 </span>
 </li>
 </ul>
@@ -4659,6 +4659,9 @@ see more: <a href="https://clang.llvm.org/docs/ThreadSafetyAnalysis.html">https:
 </ul>
 </li>
 </ul>
+<div class="paragraph">
+<p>TODO: maybe show src code</p>
+</div>
 <div class="title">GCC</div><ul class=" incremental">
 <li>
 <span>
@@ -4757,7 +4760,7 @@ primary exception handler
 <ul class="">
 <li>
 <span>
-simple <code>std::allocator</code> wrapper that 0&#8217;s the memory when it gets released so it&#8217;s harder to snoop
+simple <code>std::allocator</code> wrapper that zeroes the memory when it gets released so it&#8217;s harder to snoop
 </span>
 </li>
 </ul>
@@ -4769,7 +4772,7 @@ simple <code>std::allocator</code> wrapper that 0&#8217;s the memory when it get
 <ul class="">
 <li>
 <span>
-0&#8217;s the released memory but it also keeps it locked and not paged to disk, to discourage attacks
+zeroes the released memory but it also keeps it locked and not paged to disk, to discourage attacks
 </span>
 </li>
 </ul>
@@ -4815,13 +4818,13 @@ simple <code>std::allocator</code> wrapper that 0&#8217;s the memory when it get
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization - Overview";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Poor man&#8217;s reflection to help with loading/saving/transfer of objects</p>
+<p>A reflection mechanism that helps with loading/saving/transfer of objects</p>
 </div>
 <div class="paragraph incremental">
-<p>To semi-automate work, every class can declare which members gets serialized</p>
+<p>To automate work, every class can declare which members gets serialized/deserialized</p>
 </div>
 <div class="paragraph incremental">
-<p>This is achieved via the well tested combination of lots of templated helper functions and macro glue!</p>
+<p>This is implemented via a combination of <code>template</code>-ed helper functions and macro glue:</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -4958,7 +4961,8 @@ http://www.gnu.org/software/src-highlite -->
     <span style="font-weight: bold"><span style="color: #000000">WriteCompactSize</span></span><span style="color: #990000">(</span>os<span style="color: #990000">,</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
     <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span>vector<span style="color: #990000">&lt;</span>T<span style="color: #990000">,</span> A<span style="color: #990000">&gt;</span><span style="color: #990000">:</span><span style="color: #990000">:</span>const_iterator vi <span style="color: #990000">=</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">begin</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span> vi <span style="color: #990000">!</span><span style="color: #990000">=</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span> <span style="color: #990000">+</span><span style="color: #990000">+</span>vi<span style="color: #990000">)</span>
         <span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">Serialize</span></span><span style="color: #990000">(</span>os<span style="color: #990000">,</span> <span style="color: #990000">(</span><span style="color: #990000">*</span>vi<span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
-<span style="color: #FF0000">}</span></tt></pre></div></div>
+<span style="color: #FF0000">}</span>
+TODO<span style="color: #990000">:</span> split in sep slides</tt></pre></div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
@@ -5017,6 +5021,9 @@ http://www.gnu.org/software/src-highlite -->
 </span>
 </li>
 </ul>
+<div class="paragraph">
+<p>TODO: redo this page / too messy</p>
+</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5124,7 +5131,8 @@ also provides ring buffer support
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">union</span></span> direct_or_indirect <span style="color: #FF0000">{</span>
+<pre><tt>size_type _size<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">union</span></span> direct_or_indirect <span style="color: #FF0000">{</span>
     <span style="color: #009900">char</span> direct<span style="color: #990000">[</span><span style="font-weight: bold"><span style="color: #0000FF">sizeof</span></span><span style="color: #990000">(</span>T<span style="color: #990000">)</span> <span style="color: #990000">*</span> N<span style="color: #990000">]</span><span style="color: #990000">;</span>
     <span style="font-weight: bold"><span style="color: #0000FF">struct</span></span> <span style="color: #FF0000">{</span>
         size_type capacity<span style="color: #990000">;</span>
@@ -5180,6 +5188,9 @@ and made an initial sync 13% faster.</tt></pre>
 <div class="paragraph incremental">
 <p>Stores key/values as a vector of <code>std::string</code></p>
 </div>
+<div class="paragraph">
+<p>TODO: maybe example of usage</p>
+</div>
 <div class="paragraph incremental">
 <p>According to the <code>README</code>: "[it] minimizes template use (contra json_spirit)"</p>
 </div>
@@ -5210,19 +5221,19 @@ cellspacing="0" cellpadding="4">
 <tbody>
 <tr>
 <td align="left" valign="top"><p class="table">0 .. 252</p></td>
-<td align="left" valign="top"><p class="table">??</p></td>
+<td align="left" valign="top"><p class="table">XX</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">253 .. 2<sup>16</sup> - 1</p></td>
-<td align="left" valign="top"><p class="table">0xFD ?? ??</p></td>
+<td align="left" valign="top"><p class="table">0xFD XX XX</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">2<sup>16</sup> .. 2<sup>32</sup> – 1</p></td>
-<td align="left" valign="top"><p class="table">0xFE ?? ?? ?? ??</p></td>
+<td align="left" valign="top"><p class="table">0xFE XX XX XX XX</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">2<sup>32</sup> .. 2<sup>64</sup> – 1</p></td>
-<td align="left" valign="top"><p class="table">0xFF ?? ?? ?? ?? ?? ?? ?? ??</p></td>
+<td align="left" valign="top"><p class="table">0xFF XX XX XX XX XX XX XX XX</p></td>
 </tr>
 </tbody>
 </table>
@@ -5286,6 +5297,9 @@ one time usage as a sort of priority queue
 </ul>
 </li>
 </ul>
+<div class="paragraph">
+<p>TODO: example of decl/usage</p>
+</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5457,7 +5471,7 @@ bitcoin price graph <a href="https://www.buybitcoinworldwide.com/price/">https:/
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-29 23:26:58 GMT Standard Time
+Last updated 2018-01-30 21:58:26 GMT Standard Time
 </div>
 </div>
 </div></div>
