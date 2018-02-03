@@ -528,7 +528,12 @@ Variant like structure that represents a JSON object value. JSON is used everywh
 [role="incremental"]
 Stores key/values as a vector of `std::string`
 
-TODO: maybe example of usage
+[role="incremental"]
+[source]
+UniValue entry(UniValue::VOBJ);
+entry.pushKV("txid", tx.GetHash().GetHex());
+entry.pushKV("hash", tx.GetWitnessHash().GetHex());
+entry.pushKV("version", tx.nVersion);
 
 [role="incremental"]
 According to the `README`: "[it] minimizes template use (contra json_spirit)"
