@@ -236,11 +236,9 @@ C++ Extensions
 [role="incremental"]
 - Thread Safety Analysis
  * attribute decorations for static analysis of race conditions
- * `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
- * macro wrappers for compatibility; low usage in general
+ * macro wrappers for compatibility:
+ ** `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
  * see more: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
-
-TODO: maybe show src code
 
 .GCC
 [role="incremental"]
