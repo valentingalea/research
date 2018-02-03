@@ -117,6 +117,31 @@ image::img/bitcoin_contrib.png["contrib graph"]
 
 C++ - Overview (continued)
 --------------------------
+[literal]
+...
+-a----        14-Jan-18   3:30 PM           6353 bitcoind.cpp
+-a----        14-Jan-18   3:30 PM          10559 blockencodings.cpp
+-a----        14-Jan-18   3:30 PM           7320 blockencodings.h
+-a----        14-Jan-18   3:30 PM          11457 bloom.cpp
+-a----        14-Jan-18   3:30 PM           5496 bloom.h
+-a----        14-Jan-18   3:30 PM           5750 chain.cpp
+-a----        14-Jan-18   3:30 PM          16257 chain.h
+-a----        14-Jan-18   3:30 PM          19276 chainparams.cpp
+-a----        14-Jan-18   3:30 PM           4574 chainparams.h
+-a----        14-Jan-18   3:30 PM           2857 chainparamsbase.cpp
+-a----        14-Jan-18   3:30 PM           1944 chainparamsbase.h
+-a----        14-Jan-18   3:30 PM         140338 chainparamsseeds.h
+-a----        14-Jan-18   3:30 PM            880 checkpoints.cpp
+-a----        14-Jan-18   3:30 PM            689 checkpoints.h
+-a----        14-Jan-18   3:30 PM           7020 checkqueue.h
+-a----        14-Jan-18   3:30 PM           3894 clientversion.cpp
+-a----        14-Jan-18   3:30 PM           1955 clientversion.h
+-a----        14-Jan-18   3:30 PM          10919 coins.cpp
+-a----        14-Jan-18   3:30 PM          11020 coins.h
+...
+
+C++ - Overview (continued)
+--------------------------
 [role="incremental"]
 - relatively flat structure, most things are split in a `.h/.cpp` pair
 - initially a lot of functionality was buried into a giant `main.cpp` file
