@@ -26,7 +26,7 @@ Therefore I am perfectly suited to give this talk! :)
 
 - No investment advice!
 - No technical how-to!
-- Just C++ trivia!
+- Mostly C++ trivia!
 
 Agenda
 ------
@@ -51,7 +51,7 @@ Bitcoin - What Is It
 - decentralized, peer-to-peer digital currency
 - invented the public distributed ledger - the _blockchain_
 - solves the "double spending" problem
-- achieves secure transactions in an insecure environment
+- achieves secure transactions in an unsecure environment
 - utilizes a proof-of-work algorithm ("mining") to help achieve all this
 
 Bitcoin - Overview
@@ -566,7 +566,7 @@ A couple of small convenience driven modifications:
  * map that only stores the N highest values inserted
  * one time usage as a sort of priority queue
 
-TODO: example of decl/usage
+TODO: example of decl/usage or remove it altogether
 
 CuckooCache
 -----------

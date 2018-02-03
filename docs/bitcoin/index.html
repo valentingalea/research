@@ -4011,7 +4011,7 @@ No technical how-to!
 </li>
 <li>
 <span>
-Just C++ trivia!
+Mostly C++ trivia!
 </span>
 </li>
 </ul>
@@ -4076,7 +4076,7 @@ Leading the digital currency revolution
 </li>
 <li>
 <span>
-Meteoric rise as of 2017, along with others
+Meteoric rise in price and popularity as of 2017, along with others
 </span>
 </li>
 </ul>
@@ -4111,7 +4111,7 @@ solves the "double spending" problem
 </li>
 <li>
 <span>
-achieves secure transactions in an insecure environment
+achieves secure transactions in an unsecure environment
 </span>
 </li>
 <li>
@@ -4381,6 +4381,38 @@ approx. 100k SLOC <sup><a href="https://www.quora.com/How-many-lines-of-code-is-
 <h1 id="_c_overview_continued">C++ - Overview (continued)</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - Overview (continued)";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre><tt>...
+-a----        14-Jan-18   3:30 PM           6353 bitcoind.cpp
+-a----        14-Jan-18   3:30 PM          10559 blockencodings.cpp
+-a----        14-Jan-18   3:30 PM           7320 blockencodings.h
+-a----        14-Jan-18   3:30 PM          11457 bloom.cpp
+-a----        14-Jan-18   3:30 PM           5496 bloom.h
+-a----        14-Jan-18   3:30 PM           5750 chain.cpp
+-a----        14-Jan-18   3:30 PM          16257 chain.h
+-a----        14-Jan-18   3:30 PM          19276 chainparams.cpp
+-a----        14-Jan-18   3:30 PM           4574 chainparams.h
+-a----        14-Jan-18   3:30 PM           2857 chainparamsbase.cpp
+-a----        14-Jan-18   3:30 PM           1944 chainparamsbase.h
+-a----        14-Jan-18   3:30 PM         140338 chainparamsseeds.h
+-a----        14-Jan-18   3:30 PM            880 checkpoints.cpp
+-a----        14-Jan-18   3:30 PM            689 checkpoints.h
+-a----        14-Jan-18   3:30 PM           7020 checkqueue.h
+-a----        14-Jan-18   3:30 PM           3894 clientversion.cpp
+-a----        14-Jan-18   3:30 PM           1955 clientversion.h
+-a----        14-Jan-18   3:30 PM          10919 coins.cpp
+-a----        14-Jan-18   3:30 PM          11020 coins.h
+...</tt></pre>
+</div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_c_overview_continued_2">C++ - Overview (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="C++ - Overview (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
 <ul class=" incremental">
 <li>
 <span>
@@ -4643,13 +4675,15 @@ attribute decorations for static analysis of race conditions
 </li>
 <li>
 <span>
+macro wrappers for compatibility:
+</span>
+<ul class="">
+<li>
+<span>
 <code>GUARDED_BY(x)</code>, <code>SCOPED_LOCKABLE</code>, <code>SHARED_LOCKS_REQUIRED</code> etc
 </span>
 </li>
-<li>
-<span>
-macro wrappers for compatibility; low usage in general
-</span>
+</ul>
 </li>
 <li>
 <span>
@@ -4659,9 +4693,6 @@ see more: <a href="https://clang.llvm.org/docs/ThreadSafetyAnalysis.html">https:
 </ul>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: maybe show src code</p>
-</div>
 <div class="title">GCC</div><ul class=" incremental">
 <li>
 <span>
@@ -4889,6 +4920,43 @@ http://www.gnu.org/software/src-highlite -->
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_serialization_macro_magic">Serialization - Macro magic</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization - Macro magic";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Within the body of <code>SerializationOp</code> the <code>READWRITE</code> generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place</p>
+</div>
+<div class="listingblock incremental">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#define</span></span> <span style="font-weight: bold"><span style="color: #000000">READWRITE</span></span><span style="color: #990000">(</span>obj<span style="color: #990000">)</span>      <span style="color: #990000">(</span><span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">SerReadWrite</span></span><span style="color: #990000">(</span>s<span style="color: #990000">,</span> <span style="color: #990000">(</span>obj<span style="color: #990000">)</span><span style="color: #990000">,</span> ser_action<span style="color: #990000">)</span><span style="color: #990000">)</span></tt></pre></div></div>
+<div class="listingblock incremental">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span><span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> Stream<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> T<span style="color: #990000">&gt;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">SerReadWrite</span></span><span style="color: #990000">(</span>Stream<span style="color: #990000">&amp;</span> s<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> T<span style="color: #990000">&amp;</span> obj<span style="color: #990000">,</span> CSerActionSerialize ser_action<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+    <span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">Serialize</span></span><span style="color: #990000">(</span>s<span style="color: #990000">,</span> obj<span style="color: #990000">)</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="listingblock incremental">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span><span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> Stream<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> T<span style="color: #990000">&gt;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">SerReadWrite</span></span><span style="color: #990000">(</span>Stream<span style="color: #990000">&amp;</span> s<span style="color: #990000">,</span> T<span style="color: #990000">&amp;</span> obj<span style="color: #990000">,</span> CSerActionUnserialize ser_action<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+    <span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">Unserialize</span></span><span style="color: #990000">(</span>s<span style="color: #990000">,</span> obj<span style="color: #990000">)</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_serialization_template_helpers_basic_types">Serialization - Template helpers - basic types</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization - Template helpers - basic types";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
@@ -4961,8 +5029,15 @@ http://www.gnu.org/software/src-highlite -->
     <span style="font-weight: bold"><span style="color: #000000">WriteCompactSize</span></span><span style="color: #990000">(</span>os<span style="color: #990000">,</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
     <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> std<span style="color: #990000">:</span><span style="color: #990000">:</span>vector<span style="color: #990000">&lt;</span>T<span style="color: #990000">,</span> A<span style="color: #990000">&gt;</span><span style="color: #990000">:</span><span style="color: #990000">:</span>const_iterator vi <span style="color: #990000">=</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">begin</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span> vi <span style="color: #990000">!</span><span style="color: #990000">=</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">;</span> <span style="color: #990000">+</span><span style="color: #990000">+</span>vi<span style="color: #990000">)</span>
         <span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">Serialize</span></span><span style="color: #990000">(</span>os<span style="color: #990000">,</span> <span style="color: #990000">(</span><span style="color: #990000">*</span>vi<span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
-<span style="color: #FF0000">}</span>
-TODO<span style="color: #990000">:</span> split in sep slides</tt></pre></div></div>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_serialization_template_helpers_std_vector_continued">Serialization - Template helpers - std::vector (continued)</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization - Template helpers - std::vector (continued)";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
 by Lorenzo Bettini
@@ -4985,45 +5060,6 @@ http://www.gnu.org/software/src-highlite -->
             <span style="font-weight: bold"><span style="color: #000000">Unserialize</span></span><span style="color: #990000">(</span>is<span style="color: #990000">,</span> v<span style="color: #990000">[</span>i<span style="color: #990000">]</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
     <span style="color: #FF0000">}</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
-</div></div>
-<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
-</div><div class="slide">
-
-<div class="sect1">
-<h1 id="_serialization_macro_magic">Serialization - Macro magic</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization - Macro magic";slidefootnotes=false;/*]]>*/</script>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Within the body of <code>SerializationOp</code> the <code>READWRITE</code> generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place</p>
-</div>
-<div class="listingblock incremental">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #000080">#define</span></span> <span style="font-weight: bold"><span style="color: #000000">READWRITE</span></span><span style="color: #990000">(</span>obj<span style="color: #990000">)</span>      <span style="color: #990000">(</span><span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">SerReadWrite</span></span><span style="color: #990000">(</span>s<span style="color: #990000">,</span> <span style="color: #990000">(</span>obj<span style="color: #990000">)</span><span style="color: #990000">,</span> ser_action<span style="color: #990000">)</span><span style="color: #990000">)</span>
-<span style="font-weight: bold"><span style="color: #000080">#define</span></span> <span style="font-weight: bold"><span style="color: #000000">READWRITEMANY</span></span><span style="color: #990000">(</span><span style="color: #990000">.</span><span style="color: #990000">.</span><span style="color: #990000">.</span><span style="color: #990000">)</span>  <span style="color: #990000">(</span><span style="color: #990000">:</span><span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">SerReadWriteMany</span></span><span style="color: #990000">(</span>s<span style="color: #990000">,</span> ser_action<span style="color: #990000">,</span> __VA_ARGS__<span style="color: #990000">)</span><span style="color: #990000">)</span></tt></pre></div></div>
-<div class="paragraph incremental">
-<p>It will all boil down to the various templates detailed before</p>
-</div>
-<div class="paragraph incremental">
-<p>Some other macro type wrappers</p>
-</div>
-<ul class=" incremental">
-<li>
-<span>
-<code>VARINT</code> &#8594; <code>CVarInt&lt;I&gt;</code> - Variable-length integers, stores numbers independent of C++ underlying type
-</span>
-</li>
-<li>
-<span>
-<code>FLATDATA</code> &#8594; <code>CFlatData</code> - a wrapper for POD&#8217;s and arrays
-</span>
-</li>
-</ul>
-<div class="paragraph">
-<p>TODO: redo this page / too messy</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5188,9 +5224,15 @@ and made an initial sync 13% faster.</tt></pre>
 <div class="paragraph incremental">
 <p>Stores key/values as a vector of <code>std::string</code></p>
 </div>
-<div class="paragraph">
-<p>TODO: maybe example of usage</p>
-</div>
+<div class="listingblock incremental">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>UniValue <span style="font-weight: bold"><span style="color: #000000">entry</span></span><span style="color: #990000">(</span>UniValue<span style="color: #990000">:</span><span style="color: #990000">:</span>VOBJ<span style="color: #990000">)</span><span style="color: #990000">;</span>
+entry<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">pushKV</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"txid"</span><span style="color: #990000">,</span> tx<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">GetHash</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">GetHex</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+entry<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">pushKV</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"hash"</span><span style="color: #990000">,</span> tx<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">GetWitnessHash</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">GetHex</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">)</span><span style="color: #990000">;</span>
+entry<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">pushKV</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"version"</span><span style="color: #990000">,</span> tx<span style="color: #990000">.</span>nVersion<span style="color: #990000">)</span><span style="color: #990000">;</span></tt></pre></div></div>
 <div class="paragraph incremental">
 <p>According to the <code>README</code>: "[it] minimizes template use (contra json_spirit)"</p>
 </div>
@@ -5298,7 +5340,7 @@ one time usage as a sort of priority queue
 </li>
 </ul>
 <div class="paragraph">
-<p>TODO: example of decl/usage</p>
+<p>TODO: example of decl/usage or remove it altogether</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5471,7 +5513,7 @@ bitcoin price graph <a href="https://www.buybitcoinworldwide.com/price/">https:/
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-01-30 21:58:26 GMT Standard Time
+Last updated 2018-02-03 15:54:27 GMT Standard Time
 </div>
 </div>
 </div></div>
