@@ -41,7 +41,7 @@ Bitcoin - Summary
 -----------------
 - First cryptocurrency, most well known
 - Leading the digital currency revolution
-- Meteoric rise as of 2017, along with others
+- Meteoric rise in price and popularity as of 2017, along with others
 
 image::img/bitcoin_price.png["price graph"]
 
@@ -337,7 +337,6 @@ public:
 Serialization - ADD macro
 -------------------------
 [source]
--------------------------------------------------------------------------------
 /** 
  * Implement three methods for serializable objects. These are actually wrappers over
  * "SerializationOp" template, which implements the body of each class' serialization
@@ -353,7 +352,30 @@ Serialization - ADD macro
     void Unserialize(Stream& s) {                                     \
         SerializationOp(s, CSerActionUnserialize());                  \
     }
--------------------------------------------------------------------------------
+
+Serialization - Macro magic
+---------------------------
+Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place
+
+[role="incremental"]
+[source]
+#define READWRITE(obj)      (::SerReadWrite(s, (obj), ser_action))
+
+[role="incremental"]
+[source]
+template<typename Stream, typename T>
+inline void SerReadWrite(Stream& s, const T& obj, CSerActionSerialize ser_action)
+{
+    ::Serialize(s, obj);
+}
+
+[role="incremental"]
+[source]
+template<typename Stream, typename T>
+inline void SerReadWrite(Stream& s, T& obj, CSerActionUnserialize ser_action)
+{
+    ::Unserialize(s, obj);
+}
 
 Serialization - Template helpers - basic types
 ----------------------------------------------
@@ -404,7 +426,9 @@ void Serialize_impl(Stream& os, const std::vector<T, A>& v, const V&)
     for (typename std::vector<T, A>::const_iterator vi = v.begin(); vi != v.end(); ++vi)
         ::Serialize(os, (*vi));
 }
-TODO: split in sep slides
+
+Serialization - Template helpers - std::vector (continued)
+----------------------------------------------------------
 [source]
 template<typename Stream, typename T, typename A, typename V>
 void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
@@ -423,27 +447,6 @@ void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
             Unserialize(is, v[i]);
     }
 }
-
-Serialization - Macro magic
----------------------------
-Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place
-
-[role="incremental"]
-[source]
-#define READWRITE(obj)      (::SerReadWrite(s, (obj), ser_action))
-#define READWRITEMANY(...)  (::SerReadWriteMany(s, ser_action, __VA_ARGS__))
-
-[role="incremental"]
-It will all boil down to the various templates detailed before
-
-[role="incremental"]
-Some other macro type wrappers
-
-[role="incremental"]
-* `VARINT` -> `CVarInt<I>` - Variable-length integers, stores numbers independent of C++ underlying type
-* `FLATDATA` -> `CFlatData` - a wrapper for POD's and arrays
-
-TODO: redo this page / too messy
 
 Serialization - Trivia
 ----------------------
