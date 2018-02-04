@@ -59,7 +59,7 @@ Bitcoin - What Is It
 
 Bitcoin - Overview
 ------------------
-image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0201.png["network"]
+image::img/bitcoin_network.png["network"]
 
 Bitcoin - History
 -----------------
@@ -92,7 +92,7 @@ Bitcoin - Example
 
 Bitcoin Core
 ------------
-image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png["bitcoin core diagram", width="75%"]
+image::img/bitcoin_core.png["bitcoin core diagram", width="75%"]
 
 Bitcoin Core (continued)
 -------------------------
