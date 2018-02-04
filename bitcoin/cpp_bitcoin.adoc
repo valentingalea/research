@@ -18,12 +18,15 @@ Currently at _Splash Damage_ in London, UK
 
 Disclaimer
 ----------
+[role="incremental"]
 - Games coder
 - I bought some Bitcoin in the 2017 craze
 - I analyzed a bunch of times the source code
 
+[role="incremental"]
 Therefore I am perfectly suited to give this talk! :)
 
+[role="incremental"]
 - No investment advice!
 - No technical how-to!
 - Mostly C++ trivia!
