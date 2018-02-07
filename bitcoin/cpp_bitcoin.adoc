@@ -221,14 +221,14 @@ Occurrences of C++11/14 specific constructs in all the files
 [role="incremental"]
 [width="80%",options="header"]
 |=====================================================
-|                    | Bitcoin | Ripple | Ethereum 
-| Files              | 659     | 3672   | 477      
-| `auto`             | 12%     | 36%    | 36%      
-| `std::move`        | 7%      | 13%    | 7%       
-| `override`         | 6%      | 19%    | 13%      
-| `static_assert`    | 2%      | 3%     | 4%       
-| lambda expressions | 2%      | 11%    | 13%      
-| `std::enable_if`   | none    | 1%     | one file 
+|                    | Bitcoin | Ethereum | Ripple
+| Files              | 659     | 477      | 3672 
+| `auto`             | 12%     | 36%      | 36%
+| `std::move`        | 7%      | 7%       | 13% 
+| `override`         | 6%      | 13%      | 19%
+| `static_assert`    | 2%      | 4%       | 3%       
+| lambda expressions | 2%      | 13%      | 11%      
+| `std::enable_if`   | none    | one file | 1% 
 |=====================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
