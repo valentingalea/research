@@ -273,6 +273,26 @@ Major usage: 60% of the files
 - `std::runtime_error`
  * primary exception handler
 
+STL - Examples
+--------------
+[role="incremental"]
+The blockchain in memory:
+
+[role="incremental"]
+[source]
+class CChain {
+private:
+    std::vector<CBlockIndex*> vChain;
+/* ... */
+std::unordered_map<uint256, CBlockIndex*, BlockHasher> BlockMap;
+
+[role="incremental"]
+The unspent coins database:
+
+[role="incremental"]
+[source]
+std::unordered_map<COutPoint, CCoinsCacheEntry, SaltedOutpointHasher> CCoinsMap;
+
 STL - Allocators
 ----------------
 No custom memory management allocator is used. Instead custom allocators are used to enforce security:
@@ -285,25 +305,45 @@ No custom memory management allocator is used. Instead custom allocators are use
 
 Boost
 -----
-Present in about 20% of the files.
+Present in about 20% of the files
 
 [role="incremental"]
-A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard - ex: `call_once`, `thread`, `mutex`, `filesystem`, `chrono`, etc
+A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard, for ex:
 
 [role="incremental"]
-`multi_index` is used to manage the transaction data (sort by hash, fees and time for ex).
+- `call_once`, `thread`, `mutex`, `unique_lock`
+- `filesystem`,
+- `chrono`, etc
 
 [role="incremental"]
-`signals` and `bind` prevalent in the Qt UI code.
+`signals` and `bind` prevalent in the Qt UI code
 
 [role="incremental"]
-Testing handled with the Boost Unit Test framework.
+Testing handled with the Boost Unit Test framework
+
+Boost - Example
+---------------
+`boost::multi_index` used to store organized transaction data:
+
+[source]
+typedef boost::multi_index_container<
+    CTransactionRef,
+    boost::multi_index::indexed_by<
+        // sorted by txid
+        boost::multi_index::hashed_unique<
+            boost::multi_index::tag<txid_index>,
+            mempoolentry_txid,
+            SaltedTxidHasher
+        >,
+        // sorted by order in the blockchain
+        boost::multi_index::sequenced<
+            boost::multi_index::tag<insertion_order>
+        >
+    >
+> indexed_disconnected_transactions;
 
 Serialization
 -------------
-
-Serialization - Overview
-------------------------
 A reflection mechanism that helps with loading/saving/transfer of objects
 
 [role="incremental"]
