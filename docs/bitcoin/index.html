@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="copyright" content="Valentin Galea" />
 <meta name="generator" content="AsciiDoc 8.6.9 / slidy2 backend 1.0.4" />
-<meta name="duration" content="30" />
+<meta name="duration" content="45" />
 <title>Bitcoin Code Review: How C++ Powers The Biggest Cryptocurrency</title>
 <style type="text/css">
 /*
@@ -4215,7 +4215,7 @@ to large conglomerate mining pools in China!
 <ol class="arabic incremental">
 <li>
 <span>
-<strong>Alice</strong> wants to pay <strong>Bob</strong> 0.015 BTC
+<strong>Alice</strong> wants to pay <strong>Bob</strong> 1 BTC
 </span>
 </li>
 <li>
@@ -4225,7 +4225,7 @@ Alice doesn&#8217;t own any bitcoin physically, her coins are scattered across t
 </li>
 <li>
 <span>
-She does own cryptographic keys for signing and generating payment addresses
+She does own cryptographic keys for signing or generating payments
 </span>
 </li>
 <li>
@@ -4278,7 +4278,7 @@ Bob&#8217;s wallet app sees the new confirmed transaction. Bob has now unspent c
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="img/bitcoin_core.png" alt="bitcoin core diagram" width="75%" />
+<img src="img/bitcoin_core.png" alt="bitcoin core diagram" width="100%" />
 </div>
 </div>
 </div></div>
@@ -4604,16 +4604,16 @@ cellspacing="0" cellpadding="4">
 <tr>
 <th align="left" valign="top">                    </th>
 <th align="left" valign="top"> Bitcoin </th>
-<th align="left" valign="top"> Ripple </th>
-<th align="left" valign="top"> Ethereum</th>
+<th align="left" valign="top"> Ethereum </th>
+<th align="left" valign="top"> Ripple</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="left" valign="top"><p class="table">Files</p></td>
 <td align="left" valign="top"><p class="table">659</p></td>
-<td align="left" valign="top"><p class="table">3672</p></td>
 <td align="left" valign="top"><p class="table">477</p></td>
+<td align="left" valign="top"><p class="table">3672</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>auto</code></p></td>
@@ -4624,32 +4624,32 @@ cellspacing="0" cellpadding="4">
 <tr>
 <td align="left" valign="top"><p class="table"><code>std::move</code></p></td>
 <td align="left" valign="top"><p class="table">7%</p></td>
-<td align="left" valign="top"><p class="table">13%</p></td>
 <td align="left" valign="top"><p class="table">7%</p></td>
+<td align="left" valign="top"><p class="table">13%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>override</code></p></td>
 <td align="left" valign="top"><p class="table">6%</p></td>
-<td align="left" valign="top"><p class="table">19%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
+<td align="left" valign="top"><p class="table">19%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>static_assert</code></p></td>
 <td align="left" valign="top"><p class="table">2%</p></td>
-<td align="left" valign="top"><p class="table">3%</p></td>
 <td align="left" valign="top"><p class="table">4%</p></td>
+<td align="left" valign="top"><p class="table">3%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">lambda expressions</p></td>
 <td align="left" valign="top"><p class="table">2%</p></td>
-<td align="left" valign="top"><p class="table">11%</p></td>
 <td align="left" valign="top"><p class="table">13%</p></td>
+<td align="left" valign="top"><p class="table">11%</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table"><code>std::enable_if</code></p></td>
 <td align="left" valign="top"><p class="table">none</p></td>
-<td align="left" valign="top"><p class="table">1%</p></td>
 <td align="left" valign="top"><p class="table">one file</p></td>
+<td align="left" valign="top"><p class="table">1%</p></td>
 </tr>
 </tbody>
 </table>
@@ -4777,6 +4777,36 @@ primary exception handler
 </div><div class="slide">
 
 <div class="sect1">
+<h1 id="_stl_examples">STL - Examples</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL - Examples";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph incremental">
+<p>The blockchain in memory:</p>
+</div>
+<div class="listingblock incremental">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> CChain <span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+    std<span style="color: #990000">:</span><span style="color: #990000">:</span>vector<span style="color: #990000">&lt;</span>CBlockIndex<span style="color: #990000">*</span><span style="color: #990000">&gt;</span> vChain<span style="color: #990000">;</span>
+<span style="font-style: italic"><span style="color: #9A1900">/*</span></span><span style="font-style: italic"><span style="color: #9A1900"> ... </span></span><span style="font-style: italic"><span style="color: #9A1900">*/</span></span>
+std<span style="color: #990000">:</span><span style="color: #990000">:</span>unordered_map<span style="color: #990000">&lt;</span>uint256<span style="color: #990000">,</span> CBlockIndex<span style="color: #990000">*</span><span style="color: #990000">,</span> BlockHasher<span style="color: #990000">&gt;</span> BlockMap<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph incremental">
+<p>The unspent coins database:</p>
+</div>
+<div class="listingblock incremental">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>std<span style="color: #990000">:</span><span style="color: #990000">:</span>unordered_map<span style="color: #990000">&lt;</span>COutPoint<span style="color: #990000">,</span> CCoinsCacheEntry<span style="color: #990000">,</span> SaltedOutpointHasher<span style="color: #990000">&gt;</span> CCoinsMap<span style="color: #990000">;</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
 <h1 id="_stl_allocators">STL - Allocators</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="STL - Allocators";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
@@ -4818,20 +4848,65 @@ zeroes the released memory but it also keeps it locked and not paged to disk, to
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Present in about 20% of the files.</p>
+<p>Present in about 20% of the files</p>
 </div>
 <div class="paragraph incremental">
-<p>A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard - ex: <code>call_once</code>, <code>thread</code>, <code>mutex</code>, <code>filesystem</code>, <code>chrono</code>, etc</p>
+<p>A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard, for ex:</p>
+</div>
+<ul class=" incremental">
+<li>
+<span>
+<code>call_once</code>, <code>thread</code>, <code>mutex</code>, <code>unique_lock</code>
+</span>
+</li>
+<li>
+<span>
+<code>filesystem</code>,
+</span>
+</li>
+<li>
+<span>
+<code>chrono</code>, etc
+</span>
+</li>
+</ul>
+<div class="paragraph incremental">
+<p><code>signals</code> and <code>bind</code> prevalent in the Qt UI code</p>
 </div>
 <div class="paragraph incremental">
-<p><code>multi_index</code> is used to manage the transaction data (sort by hash, fees and time for ex).</p>
+<p>Testing handled with the Boost Unit Test framework</p>
 </div>
-<div class="paragraph incremental">
-<p><code>signals</code> and <code>bind</code> prevalent in the Qt UI code.</p>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_boost_example">Boost - Example</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Boost - Example";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>boost::multi_index</code> used to store organized transaction data:</p>
 </div>
-<div class="paragraph incremental">
-<p>Testing handled with the Boost Unit Test framework.</p>
-</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">typedef</span></span> boost<span style="color: #990000">:</span><span style="color: #990000">:</span>multi_index_container<span style="color: #990000">&lt;</span>
+    CTransactionRef<span style="color: #990000">,</span>
+    boost<span style="color: #990000">:</span><span style="color: #990000">:</span>multi_index<span style="color: #990000">:</span><span style="color: #990000">:</span>indexed_by<span style="color: #990000">&lt;</span>
+        <span style="font-style: italic"><span style="color: #9A1900">//</span></span><span style="font-style: italic"><span style="color: #9A1900"> sorted by txid</span></span>
+        boost<span style="color: #990000">:</span><span style="color: #990000">:</span>multi_index<span style="color: #990000">:</span><span style="color: #990000">:</span>hashed_unique<span style="color: #990000">&lt;</span>
+            boost<span style="color: #990000">:</span><span style="color: #990000">:</span>multi_index<span style="color: #990000">:</span><span style="color: #990000">:</span>tag<span style="color: #990000">&lt;</span>txid_index<span style="color: #990000">&gt;</span><span style="color: #990000">,</span>
+            mempoolentry_txid<span style="color: #990000">,</span>
+            SaltedTxidHasher
+        <span style="color: #990000">&gt;</span><span style="color: #990000">,</span>
+        <span style="font-style: italic"><span style="color: #9A1900">//</span></span><span style="font-style: italic"><span style="color: #9A1900"> sorted by order in the blockchain</span></span>
+        boost<span style="color: #990000">:</span><span style="color: #990000">:</span>multi_index<span style="color: #990000">:</span><span style="color: #990000">:</span>sequenced<span style="color: #990000">&lt;</span>
+            boost<span style="color: #990000">:</span><span style="color: #990000">:</span>multi_index<span style="color: #990000">:</span><span style="color: #990000">:</span>tag<span style="color: #990000">&lt;</span>insertion_order<span style="color: #990000">&gt;</span>
+        <span style="color: #990000">&gt;</span>
+    <span style="color: #990000">&gt;</span>
+<span style="color: #990000">&gt;</span> indexed_disconnected_transactions<span style="color: #990000">;</span></tt></pre></div></div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -4839,14 +4914,6 @@ zeroes the released memory but it also keeps it locked and not paged to disk, to
 <div class="sect1">
 <h1 id="_serialization">Serialization</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization";slidefootnotes=false;/*]]>*/</script>
-<div class="sectionbody">
-</div></div>
-<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
-</div><div class="slide">
-
-<div class="sect1">
-<h1 id="_serialization_overview">Serialization - Overview</h1>
-<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="Serialization - Overview";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A reflection mechanism that helps with loading/saving/transfer of objects</p>
@@ -5148,6 +5215,9 @@ also provides ring buffer support
 </ul>
 </li>
 </ul>
+<div class="paragraph">
+<p>TODO: remove?</p>
+</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5316,7 +5386,7 @@ stores pointers to elements but offers utility member functions that work with t
 </li>
 <li>
 <span>
-one time usage in the mempool
+one time usage in the transaction pool
 </span>
 </li>
 </ul>
@@ -5340,7 +5410,7 @@ one time usage as a sort of priority queue
 </li>
 </ul>
 <div class="paragraph">
-<p>TODO: example of decl/usage or remove it altogether</p>
+<p>TODO: remove ?</p>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5353,15 +5423,38 @@ one time usage as a sort of priority queue
 <div class="paragraph">
 <p>Unique Set data structure based on the principles of the cuckoo hash map</p>
 </div>
+<div class="imageblock" style="float:right;">
+<div class="content">
+<img src="img/Cuckoo.png" alt="cuckoo" width="50%" />
+</div>
+</div>
 <div class="paragraph incremental">
 <p>Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a <code>boost::unique_set</code> as optimization in Oct 2016</p>
 </div>
-<div class="paragraph incremental">
-<p>Elements are stored in <code>std::vector</code> and a series of hash function spread them around. A form of GC is employed on <code>insert</code> to keep erase constant time</p>
-</div>
-<div class="paragraph">
-<p>TODO: some sort of diagram / more explanation?</p>
-</div>
+<ul class=" incremental">
+<li>
+<span>
+elements are stored in <code>std::vector</code> and a series of hash functions spread them around
+</span>
+</li>
+<li>
+<span>
+constat-time find
+</span>
+</li>
+<li>
+<span>
+lockfree erase
+</span>
+<ul class="">
+<li>
+<span>
+next insert will GC
+</span>
+</li>
+</ul>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5392,6 +5485,37 @@ http://www.gnu.org/software/src-highlite -->
                 <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">6</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #990000">,</span>
                 <span style="color: #990000">(</span>uint32_t<span style="color: #990000">)</span><span style="color: #990000">(</span><span style="color: #990000">(</span>hash_function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">(</span><span style="color: #990000">)</span><span style="color: #990000">&lt;</span><span style="color: #993399">7</span><span style="color: #990000">&gt;</span><span style="color: #990000">(</span>e<span style="color: #990000">)</span> <span style="color: #990000">*</span> <span style="color: #990000">(</span>uint64_t<span style="color: #990000">)</span>size<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span><span style="color: #990000">&gt;</span> <span style="color: #993399">32</span><span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
+</div></div>
+<script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
+</div><div class="slide">
+
+<div class="sect1">
+<h1 id="_bloomfilter">BloomFilter</h1>
+<script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="BloomFilter";slidefootnotes=false;/*]]>*/</script>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Storing the entire blockchain is not trivial: approx 155 GB Jan 2018</p>
+</div>
+<div class="paragraph incremental">
+<p>Lightweight clients use a Bloom filter data structure to optimize validity checking before getting full blocks</p>
+</div>
+<div class="imageblock incremental">
+<div class="content">
+<img src="img/bloom.png" alt="bloom" />
+</div>
+</div>
+<ul class=" incremental">
+<li>
+<span>
+minimal and straightforward C++ implementation
+</span>
+</li>
+<li>
+<span>
+uses <code>MurmurHash3</code> to get the index positions for elements
+</span>
+</li>
+</ul>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5473,8 +5597,10 @@ http://www.gnu.org/software/src-highlite -->
 <h1 id="_the_end">The End</h1>
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="The End";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
-<div class="paragraph">
-<p>TODO: closing notes</p>
+<div class="imageblock">
+<div class="content">
+<img src="img/coin.jpg" alt="closing" />
+</div>
 </div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
@@ -5510,10 +5636,25 @@ bitcoin price graph <a href="https://www.buybitcoinworldwide.com/price/">https:/
 "Mastering Bitcoin" <a href="https://github.com/bitcoinbook/bitcoinbook">https://github.com/bitcoinbook/bitcoinbook</a>
 </span>
 </li>
+<li>
+<span>
+Cuckoo hashing image by Rasmus Pagh - File:Cuckoo.png, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=20556837">https://commons.wikimedia.org/w/index.php?curid=20556837</a>
+</span>
+</li>
+<li>
+<span>
+Bloom filter image By david Eppstein - self-made, originally for a talk at WADS 2007, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=2609777">https://commons.wikimedia.org/w/index.php?curid=2609777</a>
+</span>
+</li>
+<li>
+<span>
+all other images under "Fair Use"/"Fair Dealing"
+</span>
+</li>
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-02-04 15:45:06 GMT Standard Time
+Last updated 2018-02-07 17:13:37 GMT Standard Time
 </div>
 </div>
 </div></div>
