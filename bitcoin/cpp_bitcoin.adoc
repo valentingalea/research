@@ -526,6 +526,8 @@ I/O
 - `CBufferedFile` - same as above
  * also provides ring buffer support
 
+TODO: remove?
+
 prevector
 ---------
 Drop in replacement for `std::vector` that stores the first N elements in-place
@@ -604,24 +606,27 @@ A couple of small convenience driven modifications:
 [role="incremental"]
 - `indirectmap`
  * stores pointers to elements but offers utility member functions that work with the element type directly
- * one time usage in the mempool
+ * one time usage in the transaction pool
 - `limitedmap`
  * map that only stores the N highest values inserted
  * one time usage as a sort of priority queue
 
-TODO: example of decl/usage or remove it altogether
+TODO: remove ?
 
 CuckooCache
 -----------
 Unique Set data structure based on the principles of the cuckoo hash map
 
+image::img/Cuckoo.png["cuckoo", float="right", width="50%"]
+
 [role="incremental"]
 Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a `boost::unique_set` as optimization in Oct 2016
 
 [role="incremental"]
-Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time
-
-TODO: some sort of diagram / more explanation?
+- elements are stored in `std::vector` and a series of hash functions spread them around
+- constat-time find
+- lockfree erase
+ * next insert will GC
 
 CuckooCache - Hashing
 ---------------------
@@ -708,3 +713,5 @@ ifdef::backend-slidy2[]
 endif::backend-slidy2[]
 - bitcoin price graph https://www.buybitcoinworldwide.com/price/
 - "Mastering Bitcoin" https://github.com/bitcoinbook/bitcoinbook
+- Cuckoo hashing image by Rasmus Pagh - File:Cuckoo.png, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=20556837
+- all other images under "Fair Use"/"Fair Dealing"
