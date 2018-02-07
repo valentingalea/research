@@ -649,6 +649,20 @@ inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
                 (uint32_t)((hash_function.template operator()<7>(e) * (uint64_t)size) >> 32)}};
 }
 
+BloomFilter
+-----------
+Storing the entire blockchain is not trivial: approx 155 GB Jan 2018
+
+[role="incremental"]
+Lightweight clients use a Bloom filter data structure to optimize validity checking before getting full blocks
+
+[role="incremental"]
+image::img/bloom.png["bloom"]
+
+[role="incremental"]
+- minimal and straightforward C++ implementation
+- uses `MurmurHash3` to get the index positions for elements
+
 memusage
 --------
 A sort of generalized `sizeof` to measure dynamic memory usage for structures
@@ -714,4 +728,5 @@ endif::backend-slidy2[]
 - bitcoin price graph https://www.buybitcoinworldwide.com/price/
 - "Mastering Bitcoin" https://github.com/bitcoinbook/bitcoinbook
 - Cuckoo hashing image by Rasmus Pagh - File:Cuckoo.png, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=20556837
+- Bloom filter image By david Eppstein - self-made, originally for a talk at WADS 2007, Public Domain, https://commons.wikimedia.org/w/index.php?curid=2609777
 - all other images under "Fair Use"/"Fair Dealing"
