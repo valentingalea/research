@@ -79,9 +79,9 @@ Bitcoin - History
 Bitcoin - Example
 -----------------
 [role="incremental"]
-1. *Alice* wants to pay *Bob* 0.015 BTC
+1. *Alice* wants to pay *Bob* 1 BTC
 2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions
-3. She does own cryptographic keys for signing and generating payment addresses
+3. She does own cryptographic keys for signing or generating payments
 4. She uses a *wallet* app that monitors the network, tracks her balance and creates a new transaction signed with Bob's public key
 5. The wallet sends it into the p2p *node network* where it will float around
 6. A *miner* will pick it up, include it with others in a block and it will begin *Proof-Of-Work* to sign the block
@@ -92,7 +92,7 @@ Bitcoin - Example
 
 Bitcoin Core
 ------------
-image::img/bitcoin_core.png["bitcoin core diagram", width="75%"]
+image::img/bitcoin_core.png["bitcoin core diagram", width="100%"]
 
 Bitcoin Core (continued)
 -------------------------
@@ -697,7 +697,7 @@ static inline size_t DynamicUsage(const std::map<X, Y, Z>& m)
 
 The End
 -------
-TODO: closing notes
+image::img/coin.jpg["closing"]
 
 Attributions
 ------------
