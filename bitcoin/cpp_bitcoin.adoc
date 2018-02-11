@@ -284,7 +284,6 @@ class CChain {
 private:
     std::vector<CBlockIndex*> vChain;
 /* ... */
-std::unordered_map<uint256, CBlockIndex*, BlockHasher> BlockMap;
 
 [role="incremental"]
 The unspent coins database:
@@ -524,9 +523,7 @@ I/O
  * used as the backbone of serialization
 - `CAutoFile` - non-refcounted RAII wrapper for FILE*
 - `CBufferedFile` - same as above
- * also provides ring buffer support
-
-TODO: remove?
+ * with ring buffer support
 
 prevector
 ---------
@@ -611,8 +608,6 @@ A couple of small convenience driven modifications:
  * map that only stores the N highest values inserted
  * one time usage as a sort of priority queue
 
-TODO: remove ?
-
 CuckooCache
 -----------
 Unique Set data structure based on the principles of the cuckoo hash map
@@ -651,7 +646,7 @@ inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
 
 BloomFilter
 -----------
-Storing the entire blockchain is not trivial: approx 155 GB Jan 2018
+Storing the entire blockchain is not trivial: approx. 155 GB Jan 2018
 
 [role="incremental"]
 Lightweight clients use a Bloom filter data structure to optimize validity checking before getting full blocks

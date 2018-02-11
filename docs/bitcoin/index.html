@@ -4791,8 +4791,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> CChain <span style="color: #FF0000">{</span>
 <span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
     std<span style="color: #990000">:</span><span style="color: #990000">:</span>vector<span style="color: #990000">&lt;</span>CBlockIndex<span style="color: #990000">*</span><span style="color: #990000">&gt;</span> vChain<span style="color: #990000">;</span>
-<span style="font-style: italic"><span style="color: #9A1900">/*</span></span><span style="font-style: italic"><span style="color: #9A1900"> ... </span></span><span style="font-style: italic"><span style="color: #9A1900">*/</span></span>
-std<span style="color: #990000">:</span><span style="color: #990000">:</span>unordered_map<span style="color: #990000">&lt;</span>uint256<span style="color: #990000">,</span> CBlockIndex<span style="color: #990000">*</span><span style="color: #990000">,</span> BlockHasher<span style="color: #990000">&gt;</span> BlockMap<span style="color: #990000">;</span></tt></pre></div></div>
+<span style="font-style: italic"><span style="color: #9A1900">/*</span></span><span style="font-style: italic"><span style="color: #9A1900"> ... </span></span><span style="font-style: italic"><span style="color: #9A1900">*/</span></span></tt></pre></div></div>
 <div class="paragraph incremental">
 <p>The unspent coins database:</p>
 </div>
@@ -5209,15 +5208,12 @@ used as the backbone of serialization
 <ul class="">
 <li>
 <span>
-also provides ring buffer support
+with ring buffer support
 </span>
 </li>
 </ul>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: remove?</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5409,9 +5405,6 @@ one time usage as a sort of priority queue
 </ul>
 </li>
 </ul>
-<div class="paragraph">
-<p>TODO: remove ?</p>
-</div>
 </div></div>
 <script type="text/javascript">/*<![CDATA[*/if (slidefootnotes){document.write("<hr/>"); w3c_slidy.slidefootnotes();}/*]]>*/</script>
 </div><div class="slide">
@@ -5494,7 +5487,7 @@ http://www.gnu.org/software/src-highlite -->
 <script type="text/javascript">/*<![CDATA[*/subslide=1;nextclass="sect1";nexttitle="BloomFilter";slidefootnotes=false;/*]]>*/</script>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Storing the entire blockchain is not trivial: approx 155 GB Jan 2018</p>
+<p>Storing the entire blockchain is not trivial: approx. 155 GB Jan 2018</p>
 </div>
 <div class="paragraph incremental">
 <p>Lightweight clients use a Bloom filter data structure to optimize validity checking before getting full blocks</p>
@@ -5654,7 +5647,7 @@ all other images under "Fair Use"/"Fair Dealing"
 </ul>
 <div id="footer" style="position: absolute; left: 5%; top: 80%; width: 90%;">
 <div id="footer-text">
-Last updated 2018-02-07 17:13:37 GMT Standard Time
+Last updated 2018-02-11 17:49:17 GMT Standard Time
 </div>
 </div>
 </div></div>
