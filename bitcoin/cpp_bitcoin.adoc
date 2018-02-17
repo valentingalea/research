@@ -525,6 +525,48 @@ I/O
 - `CBufferedFile` - same as above
  * with ring buffer support
 
+JSON / RPC
+----------
+JSON is used everywhere for a RPC driven communication layer
+
+[source]
+[role="incremental"]
+------
+UniValue getblockcount(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getblockcount\n"
+            "\nReturns the number of blocks in the longest blockchain.\n"
+            "\nResult:\n"
+            "n    (numeric) The current block count\n"
+            "\nExamples:\n"
+            + HelpExampleCli("getblockcount", "")
+            + HelpExampleRpc("getblockcount", "")
+        );
+
+    LOCK(cs_main);
+    return chainActive.Height();
+}
+------
+
+JSON / UniValue
+---------------
+Variant like structure that represents a JSON object value 
+
+[role="incremental"]
+Stores key/values as a vector of `std::string`
+
+[role="incremental"]
+[source]
+UniValue entry(UniValue::VOBJ);
+entry.pushKV("txid", tx.GetHash().GetHex());
+entry.pushKV("hash", tx.GetWitnessHash().GetHex());
+entry.pushKV("version", tx.nVersion);
+
+[role="incremental"]
+According to the `README`: "[it] minimizes template use (contra json_spirit)"
+
 prevector
 ---------
 Drop in replacement for `std::vector` that stores the first N elements in-place
@@ -560,23 +602,6 @@ of vectors in cases where they normally contain a small number of small elements
 Tests in October 2015 showed use of this reduced dbcache memory usage by 23%
 and made an initial sync 13% faster.
 -------------------------------------------------------------------------------
-
-UniValue
---------
-Variant like structure that represents a JSON object value. JSON is used everywhere as a communication layer between all the sub-systems
-
-[role="incremental"]
-Stores key/values as a vector of `std::string`
-
-[role="incremental"]
-[source]
-UniValue entry(UniValue::VOBJ);
-entry.pushKV("txid", tx.GetHash().GetHex());
-entry.pushKV("hash", tx.GetWitnessHash().GetHex());
-entry.pushKV("version", tx.nVersion);
-
-[role="incremental"]
-According to the `README`: "[it] minimizes template use (contra json_spirit)"
 
 CVarInt
 -------
