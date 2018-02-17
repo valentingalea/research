@@ -490,12 +490,7 @@ void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
 
 Serialization - Trivia
 ----------------------
-[role="incremental"]
-- if the template function helpers don't match anything, it will revert calling a class member serialize function 
-- deserialization can be done by the constructor as well using tag dispatch
-
-[role="incremental"]
-.a cheeky hack:
+- a cheeky hack:
 
 [role="incremental"]
 [source]
@@ -510,7 +505,12 @@ inline T& REF(const T& val)
 }
 
 [role="incremental"]
-"makes sense" refers to pass-thru structs like `CFlatData` that only stores begin/end pointers and is constructed in-place
+[source]
+#define FLATDATA(obj) REF(CFlatData((char*)&(obj), (char*)&(obj) + sizeof(obj)))
+/* ... */
+unsigned char ip[16];
+/* ... */
+READWRITE(FLATDATA(ip));
 
 Custom Data Structures
 ----------------------
