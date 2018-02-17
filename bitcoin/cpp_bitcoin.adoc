@@ -711,7 +711,12 @@ static inline size_t DynamicUsage(const std::map<X, Y, Z>& m)
 
 The End
 -------
-image::img/coin.jpg["closing"]
+Thank you!
+
+- Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea]
+- http://valentingalea.github.io/research/bitcoin/
+
+image::img/coin.jpg["closing", width="50%"]
 
 Attributions
 ------------
