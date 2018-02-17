@@ -652,11 +652,26 @@ Storing the entire blockchain is not trivial: approx. 155 GB Jan 2018
 Lightweight clients use a Bloom filter data structure to optimize validity checking before getting full blocks
 
 [role="incremental"]
-image::img/bloom.png["bloom"]
+image::img/bloom.png["bloom", width="75%"]
+
+BloomFilter (continued)
+-----------------------
+- minimal and straightforward C++ implementation
 
 [role="incremental"]
-- minimal and straightforward C++ implementation
-- uses `MurmurHash3` to get the index positions for elements
+[source]
+for (unsigned int i = 0; i < nHashFuncs; i++)
+{
+    unsigned int nIndex = Hash(i, vKey);
+    vData[nIndex >> 3] |= (1 << (7 & nIndex));
+}
+
+[role="incremental"]
+- the hashing function:
+
+[role="incremental"]
+[source]
+return MurmurHash3(nHashNum * 0xFBA4C795 + nTweak, vDataToHash) % (vData.size() * 8);
 
 memusage
 --------
