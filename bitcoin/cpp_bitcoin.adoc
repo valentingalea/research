@@ -9,12 +9,12 @@ Who Am I
 image::img/splash.png["splash"]
 &&&&
 
-Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
-more than 10 years doing mobile, indie and AAA games
+- Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
+- more than 10 years doing mobile, indie and AAA games
 
 image::../badlands/img/vanity_plate.png["Games worked on"]
 
-Currently at _Splash Damage_ in London, UK
+- currently at _Splash Damage_ in London, UK
 
 Disclaimer
 ----------
