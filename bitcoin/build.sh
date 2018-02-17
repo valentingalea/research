@@ -10,7 +10,6 @@ python ../../asciidoc/asciidoc.py \
 --backend slidy2 \
 -a duration=45 \
 -a copyright="Valentin Galea" \
---verbose \
 --out-file=$ROOT/../docs/bitcoin/index.html \
 $ROOT/cpp_bitcoin.adoc
 
