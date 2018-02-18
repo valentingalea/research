@@ -174,6 +174,7 @@ incremental_display: true,
       this.add_listener(document.body, "click", this.mouse_button_click);
 
     this.add_listener(document, "keydown", this.key_down);
+    this.add_listener(document, "keyup", this.key_up);
     this.add_listener(document, "keypress", this.key_press);
     this.add_listener(window, "resize", this.resized);
     this.add_listener(window, "scroll", this.scrolled);
@@ -1887,6 +1888,40 @@ if (!w3c_slidy.incremental_display) {incremental = false;}
     return true;
   },
 
+  key_up: function (event) {
+    if (!event)
+      event = window.event;
+
+    w3c_slidy.key_wanted = false;
+
+    // kludge around NS/IE differences 
+    if (window.event)
+    {
+      key = window.event.keyCode;
+      target = window.event.srcElement;
+    }
+    else if (event.which)
+    {
+      key = event.which;
+      target = event.target;
+    }
+    else
+      return true; // Yikes! unknown browser
+  
+    if (key == 33) // Page Up
+    {
+      w3c_slidy.previous_slide(!event.shiftKey);
+      return w3c_slidy.cancel(event);
+    }
+    else if (key == 34) // Page Down
+    {
+      w3c_slidy.next_slide(!event.shiftKey);
+      return w3c_slidy.cancel(event);
+    }
+
+    return true;
+  },
+
   //  See e.g. http://www.quirksmode.org/js/events/keys.html for keycodes
   key_down: function (event) {
     var key, target, tag;
@@ -1936,28 +1971,21 @@ if (!w3c_slidy.incremental_display) {incremental = false;}
         return w3c_slidy.cancel(event);
     }
 
-    // if (key == 34) // Page Down
-    // {
-    //   if (w3c_slidy.view_all)
-    //     return true;
+    if (key == 34) // Page Down
+    {
+      return w3c_slidy.cancel(event);
+    }
+    else if (key == 33) // Page Up
+    {
+       return w3c_slidy.cancel(event);
+    }
 
-    //   w3c_slidy.next_slide(false);
-    //   return w3c_slidy.cancel(event);
-    // }
-    // else if (key == 33) // Page Up
-    // {
-    //   if (w3c_slidy.view_all)
-    //     return true;
-
-    //   w3c_slidy.previous_slide(false);
-    //   return w3c_slidy.cancel(event);
-    // }
     if (key == 32) // space bar
     {
       w3c_slidy.next_slide(true);
       return w3c_slidy.cancel(event);
     }
-    else if (key == 37 || key == 33) // Left arrow or Page Up
+    else if (key == 37)// || key == 33) // Left arrow or Page Up
     {
       w3c_slidy.previous_slide(!event.shiftKey);
       return w3c_slidy.cancel(event);
@@ -1972,7 +2000,7 @@ if (!w3c_slidy.incremental_display) {incremental = false;}
       w3c_slidy.last_slide();
       return w3c_slidy.cancel(event);
     }
-    else if (key == 39 || key == 34) // Right arrow or Page Down
+    else if (key == 39)// || key == 34) // Right arrow or Page Down
     {
       w3c_slidy.next_slide(!event.shiftKey);
       return w3c_slidy.cancel(event);
