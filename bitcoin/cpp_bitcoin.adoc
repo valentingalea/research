@@ -643,8 +643,8 @@ Used to avoid double checking transactions - once for the mempool and the other 
 
 [role="incremental"]
 - elements are stored in `std::vector` and a series of hash functions spread them around
-- constat-time find
-- lockfree erase
+- constant-time _find_
+- lockfree _erase_
  * next insert will GC
 
 CuckooCache - Hashing
@@ -658,14 +658,15 @@ An interesting technique is used to avoid the need of a modulus when mapping a r
 [source]
 inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
 {
-    return {{(uint32_t)((hash_function.template operator()<0>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<1>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<2>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<3>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<4>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<5>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<6>(e) * (uint64_t)size) >> 32),
-                (uint32_t)((hash_function.template operator()<7>(e) * (uint64_t)size) >> 32)}};
+    return
+    {{(uint32_t)((hash_function.template operator()<0>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<1>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<2>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<3>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<4>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<5>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<6>(e) * (uint64_t)size) >> 32),
+    (uint32_t)((hash_function.template operator()<7>(e) * (uint64_t)size) >> 32)}};
 }
 
 BloomFilter
