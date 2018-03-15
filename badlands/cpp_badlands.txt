@@ -52,51 +52,6 @@ mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, table
 
 image::img/mobile.jpg["mobile games", align="center", width="1024"]
 
-What I will talk about
-----------------------
-Mostly about *AAA games*...
-
-[role="incremental"]
-- I have the most experience with recently
-- they are the most process driven
-- use C++ in very special and quirky ways (the purpose of the talk)
-
-[role="incremental"]
-*Indie games*
-
-[role="incremental"]
-- they share some elements with the above, but is in general more straightforward
-
-[role="incremental"]
-*Mobile games*
-
-[role="incremental"]
-- usually written in something else: Objective C, C# - but they also do idiomatic C++
-
-What I won't talk about
------------------------
-*Scripting languages*...
-
-[role="incremental"]
-- normally AAA games supplement the C++ with another language for gameplay and level scripting
-* Lua, Python, etc
-* custom made: UnrealScript, DSL's, etc
-- Visual scripting spaghetti
-* UE4 "blueprints" ^https://docs.unrealengine.com/latest/INT/Engine/Blueprints/[1]^
-* Guerilla Games Nodegraph system ^https://www.guerrilla-games.com/read/tools-for-the-job-part-1-the-nodegraph-system[2]^
-
-[role="incremental"]
-*Tools*
-
-[role="incremental"]
-- can be written in C++, but a lot of them are in C# or Python
-
-[role="incremental"]
-*Building / Packaging* game data
-
-[role="incremental"]
-- a nightmare on its own
-
 The industry - It's a secret
 ----------------------------
 image::img/zelda_secret.gif["Secret", align="center"]
