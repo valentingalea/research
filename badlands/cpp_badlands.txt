@@ -130,24 +130,7 @@ Studios sometimes release internal libraries for general use +
 `EA/EASTL`, `InsomniacGames/ig-cachesim`, `Remedy-Entertainment/binderoo` etc
 
 [role="incremental"]
-NOTE: Everything here based on my experience so far, YMMV!
-
-[role="incremental"]
-NOTE: I will unfairly concentrate on Epic's UE4 :) +
-* I worked with it for the past years +
-* It does a lot of C++ questionable things 
-
-A glimpse of good
------------------
-Source code snippet from _Doom 3_
-
-image::img/doom3.png["Doom 3 src", align="center", width="100%"]
-
-A glimpse of bad
-----------------
-Source code snippet from _CryEngine_
-
-image::img/cryengine.png["CryEngine 3 src", align="center", width="100%"]
+NOTE: Everything here based on my experience (recently Unreal Engine 4), YMMV!
 
 ifdef::backend-slidy2[]
 [backgr_1, position: absolute; top: 1em; left: 1em;]
@@ -218,7 +201,7 @@ Platform - Compiler
 By far and large Windows centric development - even for consoles
 
 [role="incremental"]
-*MSVC*
+*Microsoft Visual Studio*
 
 [role="incremental"]
 - is overwhelmingly used, almost de facto standard
@@ -619,14 +602,8 @@ Handling of errors...
 * compiler support was lackluster
 * dev didn't use them
 
-RTTI
-----
-Seldom used - normally turned off by default because it bloats the modules size
-
-Very rare use of `dynamic_cast` - usually reimplemented manually via COM style interfaces
-
-Reflection
-----------
+Reflection / RTTI
+-----------------
 A lot of games have involved reflection systems...
 
 [role="incremental"]
