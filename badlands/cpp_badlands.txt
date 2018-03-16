@@ -17,12 +17,17 @@ image::img/vanity_plate.png["Games worked on", align="center"]
 
 Currently at Splash Damage in London, UK
 
+TODO: clean this - copy from Bitcoin
+TODO: add twitter icon
+
 Agenda
 ------
+TODO: redo & simplify
+
 - Types of video games
 - The industry
-- Philosophy
-- Platform
+- Philosophy TODO: rename (maybe Requirements)
+- Platforms & Compilation
 - Flavours of C++
 - OOP & Alternatives
 - Templates
@@ -51,6 +56,10 @@ Types of games - mobile
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
 image::img/mobile.jpg["mobile games", align="center", width="1024"]
+
+>>>The industry<<<
+------------------
+TODO: picture
 
 The industry - It's a secret
 ----------------------------
@@ -87,6 +96,34 @@ Studios sometimes release internal libraries for general use +
 [role="incremental"]
 NOTE: Everything here based on my experience (recently Unreal Engine 4), YMMV!
 
+Project size/LOC
+----------------
+AAA studios...
+
+[role="incremental"]
+- hundreds of people across various continents
+- lots of wheel reinventions
+- `legacy` of franchise games and sequels
+
+[role="incremental"]
+...so amount of code quickly skyrockets...
+
+[role="incremental"]
+[quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
+_______
+Assassin's Creed Unity:
+
+* 6.5 M C++ LOC for entire team code.
+* 9 M more C++ LOC from outside project.
+
+Rainbow Six: Siege:
+
+* 3.5 M C++ LOC for engine code from game team.
+* 4.5 M C++ LOC from Technology Group.
+_______
+
+TODO: compare with Bitcoin
+
 ifdef::backend-slidy2[]
 [backgr_1, position: absolute; top: 1em; left: 1em;]
 &&&&
@@ -95,8 +132,8 @@ image::img/badlands_1.jpg["backgr"]
 :slidebackground: backgr_1
 endif::backend-slidy2[]
 
-Philosophy / Platform / Compilation
------------------------------------
+>>>Philosophy TODO: rename<<<
+-----------------------------
 ifdef::backend-slidy2[:slidebackground!:]
 
 Philosophy
@@ -124,32 +161,6 @@ Everything is centered around achieving this - while...
 * unless server
 * unless it leaks over time!
 - low-latency but throughput also important - got to push millions of pixels to the screen!
-
-Project size/LOC
-----------------
-AAA studios...
-
-[role="incremental"]
-- hundreds of people across various continents
-- lots of wheel reinventions
-- `legacy` of franchise games and sequels
-
-[role="incremental"]
-...so amount of code quickly skyrockets...
-
-[role="incremental"]
-[quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
-_______
-Assassin's Creed Unity:
-
-* 6.5 M C++ LOC for entire team code.
-* 9 M more C++ LOC from outside project.
-
-Rainbow Six: Siege:
-
-* 3.5 M C++ LOC for engine code from game team.
-* 4.5 M C++ LOC from Technology Group.
-_______
 
 Platform - Compiler
 -------------------
@@ -239,27 +250,6 @@ Some mitigation methods...
 [role="incremental"]
 - Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
 
-Fighting the compiler
----------------------
-*Heed no warning!* +
-Warnings are mopped under the floor - couple of favorite ones to disable...
-
-[role="incremental"]
-- signed/unsigned mismatch
-- conversion from `T1` to `T2` requires a narrowing conversion
-- conversion from `T1` to `T2`, possible loss of data
-- conditional <expression> is constant
-- nonstandard extension used: nameless struct/union
-
-[role="incremental"]
-*Use the __force!* +
-Eternal hope that magically sprinkling `inline` will make things faster...
-
-[role="incremental"]
-[source]
-inline, __inline, __forceinline
-__attribute__((always_inline))
-
 ifdef::backend-slidy2[]
 [backgr_2, position: absolute; top: 1em; left: 1em;]
 &&&&
@@ -268,8 +258,8 @@ image::img/badlands_2.jpg["backgr"]
 :slidebackground: backgr_2
 endif::backend-slidy2[]
 
-Coding styles & techniques
---------------------------
+>>>Coding styles & techniques - TODO: rename<<<
+-----------------------------------------------
 ifdef::backend-slidy2[:slidebackground!:]
 
 Flavors of C++
@@ -314,6 +304,27 @@ Some of them recommend things that would really upset a C++ purist!
 - CamelCase rules the nation
 - K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used
 - `auto` destroys friendships
+
+Fighting the compiler
+---------------------
+*Heed no warning!* +
+Warnings are mopped under the floor - couple of favorite ones to disable...
+
+[role="incremental"]
+- signed/unsigned mismatch
+- conversion from `T1` to `T2` requires a narrowing conversion
+- conversion from `T1` to `T2`, possible loss of data
+- conditional <expression> is constant
+- nonstandard extension used: nameless struct/union
+
+[role="incremental"]
+*Use the __force!* +
+Eternal hope that magically sprinkling `inline` will make things faster...
+
+[role="incremental"]
+[source]
+inline, __inline, __forceinline
+__attribute__((always_inline))
 
 OOP is king
 -----------
