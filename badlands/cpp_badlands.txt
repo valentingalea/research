@@ -407,8 +407,8 @@ image::img/badlands_3.jpg["backgr"]
 :slidebackground: backgr_3
 endif::backend-slidy2[]
 
-STL / Boost
------------
+>>>STL / Boost<<<
+-----------------
 ifdef::backend-slidy2[:slidebackground!:]
 
 STL
@@ -517,8 +517,8 @@ image::img/badlands_4.jpg["backgr"]
 :slidebackground: backgr_4
 endif::backend-slidy2[]
 
-Exceptions / RTTI / Reflection
-------------------------------
+>>>Exceptions / RTTI / Reflection<<<
+------------------------------------
 ifdef::backend-slidy2[:slidebackground!:]
 
 Exceptions
