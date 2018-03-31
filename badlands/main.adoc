@@ -3,6 +3,8 @@ The Badlands of C++: Professional Game Development
 
 include::src/intro.adoc[]
 
+include::src/games.adoc[]
+
 include::src/STL.adoc[]
 
 include::src/Boost.adoc[]
