@@ -1,13 +1,13 @@
 The Badlands of C++: Professional Game Development
 ==================================================
 
-include::STL.adoc[]
+include::src/STL.adoc[]
 
-include::Boost.adoc[]
+include::src/Boost.adoc[]
 
-include::exceptions.adoc[]
+include::src/exceptions.adoc[]
 
-include::reflection.adoc[]
+include::src/reflection.adoc[]
 
 The End
 -------
