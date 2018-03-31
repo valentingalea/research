@@ -1,0 +1,93 @@
+== STL
+Adoption is very divided...
+
+.Speculative and Unfounded Personal Theory
+- Western World: Lower adoption
+ * more focus on getting things done; entrepreneurial
+- Eastern World: Higher adoption
+ * academic/mathematical background
+
+.Reasons for low adoption
+- iostreams are the devil's work!
+- associated/perceived bloat and slow compilation
+  * still true: https://groups.google.com/a/isocpp.org/forum/?utm_medium=email&utm_source=footer#!msg/sg14/bp-DDWbFhIQ/xeTL0076BgAJ
+- slow or cumbersome debugging
+- not everyone is willing to follow STL coding style and naming
+- gamedev specific allocation needs
+  * limited allocator model pre C++17
+
+== STL (continued)
+It's not always a binary choice
+
+- the STL atomics and locks are generally used as is
+- the `Iterator` concept is copied and re-implemented
+  * if nothing else just to enable `ranged-for`'s
+- sparing use of algorithms
+  * Unreal Engine mirrors them for their containers
+
+== STL - case study: std::string
+Every studio/engine reinvents the string wheel
+
+- specific localization needs
+  * very tight coupling with game data
+- previous STL implementations made awkward choices
+  * for ex: copy on write on older GCC
+  * no control over Small Buffer Optimisation
+- no need for streams
+  * C printf style preferred
+  * I/O handled in bulk elsewhere
+
+== [EA]STL
+*EASTL from Electronic Arts* -  video game specific implementation of STL
+
+Originally started 10 years ago for internal use, now open source: +
+https://github.com/electronicarts/EASTL
+
+Normally follows the `std::` nomenclature and style
+
+== [EA]STL - Differences / Changes
+- written in a more straightforward/direct way (less general)
+  * easier to debug, faster release builds
+- simplified allocator model - games specific
+  * alignment aware, naming support, etc
+- intrusive containers
+- fixed containers
+  * no allocation, only within provided block
+- new containers
+  * `ring_buffer`, `heap`, `priority_queue`, etc
+- smart pointers, type traits
+  * now obsolete
+
+== STLport
+Quick shoutout to http://stlport.sourceforge.net/Home.shtml
+
+Multiplatform implementation with some extensions. Abandoned since 2010
+
+- more advanced debug mode
+- hash tables, singly-linked list, rope
+- better `std::allocator`
+- used in embedded / limited environments
+  * still available today in Android NDK
+
+== WG21/SG14
+Game dev is officially recognized and represented in the ISO C++ Standard committee
+
+image::https://isocpp.org/files/img/wg21-structure.png["ISO C++ structure"]
+
+== WG21/SG14 (continued)
+Video games and embedded programming study sub-group +
+Tries to propose new, optimized containers, data structures and even language changes
+
+Proposals and discussion +
+https://groups.google.com/a/isocpp.org/group/sg14/
+
+- fixed point numeric library
+- view-only alternative to `std::function`
+  * function_ref
+- highly specialized multithreaded utilities
+  * RCU and hazard pointers
+- `likely` / `unlikely` optimization hints
+  * got voted in for C++20
+- alternatives to error handling
+  * `status_code` and `error_code`
+- bike shedding :)
