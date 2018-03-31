@@ -7,5 +7,7 @@ include::Boost.adoc[]
 
 include::exceptions.adoc[]
 
+include::reflection.adoc[]
+
 The End
 -------

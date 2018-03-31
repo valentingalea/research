@@ -1,0 +1,32 @@
+== Reflection / RTTI
+Default introspection (`typeid`, `dynamic_cast`) is inadequate for the needs of games
+
+- close live-link with editors and tools
+  * values inspection and edit
+  * code "hot reload"
+- serialization for loading/saving; versioning
+- network replication, RPC's
+- garbage collection
+
+== Reflection - Custom solutions
+- preprocessor based decorations that both annotate code and generate registration calls
+  * template metaprogramming for same purpose
+- mini Domain Specific Languages that generate additional `.cpp/.h` files
+- processing intermediate compiler data
+  * ex: `.PDB` file for MSVC
+- actually modifiying the compiler, if access to it
+
+== Reflection - UE4
+Example from Unreal Engine 4...
+
+image:img/ue4_reflect_editor.png["ue4 reflect", align="center"]
+
+== Reflection - UE4
+Class member decorations...
+
+image:img/ue4_reflect_header.png["ue4 reflect", align="center"]
+
+== Reflection - UE4
+The ugly insides...
+
+image:img/ue4_reflect_generated.png["ue4 reflect", align="center"]
