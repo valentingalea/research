@@ -1,0 +1,38 @@
+== Exceptions
+Almost never used due to speed penalties of `throw`-ing and `catch`-ing
+
+A small (not totally fair) demonstration...
+
+[source]
+---------------------------------------
+#include <stdexcept>
+
+int func()
+{
+    throw std::exception();
+}
+---------------------------------------
+
+Compiled with `/O2` optimizations on VS 2017 +
+Let's see disassembly: https://godbolt.org/g/wQXmTi
+
+== Exceptions - disassembly
+image::img/exception_1.png["asm", align="center"]
+
+== Exceptions - disassembly (continued)
+image::img/exception_2.png["asm", align="center"]
+
+== Exceptions - alternatives
+Handling of errors...
+
+- during dev: hard exit is requested on error
+- C style last-error or status arguments
+- impossible to handle errors in constructors
+  * solution is to have `Create`, `Instantiate`, `Begin` replacements
+- exceptions are still used in non critical code
+  * online services
+  * OS/system interactions
+- reputation problem feedback loop
+  * past gen console platforms didn't support them
+  * compiler support was lackluster
+  * dev didn't use them

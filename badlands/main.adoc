@@ -5,5 +5,7 @@ include::STL.adoc[]
 
 include::Boost.adoc[]
 
+include::exceptions.adoc[]
+
 The End
 -------
