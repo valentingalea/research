@@ -8,10 +8,9 @@ python ../../asciidoc/asciidoc.py \
 -a tabsize=4 \
 --theme=volnitsky \
 --backend slidy2 \
--a duration=45 \
+-a duration=15 \
 -a copyright="Valentin Galea" \
---verbose \
 --out-file=$ROOT/../docs/badlands/index.html \
-$ROOT/cpp_badlands.txt
+$ROOT/$1
 
 cd $ROOT
