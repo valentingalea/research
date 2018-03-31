@@ -1,0 +1,18 @@
+== Boost
+Very frowned upon and highly discouraged...
+
+image::img/carmack_tweet.png["asm", align="center"]
+
+== Boost (continued)
+Reasons...
+
+- (again my theory) clash of cultures:
+  * Boost is "academic" and research driven
+  * game dev is pragmatic and get-it-done
+- historically didn't play well with MSVC
+  * still doesn't: `boost::hana` (but getting very close)
+- by now best libraries made it into the standard
+  * `thread`, `mutex`, `unique_lock`, `chrono`, `filesystem` etc
+- difficulty to integrate & setup
+  * `bcp` tool makes this easier
+- slow compilation times
