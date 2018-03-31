@@ -1,0 +1,16 @@
+== Who Am I
+- Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
+- more than 10 years doing mobile, indie and AAA games
+
+image::img/vanity_plate.png["Games worked on"]
+
+- currently at _Splash Damage_ in London, UK
+
+== Disclaimer
+This is a shorter version of a longer (older) talk
+
+.Video
+https://skillsmatter.com/skillscasts/10231-c-plus-plus-july-meetup
+
+.Slides
+http://valentingalea.github.io/research/badlands/
