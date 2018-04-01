@@ -1,11 +1,15 @@
-[state=vanity]
-[%notitle]
 == Who Am I
-image::img/vanity_plate.png[background, size=cover]
+image::img/vanity_plate.png[Vanity, 600, 326, float="right"]
 
-- Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
-- more than 10 years doing mobile, indie and AAA games
-- currently at _Splash Damage_ in London, UK
+[.left]
+https://twitter.com/valentin_galea[@valentin_galea]
+
+[.left]
+more than 10 years in
+_mobile_, _indie_ and _AAA_ games
+
+[.left]
+now at *Splash Damage* in London, UK
 
 == Disclaimer
 This is a shorter version of a longer (older) talk
