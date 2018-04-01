@@ -1,6 +1,5 @@
 The Badlands of C++: Professional Game Development
 ==================================================
-:revealjsdir: node_modules/asciidoctor-reveal.js/node_modules/reveal.js
 :revealjs_theme: white
 :revealjs_transition: fade
 :revealjs_controls: true
