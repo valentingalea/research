@@ -26,3 +26,23 @@ section[data-state="games"] div.attribution {
     color: white;
     background-color: gray;
 }
+
+section[data-state="badland"] h2 {
+    color: white;
+    text-align: left;
+}
+
+section[id="stl_adoption"] div.paragraph:nth-child(3) {
+    color: white;
+    text-align: left;
+}
+
+section[id="stl_adoption"] div.paragraph:nth-child(4) {
+    color: white;
+    text-align: right;
+}
+
+.reveal section img {
+    border: initial;
+    box-shadow: initial;
+}
