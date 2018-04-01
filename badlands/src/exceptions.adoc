@@ -2,7 +2,7 @@
 == Exceptions
 image::img/badlands_4.jpg[background, size=cover]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Exceptions - overview
 Almost never used due to speed penalties of `throw`-ing and `catch`-ing
 
@@ -21,15 +21,15 @@ int func()
 Compiled with `/O2` optimizations on VS 2017 +
 Let's see disassembly: https://godbolt.org/g/wQXmTi
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Exceptions - disassembly
 image::img/exception_1.png[]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Exceptions - disassembly (continued)
 image::img/exception_2.png[]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Exceptions - alternatives
 Handling of errors...
 
@@ -39,7 +39,7 @@ Handling of errors...
 - impossible to handle errors in constructors
   * solution is to have `Create`, `Instantiate`, `Begin` replacements
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Exceptions - alternatives (continued)
 Handling of errors...
 

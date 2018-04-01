@@ -2,7 +2,7 @@
 == Reflection / RTTI
 image::img/reflection.jpg[background, size=cover]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Reflection / RTTI - Overview
 Default introspection (`typeid`, `dynamic_cast`) is inadequate for the needs of games
 
@@ -14,7 +14,7 @@ Default introspection (`typeid`, `dynamic_cast`) is inadequate for the needs of 
 - network replication, RPC's
 - garbage collection
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Reflection - Custom
 Custom solutions...
 
@@ -29,13 +29,13 @@ Custom solutions...
 == Reflection - UE4
 image:img/ue4_reflect_editor.png["ue4 reflect"]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Reflection - UE4 (2)
 Class member decorations...
 
 image:img/ue4_reflect_header.png["ue4 reflect"]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Reflection - UE4 (3)
 The ugly insides...
 

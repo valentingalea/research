@@ -2,13 +2,13 @@
 == Boost
 image::img/badlands_2.jpg[background, size=cover]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Boost - Diss
 Very frowned upon and highly discouraged...
 
 image::img/carmack_tweet.png["asm", align="center"]
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Boost - Reasons
 Reasons...
 
@@ -19,7 +19,7 @@ Reasons...
 - historically didn't play well with MSVC
   * still doesn't: `boost::hana` (but getting very close)
 
-[%notitle]
+[%notitle, background-iframe="src/header.html"]
 == Boost - Reasons.Two
 Reasons (continued)
 
