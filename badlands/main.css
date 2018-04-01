@@ -1,0 +1,28 @@
+.reveal section.title.present h1 {
+    color: white;
+    text-align: left;
+}
+
+.reveal section.title.present h2 {
+    color: white;
+    text-align: left;
+}
+
+section[data-state="vanity"] div.ulist {
+    background-color: #f0f0f0c0
+}
+
+section[data-state="games"] h2 {
+    color: white;
+    background-color: gray;
+}
+
+section[data-state="games"] blockquote {
+    color: white;
+    background-color: gray
+}
+
+section[data-state="games"] div.attribution {
+    color: white;
+    background-color: gray;
+}

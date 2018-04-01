@@ -1,17 +1,20 @@
+[state=games]
 == Types of games - AAA
 [quote, Wikipedia]
 AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
 
-image::img/AAA.jpg["AAA games", align="center", width="1024"]
+image::img/AAA.jpg[background, size=cover]
 
+[state=games]
 == Types of games - indie
 [quote, Wikipedia]
 indie games [...] created without the financial support of a publisher
 
-image::img/indie.jpg["indie games", align="center", width="1024"]
+image::img/indie.jpg[background, size=cover]
 
+[state=games]
 == Types of games - mobile
 [quote, Wikipedia]
 mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
 
-image::img/mobile.jpg["mobile games", align="center", width="1024"]
+image::img/mobile.jpg[background, size=cover]
