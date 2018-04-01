@@ -19,7 +19,7 @@ academic/mathematical background
 
 [%notitle, background-iframe="src/header.html"]
 == STL Adoption (continued)
-.Reasons for low adoption
+Reasons for low adoption...
 
 [%step]
 - `iostreams` are the devil's work!
@@ -32,7 +32,7 @@ academic/mathematical background
 
 [%notitle, background-iframe="src/header.html"]
 == STL (continued)
-It's not always a binary choice
+It's not always a binary choice...
 
 [.step]
 - the STL atomics and locks are generally used as is
@@ -43,7 +43,7 @@ It's not always a binary choice
 
 [%notitle, background-iframe="src/header.html"]
 == STL std::string
-Case study: `std::string`
+Case study: `std::string`...
 
 [.step]
 - specific localization needs
@@ -66,7 +66,7 @@ Normally follows the `std::` nomenclature and style
 
 [%notitle, background-iframe="src/header.html"]
 == [EA]STL Diff.One
-Differences / Changes
+Differences / Changes...
 
 [.step]
 - written in a more straightforward/direct way (less general)
@@ -96,7 +96,7 @@ Multiplatform implementation with some extensions. Abandoned since 2010
 
 [%notitle, background-iframe="src/header.html"]
 == STLport (continued)
-Features
+Features...
 
 [.step]
 - more advanced debug mode
@@ -120,7 +120,7 @@ https://groups.google.com/a/isocpp.org/group/sg14/
 
 [%notitle, background-iframe="src/header.html"]
 == WG21/SG14 List.One
-Current topics
+Current topics...
 
 [.step]
 - fixed point numeric library

@@ -41,7 +41,7 @@ Handling of errors...
 
 [%notitle, background-iframe="src/header.html"]
 == Exceptions - alternatives (continued)
-Handling of errors...
+Handling of errors (continued)
 
 [.step]
 - exceptions are still used in non critical code

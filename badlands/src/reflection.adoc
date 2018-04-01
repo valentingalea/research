@@ -4,7 +4,7 @@ image::img/reflection.jpg[background, size=cover]
 
 [%notitle, background-iframe="src/header.html"]
 == Reflection / RTTI - Overview
-Default introspection (`typeid`, `dynamic_cast`) is inadequate for the needs of games
+Default introspection (`typeid`, `dynamic_cast`) is inadequate for the needs of games...
 
 [.step]
 - close live-link with editors and tools
