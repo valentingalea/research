@@ -1,0 +1,7 @@
+== The End
+
+image:https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png[Twitter, 64, 64] @valentin_galea
+
+image:https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png[Github, 64, 64] https://github.com/valentingalea/
+
+image:https://vignette.wikia.nocookie.net/dirtybomb/images/c/cf/Splash_Damage_Logo.png/revision/latest?cb=20151117115610[SD, 64, 64] https://www.splashdamage.com/

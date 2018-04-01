@@ -15,7 +15,6 @@ The Badlands of C++: Professional Game Development
 include::src/intro.adoc[]
 
 == Agenda
-
 - Types of video games
 - Preview of longer talk
 - STL
@@ -33,5 +32,4 @@ include::src/exceptions.adoc[]
 
 include::src/reflection.adoc[]
 
-The End
--------
+include::src/outro.adoc[]
