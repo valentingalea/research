@@ -1,4 +1,9 @@
+[state=badland]
 == Exceptions
+image::img/badlands_4.jpg[background, size=cover]
+
+[%notitle]
+== Exceptions - overview
 Almost never used due to speed penalties of `throw`-ing and `catch`-ing
 
 A small (not totally fair) demonstration...
@@ -16,19 +21,29 @@ int func()
 Compiled with `/O2` optimizations on VS 2017 +
 Let's see disassembly: https://godbolt.org/g/wQXmTi
 
+[%notitle]
 == Exceptions - disassembly
-image::img/exception_1.png["asm", align="center"]
+image::img/exception_1.png[]
 
+[%notitle]
 == Exceptions - disassembly (continued)
-image::img/exception_2.png["asm", align="center"]
+image::img/exception_2.png[]
 
+[%notitle]
 == Exceptions - alternatives
 Handling of errors...
 
+[.step]
 - during dev: hard exit is requested on error
 - C style last-error or status arguments
 - impossible to handle errors in constructors
   * solution is to have `Create`, `Instantiate`, `Begin` replacements
+
+[%notitle]
+== Exceptions - alternatives (continued)
+Handling of errors...
+
+[.step]
 - exceptions are still used in non critical code
   * online services
   * OS/system interactions
