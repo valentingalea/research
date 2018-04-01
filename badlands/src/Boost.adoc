@@ -1,16 +1,29 @@
+[state=badland]
 == Boost
+image::img/badlands_2.jpg[background, size=cover]
+
+[%notitle]
+== Boost - Diss
 Very frowned upon and highly discouraged...
 
 image::img/carmack_tweet.png["asm", align="center"]
 
-== Boost (continued)
+[%notitle]
+== Boost - Reasons
 Reasons...
 
+[.step]
 - (again my theory) clash of cultures:
   * Boost is "academic" and research driven
   * game dev is pragmatic and get-it-done
 - historically didn't play well with MSVC
   * still doesn't: `boost::hana` (but getting very close)
+
+[%notitle]
+== Boost - Reasons.Two
+Reasons (continued)
+
+[.step]
 - by now best libraries made it into the standard
   * `thread`, `mutex`, `unique_lock`, `chrono`, `filesystem` etc
 - difficulty to integrate & setup
