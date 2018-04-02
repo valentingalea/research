@@ -35,3 +35,5 @@ include::src/exceptions.adoc[]
 include::src/reflection.adoc[]
 
 include::src/outro.adoc[]
+
+include::src/attrib.adoc[]
