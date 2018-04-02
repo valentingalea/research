@@ -24,6 +24,8 @@ include::src/intro.adoc[]
 
 include::src/games.adoc[]
 
+include::src/recap.adoc[]
+
 include::src/STL.adoc[]
 
 include::src/Boost.adoc[]

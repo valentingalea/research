@@ -1,0 +1,21 @@
+[state=badland]
+== Recap: The Industry, Platform, Compilation, Coding Style, Techniques
+image::img/recap.jpg[background, size=cover]
+
+[%notitle, background-iframe="src/header.html"]
+== Recap
+Previously on "Badlands"...
+
+[.step]
+- image:img/icon/console.svg[games, 64, 64] types of games: AAA, indie, mobile
+- image:img/icon/police-folder.svg[secret, 64, 64] how the industry (mainly AAA) is structured and generally secretive it is
+- image:img/icon/gauge.svg[speed, 64, 64] games requirements: low latency and high throughput 
+
+[%notitle, background-iframe="src/header.html"]
+== Recap (continued)
+Previously on "Badlands"...
+
+[.step]
+- image:img/icon/management.svg[ide, 64, 64] compilers and IDE's: primarily Windows and Visual Studio
+- image:img/icon/browser.svg[cpp, 64, 64] flavours of C++ and coding style
+- image:img/icon/hierarchical-structure.svg[oop, 64, 64] OOP and alternatives

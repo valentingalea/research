@@ -10,12 +10,13 @@ Adoption is very divided...
 
 *Western World* +
 _Lower adoption_ +
-more focus on getting things done +
+focus on getting things done +
 entrepreneurial
 
 *Eastern World* +
 _Higher adoption_ +
-academic/mathematical background
+academic / mathematical +
+background
 
 [%notitle, background-iframe="src/header.html"]
 == STL Adoption (continued)

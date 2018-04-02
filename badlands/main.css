@@ -43,6 +43,19 @@ section[id="stl_adoption"] div.paragraph:nth-child(4) {
 }
 
 .reveal section img {
-    border: initial;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-right: 0.25em;
     box-shadow: initial;
+    display: inline;
+    vertical-align: middle;
+}
+
+section[id="recap"] ul {
+    list-style-type: none;
+}
+
+section[id="recap_continued"] ul {
+    list-style-type: none;
 }
