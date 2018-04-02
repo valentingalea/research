@@ -57,7 +57,7 @@ Case study: `std::string`...
 
 [background-iframe="src/header.html"]
 == [EA]STL
-image:https://avatars1.githubusercontent.com/u/1637638?s=200&v=4[EA, 64, 64, float="left"] _EASTL from Electronic Arts_ -  video game specific implementation of STL
+_EASTL from Electronic Arts_ -  video game specific implementation of STL
 
 Originally started 10 years ago for internal use, now open source: +
 https://github.com/electronicarts/EASTL
