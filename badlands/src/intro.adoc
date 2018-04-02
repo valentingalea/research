@@ -5,12 +5,13 @@ image::img/vanity_plate.png[Vanity, 600, 326, float="right"]
 https://twitter.com/valentin_galea[@valentin_galea]
 
 [.left]
-more than 10 years in
+More than 10 years in
 _mobile_, _indie_ and _AAA_ games
 
 [.left]
-now at *Splash Damage* in London, UK
+Now at image:https://vignette.wikia.nocookie.net/dirtybomb/images/c/cf/Splash_Damage_Logo.png/revision/latest?cb=20151117115610[SD, 64, 64] in London, UK
 
+[background-iframe="src/header.html"]
 == Disclaimer
 This is a shorter version of a longer (older) talk
 
