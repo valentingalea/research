@@ -9,7 +9,7 @@ More than 10 years in
 _mobile_, _indie_ and _AAA_ games
 
 [.left]
-Now at image:https://vignette.wikia.nocookie.net/dirtybomb/images/c/cf/Splash_Damage_Logo.png/revision/latest?cb=20151117115610[SD, 64, 64] in London, UK
+Now at image:img/icon/SD.svg[SD, 64, 64] in London, UK
 
 [background-iframe="src/header.html"]
 == Disclaimer
