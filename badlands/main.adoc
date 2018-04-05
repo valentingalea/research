@@ -8,7 +8,6 @@ The Badlands of C++: Professional Game Development
 :revealjs_history: true
 :revealjs_overview: true
 :revealjs_fragments: true
-:imagesdir: ../docs/badlands/
 :customcss: main.css
 :title-slide-background-image: img/title.jpg
 
