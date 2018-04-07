@@ -56,9 +56,7 @@ Case study: `std::string`...
 - previous STL implementations made awkward choices
   * for ex: copy on write on older GCC
   * no control over _Small Buffer Optimisation_
-- no need for streams
-  * C `printf` style preferred
-  * I/O handled in bulk elsewhere
+- strings are either immutable or C `printf` logging
 
 [background-iframe="src/header.html"]
 == [EA]STL
