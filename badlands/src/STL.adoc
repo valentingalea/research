@@ -110,7 +110,7 @@ Features...
 
 [background-iframe="src/header.html"]
 == WG21
-image::https://isocpp.org/files/img/wg21-structure.png["ISO C++"]
+image::img/wg21-structure.png["ISO C++"]
 
 [background-iframe="src/header.html"]
 == WG21/SG14
