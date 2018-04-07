@@ -16,11 +16,15 @@ section[data-state="badland"] h2 {
 section[id="stl_adoption"] div.paragraph:nth-child(3) {
     color: white;
     text-align: left;
+    float: left;
+    display: block;
 }
 
 section[id="stl_adoption"] div.paragraph:nth-child(4) {
     color: white;
     text-align: right;
+    float: right;
+    display: block;
 }
 
 .reveal section img {

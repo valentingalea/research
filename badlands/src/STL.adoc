@@ -10,13 +10,17 @@ Adoption is very divided...
 
 *Western World* +
 _Lower adoption_ +
-focus on getting things done +
-entrepreneurial
+entrepreneurial +
+ex: Unreal Engine 4 (US) +
+ex: id Tech (US) +
+ex: <secret>
 
 *Eastern World* +
 _Higher adoption_ +
 academic / mathematical +
-background
+ex: CryEngine (Germany) +
+ex: STALKER (Russia) +
+ex: <secret>
 
 [%notitle, background-iframe="src/header.html"]
 == STL Adoption (continued)
