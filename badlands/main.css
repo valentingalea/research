@@ -8,6 +8,10 @@
     text-align: left;
 }
 
+section[data-state="badland"] {
+    top: 0px !important;
+}
+
 section[data-state="badland"] h2 {
     color: white;
     text-align: left;
