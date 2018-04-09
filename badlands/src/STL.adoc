@@ -91,24 +91,6 @@ Differences / Changes (continued)
   * now obsolete
 
 [background-iframe="src/header.html"]
-== STLport
-Quick shoutout to +
-http://stlport.sourceforge.net/Home.shtml
-
-Multiplatform implementation with some extensions. Abandoned since 2010
-
-[%notitle, background-iframe="src/header.html"]
-== STLport (continued)
-Features...
-
-[.step]
-- more advanced debug mode
-- hash tables, singly-linked list, rope
-- better `std::allocator`
-- used in embedded / limited environments
-  * still available today in Android NDK
-
-[background-iframe="src/header.html"]
 == WG21
 image::img/wg21-structure.png["ISO C++"]
 
