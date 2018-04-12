@@ -4,4 +4,4 @@ image:img/icon/twitter.png[Twitter, 64, 64] @valentin_galea
 
 image:img/icon/github.png[Github, 64, 64] https://github.com/valentingalea/
 
-image:img/icon/SD.svg[SD, 64, 64] https://www.splashdamage.com/
+image:img/icon/SD.svg[SD, 128, 128] https://www.splashdamage.com/

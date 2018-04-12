@@ -19,7 +19,7 @@ ex: <secret>
 _Higher adoption_ +
 academic / mathematical +
 ex: CryEngine (Germany) +
-ex: STALKER (Russia) +
+ex: STALKER (Ukraine) +
 ex: <secret>
 
 [%notitle, background-iframe="src/header.html"]
