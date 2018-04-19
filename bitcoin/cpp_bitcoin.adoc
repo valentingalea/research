@@ -9,24 +9,27 @@ Who Am I
 image::img/splash.png["splash"]
 &&&&
 
-Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
-more than 10 years doing mobile, indie and AAA games
+- Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
+- more than 10 years doing mobile, indie and AAA games
 
 image::../badlands/img/vanity_plate.png["Games worked on"]
 
-Currently at _Splash Damage_ in London, UK
+- currently at _Splash Damage_ in London, UK
 
 Disclaimer
 ----------
+[role="incremental"]
 - Games coder
 - I bought some Bitcoin in the 2017 craze
 - I analyzed a bunch of times the source code
 
+[role="incremental"]
 Therefore I am perfectly suited to give this talk! :)
 
+[role="incremental"]
 - No investment advice!
 - No technical how-to!
-- Just C++ trivia!
+- Mostly C++ trivia!
 
 Agenda
 ------
@@ -41,7 +44,7 @@ Bitcoin - Summary
 -----------------
 - First cryptocurrency, most well known
 - Leading the digital currency revolution
-- Meteoric rise as of 2017, along with others
+- Meteoric rise in price and popularity as of 2017, along with others
 
 image::img/bitcoin_price.png["price graph"]
 
@@ -51,12 +54,12 @@ Bitcoin - What Is It
 - decentralized, peer-to-peer digital currency
 - invented the public distributed ledger - the _blockchain_
 - solves the "double spending" problem
-- achieves secure transactions in an insecure environment
+- achieves secure transactions in an unsecure environment
 - utilizes a proof-of-work algorithm ("mining") to help achieve all this
 
 Bitcoin - Overview
 ------------------
-image::https://raw.githubusercontent.com/bitcoinbook/bitcoinbook/second_edition/images/mbc2_0201.png["network"]
+image::img/bitcoin_network.png["network"]
 
 Bitcoin - History
 -----------------
@@ -76,11 +79,11 @@ Bitcoin - History
 Bitcoin - Example
 -----------------
 [role="incremental"]
-1. *Alice* wants to pay *Bob* 0.015 BTC
-2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions (`UTXO`)
-3. She does own cryptographic keys for signing and generating payment addresses
+1. *Alice* wants to pay *Bob* 1 BTC
+2. Alice doesn't own any bitcoin physically, her coins are scattered across the network as unspent transactions
+3. She does own cryptographic keys for signing or generating payments
 4. She uses a *wallet* app that monitors the network, tracks her balance and creates a new transaction signed with Bob's public key
-5. The wallet sends it into the p2p *node network* where it will float around (`mempool`)
+5. The wallet sends it into the p2p *node network* where it will float around
 6. A *miner* will pick it up, include it with others in a block and it will begin *Proof-Of-Work* to sign the block
  * this usually takes 10 min, and the difficulty is adjusted by consensus to keep that true
 7. When it's successful (or when others are) the new block is broadcast to the network and added to the *blockchain*
@@ -89,7 +92,7 @@ Bitcoin - Example
 
 Bitcoin Core
 ------------
-image::https://user-images.githubusercontent.com/4360349/33806515-580bc820-dd97-11e7-9cc3-1a63ea6b0da1.png["bitcoin core diagram", width="75%"]
+image::img/bitcoin_core.png["bitcoin core diagram", width="100%"]
 
 Bitcoin Core (continued)
 -------------------------
@@ -101,7 +104,7 @@ Bitcoin Core (continued)
   * CLI interface as well
 - has wallet to "store" bitcoin but it's not recommended to use
 - PoW algorithms and it can mine but again not recommended
-- lots of other coins are forks of it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
+- lots of other coins are adapted from it: Litecoin, Verge, ZCash, Dash, Doge, Qtum, etc
 
 [role="incremental"]
 The focus of this talk
@@ -114,6 +117,31 @@ C++ - Overview
  * approx. 100k SLOC ^https://www.quora.com/How-many-lines-of-code-is-the-Bitcoin-blockchain-network-infrastructure-written-in[1]^
 
 image::img/bitcoin_contrib.png["contrib graph"]
+
+C++ - Overview (continued)
+--------------------------
+[literal]
+...
+-a----        14-Jan-18   3:30 PM           6353 bitcoind.cpp
+-a----        14-Jan-18   3:30 PM          10559 blockencodings.cpp
+-a----        14-Jan-18   3:30 PM           7320 blockencodings.h
+-a----        14-Jan-18   3:30 PM          11457 bloom.cpp
+-a----        14-Jan-18   3:30 PM           5496 bloom.h
+-a----        14-Jan-18   3:30 PM           5750 chain.cpp
+-a----        14-Jan-18   3:30 PM          16257 chain.h
+-a----        14-Jan-18   3:30 PM          19276 chainparams.cpp
+-a----        14-Jan-18   3:30 PM           4574 chainparams.h
+-a----        14-Jan-18   3:30 PM           2857 chainparamsbase.cpp
+-a----        14-Jan-18   3:30 PM           1944 chainparamsbase.h
+-a----        14-Jan-18   3:30 PM         140338 chainparamsseeds.h
+-a----        14-Jan-18   3:30 PM            880 checkpoints.cpp
+-a----        14-Jan-18   3:30 PM            689 checkpoints.h
+-a----        14-Jan-18   3:30 PM           7020 checkqueue.h
+-a----        14-Jan-18   3:30 PM           3894 clientversion.cpp
+-a----        14-Jan-18   3:30 PM           1955 clientversion.h
+-a----        14-Jan-18   3:30 PM          10919 coins.cpp
+-a----        14-Jan-18   3:30 PM          11020 coins.h
+...
 
 C++ - Overview (continued)
 --------------------------
@@ -193,14 +221,14 @@ Occurrences of C++11/14 specific constructs in all the files
 [role="incremental"]
 [width="80%",options="header"]
 |=====================================================
-|                    | Bitcoin | Ripple | Ethereum 
-| Files              | 659     | 3672   | 477      
-| `auto`             | 12%     | 36%    | 36%      
-| `std::move`        | 7%      | 13%    | 7%       
-| `override`         | 6%      | 19%    | 13%      
-| `static_assert`    | 2%      | 3%     | 4%       
-| lambda expressions | 2%      | 11%    | 13%      
-| `std::enable_if`   | none    | 1%     | one file 
+|                    | Bitcoin | Ethereum | Ripple
+| Files              | 659     | 477      | 3672 
+| `auto`             | 12%     | 36%      | 36%
+| `std::move`        | 7%      | 7%       | 13% 
+| `override`         | 6%      | 13%      | 19%
+| `static_assert`    | 2%      | 4%       | 3%       
+| lambda expressions | 2%      | 13%      | 11%      
+| `std::enable_if`   | none    | one file | 1% 
 |=====================================================
 
 // lambda regex: [^operator]\[[^\]]*\][\s\r\n]*\(
@@ -211,8 +239,8 @@ C++ Extensions
 [role="incremental"]
 - Thread Safety Analysis
  * attribute decorations for static analysis of race conditions
- * `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
- * macro wrappers for compatibility; low usage in general
+ * macro wrappers for compatibility:
+ ** `GUARDED_BY(x)`, `SCOPED_LOCKABLE`, `SHARED_LOCKS_REQUIRED` etc
  * see more: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
 
 .GCC
@@ -245,44 +273,83 @@ Major usage: 60% of the files
 - `std::runtime_error`
  * primary exception handler
 
+STL - Examples
+--------------
+[role="incremental"]
+The blockchain in memory:
+
+[role="incremental"]
+[source]
+class CChain {
+private:
+    std::vector<CBlockIndex*> vChain;
+/* ... */
+
+[role="incremental"]
+The unspent coins database:
+
+[role="incremental"]
+[source]
+std::unordered_map<COutPoint, CCoinsCacheEntry, SaltedOutpointHasher> CCoinsMap;
+
 STL - Allocators
 ----------------
 No custom memory management allocator is used. Instead custom allocators are used to enforce security:
 
 [role="incremental"]
 - `zero_after_free_allocator`
- * simple `std::allocator` wrapper that 0's the memory when it gets released so it's harder to snoop
+ * simple `std::allocator` wrapper that zeroes the memory when it gets released so it's harder to snoop
 - `secure_allocator`
- * 0's the released memory but it also keeps it locked and not paged to disk, to discourage attacks
+ * zeroes the released memory but it also keeps it locked and not paged to disk, to discourage attacks
 
 Boost
 -----
-Present in about 20% of the files.
+Present in about 20% of the files
 
 [role="incremental"]
-A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard - ex: `call_once`, `thread`, `mutex`, `filesystem`, `chrono`, etc
+A lot of the usage is due to code predating C++11 adoption, before Boost constructs made it into the standard, for ex:
 
 [role="incremental"]
-`multi_index` is used to manage the transaction data (sort by hash, fees and time for ex).
+- `call_once`, `thread`, `mutex`, `unique_lock`
+- `filesystem`,
+- `chrono`, etc
 
 [role="incremental"]
-`signals` and `bind` prevalent in the Qt UI code.
+`signals` and `bind` prevalent in the Qt UI code
 
 [role="incremental"]
-Testing handled with the Boost Unit Test framework.
+Testing handled with the Boost Unit Test framework
+
+Boost - Example
+---------------
+`boost::multi_index` used to store organized transaction data:
+
+[source]
+typedef boost::multi_index_container<
+    CTransactionRef,
+    boost::multi_index::indexed_by<
+        // sorted by txid
+        boost::multi_index::hashed_unique<
+            boost::multi_index::tag<txid_index>,
+            mempoolentry_txid,
+            SaltedTxidHasher
+        >,
+        // sorted by order in the blockchain
+        boost::multi_index::sequenced<
+            boost::multi_index::tag<insertion_order>
+        >
+    >
+> indexed_disconnected_transactions;
 
 Serialization
 -------------
-
-Serialization - Overview
-------------------------
-Poor man's reflection to help with loading/saving/transfer of objects
+A reflection mechanism that helps with loading/saving/transfer of objects
 
 [role="incremental"]
-To semi-automate work, every class can declare which members gets serialized
+To automate work, every class can declare which members gets serialized/deserialized
 
 [role="incremental"]
-This is achieved via the well tested combination of lots of templated helper functions and macro glue!
+This is implemented via a combination of `template`-ed helper functions and macro glue:
 
 Serialization - Example
 -----------------------
@@ -310,7 +377,6 @@ public:
 Serialization - ADD macro
 -------------------------
 [source]
--------------------------------------------------------------------------------
 /** 
  * Implement three methods for serializable objects. These are actually wrappers over
  * "SerializationOp" template, which implements the body of each class' serialization
@@ -326,7 +392,30 @@ Serialization - ADD macro
     void Unserialize(Stream& s) {                                     \
         SerializationOp(s, CSerActionUnserialize());                  \
     }
--------------------------------------------------------------------------------
+
+Serialization - Macro magic
+---------------------------
+Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place
+
+[role="incremental"]
+[source]
+#define READWRITE(obj)      (::SerReadWrite(s, (obj), ser_action))
+
+[role="incremental"]
+[source]
+template<typename Stream, typename T>
+inline void SerReadWrite(Stream& s, const T& obj, CSerActionSerialize ser_action)
+{
+    ::Serialize(s, obj);
+}
+
+[role="incremental"]
+[source]
+template<typename Stream, typename T>
+inline void SerReadWrite(Stream& s, T& obj, CSerActionUnserialize ser_action)
+{
+    ::Unserialize(s, obj);
+}
 
 Serialization - Template helpers - basic types
 ----------------------------------------------
@@ -378,6 +467,8 @@ void Serialize_impl(Stream& os, const std::vector<T, A>& v, const V&)
         ::Serialize(os, (*vi));
 }
 
+Serialization - Template helpers - std::vector (continued)
+----------------------------------------------------------
 [source]
 template<typename Stream, typename T, typename A, typename V>
 void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
@@ -397,33 +488,9 @@ void Unserialize_impl(Stream& is, std::vector<T, A>& v, const V&)
     }
 }
 
-Serialization - Macro magic
----------------------------
-Within the body of `SerializationOp` the `READWRITE` generic macro is used. It will expand differently depending if a read(unserialize) or write(serialize) is taking place
-
-[role="incremental"]
-[source]
-#define READWRITE(obj)      (::SerReadWrite(s, (obj), ser_action))
-#define READWRITEMANY(...)  (::SerReadWriteMany(s, ser_action, __VA_ARGS__))
-
-[role="incremental"]
-It will all boil down to the various templates detailed before
-
-[role="incremental"]
-Some other macro type wrappers
-
-[role="incremental"]
-* `VARINT` -> `CVarInt<I>` - Variable-length integers, stores numbers independent of C++ underlying type
-* `FLATDATA` -> `CFlatData` - a wrapper for POD's and arrays
-
 Serialization - Trivia
 ----------------------
-[role="incremental"]
-- if the template function helpers don't match anything, it will revert calling a class member serialize function 
-- deserialization can be done by the constructor as well using tag dispatch
-
-[role="incremental"]
-.a cheeky hack:
+- a cheeky hack:
 
 [role="incremental"]
 [source]
@@ -438,7 +505,12 @@ inline T& REF(const T& val)
 }
 
 [role="incremental"]
-"makes sense" refers to pass-thru structs like `CFlatData` that only stores begin/end pointers and is constructed in-place
+[source]
+#define FLATDATA(obj) REF(CFlatData((char*)&(obj), (char*)&(obj) + sizeof(obj)))
+/* ... */
+unsigned char ip[16];
+/* ... */
+READWRITE(FLATDATA(ip));
 
 Custom Data Structures
 ----------------------
@@ -451,7 +523,49 @@ I/O
  * used as the backbone of serialization
 - `CAutoFile` - non-refcounted RAII wrapper for FILE*
 - `CBufferedFile` - same as above
- * also provides ring buffer support
+ * with ring buffer support
+
+JSON / RPC
+----------
+JSON is used everywhere for a RPC driven communication layer
+
+[source]
+[role="incremental"]
+------
+UniValue getblockcount(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getblockcount\n"
+            "\nReturns the number of blocks in the longest blockchain.\n"
+            "\nResult:\n"
+            "n    (numeric) The current block count\n"
+            "\nExamples:\n"
+            + HelpExampleCli("getblockcount", "")
+            + HelpExampleRpc("getblockcount", "")
+        );
+
+    LOCK(cs_main);
+    return chainActive.Height();
+}
+------
+
+JSON / UniValue
+---------------
+Variant like structure that represents a JSON object value 
+
+[role="incremental"]
+Stores key/values as a vector of `std::string`
+
+[role="incremental"]
+[source]
+UniValue entry(UniValue::VOBJ);
+entry.pushKV("txid", tx.GetHash().GetHex());
+entry.pushKV("hash", tx.GetWitnessHash().GetHex());
+entry.pushKV("version", tx.nVersion);
+
+[role="incremental"]
+According to the `README`: "[it] minimizes template use (contra json_spirit)"
 
 prevector
 ---------
@@ -462,6 +576,7 @@ An interesting mix of the standard array and a dynamic vector
 
 [role="incremental"]
 [source]
+size_type _size;
 union direct_or_indirect {
     char direct[sizeof(T) * N];
     struct {
@@ -480,23 +595,12 @@ prevector - usage
 Only usage case is for storing the transaction script opcodes where apparently:
 
 [role="incremental"]
-[quote]
--------------------------------------------------------------------------------
+.....
 We use a prevector for the script to reduce the considerable memory overhead
 of vectors in cases where they normally contain a small number of small elements.
 Tests in October 2015 showed use of this reduced dbcache memory usage by 23%
 and made an initial sync 13% faster.
--------------------------------------------------------------------------------
-
-UniValue
---------
-Variant like structure that represents a JSON object value. JSON is used everywhere as a communication layer between all the sub-systems
-
-[role="incremental"]
-Stores key/values as a vector of `std::string`
-
-[role="incremental"]
-According to the `README`: "[it] minimizes template use (contra json_spirit)"
+.....
 
 CVarInt
 -------
@@ -506,10 +610,10 @@ A quite simple form of encoding integers depending on their numeric range, in or
 [width="50%",options="header"]
 |====================================================================
 | Range               | Encoding in bytes
-|     0 .. 252        | ??
-|   253 .. 2^16^ - 1  | 0xFD ?? ??
-| 2^16^ .. 2^32^ – 1  | 0xFE ?? ?? ?? ??
-| 2^32^ .. 2^64^ – 1  | 0xFF ?? ?? ?? ?? ?? ?? ?? ??
+|     0 .. 252        | XX
+|   253 .. 2^16^ - 1  | 0xFD XX XX
+| 2^16^ .. 2^32^ – 1  | 0xFE XX XX XX XX
+| 2^32^ .. 2^64^ – 1  | 0xFF XX XX XX XX XX XX XX XX
 |====================================================================
 
 [role="incremental"]
@@ -523,7 +627,7 @@ A couple of small convenience driven modifications:
 [role="incremental"]
 - `indirectmap`
  * stores pointers to elements but offers utility member functions that work with the element type directly
- * one time usage in the mempool
+ * one time usage in the transaction pool
 - `limitedmap`
  * map that only stores the N highest values inserted
  * one time usage as a sort of priority queue
@@ -532,13 +636,16 @@ CuckooCache
 -----------
 Unique Set data structure based on the principles of the cuckoo hash map
 
+image::img/Cuckoo.png["cuckoo", float="right", width="50%"]
+
 [role="incremental"]
 Used to avoid double checking transactions - once for the mempool and the other time for the blocks. Replaced a `boost::unique_set` as optimization in Oct 2016
 
 [role="incremental"]
-Elements are stored in `std::vector` and a series of hash function spread them around. A form of GC is employed on `insert` to keep erase constant time
-
-TODO: some sort of diagram / more explanation?
+- elements are stored in `std::vector` and a series of hash functions spread them around
+- constat-time find
+- lockfree erase
+ * next insert will GC
 
 CuckooCache - Hashing
 ---------------------
@@ -560,6 +667,35 @@ inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
                 (uint32_t)((hash_function.template operator()<6>(e) * (uint64_t)size) >> 32),
                 (uint32_t)((hash_function.template operator()<7>(e) * (uint64_t)size) >> 32)}};
 }
+
+BloomFilter
+-----------
+Storing the entire blockchain is not trivial: approx. 155 GB Jan 2018
+
+[role="incremental"]
+Lightweight clients use a Bloom filter data structure to optimize validity checking before getting full blocks
+
+[role="incremental"]
+image::img/bloom.png["bloom", width="75%"]
+
+BloomFilter (continued)
+-----------------------
+- minimal and straightforward C++ implementation
+
+[role="incremental"]
+[source]
+for (unsigned int i = 0; i < nHashFuncs; i++)
+{
+    unsigned int nIndex = Hash(i, vKey);
+    vData[nIndex >> 3] |= (1 << (7 & nIndex));
+}
+
+[role="incremental"]
+- the hashing function:
+
+[role="incremental"]
+[source]
+return MurmurHash3(nHashNum * 0xFBA4C795 + nTweak, vDataToHash) % (vData.size() * 8);
 
 memusage
 --------
@@ -614,7 +750,12 @@ static inline size_t DynamicUsage(const std::map<X, Y, Z>& m)
 
 The End
 -------
-TODO: closing notes
+Thank you!
+
+- Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea]
+- http://valentingalea.github.io/research/bitcoin/
+
+image::img/coin.jpg["closing", width="50%"]
 
 Attributions
 ------------
@@ -625,3 +766,6 @@ ifdef::backend-slidy2[]
 endif::backend-slidy2[]
 - bitcoin price graph https://www.buybitcoinworldwide.com/price/
 - "Mastering Bitcoin" https://github.com/bitcoinbook/bitcoinbook
+- Cuckoo hashing image by Rasmus Pagh - File:Cuckoo.png, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=20556837
+- Bloom filter image By david Eppstein - self-made, originally for a talk at WADS 2007, Public Domain, https://commons.wikimedia.org/w/index.php?curid=2609777
+- all other images under "Fair Use"/"Fair Dealing"

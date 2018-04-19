@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="js no-mobile desktop no-ie ff ff59 c:-section users-section v-section dev-section research-section badlands-section gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius no-cssreflections csstransforms csstransitions touch retina fontface title domloaded w-1440 gt-240 gt-320 gt-480 gt-640 gt-768 gt-800 gt-1024 gt-1280 lt-1680 lt-1920 no-portrait landscape" id="main-page" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>The Badlands of C++: Professional Game Development</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="badlands_files/reveal.css" rel="stylesheet"><link rel="stylesheet" href="badlands_files/white.css" id="theme"><link href="badlands_files/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "node_modules/reveal.js/css/print/pdf.css" : "node_modules/reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link rel="stylesheet" type="text/css" href="badlands_files/paper.css"><!--[if lt IE 9]><script src="node_modules/reveal.js/lib/js/html5shiv.js"></script><![endif]--><script type="text/javascript" src="badlands_files/zoom.js"></script><script type="text/javascript" src="badlands_files/notes.js"></script><link rel="stylesheet" href="badlands_files/main.css"></head><body style="transition: -webkit-transform 0.8s ease 0s;"><div class="reveal fade center has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade"><div class="slides" style="width: 960px; height: 700px; left: 50%; top: 50%; bottom: auto; right: auto; transform: translate(-50%, -50%) scale(1.05943);"><section class="title present" data-state="title" data-background-image="img/title.jpg" style="top: 103.5px; display: block;"><h1>The Badlands of C++</h1><h2>Professional Game Development</h2></section><section id="who_am_i" style="top: 80.5px; display: block;" aria-hidden="true" class="future" hidden=""><h2>Who Am I</h2><div class="imageblock" style="float: right"><img src="badlands_files/vanity_plate.png" alt="Vanity" width="600" height="326"></div>
+<div class="paragraph left"><p><a href="https://twitter.com/valentin_galea">@valentin_galea</a></p></div>
+<div class="paragraph left"><p>More than 10 years in
+<em>mobile</em>, <em>indie</em> and <em>AAA</em> games</p></div>
+<div class="paragraph left"><p>Now at <span class="image"><img src="badlands_files/SD.svg" alt="SD" width="64" height="64"></span> in London, UK</p></div></section>
+<section id="disclaimer" data-background-iframe="src/header.html" style="top: 66px; display: block;" aria-hidden="true" class="future" hidden=""><h2>Disclaimer</h2><div class="paragraph"><p>This is a shorter version of a longer (older) talk</p></div>
+<div class="paragraph"><div class="title">Video</div><p><a href="https://skillsmatter.com/skillscasts/10231-c-plus-plus-july-meetup" class="bare">https://skillsmatter.com/skillscasts/10231-c-plus-plus-july-meetup</a></p></div>
+<div class="paragraph"><div class="title">Slides</div><p><a href="http://valentingalea.github.io/research/badlands/" class="bare">http://valentingalea.github.io/research/badlands/</a></p></div></section>
+<section id="agenda" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Agenda</h2><div class="ulist"><ul><li><p>Preview of longer talk</p></li><li><p>STL</p></li><li><p>Boost</p></li><li><p>Exceptions</p></li><li><p>Reflection</p></li></ul></div></section>
+<section id="recap_the_industry_platform_compilation_coding_style_techniques" data-background-image="img/recap.jpg" data-background-size="cover" data-state="badland" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Recap: The Industry, Platform, Compilation, Coding Style, Techniques</h2></section>
+<section id="recap" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Previously on "Badlands"…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p><span class="image"><img src="badlands_files/console.svg" alt="games" width="64" height="64"></span> types of games: AAA, indie, mobile</p></li><li class="fragment" data-fragment-index="1"><p><span class="image"><img src="badlands_files/police-folder.svg" alt="secret" width="64" height="64"></span> how the industry (mainly AAA) is structured and generally secretive it is</p></li><li class="fragment" data-fragment-index="2"><p><span class="image"><img src="badlands_files/gauge.svg" alt="speed" width="64" height="64"></span> games requirements: low latency and high throughput</p></li></ul></div></section>
+<section id="recap_continued" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Previously on "Badlands"…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p><span class="image"><img src="badlands_files/management.svg" alt="ide" width="64" height="64"></span> compilers and IDE’s: primarily Windows and Visual Studio</p></li><li class="fragment" data-fragment-index="1"><p><span class="image"><img src="badlands_files/browser.svg" alt="cpp" width="64" height="64"></span> flavours of C++ and coding style</p></li><li class="fragment" data-fragment-index="2"><p><span class="image"><img src="badlands_files/hierarchical-structure.svg" alt="oop" width="64" height="64"></span> OOP and alternatives</p></li></ul></div></section>
+<section id="stl" data-background-image="img/STL.jpg" data-background-size="cover" data-state="badland" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>STL</h2></section>
+<section id="stl_adoption" data-background-iframe="src/STL.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Adoption is very divided…​</p></div>
+<div class="paragraph"><p>(Speculative and Unfounded Personal Theory)</p></div>
+<div class="paragraph"><p><strong>Western World</strong><br>
+<em>Lower adoption</em><br>
+entrepreneurial<br>
+ex: Unreal Engine 4 (US)<br>
+ex: id Tech (US)<br>
+ex: &lt;secret&gt;</p></div>
+<div class="paragraph"><p><strong>Eastern World</strong><br>
+<em>Higher adoption</em><br>
+academic / mathematical<br>
+ex: CryEngine (Germany)<br>
+ex: STALKER (Ukraine)<br>
+ex: &lt;secret&gt;</p></div></section>
+<section id="stl_adoption_continued" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Reasons for low adoption…​</p></div>
+<div class="ulist"><ul><li class="fragment" data-fragment-index="0"><p><code>iostreams</code> are the devil’s work!</p></li><li class="fragment" data-fragment-index="1"><p>associated/perceived bloat and slow compilation</p><div class="ulist"><ul><li><p>still true: <a href="https://goo.gl/Tzqwye" class="bare">https://goo.gl/Tzqwye</a></p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>slow or cumbersome debugging</p></li><li class="fragment" data-fragment-index="3"><p>not everyone is willing to follow STL coding style and naming</p></li><li class="fragment" data-fragment-index="4"><p>gamedev specific allocation needs</p><div class="ulist"><ul><li><p>limited allocator model pre C++17</p></li></ul></div></li></ul></div></section>
+<section id="stl_continued" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>It’s not always a binary choice…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>the STL atomics and locks are generally used as is</p></li><li class="fragment" data-fragment-index="1"><p>the <code>Iterator</code> concept is copied and re-implemented</p><div class="ulist"><ul><li><p>if nothing else just to enable <code>ranged-for</code>'s</p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>sparing use of algorithms</p><div class="ulist"><ul><li><p>Unreal Engine mirrors them for their containers</p></li></ul></div></li></ul></div></section>
+<section id="stl_std_string" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Case study: <code>std::string</code>…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>specific localization needs</p><div class="ulist"><ul><li><p>very tight coupling with game data</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>previous STL implementations made awkward choices</p><div class="ulist"><ul><li><p>for ex: copy on write on older GCC</p></li><li><p>no control over <em>Small Buffer Optimisation</em></p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>strings are either immutable or C <code>printf</code> logging</p></li></ul></div></section>
+<section id="ea_stl" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>[EA]STL</h2><div class="paragraph"><p><em>EASTL from Electronic Arts</em> -  video game specific implementation of STL</p></div>
+<div class="paragraph"><p>Originally started 10 years ago for internal use, now open source:<br>
+<a href="https://github.com/electronicarts/EASTL" class="bare">https://github.com/electronicarts/EASTL</a></p></div>
+<div class="paragraph"><p>Normally follows the <code>std::</code> nomenclature and style</p></div></section>
+<section id="ea_stl_diff_one" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Differences / Changes…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>written in a more straightforward/direct way (less general)</p><div class="ulist"><ul><li><p>easier to debug, faster release builds</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>simplified allocator model - games specific</p><div class="ulist"><ul><li><p>alignment aware, naming support, etc</p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>intrusive containers</p></li></ul></div></section>
+<section id="ea_stl_diff_two" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Differences / Changes (continued)</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>fixed containers</p><div class="ulist"><ul><li><p>no allocation, only within provided block</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>new containers</p><div class="ulist"><ul><li><p><code>ring_buffer</code>, <code>heap</code>, <code>priority_queue</code>, etc</p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>smart pointers, type traits</p><div class="ulist"><ul><li><p>now obsolete</p></li></ul></div></li></ul></div></section>
+<section id="wg21" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>WG21</h2><div class="imageblock" style=""><img src="badlands_files/wg21-structure.png" alt="ISO C++"></div></section>
+<section id="wg21_sg14" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>WG21/SG14</h2><div class="paragraph"><p>Video games and embedded programming study sub-group</p></div>
+<div class="paragraph"><p>Tries to propose new, optimized containers, data structures and even language changes</p></div>
+<div class="paragraph"><p>Proposals and discussion<br>
+<a href="https://groups.google.com/a/isocpp.org/group/sg14/" class="bare">https://groups.google.com/a/isocpp.org/group/sg14/</a></p></div></section>
+<section id="wg21_sg14_list_one" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Current topics…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>fixed point numeric library</p></li><li class="fragment" data-fragment-index="1"><p>view-only alternative to <code>std::function</code></p><div class="ulist"><ul><li><p>function_ref</p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>highly specialized multithreaded utilities</p><div class="ulist"><ul><li><p>RCU and hazard pointers</p></li></ul></div></li></ul></div></section>
+<section id="wg21_sg14_list_two" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Current topics (continued)</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p><code>likely</code> / <code>unlikely</code> optimization hints</p><div class="ulist"><ul><li><p>got voted in for C++20</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>alternatives to error handling</p><div class="ulist"><ul><li><p><code>status_code</code> and <code>error_code</code></p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>bike shedding :)</p></li></ul></div></section>
+<section id="boost" data-background-image="img/badlands_2.jpg" data-background-size="cover" data-state="badland" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Boost</h2></section>
+<section id="boost_diss" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Very frowned upon and highly discouraged…​</p></div>
+<div class="imageblock" style="text-align: center"><img src="badlands_files/carmack_tweet.png" alt="asm"></div></section>
+<section id="boost_reasons" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Reasons…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>(again my theory) clash of cultures:</p><div class="ulist"><ul><li><p>Boost is "academic" and research driven</p></li><li><p>game dev is pragmatic and get-it-done</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>historically didn’t play well with MSVC</p><div class="ulist"><ul><li><p>still doesn’t: <code>boost::hana</code> (but getting very close)</p></li></ul></div></li></ul></div></section>
+<section id="boost_reasons_two" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Reasons (continued)</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>by now best libraries made it into the standard</p><div class="ulist"><ul><li><p><code>thread</code>, <code>mutex</code>, <code>unique_lock</code>, <code>chrono</code>, <code>filesystem</code> etc</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>difficulty to integrate &amp; setup</p><div class="ulist"><ul><li><p><code>bcp</code> tool makes this easier</p></li></ul></div></li><li class="fragment" data-fragment-index="2"><p>slow compilation times</p></li></ul></div></section>
+<section id="exceptions" data-background-image="img/badlands_4.jpg" data-background-size="cover" data-state="badland" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Exceptions</h2></section>
+<section id="exceptions_overview" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Almost never used due to speed penalties of <code>throw</code>-ing and <code>catch</code>-ing</p></div>
+<div class="paragraph"><p>A small (not totally fair) demonstration…​</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>#include &lt;stdexcept&gt;
+
+int func()
+{
+    throw std::exception();
+}</code></pre></div></div>
+<div class="paragraph"><p>Compiled with <code>/O2</code> optimizations on VS 2017<br>
+Let’s see disassembly: <a href="https://godbolt.org/g/wQXmTi" class="bare">https://godbolt.org/g/wQXmTi</a></p></div></section>
+<section id="exceptions_disassembly" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="imageblock" style=""><img src="badlands_files/exception_1.png" alt="exception 1"></div></section>
+<section id="exceptions_disassembly_continued" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="imageblock" style=""><img src="badlands_files/exception_2.png" alt="exception 2"></div></section>
+<section id="exceptions_alternatives" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Handling of errors…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>during dev: hard exit is requested on error</p></li><li class="fragment" data-fragment-index="1"><p>C style last-error or status arguments</p></li><li class="fragment" data-fragment-index="2"><p>impossible to handle errors in constructors</p><div class="ulist"><ul><li><p>solution is to have <code>Create</code>, <code>Instantiate</code>, <code>Begin</code> replacements</p></li></ul></div></li></ul></div></section>
+<section id="exceptions_alternatives_continued" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Handling of errors (continued)</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>exceptions are still used in non critical code</p><div class="ulist"><ul><li><p>online services</p></li><li><p>OS/system interactions</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>reputation problem feedback loop</p><div class="ulist"><ul><li><p>past gen console platforms didn’t support them</p></li><li><p>compiler support was lackluster</p></li><li><p>dev didn’t use them</p></li></ul></div></li></ul></div></section>
+<section id="reflection_rtti" data-background-image="img/reflection.jpg" data-background-size="cover" data-state="badland" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Reflection / RTTI</h2></section>
+<section id="reflection_rtti_overview" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Default introspection (<code>typeid</code>, <code>dynamic_cast</code>) is inadequate for the needs of games…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>close live-link with editors and tools</p><div class="ulist"><ul><li><p>values inspection and edit</p></li><li><p>code "hot reload"</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>serialization for loading/saving; versioning</p></li><li class="fragment" data-fragment-index="2"><p>network replication, RPC’s</p></li><li class="fragment" data-fragment-index="3"><p>garbage collection</p></li></ul></div></section>
+<section id="reflection_custom" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Custom solutions…​</p></div>
+<div class="ulist step"><ul><li class="fragment" data-fragment-index="0"><p>preprocessor based decorations that both annotate code and generate registration calls</p><div class="ulist"><ul><li><p>template metaprogramming for same purpose</p></li></ul></div></li><li class="fragment" data-fragment-index="1"><p>mini <em>Domain Specific Languages</em> that generate additional <code>.cpp/.h</code> files</p></li><li class="fragment" data-fragment-index="2"><p>processing intermediate compiler data</p><div class="ulist"><ul><li><p>ex: <code>.PDB</code> file for MSVC</p></li></ul></div></li><li class="fragment" data-fragment-index="3"><p>actually modifying the compiler, if access to it</p></li></ul></div></section>
+<section id="reflection_ue4" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Reflection - UE4</h2><div class="paragraph"><p><span class="image"><img src="badlands_files/ue4_reflect_editor.png" alt="ue4 reflect"></span></p></div></section>
+<section id="reflection_ue4_2" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>Class member decorations…​</p></div>
+<div class="paragraph"><p><span class="image"><img src="badlands_files/ue4_reflect_header.png" alt="ue4 reflect"></span></p></div></section>
+<section id="reflection_ue4_3" data-background-iframe="src/header.html" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><div class="paragraph"><p>The ugly insides…​</p></div>
+<div class="paragraph"><p><span class="image"><img src="badlands_files/ue4_reflect_generated.png" alt="ue4 reflect"></span></p></div></section>
+<section id="the_end" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>The End</h2><div class="paragraph"><p><span class="image"><img src="badlands_files/twitter.png" alt="Twitter" width="64" height="64"></span> @valentin_galea</p></div>
+<div class="paragraph"><p><span class="image"><img src="badlands_files/github.png" alt="Github" width="64" height="64"></span> <a href="https://github.com/valentingalea/" class="bare">https://github.com/valentingalea/</a></p></div>
+<div class="paragraph"><p><span class="image"><img src="badlands_files/SD.svg" alt="SD" width="128" height="128"></span> <a href="https://www.splashdamage.com/" class="bare">https://www.splashdamage.com/</a></p></div></section>
+<section id="attribution" style="top: 350px; display: none;" aria-hidden="true" class="future" hidden=""><h2>Attribution</h2><style>
+    div.attrib {
+        font-size: 0.5em;
+    }
+</style>
+<div class="attrib">Made with <a href="https://github.com/asciidoctor/asciidoctor-reveal.js/">asciidoctor-reveal.js</a></div>
+
+<div class="attrib">Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/webalys-freebies" title="Webalys Freebies">Webalys Freebies</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">WG21 chart from isocpp.org; Copyright 2018 Standard C++ Foundation. All rights reserved</div>
+<div class="attrib">"Boost" cover image (CC BY-SA 4.0) from <a href="https://commons.wikimedia.org/wiki/File:Changing_Scenes_Overlook_PA100156.JPG">original</a></div>
+
+<div class="attrib">"Exceptions" cover image (CC BY-SA 2.0) from <a href="https://commons.wikimedia.org/wiki/File:Prairie_Wind_Overlook_in_the_Badlands.jpg">original</a></div>
+
+<div class="attrib">All other images taken personally in Tenerife, Spain; Released into public domain</div></section></div><div class="backgrounds"><div class="slide-background title present" data-background-hash="0img/title.jpgnullnullnullnullnullnull" style="display: block; background-image: url(&quot;img/title.jpg&quot;);" data-loaded="true"></div><div class="slide-background future" style="display: block;" data-loaded="true"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: block;" data-loaded="true"><iframe allowfullscreen="" mozallowfullscreen="" webkitallowfullscreen="" src="badlands_files/header.html" style="width: 100%; height: 100%; max-height: 100%; max-width: 100%;"></iframe></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="nullcoverimg/recap.jpgnullnullnullnullnullnull" style="background-size: cover; display: none;" data-background-size="cover"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="nullcoverimg/STL.jpgnullnullnullnullnullnull" style="background-size: cover; display: none;" data-background-size="cover"></div><div class="slide-background future" data-background-hash="0src/STL.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="nullcoverimg/badlands_2.jpgnullnullnullnullnullnull" style="background-size: cover; display: none;" data-background-size="cover"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="nullcoverimg/badlands_4.jpgnullnullnullnullnullnull" style="background-size: cover; display: none;" data-background-size="cover"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="nullcoverimg/reflection.jpgnullnullnullnullnullnull" style="background-size: cover; display: none;" data-background-size="cover"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" data-background-hash="0src/header.htmlnullnullnullnull" style="display: none;"></div><div class="slide-background future" style="display: none;"></div><div class="slide-background future" style="display: none;"></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" style="display: block;" data-controls-layout="bottom-right" data-controls-back-arrows="faded"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><span class="slide-number-a">1</span></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"></div><div style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);" id="aria-status-div" aria-live="polite" aria-atomic="true">The Badlands of C++Professional Game Development</div></div><script src="badlands_files/head.js"></script><script src="badlands_files/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'white',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'fade',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'node_modules/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'node_modules/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'node_modules/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'node_modules/reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>

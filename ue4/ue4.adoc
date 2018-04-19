@@ -1,0 +1,12 @@
+= How Unreal Engine 4 solved all C++'s problems, failed, and got rich trying
+
+Agenda
+------
+- Quick overview of game development
+- Unreal Engine 4 and its history
+- Games showcase
+- Problem #1: Build system
+- Problem #2: Modules
+- Problem #3: GC and memory management
+- Problem #4: Reflection
+- Problem #5 (self made): Rewrite STL

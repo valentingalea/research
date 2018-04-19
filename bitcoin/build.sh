@@ -8,9 +8,8 @@ python ../../asciidoc/asciidoc.py \
 -a tabsize=4 \
 --theme=volnitsky \
 --backend slidy2 \
--a duration=30 \
+-a duration=45 \
 -a copyright="Valentin Galea" \
---verbose \
 --out-file=$ROOT/../docs/bitcoin/index.html \
 $ROOT/cpp_bitcoin.adoc
 
