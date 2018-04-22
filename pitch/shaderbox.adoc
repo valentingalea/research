@@ -1,0 +1,9 @@
+= How to trick C++ into drawing complex GPU shaders
+
+C++ is not capable (yet) of directly executing GPU graphical shaders. Instead C-style languages like GLSL or HLSL are used. With some library and pre-processor effort code can be written that compiles both as C++ and as shader language. This allows full debugging and good code reuse.
+
+What's the catch? Swizzling! The shader 3D vector allows addressing of its components both as [0], [1] etc but also as .x, .y, .xyz, .zyx, .xxx and all possible combinations. We will show how this can be achieved in C++ using various modern techniques like variadic templates, meta-programming, type traits and others.
+
+To showcase all this we present Signed Distance Field modeling and a couple of visually interesting shaders that use it: Procedural Generated Planet, Volumetric Clouds simulation and some fun experiments: a Vinyl Turntable and an Egg On Bicycle!
+
+All the examples will be run both in C++ applications at interactive rates and as 3D applications running full speed. More information here: https://github.com/valentingalea/shaderbox
