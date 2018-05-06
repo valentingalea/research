@@ -2,7 +2,7 @@
 
 A tale of two systems: pushing C++ into accepting GPU shader source code, and the graphical effects that can be written following this transformation.
 
-Why such an effort? Besides the C\++ instructional exercise, having graphics code that compiles universally allows rapid prototyping, full CPU-side debugging and unit testing, as well as ground truth reference on devices where the GPU might be limited in functionality (a mobile phone for ex).
+Why such an effort? Besides the C++ instructional exercise, having graphics code that compiles universally allows rapid prototyping, full CPU-side debugging and unit testing, as well as ground truth reference on devices where the GPU might be limited in functionality (a mobile phone for ex).
 
 The C\++ side seems simple: most of the work is in the library that provides equivalent 2D/3D/4D vector and matrix types. What's the catch then? Swizzling! The shader vector allows addressing of its components both as [0], [1], [2] etc but also as .x, .y, .xyz, .zyx, .xxx and all possible combinations. We will show how this can be achieved in modern C++, clean and in a generic way, without preprocessor tricks, and overcome language obstacles like template argument deduction with implicit conversions.
 
