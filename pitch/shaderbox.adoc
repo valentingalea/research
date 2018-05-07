@@ -1,10 +1,11 @@
-= How to trick C++ into drawing complex GPU shaders
-= Rapid prototyping of graphics shaders with Modern C++
+- Embracing Limitations: C++ As GPU Shading Languages
+- C++ In Disguise On The GPU For Fun And Profit 
+- C++ In Disguise as GPU Shading Languages
 
-Traditionally it's been hard or downright impossible to have C++ on a GPU: Graphics Shaders are mainly done in GLSL/HLSL (C-like languages) and Compute Shaders only recently run it via CUDA/LLVM complex toolchains.
+The seeds of this talk were planted quite a while ago, on my long daily commute, with no seat to stand on, and GCC on my Android phone! All I wanted to do is write some raytracing graphics shaders, but OpenGL programming can make the forest disappear in the trees one too many times. C\++ to the rescue! Turns out that the C-like GPU shader languages of GLSL or HLSL can be compiled as modern C++ if one is willing to put in a bit of a library writing effort! All you mostly need are equivalent 2D/3D/4D vector and matrix types.
 
-We, in the C++ community, can do better! The language can be used in such a way that it can accept the aforementioned GLSL/HLSL syntax! This allows for rapid prototyping, full CPU-side debugging and unit testing, as well as reference on devices where the GPU might be limited in functionality (a mobile phone for ex).
+What's the catch then? Swizzling! The shader vector allows addressing of its components both as [0], [1], [2] etc but also as .x, .y, .xyz, .zyx, .xxx and all possible combinations. The talk details how this can be achieved in modern C++, clean and in a generic way, without preprocessor tricks, and overcome language obstacles like template argument deduction with implicit conversions.
 
-The start is deceptively simple: most of the work is in the library that provides equivalent 2D/3D/4D vector and matrix types. What's the catch then? Swizzling! The shader vector allows addressing of its components both as [0], [1], [2] etc but also as .x, .y, .xyz, .zyx, .xxx and all possible combinations. We will show how this can be achieved in modern C++, clean and in a generic way, without preprocessor tricks, and overcome language obstacles like template argument deduction with implicit conversions.
+Once again C++ shows its strength - after all this effort it's possible to run complex procedural effects at an interactive rate with full CPU side debugging. Of course a dedicated GPU will very quickly outpace this but loses the debugging, and on embedded systems like phones might not even produce 100% correct results due to driver bugs.
 
-To showcase all this machinery we present Signed Distance Field modeling and a couple of visually interesting shaders that use it: Procedural Generated Planet, Volumetric Clouds simulation and some fun experiments: a Vinyl Turntable and an Egg On Bicycle!
+Lastly the actual graphical part will be showcased: Signed Distance Field functions modeling and shaders that use it: Procedural Generated Planet, Volumetric Clouds simulation and some fun experiments: a Vinyl Turntable and an Egg On Bicycle!
