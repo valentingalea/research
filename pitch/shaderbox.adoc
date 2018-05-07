@@ -1,9 +1,9 @@
 = How to trick C++ into drawing complex GPU shaders
 = Rapid prototyping of graphics shaders with Modern C++
 
-Traditionally it's been hard or downright impossible to have C++ on a GPU; Graphics Shaders are mainly done in GLSL/HLSL (C-like languages) and Compute Shaders only recently run C++ via CUDA/LLVM complex toolchains.
+Traditionally it's been hard or downright impossible to have C++ on a GPU: Graphics Shaders are mainly done in GLSL/HLSL (C-like languages) and Compute Shaders only recently run it via CUDA/LLVM complex toolchains.
 
-We, in the C++ community, can do better! The language can be used in such a way that it can accept the aforementioned GLSL/HLSL syntax! This allows for rapid prototyping, full CPU-side debugging and unit testing, as well as ground truth reference on devices where the GPU might be limited in functionality (a mobile phone for ex).
+We, in the C++ community, can do better! The language can be used in such a way that it can accept the aforementioned GLSL/HLSL syntax! This allows for rapid prototyping, full CPU-side debugging and unit testing, as well as reference on devices where the GPU might be limited in functionality (a mobile phone for ex).
 
 The start is deceptively simple: most of the work is in the library that provides equivalent 2D/3D/4D vector and matrix types. What's the catch then? Swizzling! The shader vector allows addressing of its components both as [0], [1], [2] etc but also as .x, .y, .xyz, .zyx, .xxx and all possible combinations. We will show how this can be achieved in modern C++, clean and in a generic way, without preprocessor tricks, and overcome language obstacles like template argument deduction with implicit conversions.
 
