@@ -1,4 +1,7 @@
-= C++ In Disguise on the GPU: Rapid Prototyping of Graphics Shaders
+- Embracing Limitations: C++ As GPU Shading Language
+- C++ In Disguise On The GPU For Fun And Profit 
+- C++ In Disguise on the GPU: Rapid Prototyping of Graphics Shaders
+- How To Trick C++ Into Drawing GPU Shaders
 
 The seeds of this talk were planted quite a while ago, on my long daily commute, with no seat to stand on, and GCC on my Android phone! All I wanted to do is write some raytracing graphics shaders, but OpenGL programming can make the forest disappear in the trees one too many times. C\++ to the rescue! Turns out that the C-like GPU shader languages of GLSL or HLSL can be compiled as modern C++ if one is willing to put in a bit of a library writing effort! All you mostly need are equivalent 2D/3D/4D vector and matrix types.
 
