@@ -1,0 +1,16 @@
+= Rapid Prototyping of Graphics Shaders in Modern C++
+
+== About Me
+TODO:
+
+== Agenda
+- Introduction and motivation
+- General design
+- How swizzling is achieved
+- Corner cases and limitations
+- Optimization with Expression Templates [possibly]
+- Quick intro to shader graphics
+- Showcase and walk-through of effects
+- Benchmarks and conclusions
+
+== The End
