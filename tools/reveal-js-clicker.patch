@@ -1,0 +1,44 @@
+--- /mnt/c/Users/v/Downloads/reveal.js	2018-07-25 22:27:36.458220900 +0100
++++ /mnt/c/Users/v/Dev/research/badlands/node_modules/reveal.js/js/reveal.js	2018-04-10 20:51:01.137000000 +0100
+@@ -1171,6 +1171,7 @@
+ 
+ 		if( config.keyboard ) {
+ 			document.addEventListener( 'keydown', onDocumentKeyDown, false );
++			document.addEventListener( 'keyup', onDocumentKeyUp, false );
+ 			document.addEventListener( 'keypress', onDocumentKeyPress, false );
+ 		}
+ 
+@@ -4389,6 +4390,21 @@
+ 
+ 	}
+ 
++	function onDocumentKeyUp( event ) {
++		var triggered = false;
++		if (event.keyCode == 33) { // page up
++			navigatePrev();
++			triggered = true;
++		}
++		if (event.keyCode == 34) { // page down
++			navigateNext();
++			triggered = true;
++		}
++		if (triggered) {
++			event.preventDefault && event.preventDefault();
++		}
++	}
++
+ 	/**
+ 	 * Handler for the document level 'keydown' event.
+ 	 *
+@@ -4471,9 +4487,9 @@
+ 
+ 			switch( event.keyCode ) {
+ 				// p, page up
+-				case 80: case 33: navigatePrev(); break;
++				case 80: navigatePrev(); break;
+ 				// n, page down
+-				case 78: case 34: navigateNext(); break;
++				case 78: navigateNext(); break;
+ 				// h, left
+ 				case 72: case 37: navigateLeft(); break;
+ 				// l, right
