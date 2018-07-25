@@ -1,0 +1,126 @@
+[state=badland]
+== STL
+image::img/STL.jpg[background, size=cover]
+
+[%notitle, background-iframe="src/STL.html"]
+== STL Adoption
+Adoption is very divided...
+
+(Speculative and Unfounded Personal Theory)
+
+*Western World* +
+_Lower adoption_ +
+entrepreneurial +
+ex: Unreal Engine 4 (US) +
+ex: id Tech (US) +
+ex: <secret>
+
+*Eastern World* +
+_Higher adoption_ +
+academic / mathematical +
+ex: CryEngine (Germany) +
+ex: STALKER (Ukraine) +
+ex: <secret>
+
+[%notitle, background-iframe="src/header.html"]
+== STL Adoption (continued)
+Reasons for low adoption...
+
+[%step]
+- `iostreams` are the devil's work!
+- associated/perceived bloat and slow compilation
+  * still true: https://goo.gl/Tzqwye
+- slow or cumbersome debugging
+- not everyone is willing to follow STL coding style and naming
+- gamedev specific allocation needs
+  * limited allocator model pre C++17
+
+[%notitle, background-iframe="src/header.html"]
+== STL (continued)
+It's not always a binary choice...
+
+[.step]
+- the STL atomics and locks are generally used as is
+- the `Iterator` concept is copied and re-implemented
+  * if nothing else just to enable `ranged-for`'s
+- sparing use of algorithms
+  * Unreal Engine mirrors them for their containers
+
+[%notitle, background-iframe="src/header.html"]
+== STL std::string
+Case study: `std::string`...
+
+[.step]
+- specific localization needs
+  * very tight coupling with game data
+- previous STL implementations made awkward choices
+  * for ex: copy on write on older GCC
+  * no control over _Small Buffer Optimisation_
+- strings are either immutable or C `printf` logging
+
+[background-iframe="src/header.html"]
+== [EA]STL
+_EASTL from Electronic Arts_ -  video game specific implementation of STL
+
+Originally started 10 years ago for internal use, now open source: +
+https://github.com/electronicarts/EASTL
+
+Normally follows the `std::` nomenclature and style
+
+[%notitle, background-iframe="src/header.html"]
+== [EA]STL Diff.One
+Differences / Changes...
+
+[.step]
+- written in a more straightforward/direct way (less general)
+  * easier to debug, faster release builds
+- simplified allocator model - games specific
+  * alignment aware, naming support, etc
+- intrusive containers
+
+[%notitle, background-iframe="src/header.html"]
+== [EA]STL Diff.Two
+Differences / Changes (continued)
+
+[.step]
+- fixed containers
+  * no allocation, only within provided block
+- new containers
+  * `ring_buffer`, `heap`, `priority_queue`, etc
+- smart pointers, type traits
+  * now obsolete
+
+[background-iframe="src/header.html"]
+== WG21
+image::img/wg21-structure.png["ISO C++"]
+
+[background-iframe="src/header.html"]
+== WG21/SG14
+Video games and embedded programming study sub-group
+
+Tries to propose new, optimized containers, data structures and even language changes
+
+Proposals and discussion +
+https://groups.google.com/a/isocpp.org/group/sg14/
+
+[%notitle, background-iframe="src/header.html"]
+== WG21/SG14 List.One
+Current topics...
+
+[.step]
+- fixed point numeric library
+- view-only alternative to `std::function`
+  * function_ref
+- highly specialized multithreaded utilities
+  * RCU and hazard pointers
+
+[%notitle, background-iframe="src/header.html"]
+== WG21/SG14 List.Two
+Current topics (continued)
+
+[.step]
+- `likely` / `unlikely` optimization hints
+  * got voted in for C++20
+- alternatives to error handling
+  * `status_code` and `error_code`
+- bike shedding :)

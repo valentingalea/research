@@ -1,0 +1,29 @@
+== Attribution
+
+++++
+<style>
+    div.attrib {
+        font-size: 0.5em;
+    }
+</style>
+<div class="attrib">Made with <a href="https://github.com/asciidoctor/asciidoctor-reveal.js/">asciidoctor-reveal.js</a></div>
+
+<div class="attrib">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/webalys-freebies" title="Webalys Freebies">Webalys Freebies</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<div class="attrib">WG21 chart from isocpp.org; Copyright 2018 Standard C++ Foundation. All rights reserved</div>
+<div class="attrib">"Boost" cover image (CC BY-SA 4.0) from <a href="https://commons.wikimedia.org/wiki/File:Changing_Scenes_Overlook_PA100156.JPG">original</a></div>
+
+<div class="attrib">"Exceptions" cover image (CC BY-SA 2.0) from <a href="https://commons.wikimedia.org/wiki/File:Prairie_Wind_Overlook_in_the_Badlands.jpg">original</a></div>
+
+<div class="attrib">All other images taken personally in Tenerife, Spain; Released into public domain</div>
+++++

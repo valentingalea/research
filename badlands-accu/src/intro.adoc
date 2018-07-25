@@ -1,0 +1,22 @@
+== Who Am I
+image::img/vanity_plate.png[Vanity, 600, 326, float="right"]
+
+[.left]
+https://twitter.com/valentin_galea[@valentin_galea]
+
+[.left]
+More than 10 years in
+_mobile_, _indie_ and _AAA_ games
+
+[.left]
+Now at image:img/icon/SD.svg[SD, 64, 64] in London, UK
+
+[background-iframe="src/header.html"]
+== Disclaimer
+This is a shorter version of a longer (older) talk
+
+.Video
+https://skillsmatter.com/skillscasts/10231-c-plus-plus-july-meetup
+
+.Slides
+http://valentingalea.github.io/research/badlands/

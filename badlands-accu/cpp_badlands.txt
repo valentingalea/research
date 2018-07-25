@@ -1,0 +1,652 @@
+= The Badlands of C++: Professional Game Development
+:slidebackground: backgr_intro
+
+ifdef::backend-slidy2[:slidebackground!:]
+Who am I
+--------
+ifdef::backend-slidy2[]
+[backgr_intro, position: absolute; top: 3em; left: 1em;]
+&&&&
+image::img/intro.jpg["backgr"]
+&&&&
+endif::backend-slidy2[]
+Valentin Galea - https://twitter.com/valentin_galea[@valentin_galea] +
+more than 10 years doing mobile, indie and AAA games
+
+image::img/vanity_plate.png["Games worked on", align="center"]
+
+Currently at Splash Damage in London, UK
+
+TODO: clean this - copy from Bitcoin
+TODO: add twitter icon
+
+Agenda
+------
+TODO: redo & simplify
+
+- Types of video games
+- The industry
+- Philosophy TODO: rename (maybe Requirements)
+- Platforms & Compilation
+- Flavours of C++
+- OOP & Alternatives
+- Templates
+- STL & Boost
+- Exceptions
+- Reflection & RTTI
+- Conclusions
+
+Types of games - AAA
+--------------------
+[quote, Wikipedia]
+AAA games [...] informal classification used for video games with the highest development budgets and levels of promotion
+
+image::img/AAA.jpg["AAA games", align="center", width="1024"]
+
+Types of games - indie
+----------------------
+[quote, Wikipedia]
+indie games [...] created without the financial support of a publisher
+
+image::img/indie.jpg["indie games", align="center", width="1024"]
+
+Types of games - mobile
+-----------------------
+[quote, Wikipedia]
+mobile games [...] played on a feature phone, smartphone, smartwatch, PDA, tablet computer
+
+image::img/mobile.jpg["mobile games", align="center", width="1024"]
+
+>>>The industry<<<
+------------------
+TODO: picture
+
+The industry - It's a secret
+----------------------------
+image::img/zelda_secret.gif["Secret", align="center"]
+
+For various reasons, AAA development is covered in secrecy, source code included
+
+The industry (2)
+----------------
+Some of these reasons...
+
+[role="incremental"]
+- IP principles and copyright
+- "first to market" desire and competition
+- multiple stakeholders involved
+
+[role="incremental"]
+_id software_ notably broke the trend and released the source code of all their _Doom_ and _Quake_ games
+
+[role="incremental"]
+The rest of the industry didn't follow suit. Even *id* stopped after being acquired by the publisher Bethesda
+
+The industry (3)
+----------------
+Some modern AAA game engines changed their licensing and they’re now open...
+
+- Unreal Engine 4 https://www.unrealengine.com/ue4-on-github
+- CryEngine https://github.com/CRYTEK/CRYENGINE
+
+[role="incremental"]
+Studios sometimes release internal libraries for general use +
+`EA/EASTL`, `InsomniacGames/ig-cachesim`, `Remedy-Entertainment/binderoo` etc
+
+[role="incremental"]
+NOTE: Everything here based on my experience (recently Unreal Engine 4), YMMV!
+
+Project size/LOC
+----------------
+AAA studios...
+
+[role="incremental"]
+- hundreds of people across various continents
+- lots of wheel reinventions
+- `legacy` of franchise games and sequels
+
+[role="incremental"]
+...so amount of code quickly skyrockets...
+
+[role="incremental"]
+[quote, CppCon 2014: Nicolas Fleury "C++ in Huge AAA Games"]
+_______
+Assassin's Creed Unity:
+
+* 6.5 M C++ LOC for entire team code.
+* 9 M more C++ LOC from outside project.
+
+Rainbow Six: Siege:
+
+* 3.5 M C++ LOC for engine code from game team.
+* 4.5 M C++ LOC from Technology Group.
+_______
+
+TODO: compare with Bitcoin
+
+ifdef::backend-slidy2[]
+[backgr_1, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_1.jpg["backgr"]
+&&&&
+:slidebackground: backgr_1
+endif::backend-slidy2[]
+
+>>>Philosophy TODO: rename<<<
+-----------------------------
+ifdef::backend-slidy2[:slidebackground!:]
+
+Philosophy
+----------
+Games need to *run*...
+
+[role="incremental"]
+- at least _30 FPS_ - _33 ms_ per frame
+- _60+ FPS_ very desirable (obligatory for good multiplayer) - _16 ms_ per frame
+
+[role="incremental"]
+Everything is centered around achieving this - while...
+
+[role="incremental"]
+- pushing the graphics and gameplay
+- maintaining low-latency
+
+[role="incremental"]
+*Tradeoffs...*
+
+[role="incremental"]
+- stability is important
+* a (rare) crash forgiven if it doesn't corrupt the save/user data
+- limited concern for uptime
+* unless server
+* unless it leaks over time!
+- low-latency but throughput also important - got to push millions of pixels to the screen!
+
+Platform - Compiler
+-------------------
+By far and large Windows centric development - even for consoles
+
+[role="incremental"]
+*Microsoft Visual Studio*
+
+[role="incremental"]
+- is overwhelmingly used, almost de facto standard
+- sometimes quite old versions, by now 2013+
+- before C++11 lots of code depended on Microsoft quirks
+
+[role="incremental"]
+*GCC*
+
+[role="incremental"]
+- rarely used on PC : mainly dedicated servers, or the odd Linux port
+- prev gen consoles had vendor specific variants
+
+[role="incremental"]
+*clang*
+
+[role="incremental"]
+- Playstation 4(R) uses it exclusively (with LLVM backend)
+
+Platform - IDE
+--------------
+Again, Microsoft drives it...
+
+[role="incremental"]
+*Visual Studio*
+
+[role="incremental"]
+- used everywhere: PC, Xbox One, PS4
+- used with extensions:
+* various profilers & debuggers
+* help with code completion & formatting: Visual Assist X, Resharper
+
+[role="incremental"]
+*Others*
+
+[role="incremental"]
+- SN Systems: proprietary EDG front end for Sony until PS4; extensions/toolchain
+- Metroworks CodeWarrior for Nintendo consoles
+- XCode - Just say No :)
+
+Compilation
+-----------
+Compilation and linking are usually dreadfully slow
+
+End result usually a single executable - size is ridiculous!
+
+[role="incremental"]
+Optimizations are on by default, full debug builds have crawling FPS; +
+Various tricks:
+
+[role="incremental"]
+- `#pragma optimize` on/off "islands"
+- only specific modules are debug
+- mastery of reading optimized disassembly
+
+Compilation (continued)
+-----------------------
+Some mitigation methods...
+
+[role="incremental"]
+*Unity builds*
+
+[role="incremental"]
+- combine all/lots of source files into a couple of gigantic `.cpp` units
+- improves speeds due to way less churn on #include's
+* basically poor man's modules
+- can create hidden dependencies gotchas as opposed to normal pipeline 
+- can hurt iteration (usual mitigation: extract out specific .cpp)
+
+[role="incremental"]
+*Various techniques*
+
+[role="incremental"]
+- "include what you use" parser tools
+- template explicit instantiation & similar to reduce symbol count for linking
+
+[role="incremental"]
+*Distributed compilation*
+
+[role="incremental"]
+- Use solution like `FastBuild` or `Incredibuild` to effectively create compilation farms
+
+ifdef::backend-slidy2[]
+[backgr_2, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_2.jpg["backgr"]
+&&&&
+:slidebackground: backgr_2
+endif::backend-slidy2[]
+
+>>>Coding styles & techniques - TODO: rename<<<
+-----------------------------------------------
+ifdef::backend-slidy2[:slidebackground!:]
+
+Flavors of C++
+---------------
+Traditionally was very C++98 but by now changed...
+
+[role="incremental"]
+- C++11: baseline 
+- C++14: getting good traction
+* the major engines help with this - `UE4` enables it by default
+- C++17: not yet, I predict some features will be embraced 
+* `if-with-initializer` seems a favorite, guaranteed RVO, `std::optional` for errors etc
+
+[role="incremental"]
+Due to differences in people's experience, personality and time availability, adoption of the various new features and techniques is slow...
+
+[role="incremental"]
+Personal way to help...
+
+[role="incremental"]
+- running a series of internal talks "C++11/14 for game dev"
+- http://www.splashdamage.com/blog/1254/introducing-our-c-tech-bloga[newsletter] about best practices and modern C++ 
+- promoting & sharing conference talks
+
+Coding style
+------------
+Every studio has a set of guidelines or a complete style guide. +
+Some of them recommend things that would really upset a C++ purist!
+
+[role="incremental"]
+*Example*: Namespaces
+
+[role="incremental"]
+- not preferred (with exceptions: anonymous to force internal linkage)
+- Instead everything has a game specific prefix:
+* `CShooterComponent`, `TShooterItem`, `EShooterState` etc
+
+[role="incremental"]
+*Trivia*
+
+[role="incremental"]
+- CamelCase rules the nation
+- K&R (or "Egyptian") style of braces very frowned upon - Allman is almost always used
+- `auto` destroys friendships
+
+Fighting the compiler
+---------------------
+*Heed no warning!* +
+Warnings are mopped under the floor - couple of favorite ones to disable...
+
+[role="incremental"]
+- signed/unsigned mismatch
+- conversion from `T1` to `T2` requires a narrowing conversion
+- conversion from `T1` to `T2`, possible loss of data
+- conditional <expression> is constant
+- nonstandard extension used: nameless struct/union
+
+[role="incremental"]
+*Use the __force!* +
+Eternal hope that magically sprinkling `inline` will make things faster...
+
+[role="incremental"]
+[source]
+inline, __inline, __forceinline
+__attribute__((always_inline))
+
+OOP is king
+-----------
+Preferred technique for game code - with some studios resisting!
+
+[role="incremental"]
+*Polymorphism*
+
+[role="incremental"]
+- the preferred default technique
+- "What is a v-table?" - common interview question
+- lots of codebases have a Java-style `Object` ultimate base class
+
+[role="incremental"]
+*ECS*
+
+[role="incremental"]
+- Entity-Component-Systems are prevalent in gameplay code
+- Everything hierachy of `Entity`, `Node` or `Object`'s
+- Components do virtual `Update`, `Tick`, `Draw` or `Render`
+
+[role="incremental"]
+*Common communication methods*
+
+[role="incremental"]
+- normally just tight coupling
+- delegate/event systems (heavily macro'ed for "usability"!)
+- typed/untyped message queues 
+
+Alternatives to OOP
+-------------------
+Need for *multithreading* continuously growing...
+
+[role="incremental"]
+- I/O systems, loading & saving
+- Rendering, Animation, Navigation, etc decoupled from gameplay
+- Online sub-systems and services
+
+[role="incremental"]
+*New/old paradigms*
+
+[role="incremental"]
+- Functional style
+* monad continuations - `.Then()`, `.With()` etc
+* seeking to minimize state, pursue purity
+- "Job-ifying" 
+* Parallel Patterns Library (PPL) from Microsoft
+* Threading Building Blocks from Intel
+* Seldom the standard `future` and `promise` - usually every game engine has own equivalents
+
+Templates
+---------
+Traditionally, there was a tendency to downplay templates - changing now with modern standards and mature compilers
+
+[role="incremental"]
+*Normal usage*
+
+[role="incremental"]
+- container work obviously
+- policy design: allocator, rendering, etc
+- variadic templates used to be emulated with "up to 11 arguments" horrible macros
+
+[role="incremental"]
+*Metaprogramming*
+
+[role="incremental"]
+- seen as black magic and highly discouraged
+- due to project size - isolated islands where it thrives
+- sometimes custom reduced specific `enable_if`, `void_t`, traits etc
+
+[role="incremental"]
+.Poor man's templates
+Still a tendecy to use *macros* where `template` or `constexpr` functions would be more adequate
+
+ifdef::backend-slidy2[]
+[backgr_3, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_3.jpg["backgr"]
+&&&&
+:slidebackground: backgr_3
+endif::backend-slidy2[]
+
+>>>STL / Boost<<<
+-----------------
+ifdef::backend-slidy2[:slidebackground!:]
+
+STL
+---
+Adoption generally low...
+
+[role="incremental"]
+- console games seldom ship with STL containers
+- more usage in PC-only/indie
+- iostreams are the devil's work!
+
+[role="incremental"]
+*Bespoke alternatives*
+
+[role="incremental"]
+- specific allocation needs (and limited allocator model pre C++17)
+- associated (or perceived) bloat
+- slow or cumbersome debugging
+- not everyone is willing to follow STL coding style and naming
+
+STL (continued)
+---------------
+`std::string` - best example...
+
+[role="incremental"]
+- every studio/engine reinvents the string wheel
+- specific localization needs - ties with game data
+- previous STL implementations made awkward choices (Ex: copy on write on older GCC)
+- no need for streams: C printf style preferred, I/O handled in bulk elsewhere
+
+[role="incremental"]
+*Bits & pieces*...
+
+[role="incremental"]
+- the `Iterator` concept is copied and reimplemented - if nothing else just to enable ranged-for's
+- the STL atomics and locks are generally used as is
+- sparing use of algorithms, normally bespoke containers don't play well with them
+
+[EA]STL
+-------
+*EASTL from Electronic Arts* -  video game specific implementation of STL +
+Originally started 10 years ago for internal use, now open source (https://github.com/electronicarts/EASTL)
+
+[role="incremental"]
+Normally follows the `std::` nomenclature & style +
+Differences / Changes...
+
+[role="incremental"]
+- written in a more straightforward/direct way (less general)
+* easier to debug, faster release builds
+- simplified allocator model - games specific
+* alignment aware, naming support, etc
+- intrusive containers
+- fixed_ containers (no allocation, only within provided block)
+- new containers
+* `ring_buffer`, `heap`, `priority_queue`, etc
+- smart pointers, type traits - now obsolete
+
+STL - SG14
+----------
+Finally game dev is officially recognized in the ISO C++ Standard committee! +
+
+[role="incremental"]
+*SG14 group* +
+Video games and embedded programming study sub-group +
+Tries to propose new, optimized containers, data structures even language changes
+
+[role="incremental"]
+*Proposals & Papers in-flight*...
+
+[role="incremental"]
+- fixed point numeric library
+- ring buffer
+- intrusive containers
+- "in place" alternative to `std::function`
+- likely/unlikely optimization hints
+- bike shedding :)
+
+Boost
+-----
+Very frowned upon and highly discouraged...
+
+[role="incremental"]
+image::img/carmack_tweet.png["asm", align="center"]
+
+Boost (continued)
+-----------------
+*Reasons*...
+
+[role="incremental"]
+- clash of cultures:
+* Boost is "academic" and research driven
+* game dev is pragmatic and get-it-done
+- historically didn't play well with MSVC
+* still doesn't: `boost::hana` (but getting very close)
+- by now best libraries made it into the standard
+- difficulty to integrate & setup
+* `bcp` tool makes this easier
+- slow compilation times
+
+ifdef::backend-slidy2[]
+[backgr_4, position: absolute; top: 1em; left: 1em;]
+&&&&
+image::img/badlands_4.jpg["backgr"]
+&&&&
+:slidebackground: backgr_4
+endif::backend-slidy2[]
+
+>>>Exceptions / RTTI / Reflection<<<
+------------------------------------
+ifdef::backend-slidy2[:slidebackground!:]
+
+Exceptions
+----------
+Almost never used due to speed penalties of `throw`-ing and `catch`-ing
+
+[role="incremental"]
+A small (not totally fair) demonstration...
+
+[role="incremental"]
+[source]
+---------------------------------------
+#include <stdexcept>
+
+int func()
+{
+    throw std::exception();
+}
+---------------------------------------
+
+[role="incremental"]
+Compiled with `/O2` optimizations on VS 2017 +
+Let's see disassembly: https://godbolt.org/g/wQXmTi
+
+Exceptions (continued)
+----------------------
+image::img/exception_1.png["asm", align="center"]
+
+Exceptions (continued)
+----------------------
+image::img/exception_2.png["asm", align="center"]
+
+Exceptions - alternatives
+-------------------------
+Handling of errors...
+
+[role="incremental"]
+- during dev: hard exit is requested on error
+- C style last-error or status arguments
+- impossible to handle errors in constructors
+* solution is to have `Create`, `Instantiate`, `Begin` replacements
+- exceptions are still used sometimes in non critical code
+* online services
+* OS/system interactions
+- reputation problem feedback loop
+* past gen console platforms didn't support them
+* compiler support was lackluster
+* dev didn't use them
+
+Reflection / RTTI
+-----------------
+A lot of games have involved reflection systems...
+
+[role="incremental"]
+- close live-link with editors and tools
+* values inspection, code hot reload
+- serialization for loading/saving; versioning
+- network replication, RPC's
+- garbage collection
+
+[role="incremental"]
+*Custom solutions*...
+
+[role="incremental"]
+- preprocessor based decorations that both annotate code and generate registration calls
+- template metaprogramming for same purpose
+- mini IDL's that generate additional cpp/h files
+- processing intermediate compiler data (ex: .PDB file)
+- actually modifiying the compiler, if access to it
+
+Reflection - UE4
+----------------
+Example from Unreal Engine 4...
+
+image:img/ue4_reflect_editor.png["ue4 reflect", align="center"]
+
+Reflection - UE4
+----------------
+Class member decorations...
+
+image:img/ue4_reflect_header.png["ue4 reflect", align="center"]
+
+Reflection - UE4
+----------------
+The ugly insides...
+
+image:img/ue4_reflect_generated.png["ue4 reflect", align="center"]
+
+There is more...
+----------------
+[role="incremental"]
+- Most used Patterns
+* Singleton - the anti-pattern of choice
+* Factory
+* Builder
+* Visitor (double-dispatch)
+* Policy based design
+* etc...
+- Lots and lots of preprocessor abuse
+- Whatever I missed from codebases I never worked on...
+
+Closing
+-------
+There you have it - a short survey of C++ in game development!
+
+[role="incremental"]
+- game dev pushes the bar due to video games hard requirements
+- for a time looked at as the ugly cousin in the basement of C++
+- coming back strong
+* better represented now in the C++ ecosystem
+
+[role="incremental"]
+Thank you! +
+https://twitter.com/valentin_galea[@valentin_galea] +
+https://github.com/valentingalea/research/tree/master/badlands
+
+Attributions
+------------
+- made with http://www.methods.co.nz/asciidoc/index.html[Asciidoc]
+- uses https://www.gnu.org/software/src-highlite/[GNU Source-highlight]
+ifdef::backend-slidy2[]
+- uses https://github.com/mosabua/asciidoc-slidy2-backend-plugin[Slidy2 plugin]
+- badlands images:
+* intro: (CC BY-SA 3.0) modified from https://commons.wikimedia.org/wiki/File:Badlands_National_Park_-_panoramio_(2).jpg[original]
+* slide 14: (CC BY-SA 4.0) https://commons.wikimedia.org/wiki/File:Big_Badlands_Overlook_PA120529.JPG[original]
+* slide 22: (CC BY-SA 4.0) https://commons.wikimedia.org/wiki/File:Changing_Scenes_Overlook_PA100156.JPG[original]
+* slide 28: public domain https://commons.wikimedia.org/wiki/File:Badlands_National_Park,_South_Dakota,_04594u.jpg[original]
+* slide 34: (CC BY-SA 2.0) https://commons.wikimedia.org/wiki/File:Prairie_Wind_Overlook_in_the_Badlands.jpg[original]
+endif::backend-slidy2[]
+- The Legend of Zelda(R) is property of Nintendo(R)
+- all other images under "Fair Use"/"Fair Dealing"

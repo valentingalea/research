@@ -1,0 +1,42 @@
+[state=badland]
+== Reflection / RTTI
+image::img/reflection.jpg[background, size=cover]
+
+[%notitle, background-iframe="src/header.html"]
+== Reflection / RTTI - Overview
+Default introspection (`typeid`, `dynamic_cast`) is inadequate for the needs of games...
+
+[.step]
+- close live-link with editors and tools
+  * values inspection and edit
+  * code "hot reload"
+- serialization for loading/saving; versioning
+- network replication, RPC's
+- garbage collection
+
+[%notitle, background-iframe="src/header.html"]
+== Reflection - Custom
+Custom solutions...
+
+[.step]
+- preprocessor based decorations that both annotate code and generate registration calls
+  * template metaprogramming for same purpose
+- mini _Domain Specific Languages_ that generate additional `.cpp/.h` files
+- processing intermediate compiler data
+  * ex: `.PDB` file for MSVC
+- actually modifying the compiler, if access to it
+
+== Reflection - UE4
+image:img/ue4_reflect_editor.png["ue4 reflect"]
+
+[%notitle, background-iframe="src/header.html"]
+== Reflection - UE4 (2)
+Class member decorations...
+
+image:img/ue4_reflect_header.png["ue4 reflect"]
+
+[%notitle, background-iframe="src/header.html"]
+== Reflection - UE4 (3)
+The ugly insides...
+
+image:img/ue4_reflect_generated.png["ue4 reflect"]
