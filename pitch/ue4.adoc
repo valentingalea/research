@@ -1,12 +1,9 @@
 = How Unreal Engine 4 solved all C++'s problems, failed, and got rich trying
 
-Agenda
-------
-- Quick overview of game development
-- Unreal Engine 4 and its history
-- Games showcase
-- Problem #1: Build system
-- Problem #2: Modules
-- Problem #3: GC and memory management
-- Problem #4: Reflection
-- Problem #5 (self made): Rewrite STL
+Unreal Engine from Epic Games is a veteran 3D engine in the video games industry. It powers well known franchises such as Gears Of War, Bioshock, Borderlands and countless others, as well as the phenomenally successful Fortnite.
+
+Now at version 4, it has a rich history dating back to 1996. It was originally written in C++ and continues to be to this day. Such a heritage brings its own set of problems - most of its initial design predates Modern C++, although recently it caught up. Couple this with the general isolation of game development and you get a very interesting mix of C++ design and architectural decisions.
+
+The talk will walk though its rich legacy and highlight the various struggles of Epic against the limitations of C++ at various points in time and their unique and sometimes questionable solutions. We will analyse their approaches in build systems, simulation of modules, adding GC, reflection and of course custom containers and self-made STL alternative.
+
+Purist of C++ will be outraged, game developers will smirk knowingly and general C++ users will be at least intrigued at this unwieldly, complex, but ultimately hugely successful system. 
