@@ -2,8 +2,8 @@
 
 Unreal Engine from Epic Games is a veteran 3D engine in the video games industry. It powers well known franchises such as Gears Of War, Bioshock, Borderlands and countless others, as well as the phenomenally successful Fortnite.
 
-Now at version 4, it has a rich history dating back to 1996. It was originally written in C\++ and continues to be to this day. Such a heritage brings its own set of problems - most of its initial design predates Modern C+\+, although recently it caught up. Couple this with the general isolation of game development and you get a very interesting mix of C++ design and architectural decisions.
+Now at version 4, it has a rich history dating back to 1996. It was originally written in C\++ and continues to be to this day. Such a heritage brings its own set of problems - most of its initial design predates Modern C+\+, although recently it caught up. Couple this with the relative isolation of game development and you get a very interesting mix of C++ design and architectural decisions.
 
-The talk will walk though its rich legacy and highlight the various struggles of Epic against the limitations of C++ at various points in time and their unique and sometimes questionable solutions. We will analyse their approaches in build systems, simulation of modules, adding GC, reflection and of course custom containers and self-made STL alternative.
+The talk will highlight the various struggles of Epic in mastering and augmenting C++ at various points in time and their unique and sometimes questionable solutions. We will analyse their approaches in build systems, simulation of modules, adding GC, reflection, hot-patching, and of course custom containers and self-made STL alternative.
 
 Purist of C\++ will be outraged, game developers will smirk knowingly and general C++ users will be at least intrigued at this unwieldly, complex, but ultimately hugely successful system. 
