@@ -89,4 +89,73 @@ CAUTION: test test
 
 WARNING: test test
 
+== What Are Shaders
+image::https://upload.wikimedia.org/wikipedia/commons/8/84/Phong-shading-sample.jpg[]
+// public domain
+
+Shaders are computer graphics programs used for a variety of specialized effects
+
+NOTE: Originally the term was introduced by PIXAR in 1988, for their RenderMan system
+
+== Shaders on GPU's
+image::http://images.nvidia.com/products/geforce_9600_gt/GeForce_9600_GT_3qtr_med.png[]
+
+- computer graphics
+- image manipulation
+- general purpose - highly parallel - processing
+
+== Why (generaly) on GPU
+image::https://steemitimages.com/0x0/https://steemitimages.com/DQmbboYVYjvhUetEDhh9bQPXz4AxZTBaDujTkSLBtqn7TYv/image.png[]
+// https://steemit.com/gridcoin/@dutch/hardware-and-project-selection-part-1-cpu-vs-gpu
+
+== Types of Shaders
+image::https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/06-shaders/OpenGL-2.0-Programmable-Shader-Pipeline.png[]
+// https://github.com/ssloy/tinyrenderer
+
+image::https://glumpy.github.io/_images/gl-pipeline.png[]
+// https://glumpy.github.io/modern-gl.html
+
+== Pixel/Fragment Shader
+image::https://i.ytimg.com/vi/JtHm6auVnxA/maxresdefault.jpg[]
+
+IMPORTANT: We will concentrate on image-only shaders
+
+== Motivation
+I wanted to create images like...
+
+== !
+image::https://i.ytimg.com/vi/__G43hELHL0/maxresdefault.jpg[background]
+
+== !
+image::http://boostclock.com/img/bench_app/ShaderToy_volcaninc.jpg[background]
+
+== !
+image::http://www.beautypi.com/images/shadertoyvr.jpg[background]
+
+== !
+on more limited devices...
+
+== !
+image::https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2016/03/25756567562_59a7e81de5_k.jpg[background]
+
+== !
+image::https://winblogs.azureedge.net/win/2016/04/Switch-Alpha-12_SA5-271_06.jpg[background]
+
+[state=commute]
+== !
+image::img/commute.png[background]
+
+during long commutes...
+
+[state=gpu_bug]
+== !
+image::img/snail-bug.png[background]
+
+also because GPU driver render bugs
+
+WARNING: taken on my desktop PC / Nvidia GTX 1060
+
+== !
+Let's see how C++ can help out!
+
 == The End

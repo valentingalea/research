@@ -19,3 +19,11 @@
     display: inline;
     vertical-align: middle;
 }
+
+section[data-state="commute"] p {
+    color: black;
+}
+
+section[data-state="gpu_bug"] {
+    color:black;
+}
