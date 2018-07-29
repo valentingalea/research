@@ -1,0 +1,21 @@
+.reveal section.title.present h1 {
+    color: white;
+    text-align: left;
+    text-shadow: 0px 5px 0px rgba(0,0,0,0.5);
+}
+
+.reveal section.title.present h2 {
+    color: white;
+    text-align: left;
+    text-shadow: 0px 5px 0px rgba(0,0,0,0.5);
+}
+
+.reveal section img {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-right: 0.25em;
+    box-shadow: initial;
+    display: inline;
+    vertical-align: middle;
+}

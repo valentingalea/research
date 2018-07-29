@@ -1,4 +1,14 @@
 = Rapid Prototyping of Graphics Shaders in Modern C++
+:revealjs_theme: black
+:revealjs_transition: fade
+:revealjs_controls: true
+:revealjs_progress: true
+:revealjs_slideNumber: true
+:revealjs_history: true
+:revealjs_overview: true
+:revealjs_fragments: true
+:customcss: main.css
+:title-slide-background-image: img/title.png
 
 == About Me
 TODO:
