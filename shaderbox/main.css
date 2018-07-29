@@ -21,9 +21,9 @@
 }
 
 section[data-state="commute"] p {
-    color: black;
+    background-color: #222222
 }
 
-section[data-state="gpu_bug"] {
-    color:black;
+section[data-state="gpu_bug"] p, td {
+    background-color: #222222
 }
