@@ -9,6 +9,8 @@
 :revealjs_fragments: true
 :customcss: main.css
 :title-slide-background-image: img/title.png
+:source-highlighter: highlightjs
+:icons: font
 
 == About Me
 TODO:
@@ -55,5 +57,36 @@ TODO:
 - Showcase
  * my stuff
  * benchmarks
+
+
+== Source Code
+[source, cpp]
+---------------------------------------
+class CBlockHeader
+{
+public:
+    int32_t nVersion;
+    uint256 hashPrevBlock;
+    uint256 hashMerkleRoot;
+    uint32_t nTime;
+    uint32_t nBits;
+    uint32_t nNonce;
+
+    CBlockHeader()
+    {
+        SetNull();
+    }
+---------------------------------------
+
+== Admonitions
+NOTE: test test
+
+TIP: test test
+
+IMPORTANT: test test
+
+CAUTION: test test
+
+WARNING: test test
 
 == The End
