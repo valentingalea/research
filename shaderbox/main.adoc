@@ -4,7 +4,7 @@
 :revealjs_controls: true
 :revealjs_progress: true
 :revealjs_slideNumber: true
-:revealjs_history: true
+:revealjs_history: false
 :revealjs_overview: true
 :revealjs_fragments: true
 :customcss: main.css
@@ -18,22 +18,39 @@ TODO:
 == Agenda
 TODO:
 
-== What Are Shaders
-image::https://upload.wikimedia.org/wikipedia/commons/8/84/Phong-shading-sample.jpg[]
+== Shaders
+[quote]
+A computer program that is used to do *shading*
+// originally from https://www.clicktorelease.com/talks/scotlandjs-2015/
+
+[state=shading]
+== !
+image::https://www.clicktorelease.com/talks/scotlandjs-2015/files/CubeSphereConeCylinderNoBackgrnd.jpg[background]
+// alternative: https://qph.ec.quoracdn.net/main-qimg-f441c2d9b120a389f6fa5c995080adaf-c
+
+[quote, Wikipedia]
+Depicting depth perception in 3D models or illustrations by varying levels of darkness
+
+[state=luxo]
+== !
+image::https://i.ytimg.com/vi/lkKf9DWmR04/maxresdefault.jpg[background]
+
+[quote, Pixar RenderMan 1988]
+A computer program that tells the computer how to draw something
+//image::https://upload.wikimedia.org/wikipedia/commons/8/84/Phong-shading-sample.jpg[]
 // public domain
 
-Shaders are computer graphics programs used for a variety of specialized effects
-
-NOTE: Originally the term was introduced by PIXAR in 1988, for their RenderMan system
-
-== Shaders on GPU's
+== Shaders on Modern GPU's
 image::http://images.nvidia.com/products/geforce_9600_gt/GeForce_9600_GT_3qtr_med.png[]
+//image::https://cryptosrus.com/wp-content/uploads/2017/10/gpu_mining_cards-1280x550.jpg[background]
 
+== Usage on Modern GPU's
+[.step]
 - computer graphics
 - image manipulation
 - general purpose - highly parallel - processing
 
-== Why (generaly) on GPU
+== Why on GPU
 image::https://steemitimages.com/0x0/https://steemitimages.com/DQmbboYVYjvhUetEDhh9bQPXz4AxZTBaDujTkSLBtqn7TYv/image.png[]
 // https://steemit.com/gridcoin/@dutch/hardware-and-project-selection-part-1-cpu-vs-gpu
 

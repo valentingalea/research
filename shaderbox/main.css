@@ -14,16 +14,20 @@
     border: 0;
     padding: 0;
     margin: 0;
-    margin-right: 0.25em;
-    box-shadow: initial;
-    display: inline;
-    vertical-align: middle;
+}
+
+/* shading drawing */
+.reveal .slide-background:nth-of-type(5) {
+    opacity: .2 !important;
+}
+/* pixar luxo */
+.reveal .slide-background:nth-child(6) {
+    opacity: .2 !important;
 }
 
 section[data-state="commute"] p {
     background-color: #222222
 }
-
 section[data-state="gpu_bug"] p, td {
     background-color: #222222
 }
