@@ -102,6 +102,44 @@ also because GPU driver render bugs
 WARNING: taken on my desktop PC / Nvidia GTX 1060
 
 == !
-Let's see how C++ can help out!
+Shading Languages
+
+[state=RSL]
+== Pixar RenderMan Language
+image::https://www.clicktorelease.com/talks/scotlandjs-2015/files/renderman.jpg[background]
+
+[.stretch]
+[source, javascript]
+-----
+/* red mesh */                  /* red shaded mesh */
+surface basic() {               surface simple(color myOpacity = 1;) {
+    Ci = (1.0, 0.0, 0.0);           color myColor = (1.0, 0.0, 0.0);
+    Oi = 1;                         normal Nn = normalize(N);
+}                                   Ci = myColor * myOpacity * diffuse(Nn);
+                                    Oi = myOpacity;
+                                }
+-----
+
+== Shading Languages History
+
+Real-time rendering:
+
+- ARB assembly language
+- OpenGL shading language (*GLSL*)
+- Cg programming language
+- DirectX Shader Assembly Language
+- DirectX High-Level Shader Language (*HLSL*)
+- PlayStation Shader Language
+
+== Shading Languages Future
+
+Basically C++ (usually via LLVM)
+
+- Metal Shading Language (C++14, Apple)
+- CUDA Heterogeneous Computing (C++11, NVidia)
+- HLSL 6.x (C++98'ish, Microsoft)
+
+== !
+Let's see how C++ can help out, NOW!
 
 == The End

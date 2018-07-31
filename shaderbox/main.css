@@ -28,6 +28,14 @@
 section[data-state="commute"] p {
     background-color: #222222
 }
+
 section[data-state="gpu_bug"] p, td {
     background-color: #222222
+}
+
+section[data-state="RSL"] h2 {
+    background-color: #222222
+}
+section[data-state="RSL"] pre {
+    width: 100% !important;
 }
