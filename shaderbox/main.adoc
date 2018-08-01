@@ -82,10 +82,14 @@ image::http://www.beautypi.com/images/shadertoyvr.jpg[background]
 on more limited devices...
 
 == !
-image::https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2016/03/25756567562_59a7e81de5_k.jpg[background]
+image::https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2016/03/25756567562_59a7e81de5_k.jpg[400, 300]
+
+TODO: replace image
 
 == !
-image::https://winblogs.azureedge.net/win/2016/04/Switch-Alpha-12_SA5-271_06.jpg[background]
+image::https://winblogs.azureedge.net/win/2016/04/Switch-Alpha-12_SA5-271_06.jpg[400, 300]
+
+TODO: replace image
 
 [state=commute]
 == !
@@ -100,6 +104,12 @@ image::img/snail-bug.png[background]
 also because GPU driver render bugs
 
 WARNING: taken on my desktop PC / Nvidia GTX 1060
+
+== !
+
+and finally it's nice to have full source code debugging, which is hard on GPU's
+
+TODO: image of VS debug
 
 == !
 Shading Languages
@@ -131,6 +141,15 @@ Real-time rendering:
 - DirectX High-Level Shader Language (*HLSL*)
 - PlayStation Shader Language
 
+== A glimpse of GLSL
+TODO: classic example
+
+== A glimpse of HLSL
+TODO: classic example
+
+== GLSL vs HLSL
+TODO: couple of types comparison from that MSDN site
+
 == Shading Languages Future
 
 Basically C++ (usually via LLVM)
@@ -141,5 +160,27 @@ Basically C++ (usually via LLVM)
 
 == !
 Let's see how C++ can help out, NOW!
+
+== The Plan
+
+Pick one shading language and emulate it in C++
+
+Bonus: use the preprocessor for transcription back to the original language as well as the main competitor!
+
+== The Plan (continued)
+
+[.step]
+- obligatory preprocessor layer
+- vector (linear algebra) types
+ * swizzle support
+- matrix types
+- operators
+- utility/math functions
+
+== Place The Bet
+
+We will chose *GLSL* as it's used on desktop, web and mobile.
+
+NOTE: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
 == The End
