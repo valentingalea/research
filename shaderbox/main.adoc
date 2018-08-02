@@ -107,7 +107,7 @@ WARNING: taken on my desktop PC / Nvidia GTX 1060
 
 == !
 
-and finally it's nice to have full source code debugging, which is hard on GPU's
+and finally: full source code debugging - hard/impossible on GPU's
 
 TODO: image of VS debug
 
@@ -134,6 +134,7 @@ surface basic() {               surface simple(color myOpacity = 1;) {
 
 Real-time rendering:
 
+[.step]
 - ARB assembly language
 - OpenGL shading language (*GLSL*)
 - Cg programming language
@@ -154,9 +155,13 @@ TODO: couple of types comparison from that MSDN site
 
 Basically C++ (usually via LLVM)
 
+[.step]
 - Metal Shading Language (C++14, Apple)
+ * only on iOS devices
 - CUDA Heterogeneous Computing (C++11, NVidia)
+ * only for computing, not graphics
 - HLSL 6.x (C++98'ish, Microsoft)
+ * not released yet
 
 == !
 Let's see how C++ can help out, NOW!
@@ -179,8 +184,8 @@ Bonus: use the preprocessor for transcription back to the original language as w
 
 == Place The Bet
 
-We will chose *GLSL* as it's used on desktop, web and mobile.
+We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
 
-NOTE: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
+WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
 == The End
