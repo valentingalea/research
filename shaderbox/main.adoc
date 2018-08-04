@@ -226,4 +226,67 @@ We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
 
 WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
+== TODO...
+
+== Showcase
+
+First - crash course into procedural graphics...
+
+== Raymaching into Signed Distance Fields
+
+TODO: obtain permissions from https://twitter.com/ReinderNijhoff
+
+== Results
+
+[%step]
+- GPU on desktop PC
+ * https://www.shadertoy.com/user/valentingalea
+ * Nvidia GeForce 1060
+ * 1080p
+- CPU on desktop PC
+ * AMD FX 8350 8-core 4.00 GHz
+ * Microsoft Visual C++ 15.7.6
+ * 320x240px
+
+== Results (continued)
+
+- CPU mobile phone
+ * Samsung Galaxy S7
+ * C4Droid app (https://play.google.com/store/apps/details?id=com.n0n3m4.droidc)
+ * GCC 7.2.0
+ * 100x100px
+
+[%notitle, background-video="vid/planet.mp4", options="loop,muted"]
+== Planet (GPU)
+
+== Planet (CPU)
+
+|==========================================================================================
+| image:img/pc_planet.png[Planet(PC)] | image:img/droid_planet.jpg[Planet(Droid), 300, 300]
+| Desktop PC                          | Mobile Phone
+| .1 FPS :(                           | 5 FPS
+|==========================================================================================
+
+== Clouds (GPU)
+
+TODO: capture video
+
+== Clouds (CPU)
+
+TODO: integrate old shader
+TODO: capture pics/vid
+
+== Vinyl Turntable (GPU)
+
+TODO: capture video
+
+== Vinyl Turntable (CPU)
+
+TODO: capture pics/vid
+
+== Egg (GPU)
+
+TODO: capture video (disable 3d and longer)
+TODO: only on GPU
+
 == The End
