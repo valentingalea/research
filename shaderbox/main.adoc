@@ -212,7 +212,7 @@ Bonus: use the preprocessor for transcription back to the original language as w
 
 == The Plan (continued)
 
-[.step]
+[%step]
 - obligatory preprocessor layer
 - vector (linear algebra) types
  * swizzle support
@@ -226,7 +226,25 @@ We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
 
 WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
-== TODO...
+== Language: Declarations
+
+|==============================================================================
+| GLSL              | HLSL                  | C++
+3+^| classic basic types
+3+^| C-style `struct`
+| `T name = T ( ... )` | `T name = { ... }` |  both (`_begin()` macro)
+|==============================================================================
+
+== Language: Arguments
+
+|===========================================
+| GLSL/HLSL     | C++           | Macro glue
+| `const in T`  | `const T &`   | `_in(T)`
+| `inout T`     | `T &`         | `_inout(T)`
+| `out T`       | `T &`         | `_out(T)`
+|===========================================
+
+
 
 == Showcase
 
