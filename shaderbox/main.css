@@ -39,3 +39,10 @@ section[data-state="RSL"] h2 {
 section[data-state="RSL"] pre {
     width: 100% !important;
 }
+
+section[data-state="STL"] table colgroup col:nth-child(1) {
+    width: 20% !important;
+}
+section[data-state="STL"] table colgroup col:nth-child(2) {
+    width: 80% !important;
+}
