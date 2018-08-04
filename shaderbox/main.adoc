@@ -230,11 +230,28 @@ WARNING: only a subset of it - concentrate on procedural graphics thus minimize/
 
 == Showcase
 
-First - crash course into procedural graphics...
+//TODO: doen's work
+//[.step]
+First: crash course into procedural graphics...
 
-== Raymaching into Signed Distance Fields
+NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 
-TODO: obtain permissions from https://twitter.com/ReinderNijhoff
+[%notitle, background-image="img/tutorial/step_1.png"]
+== raymarch tutorial step 1
+[%notitle, background-image="img/tutorial/step_2.png"]
+== raymarch tutorial step 2
+[%notitle, background-image="img/tutorial/step_3.png"]
+== raymarch tutorial step 3
+[%notitle, background-image="img/tutorial/step_4.png"]
+== raymarch tutorial step 4
+[%notitle, background-image="img/tutorial/step_5.png"]
+== raymarch tutorial step 5
+[%notitle, background-video="vid/raymarch.mp4", options="loop,muted"]
+== raymarch tutorial step 6
+[%notitle, background-image="img/tutorial/step_7.png"]
+== raymarch tutorial step 7
+[%notitle, background-image="img/tutorial/step_8.png"]
+== raymarch tutorial step 8
 
 == Results
 
