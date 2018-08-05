@@ -81,34 +81,25 @@ I wanted to create real-time effects like...
 == !
 on more limited devices...
 
-== !
-image::https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2016/03/25756567562_59a7e81de5_k.jpg[400, 300]
+image:https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Samsung_Galaxy_S7_and_S7_Edge.png/584px-Samsung_Galaxy_S7_and_S7_Edge.png[s7, 30%, 30%, float="left"]
 
-TODO: replace image
+image:https://thegoodguys.sirv.com/products/50052257/50052257_547863.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true[tablet, 40%, 40%, float="right"]
 
-== !
-image::https://winblogs.azureedge.net/win/2016/04/Switch-Alpha-12_SA5-271_06.jpg[400, 300]
-
-TODO: replace image
+TODO: align and get better pics
 
 [state=commute]
 == !
 image::img/commute.png[background]
-
-during long commutes...
+...because of long commutes!
 
 [state=gpu_bug]
 == !
 image::img/snail-bug.png[background]
-
 also because GPU driver render bugs
-
 WARNING: taken on my desktop PC / Nvidia GTX 1060
 
 == !
-
 and finally: full source code debugging - hard/impossible on GPU's
-
 TODO: image of VS debug
 
 == Shading Languages
