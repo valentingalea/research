@@ -67,16 +67,16 @@ image::https://i.ytimg.com/vi/JtHm6auVnxA/maxresdefault.jpg[]
 IMPORTANT: We will concentrate on image-only shaders
 
 == Motivation
-I wanted to create images like...
+I wanted to create real-time effects like...
 
-== !
-image::https://i.ytimg.com/vi/__G43hELHL0/maxresdefault.jpg[background]
+[%notitle, background-image="img/motivation_snail.jpg"]
+== Example 1
 
-== !
-image::http://boostclock.com/img/bench_app/ShaderToy_volcaninc.jpg[background]
+[%notitle, background-image="img/motivation_rainforest.png"]
+== Example 2
 
-== !
-image::http://www.beautypi.com/images/shadertoyvr.jpg[background]
+[%notitle, background-image="img/motivation_temple.png"]
+== Example 3
 
 == !
 on more limited devices...
@@ -725,4 +725,6 @@ TODO: links
 
 == Credits / Acknowledgements
 
-TODO: links
+Motivation Shaders: https://www.shadertoy.com/view/ld3Gz2 https://www.shadertoy.com/view/ldScDh https://www.shadertoy.com/view/4ttSWf
+
+TODO: the rest
