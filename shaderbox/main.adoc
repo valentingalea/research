@@ -268,8 +268,7 @@ Syntactic sugar for easy referring to components (or combination of)
 |=========================
 | { x, y, z, w } | to represent points or normals
 | { r, g, b, a } | to refer to colors (`a` is alpha/translucency)
-| { s, t, p, q 
-} | texture coordinates
+| { s, t, p, q } | texture coordinates
 |=========================
 
 == Vector Swizzle - Examples
@@ -347,9 +346,300 @@ u = v * m;            u.x = dot(v, m[0]); // m[0] is the left column of m
 
 Recreating all this in C++ ...
 
-== !
+== Design of `vector<>`
 
-SHOWCASE
+[source, cpp]
+-----
+template<typename T, size_t N>
+struct vector : public vector_base<T, N>
+{
+	using scalar_type = T;
+	using vector_type = vector<T, N>;
+	using base_type = vector_base<T, N>;
+
+	vector()
+	{
+		iterate([&](size_t i) {
+			data[i] = 0;
+		});
+	}
+    ...
+-----
+
+== `static_for` utility
+
+[source, cpp]
+-----
+template<size_t Begin, size_t End>
+struct static_for
+{
+	template<class Func>
+	void operator ()(Func &&f) {
+		f(Begin);
+
+		static_for<Begin + 1, End>()(
+			std::forward<Func>(f));
+	}
+};
+-----
+
+[source, cpp]
+-----
+template<size_t N>
+struct static_for<N, N>
+{
+	template<class Func>
+	constexpr void operator ()(Func &&) { /* empty */ }
+};
+-----
+
+== `vector<>` constructor
+
+[source, cpp]
+-----
+template<typename... S>
+explicit vector(S... args)
+{
+    static_assert((sizeof...(args) <= N),
+        "mismatch number of vector init arguments");
+
+    // dummy forwarding structure
+    struct constructor {
+        constructor(...) {}
+    };
+
+    size_t i = 0;
+    constructor(
+        { construct_at_index(i, std::forward<S>(args)) ... }
+    );
+}
+-----
+
+NOTE: `{}` init list is used to guarantee left-right order
+
+== constructor specialization
+
+[source, cpp]
+-----
+bool construct_at_index(size_t &i, scalar_type arg)
+{
+    data[i++] = arg;
+    return true; // dummy return, just because it wil be called in a {} init list
+}
+-----
+
+[source, cpp]
+-----
+template<typename Other, size_t Other_N>
+bool construct_at_index(size_t &i, vector<Other, Other_N> &&arg)
+{
+    constexpr auto count = std::min(N, Other_N);
+    static_for<0, count>()([&](size_t j) {
+        data[i++] = arg.data[j];
+    });
+    return true;
+}
+-----
+
+== construction in action
+
+[source, cpp]
+-----
+using vec2 = vector<int, 2>;
+using vec3 = vector<int, 3>;
+
+vec3 v = vec3(99, vec2(98, 100));
+//             ^    ^
+//             |    |
+//             `-- scalar construct gets called
+//                  |
+//                  `---- sub-vector construct gets called
+//                        and then recursively again
+-----
+
+== Godbolt
+
+TODO: show how all this gets inlined
+
+== `vector_base` foundation
+
+[source, cpp]
+-----
+template<typename T, size_t N>
+struct vector_base
+{
+	union
+	{
+		T data[N];
+	};
+};
+-----
+
+NOTE: both anonymous `struct` and `union` are permitted, only MSVC complains with warning
+
+== `vector_base` variation
+
+[source, cpp]
+-----
+template<typename T>
+struct vector_base<T, 2>
+{
+	union
+	{
+		T data[2];
+		struct { T x, y; };
+		struct { T s, t; };
+		struct { T u, v; };
+    }
+};
+-----
+
+[source, cpp]
+-----
+template<typename T>
+struct vector_base<T, 3>
+{
+	union
+	{
+		T data[3];
+		struct { T x, y, z; };
+		struct { T r, g, b; };
+		struct { T s, t, p; };
+    }
+};
+-----
+
+TODO: clarify union member access https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active / https://en.cppreference.com/w/cpp/language/union
+
+== Swizzle
+
+TIP: We introduce an additional proxy class that allows custom access to the indices and we create all possible permutations (per GLSL standard)
+
+[source, cpp]
+-----
+union
+{
+    T data[2];
+    struct { T x, y; };
+    struct { T s, t; };
+    struct { T u, v; };
+    swizzler<T, 2, 0, 0> xx, rr, ss;
+    swizzler<T, 2, 0, 1> xy, rg, st;
+    swizzler<T, 2, 1, 0> yx, gr, ts;
+    swizzler<T, 2, 1, 1> yy, gg, tt;
+    ...
+-----
+
+== Swizzle for `vector<T, 3>`
+
+[source, cpp]
+-----
+union
+{
+    T data[3];
+    struct { T x, y, z; };
+    struct { T r, g, b; };
+    struct { T s, t, p; };
+    swizzler<T, 3, 0, 0> xx, rr, ss;
+    swizzler<T, 3, 0, 1> xy, rg, st;
+    swizzler<T, 3, 0, 2> xz, rb, sp;
+    swizzler<T, 3, 1, 0> yx, gr, ts;
+    swizzler<T, 3, 1, 1> yy, gg, tt;
+    swizzler<T, 3, 1, 2> yz, gb, tp;
+    swizzler<T, 3, 2, 0> zx, br, ps;
+    swizzler<T, 3, 2, 1> zy, bg, pt;
+    swizzler<T, 3, 2, 2> zz, bb, pp;
+    ...
+-----
+
+== ...more swizzle
+
+[source, cpp]
+-----
+    ...
+    swizzler<T, 3, 0, 0, 0> xxx, rrr, sss;
+    swizzler<T, 3, 0, 0, 1> xxy, rrg, sst;
+    swizzler<T, 3, 0, 0, 2> xxz, rrb, ssp;
+    swizzler<T, 3, 0, 1, 0> xyx, rgr, sts;
+    swizzler<T, 3, 0, 1, 1> xyy, rgg, stt;
+    swizzler<T, 3, 0, 1, 2> xyz, rgb, stp;
+    swizzler<T, 3, 0, 2, 0> xzx, rbr, sps;
+    swizzler<T, 3, 0, 2, 1> xzy, rbg, spt;
+    swizzler<T, 3, 0, 2, 2> xzz, rbb, spp;
+    swizzler<T, 3, 1, 0, 0> yxx, grr, tss;
+    swizzler<T, 3, 1, 0, 1> yxy, grg, tst;
+    swizzler<T, 3, 1, 0, 2> yxz, grb, tsp;
+    swizzler<T, 3, 1, 1, 0> yyx, ggr, tts;
+    swizzler<T, 3, 1, 1, 1> yyy, ggg, ttt;
+    swizzler<T, 3, 1, 1, 2> yyz, ggb, ttp;
+    swizzler<T, 3, 1, 2, 0> yzx, gbr, tps;
+    swizzler<T, 3, 1, 2, 1> yzy, gbg, tpt;
+    swizzler<T, 3, 1, 2, 2> yzz, gbb, tpp;
+    swizzler<T, 3, 2, 0, 0> zxx, brr, pss;
+    swizzler<T, 3, 2, 0, 1> zxy, brg, pst;
+    swizzler<T, 3, 2, 0, 2> zxz, brb, psp;
+    swizzler<T, 3, 2, 1, 0> zyx, bgr, pts;
+    swizzler<T, 3, 2, 1, 1> zyy, bgg, ptt;
+    swizzler<T, 3, 2, 1, 2> zyz, bgb, ptp;
+    swizzler<T, 3, 2, 2, 0> zzx, bbr, pps;
+    swizzler<T, 3, 2, 2, 1> zzy, bbg, ppt;
+    swizzler<T, 3, 2, 2, 2> zzz, bbb, ppp;
+    ...
+-----
+
+== ...even more swizzle!
+
+[source, cpp]
+-----
+    ...
+    swizzler<T, 3, 0, 0, 0, 0> xxxx, rrrr, ssss;
+    swizzler<T, 3, 0, 0, 0, 1> xxxy, rrrg, ssst;
+    swizzler<T, 3, 0, 0, 0, 2> xxxz, rrrb, sssp;
+    swizzler<T, 3, 0, 0, 1, 0> xxyx, rrgr, ssts;
+    swizzler<T, 3, 0, 0, 1, 1> xxyy, rrgg, sstt;
+    swizzler<T, 3, 0, 0, 1, 2> xxyz, rrgb, sstp;
+    swizzler<T, 3, 0, 0, 2, 0> xxzx, rrbr, ssps;
+    swizzler<T, 3, 0, 0, 2, 1> xxzy, rrbg, sspt;
+    swizzler<T, 3, 0, 0, 2, 2> xxzz, rrbb, sspp;
+    swizzler<T, 3, 0, 1, 0, 0> xyxx, rgrr, stss;
+    swizzler<T, 3, 0, 1, 0, 1> xyxy, rgrg, stst;
+    swizzler<T, 3, 0, 1, 0, 2> xyxz, rgrb, stsp;
+    swizzler<T, 3, 0, 1, 1, 0> xyyx, rggr, stts;
+    swizzler<T, 3, 0, 1, 1, 1> xyyy, rggg, sttt;
+    swizzler<T, 3, 0, 1, 1, 2> xyyz, rggb, sttp;
+    swizzler<T, 3, 0, 1, 2, 0> xyzx, rgbr, stps;
+    swizzler<T, 3, 0, 1, 2, 1> xyzy, rgbg, stpt;
+    swizzler<T, 3, 0, 1, 2, 2> xyzz, rgbb, stpp;
+    swizzler<T, 3, 0, 2, 0, 0> xzxx, rbrr, spss;
+    swizzler<T, 3, 0, 2, 0, 1> xzxy, rbrg, spst;
+    swizzler<T, 3, 0, 2, 0, 2> xzxz, rbrb, spsp;
+-----
+
+== `swizzler<>` design
+
+TODO: ...
+
+== Operators and Functions
+
+TODO: ...
+
+== Limitations and Problems
+
+TODO: ...
+
+== Solutions
+
+TODO: ...
+
+== the `matrix<>` datatype
+
+TODO: ...
+
+== Prior Art
+
+TODO: ...
+
+== SHOWCASE
 
 == !
 
@@ -430,3 +720,9 @@ TODO: capture video (disable 3d and longer)
 TODO: only on GPU
 
 == The End
+
+TODO: links
+
+== Credits / Acknowledgements
+
+TODO: links
