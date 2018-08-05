@@ -16,15 +16,6 @@
     margin: 0;
 }
 
-/* shading drawing */
-.reveal .slide-background:nth-of-type(5) {
-    opacity: .2 !important;
-}
-/* pixar luxo */
-.reveal .slide-background:nth-child(6) {
-    opacity: .2 !important;
-}
-
 section[data-state="commute"] p {
     background-color: #222222
 }

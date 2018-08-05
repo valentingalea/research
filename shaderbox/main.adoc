@@ -23,18 +23,16 @@ TODO:
 A computer program that is used to do *shading*
 // originally from https://www.clicktorelease.com/talks/scotlandjs-2015/
 
-[state=shading]
-== !
-image::img/shaded_shapes.jpg[background]
+[%notitle, background-image="img/shaded_shapes.jpg"]
+== Shaders Definition
 // from https://www.clicktorelease.com/talks/scotlandjs-2015/files/CubeSphereConeCylinderNoBackgrnd.jpg
 // alternative: https://qph.ec.quoracdn.net/main-qimg-f441c2d9b120a389f6fa5c995080adaf-c
 
 [quote, Wikipedia]
 Depicting depth perception in 3D models or illustrations by varying levels of darkness
 
-[state=luxo]
-== !
-image::img/pixar_luxo.jpg[background]
+[%notitle, background-image="img/pixar_luxo.jpg"]
+== Shaders Pixar
 // from https://i.ytimg.com/vi/lkKf9DWmR04/maxresdefault.jpg
 
 [quote, Pixar RenderMan 1988]
