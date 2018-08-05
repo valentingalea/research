@@ -46,3 +46,17 @@ section[data-state="STL"] table colgroup col:nth-child(1) {
 section[data-state="STL"] table colgroup col:nth-child(2) {
     width: 80% !important;
 }
+
+section[data-state="plan"] img {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-right: 0.25em;
+    box-shadow: initial;
+    display: inline;
+    vertical-align: middle;
+    background: none;
+}
+section[data-state="plan"] ul {
+    list-style-type: none;
+}

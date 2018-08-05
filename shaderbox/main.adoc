@@ -111,8 +111,7 @@ and finally: full source code debugging - hard/impossible on GPU's
 
 TODO: image of VS debug
 
-== !
-Shading Languages
+== Shading Languages
 
 [state=RSL]
 == Pixar RenderMan Language
@@ -204,11 +203,12 @@ Basically C++ (usually via LLVM)
 == !
 Let's see how C++ can help out, NOW!
 
+[state=plan]
 == The Plan
 
-Pick one shading language and emulate it in C++
-
-Bonus: use the preprocessor for transcription back to the original language as well as the main competitor!
+[%step]
+- image:img/icon/browser.svg[cpp, 64, 64] Pick a shading language and twist C++ to accept it as source code!
+- image:img/icon/management.svg[bonus, 64, 64] BONUS: use the preprocessor for transcription back to the original language(s)!
 
 == The Plan (continued)
 
@@ -220,7 +220,7 @@ Bonus: use the preprocessor for transcription back to the original language as w
 - operators
 - "standard library" utility/math functions
 
-== Place The Bet
+== Place Your Bets
 
 We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
 
