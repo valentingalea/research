@@ -746,14 +746,16 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 | .1 FPS :(                           | 5 FPS
 |==========================================================================================
 
+[%notitle, background-video="vid/clouds.mp4", options="loop,muted"]
 == Clouds (GPU)
-
-TODO: capture video
 
 == Clouds (CPU)
 
-TODO: integrate old shader
-TODO: capture pics/vid
+|==========================================================================================
+| image:img/pc_clouds.png[Clouds(PC)] | image:img/droid_clouds.jpg[Clouds(Droid), 300, 300]
+| Desktop PC                          | Mobile Phone
+| 1 FPS                               | 8 FPS
+|==========================================================================================
 
 == Vinyl Turntable (GPU)
 
