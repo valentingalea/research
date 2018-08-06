@@ -16,14 +16,19 @@
     margin: 0;
 }
 
+.reveal pre {
+    width: 100%;
+}
+.reveal pre code {
+    max-height: 100%;
+}
+
 section[data-state="commute"] p {
     background-color: #222222
 }
-
 section[data-state="gpu_bug"] p, td {
     background-color: #222222
 }
-
 section[data-state="RSL"] h2 {
     background-color: #222222
 }
