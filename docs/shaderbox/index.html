@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Rapid Prototyping of Graphics Shaders in Modern C++</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="node_modules/reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="node_modules/reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "node_modules/reveal.js/css/print/pdf.css" : "node_modules/reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="node_modules/reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="stylesheet" href="main.css"></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title" data-background-image="img/title.png"><h1>Rapid Prototyping of Graphics Shaders in Modern C++</h1></section><section id="about_me"><h2>About Me</h2><div class="paragraph"><p>TODO:</p></div></section>
+<section id="agenda"><h2>Agenda</h2><div class="paragraph"><p>TODO:</p></div></section>
+<section id="shaders"><h2>Shaders</h2><div class="quoteblock"><blockquote>A computer program that is used to do <strong>shading</strong></blockquote></div></section>
+<section id="shaders_definition" data-background-image="img/shaded_shapes.jpg"><div class="quoteblock"><blockquote>Depicting depth perception in 3D models or illustrations by varying levels of darkness</blockquote><div class="attribution">&#8212; Wikipedia</div></div></section>
+<section id="shaders_pixar" data-background-image="img/pixar_luxo.jpg"><div class="quoteblock"><blockquote>A computer program that tells the computer how to draw something</blockquote><div class="attribution">&#8212; Pixar RenderMan 1988</div></div></section>
+<section id="shaders_on_modern_gpu_s"><h2>Shaders on Modern GPU&#8217;s</h2><div class="imageblock" style=""><img src="http://images.nvidia.com/products/geforce_9600_gt/GeForce_9600_GT_3qtr_med.png" alt="GeForce 9600 GT 3qtr med"></div></section>
+<section id="usage_on_modern_gpu_s"><h2>Usage on Modern GPU&#8217;s</h2><div class="ulist step"><ul><li class="fragment"><p>computer graphics</p></li><li class="fragment"><p>image manipulation</p></li><li class="fragment"><p>general purpose - highly parallel - processing</p></li></ul></div></section>
+<section id="why_on_gpu"><h2>Why on GPU</h2><div class="imageblock" style=""><img src="https://steemitimages.com/0x0/https://steemitimages.com/DQmbboYVYjvhUetEDhh9bQPXz4AxZTBaDujTkSLBtqn7TYv/image.png" alt="image"></div></section>
+<section id="types_of_shaders"><h2>Types of Shaders</h2><div class="imageblock" style=""><img src="https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/06-shaders/OpenGL-2.0-Programmable-Shader-Pipeline.png" alt="OpenGL 2.0 Programmable Shader Pipeline"></div>
+<div class="imageblock" style=""><img src="https://glumpy.github.io/_images/gl-pipeline.png" alt="gl pipeline"></div></section>
+<section id="pixel_fragment_shader"><h2>Pixel/Fragment Shader</h2><div class="imageblock" style=""><img src="https://i.ytimg.com/vi/JtHm6auVnxA/maxresdefault.jpg" alt="maxresdefault"></div>
+<div class="admonitionblock important"><table><tr><td class="icon"><i class="fa fa-exclamation-circle" title="Important"></i></td><td class="content">We will concentrate on image-only shaders</td></tr></table></div></section>
+<section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>I wanted to create real-time effects like&#8230;&#8203;</p></div></section>
+<section id="example_1" data-background-image="img/motivation_snail.jpg"></section>
+<section id="example_2" data-background-image="img/motivation_rainforest.png"></section>
+<section id="example_3" data-background-image="img/motivation_temple.png"></section>
+<section><div class="paragraph"><p>on more limited devices&#8230;&#8203;</p></div>
+<div class="paragraph"><p><span class="image" style="float: left"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Samsung_Galaxy_S7_and_S7_Edge.png/584px-Samsung_Galaxy_S7_and_S7_Edge.png" alt="s7" width="30%" height="30%"></span></p></div>
+<div class="paragraph"><p><span class="image" style="float: right"><img src="https://thegoodguys.sirv.com/products/50052257/50052257_547863.PNG?scale.height=505&amp;scale.width=773&amp;canvas.height=505&amp;canvas.width=773&amp;canvas.opacity=0&amp;format=png&amp;png.optimize=true" alt="tablet" width="40%" height="40%"></span></p></div>
+<div class="paragraph"><p>TODO: align and get better pics</p></div></section>
+<section data-background-image="img/commute.png" data-state="commute">
+<div class="paragraph"><p>&#8230;&#8203;because of long commutes!</p></div></section>
+<section data-background-image="img/snail-bug.png" data-state="gpu_bug">
+<div class="paragraph"><p>also because GPU driver render bugs
+WARNING: taken on my desktop PC / Nvidia GTX 1060</p></div></section>
+<section><div class="paragraph"><p>and finally: full source code debugging - hard/impossible on GPU&#8217;s
+TODO: image of VS debug</p></div></section>
+<section id="shading_languages"><h2>Shading Languages</h2></section>
+<section id="pixar_renderman_language" data-background-image="https://www.clicktorelease.com/talks/scotlandjs-2015/files/renderman.jpg" data-state="RSL"><h2>Pixar RenderMan Language</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">/* red mesh */                  /* red shaded mesh */
+surface basic() {               surface simple(color myOpacity = 1;) {
+    Ci = (1.0, 0.0, 0.0);           color myColor = (1.0, 0.0, 0.0);
+    Oi = 1;                         normal Nn = normalize(N);
+}                                   Ci = myColor * myOpacity * diffuse(Nn);
+                                    Oi = myOpacity;
+                                }</code></pre></div></div></section>
+<section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>Real-time rendering:</p></div>
+<div class="ulist step"><ul><li class="fragment"><p>ARB assembly language</p></li><li class="fragment"><p>Cg programming language</p></li><li class="fragment"><p>DirectX Shader Assembly Language</p></li><li class="fragment"><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li class="fragment"><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li class="fragment"><p>PlayStation Shader Language</p></li></ul></div></section>
+<section id="a_glimpse_of_glsl"><h2>A glimpse of GLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
+varying vec3 v;
+
+void main(void)
+{
+   vec3 L = normalize(gl_LightSource[0].position.xyz - v);
+   vec4 Idiff = gl_FrontLightProduct[0].diffuse
+        * max(dot(N,L), 0.0);
+   Idiff = clamp(Idiff, 0.0, 1.0);
+
+   gl_FragColor = Idiff;
+}</code></pre></div></div></section>
+<section id="a_glimpse_of_hlsl"><h2>A glimpse of HLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">float4 main(
+    float3 Light: TEXCOORD0,
+    float3 Norm : TEXCOORD1) : COLOR
+{
+    float4 diffuse = { 1.0f, 0.0f, 0.0f, 1.0f };
+    float4 ambient = { 0.1, 0.0, 0.0, 1.0 };
+    return ambient + diffuse * saturate(dot(Light, Norm));
+}</code></pre></div></div></section>
+<section id="glsl_vs_hlsl"><h2>GLSL vs HLSL</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Procedural, step-centric (C like)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Object oriented, data-centric (C++ like)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Compilation done in driver</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Client side compilation</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code>, <code>uint</code>, <code>double</code></p></td></tr></table></section>
+<section id="glsl_vs_hlsl_continued"><h2>GLSL vs HLSL (continued)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>vec2</code>, <code>vec3</code>, <code>vec4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>float2</code>, <code>float3</code>, <code>float4</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>mat2</code>, <code>mat3</code>, <code>mat4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>float2x2</code>, <code>float3x3</code>, <code>float4x4</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
+<section id="shading_languages_future"><h2>Shading Languages Future</h2><div class="paragraph"><p>Basically C++ (usually via LLVM)</p></div>
+<div class="ulist step"><ul><li class="fragment"><p>Metal Shading Language (C++14, Apple)</p><div class="ulist"><ul><li><p>only on iOS devices</p></li></ul></div></li><li class="fragment"><p>CUDA Heterogeneous Computing (C++11, NVidia)</p><div class="ulist"><ul><li><p>only for computing, not graphics</p></li></ul></div></li><li class="fragment"><p>HLSL 6.x (C++98&#8217;ish, Microsoft)</p><div class="ulist"><ul><li><p>not released yet</p></li></ul></div></li></ul></div></section>
+<section><div class="paragraph"><p>Let&#8217;s see how C++ can help out, NOW!</p></div></section>
+<section id="the_plan" data-state="plan"><h2>The Plan</h2><div class="ulist"><ul><li class="fragment"><p><span class="image"><img src="img/icon/browser.svg" alt="cpp" width="64" height="64"></span> Pick a shading language and twist C++ to accept it as source code!</p></li><li class="fragment"><p><span class="image"><img src="img/icon/management.svg" alt="bonus" width="64" height="64"></span> BONUS: use the preprocessor for transcription back to the original language(s)!</p></li></ul></div></section>
+<section id="the_plan_continued"><h2>The Plan (continued)</h2><div class="ulist"><ul><li class="fragment"><p>obligatory preprocessor layer</p></li><li class="fragment"><p>vector (linear algebra) types</p><div class="ulist"><ul><li><p>swizzle support</p></li></ul></div></li><li class="fragment"><p>matrix types</p></li><li class="fragment"><p>operators</p></li><li class="fragment"><p>"standard library" utility/math functions</p></li></ul></div></section>
+<section id="place_your_bets"><h2>Place Your Bets</h2><div class="paragraph"><p>We will chose <strong>GLSL</strong> as it&#8217;s used on <em>desktop</em>, <em>web</em> and <em>mobile</em></p></div>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)</td></tr></table></div></section>
+<section id="language_declarations"><h2>Language: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">classic basic types</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">C-style <code>struct</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = T ( &#8230;&#8203; )</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = { &#8230;&#8203; }</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">both (<code>_begin()</code> macro)</p></td></tr></table></section>
+<section id="language_arguments"><h2>Language: Arguments</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL/HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Macro glue</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const in T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_in(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>inout T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_inout(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>out T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_out(T)</code></p></td></tr></table></section>
+<section id="language_vectors_and_matrices"><h2>Language: Vectors and Matrices</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">// vectors are generic
+vec2 texcoord1, texcoord2;
+vec3 position;
+vec4 myRGBA;
+ivec2 textureLookup;
+bvec3 less;
+
+// matrices are floating point only
+mat2 mat2D;
+mat3 optMatrix;
+mat4 view, projection;</code></pre></div></div></section>
+<section id="vector_swizzle"><h2>Vector Swizzle</h2><div class="paragraph"><p>Syntactic sugar for easy referring to components (or combination of)</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">{ x, y, z, w }</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">to represent points or normals</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">{ r, g, b, a }</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">to refer to colors (<code>a</code> is alpha/translucency)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">{ s, t, p, q }</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">texture coordinates</p></td></tr></table></section>
+<section id="vector_swizzle_examples"><h2>Vector Swizzle - Examples</h2><div class="listingblock"><div class="title">subcomponents mix &amp; match</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec4 v4;
+v4.rgba;  // is a vec4 and the same as just using v4,
+v4.rgb;   // is a vec3,
+v4.b;     // is a float,
+v4.xy;    // is a vec2,</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec4 pos = vec4(1.0, 2.0, 3.0, 4.0);
+vec4 swiz= pos.wzyx; // swiz = (4.0, 3.0, 2.0, 1.0)
+vec4 dup = pos.xxyy; // dup = (1.0, 1.0, 2.0, 2.0)</code></pre></div></div>
+<div class="listingblock"><div class="title">l-value assigment</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">pos.xw = vec2(5.0, 6.0); // pos = (5.0, 2.0, 3.0, 6.0)
+pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice</code></pre></div></div></section>
+<section id="vector_swizzle_motivation"><h2>Vector Swizzle - Motivation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 calcNormal( in vec3 pos )
+{
+    vec2 e = vec2(1.0, -1.0) * 0.0005;
+
+    return normalize(
+        e.xyy * map( pos + e.xyy ).x +
+        e.yyx * map( pos + e.yyx ).x +
+        e.yxy * map( pos + e.yxy ).x +
+        e.xxx * map( pos + e.xxx ).x );
+}</code></pre></div></div></section>
+<section id="operators"><h2>Operators</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 v, u, w;
+mat3 m;
+                    /* equivalent to */
+w = v + u;            w.x = v.x + u.x;
+                      w.y = v.y + u.y;
+                      w.z = v.z + u.z;
+
+u = v * m;            u.x = dot(v, m[0]); // m[0] is the left column of m
+                      u.y = dot(v, m[1]); // dot(a,b) is the inner (dot) product of a and b
+                      u.z = dot(v, m[2]);</code></pre></div></div></section>
+<section id="standard_library" data-state="STL"><h2>"Standard Library"</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Math</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>sin</code>, <code>cos</code>, <code>radians</code>, <code>pow</code>, <code>exp</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Common</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>abs</code>, <code>sign</code>, <code>floor</code>, <code>mod</code>, <code>min</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Utility</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mix</code>, <code>step</code>, <code>smoothstep</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Geometry</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>length</code>, <code>dot</code>, <code>cross</code>, <code>distance</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Specific texture and image sampling &#8230;&#8203;</p></td></tr></table></section>
+<section><div class="paragraph"><p>Recreating all this in C++ &#8230;&#8203;</p></div></section>
+<section id="design_of_code_vector_code"><h2>Design of <code>vector&lt;&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
+struct vector : public vector_base&lt;T, N&gt;
+{
+	using scalar_type = T;
+	using vector_type = vector&lt;T, N&gt;;
+	using base_type = vector_base&lt;T, N&gt;;
+
+	vector()
+	{
+		iterate([&amp;](size_t i) {
+			data[i] = 0;
+		});
+	}
+    ...</code></pre></div></div></section>
+<section id="code_static_for_code_utility"><h2><code>static_for</code> utility</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
+struct static_for
+{
+	template&lt;class Func&gt;
+	void operator ()(Func &amp;&amp;f) {
+		f(Begin);
+
+		static_for&lt;Begin + 1, End&gt;()(
+			std::forward&lt;Func&gt;(f));
+	}
+};</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t N&gt;
+struct static_for&lt;N, N&gt;
+{
+	template&lt;class Func&gt;
+	constexpr void operator ()(Func &amp;&amp;) { /* empty */ }
+};</code></pre></div></div></section>
+<section id="code_vector_code_constructor"><h2><code>vector&lt;&gt;</code> constructor</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... S&gt;
+explicit vector(S... args)
+{
+    static_assert((sizeof...(args) &lt;= N),
+        "mismatch number of vector init arguments");
+
+    // dummy forwarding structure
+    struct constructor {
+        constructor(...) {}
+    };
+
+    size_t i = 0;
+    constructor(
+        { construct_at_index(i, std::forward&lt;S&gt;(args)) ... }
+    );
+}</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content"><code>{}</code> init list is used to guarantee left-right order</td></tr></table></div></section>
+<section id="constructor_specialization"><h2>constructor specialization</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">bool construct_at_index(size_t &amp;i, scalar_type arg)
+{
+    data[i++] = arg;
+    return true; // dummy return, just because it wil be called in a {} init list
+}</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename Other, size_t Other_N&gt;
+bool construct_at_index(size_t &amp;i, vector&lt;Other, Other_N&gt; &amp;&amp;arg)
+{
+    constexpr auto count = std::min(N, Other_N);
+    static_for&lt;0, count&gt;()([&amp;](size_t j) {
+        data[i++] = arg.data[j];
+    });
+    return true;
+}</code></pre></div></div></section>
+<section id="construction_in_action"><h2>construction in action</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">using vec2 = vector&lt;int, 2&gt;;
+using vec3 = vector&lt;int, 3&gt;;
+
+vec3 v = vec3(99, vec2(98, 100));
+//             ^    ^
+//             |    |
+//             `-- scalar construct gets called
+//                  |
+//                  `---- sub-vector construct gets called
+//                        and then recursively again</code></pre></div></div></section>
+<section id="godbolt"><h2>Godbolt</h2><div class="paragraph"><p>TODO: show how all this gets inlined</p></div></section>
+<section id="code_vector_base_code_foundation"><h2><code>vector_base</code> foundation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
+struct vector_base
+{
+	union
+	{
+		T data[N];
+	};
+};</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">both anonymous <code>struct</code> and <code>union</code> are permitted, only MSVC complains with warning</td></tr></table></div></section>
+<section id="code_vector_base_code_variation"><h2><code>vector_base</code> variation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
+struct vector_base&lt;T, 2&gt;
+{
+	union
+	{
+		T data[2];
+		struct { T x, y; };
+		struct { T s, t; };
+		struct { T u, v; };
+    }
+};</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
+struct vector_base&lt;T, 3&gt;
+{
+	union
+	{
+		T data[3];
+		struct { T x, y, z; };
+		struct { T r, g, b; };
+		struct { T s, t, p; };
+    }
+};</code></pre></div></div>
+<div class="paragraph"><p>TODO: clarify union member access <a href="https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active" class="bare">https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active</a> / <a href="https://en.cppreference.com/w/cpp/language/union" class="bare">https://en.cppreference.com/w/cpp/language/union</a></p></div></section>
+<section id="swizzle"><h2>Swizzle</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">We introduce an additional proxy class that allows custom access to the indices and we create all possible permutations (per GLSL standard)</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">union
+{
+    T data[2];
+    struct { T x, y; };
+    struct { T s, t; };
+    struct { T u, v; };
+    swizzler&lt;T, 2, 0, 0&gt; xx, rr, ss;
+    swizzler&lt;T, 2, 0, 1&gt; xy, rg, st;
+    swizzler&lt;T, 2, 1, 0&gt; yx, gr, ts;
+    swizzler&lt;T, 2, 1, 1&gt; yy, gg, tt;
+    ...</code></pre></div></div></section>
+<section id="swizzle_for_code_vector_t_3_code"><h2>Swizzle for <code>vector&lt;T, 3&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">union
+{
+    T data[3];
+    struct { T x, y, z; };
+    struct { T r, g, b; };
+    struct { T s, t, p; };
+    swizzler&lt;T, 3, 0, 0&gt; xx, rr, ss;
+    swizzler&lt;T, 3, 0, 1&gt; xy, rg, st;
+    swizzler&lt;T, 3, 0, 2&gt; xz, rb, sp;
+    swizzler&lt;T, 3, 1, 0&gt; yx, gr, ts;
+    swizzler&lt;T, 3, 1, 1&gt; yy, gg, tt;
+    swizzler&lt;T, 3, 1, 2&gt; yz, gb, tp;
+    swizzler&lt;T, 3, 2, 0&gt; zx, br, ps;
+    swizzler&lt;T, 3, 2, 1&gt; zy, bg, pt;
+    swizzler&lt;T, 3, 2, 2&gt; zz, bb, pp;
+    ...</code></pre></div></div></section>
+<section id="more_swizzle"><h2>&#8230;&#8203;more swizzle</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
+    swizzler&lt;T, 3, 0, 0, 0&gt; xxx, rrr, sss;
+    swizzler&lt;T, 3, 0, 0, 1&gt; xxy, rrg, sst;
+    swizzler&lt;T, 3, 0, 0, 2&gt; xxz, rrb, ssp;
+    swizzler&lt;T, 3, 0, 1, 0&gt; xyx, rgr, sts;
+    swizzler&lt;T, 3, 0, 1, 1&gt; xyy, rgg, stt;
+    swizzler&lt;T, 3, 0, 1, 2&gt; xyz, rgb, stp;
+    swizzler&lt;T, 3, 0, 2, 0&gt; xzx, rbr, sps;
+    swizzler&lt;T, 3, 0, 2, 1&gt; xzy, rbg, spt;
+    swizzler&lt;T, 3, 0, 2, 2&gt; xzz, rbb, spp;
+    swizzler&lt;T, 3, 1, 0, 0&gt; yxx, grr, tss;
+    swizzler&lt;T, 3, 1, 0, 1&gt; yxy, grg, tst;
+    swizzler&lt;T, 3, 1, 0, 2&gt; yxz, grb, tsp;
+    swizzler&lt;T, 3, 1, 1, 0&gt; yyx, ggr, tts;
+    swizzler&lt;T, 3, 1, 1, 1&gt; yyy, ggg, ttt;
+    swizzler&lt;T, 3, 1, 1, 2&gt; yyz, ggb, ttp;
+    swizzler&lt;T, 3, 1, 2, 0&gt; yzx, gbr, tps;
+    swizzler&lt;T, 3, 1, 2, 1&gt; yzy, gbg, tpt;
+    swizzler&lt;T, 3, 1, 2, 2&gt; yzz, gbb, tpp;
+    swizzler&lt;T, 3, 2, 0, 0&gt; zxx, brr, pss;
+    swizzler&lt;T, 3, 2, 0, 1&gt; zxy, brg, pst;
+    swizzler&lt;T, 3, 2, 0, 2&gt; zxz, brb, psp;
+    swizzler&lt;T, 3, 2, 1, 0&gt; zyx, bgr, pts;
+    swizzler&lt;T, 3, 2, 1, 1&gt; zyy, bgg, ptt;
+    swizzler&lt;T, 3, 2, 1, 2&gt; zyz, bgb, ptp;
+    swizzler&lt;T, 3, 2, 2, 0&gt; zzx, bbr, pps;
+    swizzler&lt;T, 3, 2, 2, 1&gt; zzy, bbg, ppt;
+    swizzler&lt;T, 3, 2, 2, 2&gt; zzz, bbb, ppp;
+    ...</code></pre></div></div></section>
+<section id="even_more_swizzle"><h2>&#8230;&#8203;even more swizzle!</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
+    swizzler&lt;T, 3, 0, 0, 0, 0&gt; xxxx, rrrr, ssss;
+    swizzler&lt;T, 3, 0, 0, 0, 1&gt; xxxy, rrrg, ssst;
+    swizzler&lt;T, 3, 0, 0, 0, 2&gt; xxxz, rrrb, sssp;
+    swizzler&lt;T, 3, 0, 0, 1, 0&gt; xxyx, rrgr, ssts;
+    swizzler&lt;T, 3, 0, 0, 1, 1&gt; xxyy, rrgg, sstt;
+    swizzler&lt;T, 3, 0, 0, 1, 2&gt; xxyz, rrgb, sstp;
+    swizzler&lt;T, 3, 0, 0, 2, 0&gt; xxzx, rrbr, ssps;
+    swizzler&lt;T, 3, 0, 0, 2, 1&gt; xxzy, rrbg, sspt;
+    swizzler&lt;T, 3, 0, 0, 2, 2&gt; xxzz, rrbb, sspp;
+    swizzler&lt;T, 3, 0, 1, 0, 0&gt; xyxx, rgrr, stss;
+    swizzler&lt;T, 3, 0, 1, 0, 1&gt; xyxy, rgrg, stst;
+    swizzler&lt;T, 3, 0, 1, 0, 2&gt; xyxz, rgrb, stsp;
+    swizzler&lt;T, 3, 0, 1, 1, 0&gt; xyyx, rggr, stts;
+    swizzler&lt;T, 3, 0, 1, 1, 1&gt; xyyy, rggg, sttt;
+    swizzler&lt;T, 3, 0, 1, 1, 2&gt; xyyz, rggb, sttp;
+    swizzler&lt;T, 3, 0, 1, 2, 0&gt; xyzx, rgbr, stps;
+    swizzler&lt;T, 3, 0, 1, 2, 1&gt; xyzy, rgbg, stpt;
+    swizzler&lt;T, 3, 0, 1, 2, 2&gt; xyzz, rgbb, stpp;
+    swizzler&lt;T, 3, 0, 2, 0, 0&gt; xzxx, rbrr, spss;
+    swizzler&lt;T, 3, 0, 2, 0, 1&gt; xzxy, rbrg, spst;
+    swizzler&lt;T, 3, 0, 2, 0, 2&gt; xzxz, rbrb, spsp;</code></pre></div></div></section>
+<section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="operators_and_functions"><h2>Operators and Functions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="limitations_and_problems"><h2>Limitations and Problems</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="solutions"><h2>Solutions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="prior_art"><h2>Prior Art</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="showcase"><h2>SHOWCASE</h2></section>
+<section><div class="paragraph"><p>&#8230;&#8203;but first: Crash Course into Procedural Graphics!</p></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Courtesy of @ReinderNijhoff <a href="https://www.shadertoy.com/view/4dSfRc" class="bare">https://www.shadertoy.com/view/4dSfRc</a></td></tr></table></div></section>
+<section id="raymarch_tutorial_step_1" data-background-image="img/tutorial/step_1.png"></section>
+<section id="raymarch_tutorial_step_2" data-background-image="img/tutorial/step_2.png"></section>
+<section id="raymarch_tutorial_step_3" data-background-image="img/tutorial/step_3.png"></section>
+<section id="raymarch_tutorial_step_4" data-background-image="img/tutorial/step_4.png"></section>
+<section id="raymarch_tutorial_step_5" data-background-image="img/tutorial/step_5.png"></section>
+<section id="raymarch_tutorial_step_6" data-background-video="vid/raymarch.mp4" data-background-video-loop data-background-video-muted></section>
+<section id="raymarch_tutorial_step_7" data-background-image="img/tutorial/step_7.png"></section>
+<section id="raymarch_tutorial_step_8" data-background-image="img/tutorial/step_8.png"></section>
+<section id="results"><h2>Results</h2><div class="ulist"><ul><li class="fragment"><p>GPU on desktop PC</p><div class="ulist"><ul><li><p><a href="https://www.shadertoy.com/user/valentingalea" class="bare">https://www.shadertoy.com/user/valentingalea</a></p></li><li><p>Nvidia GeForce 1060</p></li><li><p>1080p</p></li></ul></div></li><li class="fragment"><p>CPU on desktop PC</p><div class="ulist"><ul><li><p>AMD FX 8350 8-core 4.00 GHz</p></li><li><p>Microsoft Visual C++ 15.7.6</p></li><li><p>320x240px</p></li></ul></div></li></ul></div></section>
+<section id="results_continued"><h2>Results (continued)</h2><div class="ulist"><ul><li><p>CPU mobile phone</p><div class="ulist"><ul><li><p>Samsung Galaxy S7</p></li><li><p>C4Droid app (<a href="https://play.google.com/store/apps/details?id=com.n0n3m4.droidc" class="bare">https://play.google.com/store/apps/details?id=com.n0n3m4.droidc</a>)</p></li><li><p>GCC 7.2.0</p></li><li><p>100x100px</p></li></ul></div></li></ul></div></section>
+<section id="planet_gpu" data-background-video="vid/planet.mp4" data-background-video-loop data-background-video-muted></section>
+<section id="planet_cpu"><h2>Planet (CPU)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/pc_planet.png" alt="Planet(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/droid_planet.jpg" alt="Planet(Droid)" width="300" height="300"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Desktop PC</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Mobile Phone</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">.1 FPS :(</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">5 FPS</p></td></tr></table></section>
+<section id="clouds_gpu"><h2>Clouds (GPU)</h2><div class="paragraph"><p>TODO: capture video</p></div></section>
+<section id="clouds_cpu"><h2>Clouds (CPU)</h2><div class="paragraph"><p>TODO: integrate old shader
+TODO: capture pics/vid</p></div></section>
+<section id="vinyl_turntable_gpu"><h2>Vinyl Turntable (GPU)</h2><div class="paragraph"><p>TODO: capture video</p></div></section>
+<section id="vinyl_turntable_cpu"><h2>Vinyl Turntable (CPU)</h2><div class="paragraph"><p>TODO: capture pics/vid</p></div></section>
+<section id="egg_gpu"><h2>Egg (GPU)</h2><div class="paragraph"><p>TODO: capture video (disable 3d and longer)
+TODO: only on GPU</p></div></section>
+<section id="the_end"><h2>The End</h2><div class="paragraph"><p>TODO: links</p></div></section>
+<section id="credits_acknowledgements"><h2>Credits / Acknowledgements</h2><div class="paragraph"><p>Motivation Shaders: <a href="https://www.shadertoy.com/view/ld3Gz2" class="bare">https://www.shadertoy.com/view/ld3Gz2</a> <a href="https://www.shadertoy.com/view/ldScDh" class="bare">https://www.shadertoy.com/view/ldScDh</a> <a href="https://www.shadertoy.com/view/4ttSWf" class="bare">https://www.shadertoy.com/view/4ttSWf</a></p></div>
+<div class="paragraph"><p>TODO: the rest</p></div></section></div></div><script src="node_modules/reveal.js/lib/js/head.min.js"></script><script src="node_modules/reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'black',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'fade',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'node_modules/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'node_modules/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'node_modules/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'node_modules/reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
