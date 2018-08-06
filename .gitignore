@@ -1,4 +1,4 @@
-#from https://github.com/github/gitignore/blob/master/Node.gitignore
+# from https://github.com/github/gitignore/blob/master/Node.gitignore
 
 # Logs
 logs
@@ -35,7 +35,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -74,6 +73,9 @@ typings/
 # Serverless directories
 .serverless
 
+# -----------------------------------------------------------------------------
 .vscode/settings.json
 
+badlands-accu/node_modules/
+shaderbox/node_modules/
 shaderbox/*.html
