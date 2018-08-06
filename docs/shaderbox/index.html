@@ -188,7 +188,40 @@ vec3 v = vec3(99, vec2(98, 100));
 //                  |
 //                  `---- sub-vector construct gets called
 //                        and then recursively again</code></pre></div></div></section>
-<section id="godbolt"><h2>Godbolt</h2><div class="paragraph"><p>TODO: show how all this gets inlined</p></div></section>
+<section id="godbolt"><h2>Godbolt</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">int main()
+{
+    float a, b;
+    scanf("%f %f", &amp;a, &amp;b);
+
+    auto v = vec2(a, b);
+
+    printf("%f %f", v.x, v.y);
+}</code></pre></div></div></section>
+<section id="godbolt_continued"><h2>Godbolt (continued)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (trunk)</th><th class="tableblock halign-left valign-top">gcc (8.2)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+movss   xmm0, dword ptr [rsp + 4]
+cvtss2sd        xmm0, xmm0
+movss   xmm1, dword ptr [rsp]
+cvtss2sd        xmm1, xmm1
+mov     edi, offset .L.str.1
+mov     al, 2
+call    printf</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+pxor    xmm0, xmm0
+pxor    xmm1, xmm1
+mov     edi, OFFSET FLAT:.LC1
+mov     eax, 2
+cvtss2sd        xmm0, DWORD PTR [rsp+8]
+cvtss2sd        xmm1, DWORD PTR [rsp+12]
+call    printf</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+movss   xmm2, DWORD PTR b$[rsp]
+lea     rcx, OFFSET FLAT:`string'
+movss   xmm1, DWORD PTR a$[rsp]
+cvtps2pd xmm2, xmm2
+cvtps2pd xmm1, xmm1
+movq    r8, xmm2
+movq    rdx, xmm1
+call    printf</code></pre></div></div></div></td></tr></table>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">clang 5.x and 6.x produce worse code</td></tr></table></div>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">gcc&#8217;s cvtss2sd from memory is pessimization (<a href="https://stackoverflow.com/a/16597686" class="bare">https://stackoverflow.com/a/16597686</a>)</td></tr></table></div></section>
 <section id="code_vector_base_code_foundation"><h2><code>vector_base</code> foundation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
 struct vector_base
 {

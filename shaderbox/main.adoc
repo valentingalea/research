@@ -450,7 +450,67 @@ vec3 v = vec3(99, vec2(98, 100));
 
 == Godbolt
 
-TODO: show how all this gets inlined
+[source, cpp]
+-----
+int main()
+{
+    float a, b;
+    scanf("%f %f", &a, &b);
+
+    auto v = vec2(a, b);
+
+    printf("%f %f", v.x, v.y);
+}
+-----
+
+== Godbolt (continued)
+
+[cols="a,a,a"]
+|==================
+| clang (trunk) | gcc (8.2) | msvc (2017)
+
+| [source, cpp]
+-----
+call    scanf
+movss   xmm0, dword ptr [rsp + 4]
+cvtss2sd        xmm0, xmm0
+movss   xmm1, dword ptr [rsp]
+cvtss2sd        xmm1, xmm1
+mov     edi, offset .L.str.1
+mov     al, 2
+call    printf
+-----
+
+| [source, cpp]
+-----
+call    scanf
+pxor    xmm0, xmm0
+pxor    xmm1, xmm1
+mov     edi, OFFSET FLAT:.LC1
+mov     eax, 2
+cvtss2sd        xmm0, DWORD PTR [rsp+8]
+cvtss2sd        xmm1, DWORD PTR [rsp+12]
+call    printf
+-----
+
+| [source, cpp]
+-----
+call    scanf
+movss   xmm2, DWORD PTR b$[rsp]
+lea     rcx, OFFSET FLAT:`string'
+movss   xmm1, DWORD PTR a$[rsp]
+cvtps2pd xmm2, xmm2
+cvtps2pd xmm1, xmm1
+movq    r8, xmm2
+movq    rdx, xmm1
+call    printf
+-----
+
+|==================
+
+WARNING: clang 5.x and 6.x produce worse code
+
+WARNING: gcc's cvtss2sd from memory is pessimization (https://stackoverflow.com/a/16597686)
 
 == `vector_base` foundation
 

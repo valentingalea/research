@@ -56,3 +56,7 @@ section[data-state="plan"] img {
 section[data-state="plan"] ul {
     list-style-type: none;
 }
+
+section[id="godbolt_continued"] pre { 
+    font-size: .4em;
+}
