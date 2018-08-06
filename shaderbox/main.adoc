@@ -687,7 +687,7 @@ TODO: ...
 
 TODO: ...
 
-== SHOWCASE
+== Results
 
 == !
 
@@ -714,9 +714,10 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 [%notitle, background-image="img/tutorial/step_8.png"]
 == raymarch tutorial step 8
 
-== Results
+== Showcase
 
-[%step]
+[%notitle]
+== Hardware
 - GPU on desktop PC
  * https://www.shadertoy.com/user/valentingalea
  * Nvidia GeForce 1060
@@ -726,8 +727,8 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
  * Microsoft Visual C++ 15.7.6
  * 320x240px
 
-== Results (continued)
-
+[%notitle]
+== Hardware (continued)
 - CPU mobile phone
  * Samsung Galaxy S7
  * C4Droid app (https://play.google.com/store/apps/details?id=com.n0n3m4.droidc)
@@ -773,6 +774,9 @@ TODO: links
 
 == Credits / Acknowledgements
 
-Motivation Shaders: https://www.shadertoy.com/view/ld3Gz2 https://www.shadertoy.com/view/ldScDh https://www.shadertoy.com/view/4ttSWf
+- Motivation Shaders:
+ * https://www.shadertoy.com/view/ld3Gz2
+ * https://www.shadertoy.com/view/ldScDh
+ * https://www.shadertoy.com/view/4ttSWf
 
 TODO: the rest
