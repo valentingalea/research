@@ -268,38 +268,26 @@ struct vector_base&lt;T, 3&gt;
     swizzler&lt;T, 3, 1, 2, 0&gt; yzx, gbr, tps;
     swizzler&lt;T, 3, 1, 2, 1&gt; yzy, gbg, tpt;
     swizzler&lt;T, 3, 1, 2, 2&gt; yzz, gbb, tpp;
-    swizzler&lt;T, 3, 2, 0, 0&gt; zxx, brr, pss;
-    swizzler&lt;T, 3, 2, 0, 1&gt; zxy, brg, pst;
-    swizzler&lt;T, 3, 2, 0, 2&gt; zxz, brb, psp;
-    swizzler&lt;T, 3, 2, 1, 0&gt; zyx, bgr, pts;
-    swizzler&lt;T, 3, 2, 1, 1&gt; zyy, bgg, ptt;
-    swizzler&lt;T, 3, 2, 1, 2&gt; zyz, bgb, ptp;
-    swizzler&lt;T, 3, 2, 2, 0&gt; zzx, bbr, pps;
-    swizzler&lt;T, 3, 2, 2, 1&gt; zzy, bbg, ppt;
-    swizzler&lt;T, 3, 2, 2, 2&gt; zzz, bbb, ppp;
     ...</code></pre></div></div></section>
 <section id="even_more_swizzle"><h2>&#8230;&#8203;even more swizzle!</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
-    swizzler&lt;T, 3, 0, 0, 0, 0&gt; xxxx, rrrr, ssss;
-    swizzler&lt;T, 3, 0, 0, 0, 1&gt; xxxy, rrrg, ssst;
-    swizzler&lt;T, 3, 0, 0, 0, 2&gt; xxxz, rrrb, sssp;
-    swizzler&lt;T, 3, 0, 0, 1, 0&gt; xxyx, rrgr, ssts;
-    swizzler&lt;T, 3, 0, 0, 1, 1&gt; xxyy, rrgg, sstt;
-    swizzler&lt;T, 3, 0, 0, 1, 2&gt; xxyz, rrgb, sstp;
-    swizzler&lt;T, 3, 0, 0, 2, 0&gt; xxzx, rrbr, ssps;
-    swizzler&lt;T, 3, 0, 0, 2, 1&gt; xxzy, rrbg, sspt;
-    swizzler&lt;T, 3, 0, 0, 2, 2&gt; xxzz, rrbb, sspp;
-    swizzler&lt;T, 3, 0, 1, 0, 0&gt; xyxx, rgrr, stss;
-    swizzler&lt;T, 3, 0, 1, 0, 1&gt; xyxy, rgrg, stst;
-    swizzler&lt;T, 3, 0, 1, 0, 2&gt; xyxz, rgrb, stsp;
-    swizzler&lt;T, 3, 0, 1, 1, 0&gt; xyyx, rggr, stts;
-    swizzler&lt;T, 3, 0, 1, 1, 1&gt; xyyy, rggg, sttt;
-    swizzler&lt;T, 3, 0, 1, 1, 2&gt; xyyz, rggb, sttp;
-    swizzler&lt;T, 3, 0, 1, 2, 0&gt; xyzx, rgbr, stps;
-    swizzler&lt;T, 3, 0, 1, 2, 1&gt; xyzy, rgbg, stpt;
-    swizzler&lt;T, 3, 0, 1, 2, 2&gt; xyzz, rgbb, stpp;
-    swizzler&lt;T, 3, 0, 2, 0, 0&gt; xzxx, rbrr, spss;
-    swizzler&lt;T, 3, 0, 2, 0, 1&gt; xzxy, rbrg, spst;
-    swizzler&lt;T, 3, 0, 2, 0, 2&gt; xzxz, rbrb, spsp;</code></pre></div></div></section>
+    swizzler&lt;T, 3, 2, 1, 0, 0&gt; zyxx, bgrr, ptss;
+    swizzler&lt;T, 3, 2, 1, 0, 1&gt; zyxy, bgrg, ptst;
+    swizzler&lt;T, 3, 2, 1, 0, 2&gt; zyxz, bgrb, ptsp;
+    swizzler&lt;T, 3, 2, 1, 1, 0&gt; zyyx, bggr, ptts;
+    swizzler&lt;T, 3, 2, 1, 1, 1&gt; zyyy, bggg, pttt;
+    swizzler&lt;T, 3, 2, 1, 1, 2&gt; zyyz, bggb, pttp;
+    swizzler&lt;T, 3, 2, 1, 2, 0&gt; zyzx, bgbr, ptps;
+    swizzler&lt;T, 3, 2, 1, 2, 1&gt; zyzy, bgbg, ptpt;
+    swizzler&lt;T, 3, 2, 1, 2, 2&gt; zyzz, bgbb, ptpp;
+    swizzler&lt;T, 3, 2, 2, 0, 0&gt; zzxx, bbrr, ppss;
+    swizzler&lt;T, 3, 2, 2, 0, 1&gt; zzxy, bbrg, ppst;
+    swizzler&lt;T, 3, 2, 2, 0, 2&gt; zzxz, bbrb, ppsp;
+    swizzler&lt;T, 3, 2, 2, 1, 0&gt; zzyx, bbgr, ppts;
+    swizzler&lt;T, 3, 2, 2, 1, 1&gt; zzyy, bbgg, pptt;
+    swizzler&lt;T, 3, 2, 2, 1, 2&gt; zzyz, bbgb, pptp;
+    swizzler&lt;T, 3, 2, 2, 2, 0&gt; zzzx, bbbr, ppps;
+    swizzler&lt;T, 3, 2, 2, 2, 1&gt; zzzy, bbbg, pppt;
+    swizzler&lt;T, 3, 2, 2, 2, 2&gt; zzzz, bbbb, pppp;</code></pre></div></div></section>
 <section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="operators_and_functions"><h2>Operators and Functions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="limitations_and_problems"><h2>Limitations and Problems</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>

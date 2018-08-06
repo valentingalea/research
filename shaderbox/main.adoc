@@ -566,15 +566,6 @@ union
     swizzler<T, 3, 1, 2, 0> yzx, gbr, tps;
     swizzler<T, 3, 1, 2, 1> yzy, gbg, tpt;
     swizzler<T, 3, 1, 2, 2> yzz, gbb, tpp;
-    swizzler<T, 3, 2, 0, 0> zxx, brr, pss;
-    swizzler<T, 3, 2, 0, 1> zxy, brg, pst;
-    swizzler<T, 3, 2, 0, 2> zxz, brb, psp;
-    swizzler<T, 3, 2, 1, 0> zyx, bgr, pts;
-    swizzler<T, 3, 2, 1, 1> zyy, bgg, ptt;
-    swizzler<T, 3, 2, 1, 2> zyz, bgb, ptp;
-    swizzler<T, 3, 2, 2, 0> zzx, bbr, pps;
-    swizzler<T, 3, 2, 2, 1> zzy, bbg, ppt;
-    swizzler<T, 3, 2, 2, 2> zzz, bbb, ppp;
     ...
 -----
 
@@ -583,27 +574,24 @@ union
 [source, cpp]
 -----
     ...
-    swizzler<T, 3, 0, 0, 0, 0> xxxx, rrrr, ssss;
-    swizzler<T, 3, 0, 0, 0, 1> xxxy, rrrg, ssst;
-    swizzler<T, 3, 0, 0, 0, 2> xxxz, rrrb, sssp;
-    swizzler<T, 3, 0, 0, 1, 0> xxyx, rrgr, ssts;
-    swizzler<T, 3, 0, 0, 1, 1> xxyy, rrgg, sstt;
-    swizzler<T, 3, 0, 0, 1, 2> xxyz, rrgb, sstp;
-    swizzler<T, 3, 0, 0, 2, 0> xxzx, rrbr, ssps;
-    swizzler<T, 3, 0, 0, 2, 1> xxzy, rrbg, sspt;
-    swizzler<T, 3, 0, 0, 2, 2> xxzz, rrbb, sspp;
-    swizzler<T, 3, 0, 1, 0, 0> xyxx, rgrr, stss;
-    swizzler<T, 3, 0, 1, 0, 1> xyxy, rgrg, stst;
-    swizzler<T, 3, 0, 1, 0, 2> xyxz, rgrb, stsp;
-    swizzler<T, 3, 0, 1, 1, 0> xyyx, rggr, stts;
-    swizzler<T, 3, 0, 1, 1, 1> xyyy, rggg, sttt;
-    swizzler<T, 3, 0, 1, 1, 2> xyyz, rggb, sttp;
-    swizzler<T, 3, 0, 1, 2, 0> xyzx, rgbr, stps;
-    swizzler<T, 3, 0, 1, 2, 1> xyzy, rgbg, stpt;
-    swizzler<T, 3, 0, 1, 2, 2> xyzz, rgbb, stpp;
-    swizzler<T, 3, 0, 2, 0, 0> xzxx, rbrr, spss;
-    swizzler<T, 3, 0, 2, 0, 1> xzxy, rbrg, spst;
-    swizzler<T, 3, 0, 2, 0, 2> xzxz, rbrb, spsp;
+    swizzler<T, 3, 2, 1, 0, 0> zyxx, bgrr, ptss;
+    swizzler<T, 3, 2, 1, 0, 1> zyxy, bgrg, ptst;
+    swizzler<T, 3, 2, 1, 0, 2> zyxz, bgrb, ptsp;
+    swizzler<T, 3, 2, 1, 1, 0> zyyx, bggr, ptts;
+    swizzler<T, 3, 2, 1, 1, 1> zyyy, bggg, pttt;
+    swizzler<T, 3, 2, 1, 1, 2> zyyz, bggb, pttp;
+    swizzler<T, 3, 2, 1, 2, 0> zyzx, bgbr, ptps;
+    swizzler<T, 3, 2, 1, 2, 1> zyzy, bgbg, ptpt;
+    swizzler<T, 3, 2, 1, 2, 2> zyzz, bgbb, ptpp;
+    swizzler<T, 3, 2, 2, 0, 0> zzxx, bbrr, ppss;
+    swizzler<T, 3, 2, 2, 0, 1> zzxy, bbrg, ppst;
+    swizzler<T, 3, 2, 2, 0, 2> zzxz, bbrb, ppsp;
+    swizzler<T, 3, 2, 2, 1, 0> zzyx, bbgr, ppts;
+    swizzler<T, 3, 2, 2, 1, 1> zzyy, bbgg, pptt;
+    swizzler<T, 3, 2, 2, 1, 2> zzyz, bbgb, pptp;
+    swizzler<T, 3, 2, 2, 2, 0> zzzx, bbbr, ppps;
+    swizzler<T, 3, 2, 2, 2, 1> zzzy, bbbg, pppt;
+    swizzler<T, 3, 2, 2, 2, 2> zzzz, bbbb, pppp;
 -----
 
 == `swizzler<>` design
