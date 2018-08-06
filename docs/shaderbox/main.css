@@ -59,4 +59,8 @@ section[data-state="plan"] ul {
 
 section[id="godbolt_continued"] pre { 
     font-size: .4em;
+    margin-left: -33%;
+}
+section[id="godbolt_continued"] ul { 
+    font-size: .6em;
 }
