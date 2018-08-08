@@ -105,12 +105,16 @@ menu: {
     // and the menu will not attempt to load the font-awesome library.
     loadIcons: false
 },
+// https://github.com/tkrkt/reveal.js-elapsed-time-bar
+allottedTime: 45 * 60 * 1000, // minutes
+progressBarHeight: 5,
+barColor: 'rgb(200,0,0)',
 
 //
 // plugins
 //
 dependencies: [
-    // { src: 'plugin/elapsed-time-bar/elapsed-time-bar.js'} // https://github.com/tkrkt/reveal.js-elapsed-time-bar
+    { src: 'node_modules/reveal.js/plugin/elapsed-time-bar/elapsed-time-bar.js'}, // https://github.com/tkrkt/reveal.js-elapsed-time-bar
     { src: 'node_modules/reveal.js-menu/menu.js' } // https://github.com/denehyg/reveal.js-menu
 
     , // default plugins past this point; also add new-line
