@@ -68,3 +68,22 @@ section[id="godbolt_continued"] pre {
 section[id="godbolt_continued"] ul { 
     font-size: .6em;
 }
+
+section[id="the_end"] img {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-right: 0.25em;
+    box-shadow: initial;
+    display: inline;
+    vertical-align: middle;
+}
+
+section[id="attribution"] p {
+    font-size: 1em;
+    margin: 0;
+    line-height: 1;
+}
+section[id="attribution"] ul {
+    list-style-type: none;
+}

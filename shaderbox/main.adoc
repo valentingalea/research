@@ -785,14 +785,16 @@ TODO: capture video (disable 3d and longer)
 TODO: only on GPU
 
 == The End
+image:img/icon/twitter.png[Twitter, 64, 64] @valentin_galea
 
-TODO: links
+image:img/icon/github.png[Github, 64, 64] https://github.com/valentingalea/
 
-== Credits / Acknowledgements
+image:img/sd-brand/SD-logo-white-orange.svg[SD, 128, 128] https://www.splashdamage.com/
 
-- Motivation Shaders:
- * https://www.shadertoy.com/view/ld3Gz2
- * https://www.shadertoy.com/view/ldScDh
- * https://www.shadertoy.com/view/4ttSWf
+== Attribution
 
-TODO: the rest
+- Piotr Gwiazdowski @gwiazdorrr for original inspiration and help
+- Shading and Renderman: Jaume Sanchez | @thespite
+- Motivation Shaders: Inigo Quilez https://www.shadertoy.com/view/ld3Gz2 https://www.shadertoy.com/view/ldScDh https://www.shadertoy.com/view/4ttSWf
+- GPU pipeline: https://open.gl/ (CC BY-SA 4.0) 
+- All other images under "Fair Use"/"Fair Dealing"
