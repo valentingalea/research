@@ -60,20 +60,25 @@ image::img/intro/gpu_gtx1080.png[GPU, width="60%", float="right"]
 `-` Highly parallel computing
 
 == Why on GPU
-image::https://steemitimages.com/0x0/https://steemitimages.com/DQmbboYVYjvhUetEDhh9bQPXz4AxZTBaDujTkSLBtqn7TYv/image.png[]
+image::img/intro/cpu_vs_gpu.png[]
 // https://steemit.com/gridcoin/@dutch/hardware-and-project-selection-part-1-cpu-vs-gpu
 
 == Types of Shaders
-image::https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/06-shaders/OpenGL-2.0-Programmable-Shader-Pipeline.png[]
-// https://github.com/ssloy/tinyrenderer
+image::img/intro/pipeline.png[pipeline, float="right"]
+// https://open.gl/drawing https://creativecommons.org/licenses/by-sa/4.0/
 
-image::https://glumpy.github.io/_images/gl-pipeline.png[]
-// https://glumpy.github.io/modern-gl.html
+[%left]
+Vertex +
+Geometry +
+Tessellation +
+Fragment(Pixel) +
+`-----` +
+Compute
 
 == Pixel/Fragment Shader
-image::https://i.ytimg.com/vi/JtHm6auVnxA/maxresdefault.jpg[]
+image::img/intro/materials.jpg[mat, width="80%"]
 
-IMPORTANT: We will concentrate on image-only shaders
+IMPORTANT: We will concentrate on (procedurally generated) image-only shaders
 
 == Motivation
 I wanted to create real-time effects like...
@@ -87,14 +92,17 @@ I wanted to create real-time effects like...
 [%notitle, background-image="img/motivation/temple.png"]
 == Example 3
 
+[state=GPU]
 == !
 on more limited devices...
 
-image:https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Samsung_Galaxy_S7_and_S7_Edge.png/584px-Samsung_Galaxy_S7_and_S7_Edge.png[s7, 30%, 30%, float="left"]
-
-image:https://thegoodguys.sirv.com/products/50052257/50052257_547863.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true[tablet, 40%, 40%, float="right"]
-
-TODO: align and get better pics
+[cols="a,a"]
+|=================
+|
+image:img/motivation/galaxy-s7-edge.png[s7]
+|
+image:img/motivation/tablet-pc.png[tablet-pc]
+|=================
 
 [state=commute]
 == !
@@ -104,18 +112,16 @@ image::img/motivation/commute.png[background]
 [state=gpu_bug]
 == !
 image::img/motivation/snail-bug.png[background]
-also because GPU driver render bugs
-WARNING: taken on my desktop PC / Nvidia GTX 1060
 
-== !
-and finally: full source code debugging - hard/impossible on GPU's
-TODO: image of VS debug
+also because GPU driver render bugs
+
+WARNING: taken on desktop PC / Nvidia GTX 1060
 
 == Shading Languages
 
 [state=RSL]
 == Pixar RenderMan Language
-image::https://www.clicktorelease.com/talks/scotlandjs-2015/files/renderman.jpg[background]
+image::img/intro/renderman.jpg[background]
 
 [.stretch]
 [source, javascript]
@@ -133,7 +139,6 @@ surface basic() {               surface simple(color myOpacity = 1;) {
 
 Real-time rendering:
 
-[.step]
 - ARB assembly language
 - Cg programming language
 - DirectX Shader Assembly Language

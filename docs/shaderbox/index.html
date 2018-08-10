@@ -14,28 +14,29 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="paragraph"><p><code>-</code> Computer graphics</p></div>
 <div class="paragraph"><p><code>-</code> Image manipulation</p></div>
 <div class="paragraph"><p><code>-</code> Highly parallel computing</p></div></section>
-<section id="why_on_gpu"><h2>Why on GPU</h2><div class="imageblock" style=""><img src="https://steemitimages.com/0x0/https://steemitimages.com/DQmbboYVYjvhUetEDhh9bQPXz4AxZTBaDujTkSLBtqn7TYv/image.png" alt="image"></div></section>
-<section id="types_of_shaders"><h2>Types of Shaders</h2><div class="imageblock" style=""><img src="https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/06-shaders/OpenGL-2.0-Programmable-Shader-Pipeline.png" alt="OpenGL 2.0 Programmable Shader Pipeline"></div>
-<div class="imageblock" style=""><img src="https://glumpy.github.io/_images/gl-pipeline.png" alt="gl pipeline"></div></section>
-<section id="pixel_fragment_shader"><h2>Pixel/Fragment Shader</h2><div class="imageblock" style=""><img src="https://i.ytimg.com/vi/JtHm6auVnxA/maxresdefault.jpg" alt="maxresdefault"></div>
-<div class="admonitionblock important"><table><tr><td class="icon"><i class="fa fa-exclamation-circle" title="Important"></i></td><td class="content">We will concentrate on image-only shaders</td></tr></table></div></section>
+<section id="why_on_gpu"><h2>Why on GPU</h2><div class="imageblock" style=""><img src="img/intro/cpu_vs_gpu.png" alt="cpu vs gpu"></div></section>
+<section id="types_of_shaders"><h2>Types of Shaders</h2><div class="imageblock" style="float: right"><img src="img/intro/pipeline.png" alt="pipeline"></div>
+<div class="paragraph"><p>Vertex<br>
+Geometry<br>
+Tessellation<br>
+Fragment(Pixel)<br>
+<code>-----</code><br>
+Compute</p></div></section>
+<section id="pixel_fragment_shader"><h2>Pixel/Fragment Shader</h2><div class="imageblock" style=""><img src="img/intro/materials.jpg" alt="mat" width="80%"></div>
+<div class="admonitionblock important"><table><tr><td class="icon"><i class="fa fa-exclamation-circle" title="Important"></i></td><td class="content">We will concentrate on (procedurally generated) image-only shaders</td></tr></table></div></section>
 <section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>I wanted to create real-time effects like&#8230;&#8203;</p></div></section>
 <section id="example_1" data-background-image="img/motivation/snail.jpg"></section>
 <section id="example_2" data-background-image="img/motivation/rainforest.png"></section>
 <section id="example_3" data-background-image="img/motivation/temple.png"></section>
-<section><div class="paragraph"><p>on more limited devices&#8230;&#8203;</p></div>
-<div class="paragraph"><p><span class="image" style="float: left"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Samsung_Galaxy_S7_and_S7_Edge.png/584px-Samsung_Galaxy_S7_and_S7_Edge.png" alt="s7" width="30%" height="30%"></span></p></div>
-<div class="paragraph"><p><span class="image" style="float: right"><img src="https://thegoodguys.sirv.com/products/50052257/50052257_547863.PNG?scale.height=505&amp;scale.width=773&amp;canvas.height=505&amp;canvas.width=773&amp;canvas.opacity=0&amp;format=png&amp;png.optimize=true" alt="tablet" width="40%" height="40%"></span></p></div>
-<div class="paragraph"><p>TODO: align and get better pics</p></div></section>
+<section data-state="GPU"><div class="paragraph"><p>on more limited devices&#8230;&#8203;</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><span class="image"><img src="img/motivation/galaxy-s7-edge.png" alt="s7"></span></p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><span class="image"><img src="img/motivation/tablet-pc.png" alt="tablet-pc"></span></p></div></div></td></tr></table></section>
 <section data-background-image="img/motivation/commute.png" data-state="commute">
 <div class="paragraph"><p>&#8230;&#8203;because of long commutes!</p></div></section>
 <section data-background-image="img/motivation/snail-bug.png" data-state="gpu_bug">
-<div class="paragraph"><p>also because GPU driver render bugs
-WARNING: taken on my desktop PC / Nvidia GTX 1060</p></div></section>
-<section><div class="paragraph"><p>and finally: full source code debugging - hard/impossible on GPU&#8217;s
-TODO: image of VS debug</p></div></section>
+<div class="paragraph"><p>also because GPU driver render bugs</p></div>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">taken on desktop PC / Nvidia GTX 1060</td></tr></table></div></section>
 <section id="shading_languages"><h2>Shading Languages</h2></section>
-<section id="pixar_renderman_language" data-background-image="https://www.clicktorelease.com/talks/scotlandjs-2015/files/renderman.jpg" data-state="RSL"><h2>Pixar RenderMan Language</h2>
+<section id="pixar_renderman_language" data-background-image="img/intro/renderman.jpg" data-state="RSL"><h2>Pixar RenderMan Language</h2>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">/* red mesh */                  /* red shaded mesh */
 surface basic() {               surface simple(color myOpacity = 1;) {
     Ci = (1.0, 0.0, 0.0);           color myColor = (1.0, 0.0, 0.0);
@@ -44,7 +45,7 @@ surface basic() {               surface simple(color myOpacity = 1;) {
                                     Oi = myOpacity;
                                 }</code></pre></div></div></section>
 <section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>Real-time rendering:</p></div>
-<div class="ulist step"><ul><li class="fragment"><p>ARB assembly language</p></li><li class="fragment"><p>Cg programming language</p></li><li class="fragment"><p>DirectX Shader Assembly Language</p></li><li class="fragment"><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li class="fragment"><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li class="fragment"><p>PlayStation Shader Language</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>ARB assembly language</p></li><li><p>Cg programming language</p></li><li><p>DirectX Shader Assembly Language</p></li><li><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li><p>PlayStation Shader Language</p></li></ul></div></section>
 <section id="a_glimpse_of_glsl"><h2>A glimpse of GLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
 varying vec3 v;
 
