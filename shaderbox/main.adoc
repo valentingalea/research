@@ -12,8 +12,14 @@
 :source-highlighter: highlightjs
 :icons: font
 
-== About Me
-TODO:
+[background-image="img/sd-brand/banner.jpg"]
+== Valentin Galea
+https://twitter.com/valentin_galea[@valentin_galea]
+
+More than 10 years in
+_mobile_, _indie_ and _AAA_ games
+
+image::img/sd-brand/SD-logo-white.svg[SD, 128, 128]
 
 == Agenda
 TODO:
