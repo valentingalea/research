@@ -29,7 +29,7 @@ TODO:
 A computer program that is used to do *shading*
 // originally from https://www.clicktorelease.com/talks/scotlandjs-2015/
 
-[%notitle, background-image="img/shaded_shapes.jpg"]
+[%notitle, background-image="img/intro/shaded_shapes.jpg"]
 == Shaders Definition
 // from https://www.clicktorelease.com/talks/scotlandjs-2015/files/CubeSphereConeCylinderNoBackgrnd.jpg
 // alternative: https://qph.ec.quoracdn.net/main-qimg-f441c2d9b120a389f6fa5c995080adaf-c
@@ -37,7 +37,7 @@ A computer program that is used to do *shading*
 [quote, Wikipedia]
 Depicting depth perception in 3D models or illustrations by varying levels of darkness
 
-[%notitle, background-image="img/pixar_luxo.jpg"]
+[%notitle, background-image="img/intro/pixar_luxo.jpg"]
 == Shaders Pixar
 // from https://i.ytimg.com/vi/lkKf9DWmR04/maxresdefault.jpg
 
@@ -75,13 +75,13 @@ IMPORTANT: We will concentrate on image-only shaders
 == Motivation
 I wanted to create real-time effects like...
 
-[%notitle, background-image="img/motivation_snail.jpg"]
+[%notitle, background-image="img/motivation/snail.jpg"]
 == Example 1
 
-[%notitle, background-image="img/motivation_rainforest.png"]
+[%notitle, background-image="img/motivation/rainforest.png"]
 == Example 2
 
-[%notitle, background-image="img/motivation_temple.png"]
+[%notitle, background-image="img/motivation/temple.png"]
 == Example 3
 
 == !
@@ -95,12 +95,12 @@ TODO: align and get better pics
 
 [state=commute]
 == !
-image::img/commute.png[background]
+image::img/motivation/commute.png[background]
 ...because of long commutes!
 
 [state=gpu_bug]
 == !
-image::img/snail-bug.png[background]
+image::img/motivation/snail-bug.png[background]
 also because GPU driver render bugs
 WARNING: taken on my desktop PC / Nvidia GTX 1060
 
@@ -747,7 +747,7 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 == Planet (CPU)
 
 |==========================================================================================
-| image:img/pc_planet.png[Planet(PC)] | image:img/droid_planet.jpg[Planet(Droid), 300, 300]
+| image:img/showcase/pc_planet.png[Planet(PC)] | image:img/showcase/droid_planet.jpg[Planet(Droid), 300, 300]
 | Desktop PC                          | Mobile Phone
 | .1 FPS :(                           | 5 FPS
 |==========================================================================================
@@ -758,7 +758,7 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 == Clouds (CPU)
 
 |==========================================================================================
-| image:img/pc_clouds.png[Clouds(PC)] | image:img/droid_clouds.jpg[Clouds(Droid), 300, 300]
+| image:img/showcase/pc_clouds.png[Clouds(PC)] | image:img/showcase/droid_clouds.jpg[Clouds(Droid), 300, 300]
 | Desktop PC                          | Mobile Phone
 | 1 FPS                               | 8 FPS
 |==========================================================================================
