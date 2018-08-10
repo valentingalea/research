@@ -46,15 +46,18 @@ A computer program that tells the computer how to draw something
 //image::https://upload.wikimedia.org/wikipedia/commons/8/84/Phong-shading-sample.jpg[]
 // public domain
 
+[state=GPU]
 == Shaders on Modern GPU's
-image::http://images.nvidia.com/products/geforce_9600_gt/GeForce_9600_GT_3qtr_med.png[]
-//image::https://cryptosrus.com/wp-content/uploads/2017/10/gpu_mining_cards-1280x550.jpg[background]
+image::img/intro/gpu_gtx1080.png[GPU, width="60%", float="right"]
 
-== Usage on Modern GPU's
-[.step]
-- computer graphics
-- image manipulation
-- general purpose - highly parallel - processing
+[%left]
+`-` Computer graphics
+
+[%left]
+`-` Image manipulation
+
+[%left]
+`-` Highly parallel computing
 
 == Why on GPU
 image::https://steemitimages.com/0x0/https://steemitimages.com/DQmbboYVYjvhUetEDhh9bQPXz4AxZTBaDujTkSLBtqn7TYv/image.png[]

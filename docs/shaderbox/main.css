@@ -23,6 +23,10 @@
     max-height: 100%;
 }
 
+section[data-state="GPU"] img {
+    padding: .5em;
+}
+
 section[data-state="commute"] p {
     background-color: #222222
 }
