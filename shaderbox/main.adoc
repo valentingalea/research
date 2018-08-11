@@ -118,7 +118,6 @@ also because GPU driver render bugs
 WARNING: taken on desktop PC / Nvidia GTX 1060
 
 == Shading Languages
-
 [state=RSL]
 == Pixar RenderMan Language
 image::img/intro/renderman.jpg[background]
@@ -137,7 +136,6 @@ surface basic() {           surface simple(color Alpha = 1) {
 -----
 
 == Shading Languages History
-
 For real-time rendering:
 
 - Early: ARB assembly, Cg
@@ -193,7 +191,6 @@ float4 main(
 |==============================================================================
 
 == Shading Languages Future
-
 Basically C++ (usually via LLVM)
 
 [.step]
@@ -209,13 +206,11 @@ Let's see how C++ can help out, NOW!
 
 [state=plan]
 == The Plan
-
 [%step]
 - image:img/icon/browser.svg[cpp, 64, 64] Pick a shading language and twist C++ to accept it as source code!
 - image:img/icon/management.svg[bonus, 64, 64] BONUS: use the preprocessor for transcription back to the original language(s)!
 
 == The Plan (continued)
-
 [%step]
 - obligatory preprocessor layer
 - vector (linear algebra) types
@@ -225,13 +220,11 @@ Let's see how C++ can help out, NOW!
 - "standard library" utility/math functions
 
 == Place Your Bets
-
 We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
 
 WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
 == Languages: Declarations
-
 |==============================================================================
 | GLSL              | HLSL                  | C++
 3+^|
@@ -245,7 +238,6 @@ C-style `struct`
 |==============================================================================
 
 == Languages: Arguments
-
 |===========================================
 | GLSL/HLSL     | C++           | Macro glue
 | `const in T`  | `const T &`   | `_in(T)`
@@ -254,7 +246,6 @@ C-style `struct`
 |===========================================
 
 == GLSL ex: Vectors and Matrices
-
 [source, cpp]
 -----
 // vectors are generic
@@ -271,7 +262,6 @@ mat4 view, projection;
 -----
 
 == Vector Swizzle
-
 Syntactic sugar for easy referring to components (or combination of)
 
 |=========================
@@ -281,7 +271,6 @@ Syntactic sugar for easy referring to components (or combination of)
 |=========================
 
 == Vector Swizzle - Examples
-
 .subcomponents mix & match
 [source, cpp]
 -----
@@ -307,7 +296,6 @@ pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice
 -----
 
 == Vector Swizzle - Motivation
-
 [source, cpp]
 -----
 vec3 calcNormal( in vec3 pos )
@@ -323,7 +311,6 @@ vec3 calcNormal( in vec3 pos )
 -----
 
 == Operators
-
 [cols="a,a"]
 |============
 | syntax | equivalent
@@ -356,7 +343,6 @@ u.z = dot(v, m[2]);
 
 [state=STL]
 == "Standard Library"
-
 //TODO: table styling attrib are ignored
 [cols="%20,%80", width="100%"]
 |==========================================================
@@ -368,42 +354,38 @@ u.z = dot(v, m[2]);
 |==========================================================
 
 == !
-
 Recreating all this in C++ ...
 
 == Design of `vector<>`
-
 [source, cpp]
 -----
 template<typename T, size_t N>
-struct vector : public vector_base<T, N>
+struct vector :
+    public vector_base<T, N>
 {
-    using scalar_type = T;
-    using vector_type = vector<T, N>;
-    using base_type = vector_base<T, N>;
-
-    vector()
-    {
-        iterate([&](size_t i) {
-            data[i] = 0;
-        });
-    }
-    ...
+    vector();
+    vector(scalar_type s);
+    template<typename... S> explicit vector(S... args);
+...
+    scalar_type& operator[](size_t i);
+    scalar_type& operator[](size_t i)
+...
+    vector_type& operator +=(scalar_type s)
+    vector_type& operator +=(const vector_type &v);
+...
 -----
 
 == `static_for` utility
-
 [source, cpp]
 -----
 template<size_t Begin, size_t End>
 struct static_for
 {
     template<class Func>
-    void operator ()(Func &&f) {
+    constexpr void operator ()(Func &&f)
+    {
         f(Begin);
-
-        static_for<Begin + 1, End>()(
-            std::forward<Func>(f));
+        static_for<Begin + 1, End>()(std::forward<Func>(f));
     }
 };
 -----
@@ -418,62 +400,68 @@ struct static_for<N, N>
 };
 -----
 
-== `vector<>` constructor
+== `vector<>` ctor - basic
+[source, cpp]
+-----
+vector()
+{
+    static_for<0, N>()([this](size_t i) {
+        data[i] = 0;
+    });
+}
 
+vector(scalar_type s)
+{
+    static_for<0, N>()([s, this](size_t i) {
+        data[i] = s;
+    });
+}
+-----
+
+== `vector<>` ctor - advanced
 [source, cpp]
 -----
 template<typename... S>
 explicit vector(S... args)
 {
-    static_assert((sizeof...(args) <= N),
-        "mismatch number of vector init arguments");
-
-    // dummy forwarding structure
-    struct constructor {
-        constructor(...) {}
-    };
+    static_assert((sizeof...(args) <= N), "too many arguments");
 
     size_t i = 0;
-    constructor(
-        { construct_at_index(i, std::forward<S>(args)) ... }
-    );
+    (construct_at_index(i, std::forward<S>(args)), ...);
 }
 -----
 
-NOTE: `{}` init list is used to guarantee left-right order
+NOTE: unary fold expression over comma operator: send every arg to specialized processor function
 
-== constructor specialization
-
+== `vector<>` ctor - advanced (continued)
 [source, cpp]
 -----
-bool construct_at_index(size_t &i, scalar_type arg)
+void construct_at_index(size_t &i, scalar_type arg)
 {
     data[i++] = arg;
-    return true; // dummy return, just because it wil be called in a {} init list
 }
 -----
 
 [source, cpp]
 -----
 template<typename Other, size_t Other_N>
-bool construct_at_index(size_t &i, vector<Other, Other_N> &&arg)
+void construct_at_index(size_t &i, vector<Other, Other_N> &&arg)
 {
     constexpr auto count = std::min(N, Other_N);
-    static_for<0, count>()([&](size_t j) {
+
+    detail::static_for<0, count>()([&](size_t j) {
         data[i++] = arg.data[j];
     });
-    return true;
 }
 -----
 
-== construction in action
-
+== `vector<>` ctor in action
 [source, cpp]
 -----
 using vec2 = vector<int, 2>;
 using vec3 = vector<int, 3>;
 
-vec3 v = vec3(99, vec2(98, 100));
+vec3 v = vec3(98, vec2(99, 100));
 //             ^    ^
 //             |    |
 //             `-- scalar construct gets called
@@ -555,24 +543,7 @@ call    printf
 - clang 5.x and 6.x produce worse code
 - gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
 
-== `vector_base` foundation
-
-[source, cpp]
------
-template<typename T, size_t N>
-struct vector_base
-{
-    union
-    {
-        T data[N];
-    };
-};
------
-
-NOTE: both anonymous `struct` and `union` are permitted, only MSVC complains with warning
-
-== `vector_base` variation
-
+== `vector_base` naive impl
 [source, cpp]
 -----
 template<typename T>
@@ -588,6 +559,7 @@ struct vector_base<T, 2>
 };
 -----
 
+== `vector_base` naive impl (2)
 [source, cpp]
 -----
 template<typename T>
@@ -603,98 +575,117 @@ struct vector_base<T, 3>
 };
 -----
 
-TODO: clarify union member access https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active / https://en.cppreference.com/w/cpp/language/union
+== `vector_base` naive impl (3)
+[source, cpp]
+-----
+template<typename T>
+struct vector_base<T, 4>
+{
+    union
+    {
+        T data[4];
+        struct { T x, y, z, w; };
+        struct { T r, g, b, a; };
+        struct { T s, t, p, q; };
+    }
+};
+-----
+
+== `vector_base` notes
+NOTE: both anonymous `struct` and `union` are permitted, only MSVC complains with warning
+
+WARNING: `union` active member switching can be tricky `[10.5]` but we'll use only trivial types with trivial assignment 
 
 == Swizzle
-
-TIP: We introduce an additional proxy class that allows custom access to the indices and we create all possible permutations (per GLSL standard)
+TIP: We introduce an additional proxy class that allows custom access to the indices and we create all possible permutations (per GLSL/HLSL standard)
 
 [source, cpp]
 -----
-union
+template<class vector_type, class T, size_t N, size_t... indices>
+struct swizzler
 {
-    T data[2];
-    struct { T x, y; };
-    struct { T s, t; };
-    struct { T u, v; };
-    swizzler<T, 2, 0, 0> xx, rr, ss;
-    swizzler<T, 2, 0, 1> xy, rg, st;
-    swizzler<T, 2, 1, 0> yx, gr, ts;
-    swizzler<T, 2, 1, 1> yy, gg, tt;
-    ...
+	T data[N]; // can differ from vector_type
+...
+};
 -----
 
 == Swizzle for `vector<T, 3>`
-
 [source, cpp]
 -----
 union
 {
     T data[3];
-    struct { T x, y, z; };
-    struct { T r, g, b; };
-    struct { T s, t, p; };
-    swizzler<T, 3, 0, 0> xx, rr, ss;
-    swizzler<T, 3, 0, 1> xy, rg, st;
-    swizzler<T, 3, 0, 2> xz, rb, sp;
-    swizzler<T, 3, 1, 0> yx, gr, ts;
-    swizzler<T, 3, 1, 1> yy, gg, tt;
-    swizzler<T, 3, 1, 2> yz, gb, tp;
-    swizzler<T, 3, 2, 0> zx, br, ps;
-    swizzler<T, 3, 2, 1> zy, bg, pt;
-    swizzler<T, 3, 2, 2> zz, bb, pp;
+
+    struct {
+        swizzler<0>::type x;
+        swizzler<1>::type y;
+        swizzler<2>::type z;
+    };
+    struct {
+        swizzler<0>::type r;
+        swizzler<1>::type g;
+        swizzler<2>::type b;
+    };
+    struct {
+        swizzler<0>::type s;
+        swizzler<1>::type t;
+        swizzler<2>::type p;
+    };
+    ...
+-----
+
+== swizzle (continued)
+[source, cpp]
+-----
+    ...
+    swizzler<0, 0>::type xx, rr, ss;
+    swizzler<0, 1>::type xy, rg, st;
+    swizzler<0, 2>::type xz, rb, sp;
+    swizzler<1, 0>::type yx, gr, ts;
+    swizzler<1, 1>::type yy, gg, tt;
+    swizzler<1, 2>::type yz, gb, tp;
+    swizzler<2, 0>::type zx, br, ps;
+    swizzler<2, 1>::type zy, bg, pt;
+    swizzler<2, 2>::type zz, bb, pp;
     ...
 -----
 
 == ...more swizzle
-
 [source, cpp]
 -----
     ...
-    swizzler<T, 3, 0, 0, 0> xxx, rrr, sss;
-    swizzler<T, 3, 0, 0, 1> xxy, rrg, sst;
-    swizzler<T, 3, 0, 0, 2> xxz, rrb, ssp;
-    swizzler<T, 3, 0, 1, 0> xyx, rgr, sts;
-    swizzler<T, 3, 0, 1, 1> xyy, rgg, stt;
-    swizzler<T, 3, 0, 1, 2> xyz, rgb, stp;
-    swizzler<T, 3, 0, 2, 0> xzx, rbr, sps;
-    swizzler<T, 3, 0, 2, 1> xzy, rbg, spt;
-    swizzler<T, 3, 0, 2, 2> xzz, rbb, spp;
-    swizzler<T, 3, 1, 0, 0> yxx, grr, tss;
-    swizzler<T, 3, 1, 0, 1> yxy, grg, tst;
-    swizzler<T, 3, 1, 0, 2> yxz, grb, tsp;
-    swizzler<T, 3, 1, 1, 0> yyx, ggr, tts;
-    swizzler<T, 3, 1, 1, 1> yyy, ggg, ttt;
-    swizzler<T, 3, 1, 1, 2> yyz, ggb, ttp;
-    swizzler<T, 3, 1, 2, 0> yzx, gbr, tps;
-    swizzler<T, 3, 1, 2, 1> yzy, gbg, tpt;
-    swizzler<T, 3, 1, 2, 2> yzz, gbb, tpp;
+    swizzler<0, 0, 0>::type xxx, rrr, sss;
+    swizzler<0, 0, 1>::type xxy, rrg, sst;
+    swizzler<0, 0, 2>::type xxz, rrb, ssp;
+    swizzler<0, 1, 0>::type xyx, rgr, sts;
+    swizzler<0, 1, 1>::type xyy, rgg, stt;
+    swizzler<0, 1, 2>::type xyz, rgb, stp;
+    swizzler<0, 2, 0>::type xzx, rbr, sps;
+    swizzler<0, 2, 1>::type xzy, rbg, spt;
+    swizzler<0, 2, 2>::type xzz, rbb, spp;
+    swizzler<1, 0, 0>::type yxx, grr, tss;
+    swizzler<1, 0, 1>::type yxy, grg, tst;
+    swizzler<1, 0, 2>::type yxz, grb, tsp;
     ...
 -----
 
 == ...even more swizzle!
-
 [source, cpp]
 -----
     ...
-    swizzler<T, 3, 2, 1, 0, 0> zyxx, bgrr, ptss;
-    swizzler<T, 3, 2, 1, 0, 1> zyxy, bgrg, ptst;
-    swizzler<T, 3, 2, 1, 0, 2> zyxz, bgrb, ptsp;
-    swizzler<T, 3, 2, 1, 1, 0> zyyx, bggr, ptts;
-    swizzler<T, 3, 2, 1, 1, 1> zyyy, bggg, pttt;
-    swizzler<T, 3, 2, 1, 1, 2> zyyz, bggb, pttp;
-    swizzler<T, 3, 2, 1, 2, 0> zyzx, bgbr, ptps;
-    swizzler<T, 3, 2, 1, 2, 1> zyzy, bgbg, ptpt;
-    swizzler<T, 3, 2, 1, 2, 2> zyzz, bgbb, ptpp;
-    swizzler<T, 3, 2, 2, 0, 0> zzxx, bbrr, ppss;
-    swizzler<T, 3, 2, 2, 0, 1> zzxy, bbrg, ppst;
-    swizzler<T, 3, 2, 2, 0, 2> zzxz, bbrb, ppsp;
-    swizzler<T, 3, 2, 2, 1, 0> zzyx, bbgr, ppts;
-    swizzler<T, 3, 2, 2, 1, 1> zzyy, bbgg, pptt;
-    swizzler<T, 3, 2, 2, 1, 2> zzyz, bbgb, pptp;
-    swizzler<T, 3, 2, 2, 2, 0> zzzx, bbbr, ppps;
-    swizzler<T, 3, 2, 2, 2, 1> zzzy, bbbg, pppt;
-    swizzler<T, 3, 2, 2, 2, 2> zzzz, bbbb, pppp;
+    swizzler<2, 1, 2, 0>::type zyzx, bgbr, ptps;
+    swizzler<2, 1, 2, 1>::type zyzy, bgbg, ptpt;
+    swizzler<2, 1, 2, 2>::type zyzz, bgbb, ptpp;
+    swizzler<2, 2, 0, 0>::type zzxx, bbrr, ppss;
+    swizzler<2, 2, 0, 1>::type zzxy, bbrg, ppst;
+    swizzler<2, 2, 0, 2>::type zzxz, bbrb, ppsp;
+    swizzler<2, 2, 1, 0>::type zzyx, bbgr, ppts;
+    swizzler<2, 2, 1, 1>::type zzyy, bbgg, pptt;
+    swizzler<2, 2, 1, 2>::type zzyz, bbgb, pptp;
+    swizzler<2, 2, 2, 0>::type zzzx, bbbr, ppps;
+    swizzler<2, 2, 2, 1>::type zzzy, bbbg, pppt;
+    swizzler<2, 2, 2, 2>::type zzzz, bbbb, pppp;
+};
 -----
 
 == `swizzler<>` design

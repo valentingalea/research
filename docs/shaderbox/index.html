@@ -123,28 +123,27 @@ u.z = dot(v, m[2]);
 <section id="standard_library" data-state="STL"><h2>"Standard Library"</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Math</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>sin</code>, <code>cos</code>, <code>radians</code>, <code>pow</code>, <code>exp</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Common</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>abs</code>, <code>sign</code>, <code>floor</code>, <code>mod</code>, <code>min</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Utility</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mix</code>, <code>step</code>, <code>smoothstep</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Geometry</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>length</code>, <code>dot</code>, <code>cross</code>, <code>distance</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Specific texture and image sampling &#8230;&#8203;</p></td></tr></table></section>
 <section><div class="paragraph"><p>Recreating all this in C++ &#8230;&#8203;</p></div></section>
 <section id="design_of_code_vector_code"><h2>Design of <code>vector&lt;&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
-struct vector : public vector_base&lt;T, N&gt;
+struct vector :
+    public vector_base&lt;T, N&gt;
 {
-    using scalar_type = T;
-    using vector_type = vector&lt;T, N&gt;;
-    using base_type = vector_base&lt;T, N&gt;;
-
-    vector()
-    {
-        iterate([&amp;](size_t i) {
-            data[i] = 0;
-        });
-    }
-    ...</code></pre></div></div></section>
+    vector();
+    vector(scalar_type s);
+    template&lt;typename... S&gt; explicit vector(S... args);
+...
+    scalar_type&amp; operator[](size_t i);
+    scalar_type&amp; operator[](size_t i)
+...
+    vector_type&amp; operator +=(scalar_type s)
+    vector_type&amp; operator +=(const vector_type &amp;v);
+...</code></pre></div></div></section>
 <section id="code_static_for_code_utility"><h2><code>static_for</code> utility</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
 struct static_for
 {
     template&lt;class Func&gt;
-    void operator ()(Func &amp;&amp;f) {
+    constexpr void operator ()(Func &amp;&amp;f)
+    {
         f(Begin);
-
-        static_for&lt;Begin + 1, End&gt;()(
-            std::forward&lt;Func&gt;(f));
+        static_for&lt;Begin + 1, End&gt;()(std::forward&lt;Func&gt;(f));
     }
 };</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t N&gt;
@@ -153,41 +152,45 @@ struct static_for&lt;N, N&gt;
     template&lt;class Func&gt;
     constexpr void operator ()(Func &amp;&amp;) { /* empty */ }
 };</code></pre></div></div></section>
-<section id="code_vector_code_constructor"><h2><code>vector&lt;&gt;</code> constructor</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... S&gt;
+<section id="code_vector_code_ctor_basic"><h2><code>vector&lt;&gt;</code> ctor - basic</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vector()
+{
+    static_for&lt;0, N&gt;()([this](size_t i) {
+        data[i] = 0;
+    });
+}
+
+vector(scalar_type s)
+{
+    static_for&lt;0, N&gt;()([s, this](size_t i) {
+        data[i] = s;
+    });
+}</code></pre></div></div></section>
+<section id="code_vector_code_ctor_advanced"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... S&gt;
 explicit vector(S... args)
 {
-    static_assert((sizeof...(args) &lt;= N),
-        "mismatch number of vector init arguments");
-
-    // dummy forwarding structure
-    struct constructor {
-        constructor(...) {}
-    };
+    static_assert((sizeof...(args) &lt;= N), "too many arguments");
 
     size_t i = 0;
-    constructor(
-        { construct_at_index(i, std::forward&lt;S&gt;(args)) ... }
-    );
+    (construct_at_index(i, std::forward&lt;S&gt;(args)), ...);
 }</code></pre></div></div>
-<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content"><code>{}</code> init list is used to guarantee left-right order</td></tr></table></div></section>
-<section id="constructor_specialization"><h2>constructor specialization</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">bool construct_at_index(size_t &amp;i, scalar_type arg)
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">unary fold expression over comma operator: send every arg to specialized processor function</td></tr></table></div></section>
+<section id="code_vector_code_ctor_advanced_continued"><h2><code>vector&lt;&gt;</code> ctor - advanced (continued)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void construct_at_index(size_t &amp;i, scalar_type arg)
 {
     data[i++] = arg;
-    return true; // dummy return, just because it wil be called in a {} init list
 }</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename Other, size_t Other_N&gt;
-bool construct_at_index(size_t &amp;i, vector&lt;Other, Other_N&gt; &amp;&amp;arg)
+void construct_at_index(size_t &amp;i, vector&lt;Other, Other_N&gt; &amp;&amp;arg)
 {
     constexpr auto count = std::min(N, Other_N);
-    static_for&lt;0, count&gt;()([&amp;](size_t j) {
+
+    detail::static_for&lt;0, count&gt;()([&amp;](size_t j) {
         data[i++] = arg.data[j];
     });
-    return true;
 }</code></pre></div></div></section>
-<section id="construction_in_action"><h2>construction in action</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">using vec2 = vector&lt;int, 2&gt;;
+<section id="code_vector_code_ctor_in_action"><h2><code>vector&lt;&gt;</code> ctor in action</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">using vec2 = vector&lt;int, 2&gt;;
 using vec3 = vector&lt;int, 3&gt;;
 
-vec3 v = vec3(99, vec2(98, 100));
+vec3 v = vec3(98, vec2(99, 100));
 //             ^    ^
 //             |    |
 //             `-- scalar construct gets called
@@ -237,16 +240,7 @@ movq    r9, xmm3
 movq    r8, xmm2
 call    printf</code></pre></div></div></div></td></tr></table>
 <div class="ulist"><ul><li><p>clang 5.x and 6.x produce worse code</p></li><li><p>gcc&#8217;s <code>cvtss2sd</code> from memory is pessimization (<a href="https://stackoverflow.com/a/16597686" class="bare">https://stackoverflow.com/a/16597686</a>)</p></li></ul></div></section>
-<section id="code_vector_base_code_foundation"><h2><code>vector_base</code> foundation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
-struct vector_base
-{
-    union
-    {
-        T data[N];
-    };
-};</code></pre></div></div>
-<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">both anonymous <code>struct</code> and <code>union</code> are permitted, only MSVC complains with warning</td></tr></table></div></section>
-<section id="code_vector_base_code_variation"><h2><code>vector_base</code> variation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
+<section id="code_vector_base_code_naive_impl"><h2><code>vector_base</code> naive impl</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 2&gt;
 {
     union
@@ -256,8 +250,8 @@ struct vector_base&lt;T, 2&gt;
         struct { T s, t; };
         struct { T u, v; };
     }
-};</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
+};</code></pre></div></div></section>
+<section id="code_vector_base_code_naive_impl_2"><h2><code>vector_base</code> naive impl (2)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 3&gt;
 {
     union
@@ -267,75 +261,86 @@ struct vector_base&lt;T, 3&gt;
         struct { T r, g, b; };
         struct { T s, t, p; };
     }
-};</code></pre></div></div>
-<div class="paragraph"><p>TODO: clarify union member access <a href="https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active" class="bare">https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active</a> / <a href="https://en.cppreference.com/w/cpp/language/union" class="bare">https://en.cppreference.com/w/cpp/language/union</a></p></div></section>
-<section id="swizzle"><h2>Swizzle</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">We introduce an additional proxy class that allows custom access to the indices and we create all possible permutations (per GLSL standard)</td></tr></table></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">union
+};</code></pre></div></div></section>
+<section id="code_vector_base_code_naive_impl_3"><h2><code>vector_base</code> naive impl (3)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
+struct vector_base&lt;T, 4&gt;
 {
-    T data[2];
-    struct { T x, y; };
-    struct { T s, t; };
-    struct { T u, v; };
-    swizzler&lt;T, 2, 0, 0&gt; xx, rr, ss;
-    swizzler&lt;T, 2, 0, 1&gt; xy, rg, st;
-    swizzler&lt;T, 2, 1, 0&gt; yx, gr, ts;
-    swizzler&lt;T, 2, 1, 1&gt; yy, gg, tt;
-    ...</code></pre></div></div></section>
+    union
+    {
+        T data[4];
+        struct { T x, y, z, w; };
+        struct { T r, g, b, a; };
+        struct { T s, t, p, q; };
+    }
+};</code></pre></div></div></section>
+<section id="code_vector_base_code_notes"><h2><code>vector_base</code> notes</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">both anonymous <code>struct</code> and <code>union</code> are permitted, only MSVC complains with warning</td></tr></table></div>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content"><code>union</code> active member switching can be tricky <code>[10.5]</code> but we&#8217;ll use only trivial types with trivial assignment</td></tr></table></div></section>
+<section id="swizzle"><h2>Swizzle</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">We introduce an additional proxy class that allows custom access to the indices and we create all possible permutations (per GLSL/HLSL standard)</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;class vector_type, class T, size_t N, size_t... indices&gt;
+struct swizzler
+{
+	T data[N]; // can differ from vector_type
+...
+};</code></pre></div></div></section>
 <section id="swizzle_for_code_vector_t_3_code"><h2>Swizzle for <code>vector&lt;T, 3&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">union
 {
     T data[3];
-    struct { T x, y, z; };
-    struct { T r, g, b; };
-    struct { T s, t, p; };
-    swizzler&lt;T, 3, 0, 0&gt; xx, rr, ss;
-    swizzler&lt;T, 3, 0, 1&gt; xy, rg, st;
-    swizzler&lt;T, 3, 0, 2&gt; xz, rb, sp;
-    swizzler&lt;T, 3, 1, 0&gt; yx, gr, ts;
-    swizzler&lt;T, 3, 1, 1&gt; yy, gg, tt;
-    swizzler&lt;T, 3, 1, 2&gt; yz, gb, tp;
-    swizzler&lt;T, 3, 2, 0&gt; zx, br, ps;
-    swizzler&lt;T, 3, 2, 1&gt; zy, bg, pt;
-    swizzler&lt;T, 3, 2, 2&gt; zz, bb, pp;
+
+    struct {
+        swizzler&lt;0&gt;::type x;
+        swizzler&lt;1&gt;::type y;
+        swizzler&lt;2&gt;::type z;
+    };
+    struct {
+        swizzler&lt;0&gt;::type r;
+        swizzler&lt;1&gt;::type g;
+        swizzler&lt;2&gt;::type b;
+    };
+    struct {
+        swizzler&lt;0&gt;::type s;
+        swizzler&lt;1&gt;::type t;
+        swizzler&lt;2&gt;::type p;
+    };
+    ...</code></pre></div></div></section>
+<section id="swizzle_continued"><h2>swizzle (continued)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
+    swizzler&lt;0, 0&gt;::type xx, rr, ss;
+    swizzler&lt;0, 1&gt;::type xy, rg, st;
+    swizzler&lt;0, 2&gt;::type xz, rb, sp;
+    swizzler&lt;1, 0&gt;::type yx, gr, ts;
+    swizzler&lt;1, 1&gt;::type yy, gg, tt;
+    swizzler&lt;1, 2&gt;::type yz, gb, tp;
+    swizzler&lt;2, 0&gt;::type zx, br, ps;
+    swizzler&lt;2, 1&gt;::type zy, bg, pt;
+    swizzler&lt;2, 2&gt;::type zz, bb, pp;
     ...</code></pre></div></div></section>
 <section id="more_swizzle"><h2>&#8230;&#8203;more swizzle</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
-    swizzler&lt;T, 3, 0, 0, 0&gt; xxx, rrr, sss;
-    swizzler&lt;T, 3, 0, 0, 1&gt; xxy, rrg, sst;
-    swizzler&lt;T, 3, 0, 0, 2&gt; xxz, rrb, ssp;
-    swizzler&lt;T, 3, 0, 1, 0&gt; xyx, rgr, sts;
-    swizzler&lt;T, 3, 0, 1, 1&gt; xyy, rgg, stt;
-    swizzler&lt;T, 3, 0, 1, 2&gt; xyz, rgb, stp;
-    swizzler&lt;T, 3, 0, 2, 0&gt; xzx, rbr, sps;
-    swizzler&lt;T, 3, 0, 2, 1&gt; xzy, rbg, spt;
-    swizzler&lt;T, 3, 0, 2, 2&gt; xzz, rbb, spp;
-    swizzler&lt;T, 3, 1, 0, 0&gt; yxx, grr, tss;
-    swizzler&lt;T, 3, 1, 0, 1&gt; yxy, grg, tst;
-    swizzler&lt;T, 3, 1, 0, 2&gt; yxz, grb, tsp;
-    swizzler&lt;T, 3, 1, 1, 0&gt; yyx, ggr, tts;
-    swizzler&lt;T, 3, 1, 1, 1&gt; yyy, ggg, ttt;
-    swizzler&lt;T, 3, 1, 1, 2&gt; yyz, ggb, ttp;
-    swizzler&lt;T, 3, 1, 2, 0&gt; yzx, gbr, tps;
-    swizzler&lt;T, 3, 1, 2, 1&gt; yzy, gbg, tpt;
-    swizzler&lt;T, 3, 1, 2, 2&gt; yzz, gbb, tpp;
+    swizzler&lt;0, 0, 0&gt;::type xxx, rrr, sss;
+    swizzler&lt;0, 0, 1&gt;::type xxy, rrg, sst;
+    swizzler&lt;0, 0, 2&gt;::type xxz, rrb, ssp;
+    swizzler&lt;0, 1, 0&gt;::type xyx, rgr, sts;
+    swizzler&lt;0, 1, 1&gt;::type xyy, rgg, stt;
+    swizzler&lt;0, 1, 2&gt;::type xyz, rgb, stp;
+    swizzler&lt;0, 2, 0&gt;::type xzx, rbr, sps;
+    swizzler&lt;0, 2, 1&gt;::type xzy, rbg, spt;
+    swizzler&lt;0, 2, 2&gt;::type xzz, rbb, spp;
+    swizzler&lt;1, 0, 0&gt;::type yxx, grr, tss;
+    swizzler&lt;1, 0, 1&gt;::type yxy, grg, tst;
+    swizzler&lt;1, 0, 2&gt;::type yxz, grb, tsp;
     ...</code></pre></div></div></section>
 <section id="even_more_swizzle"><h2>&#8230;&#8203;even more swizzle!</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
-    swizzler&lt;T, 3, 2, 1, 0, 0&gt; zyxx, bgrr, ptss;
-    swizzler&lt;T, 3, 2, 1, 0, 1&gt; zyxy, bgrg, ptst;
-    swizzler&lt;T, 3, 2, 1, 0, 2&gt; zyxz, bgrb, ptsp;
-    swizzler&lt;T, 3, 2, 1, 1, 0&gt; zyyx, bggr, ptts;
-    swizzler&lt;T, 3, 2, 1, 1, 1&gt; zyyy, bggg, pttt;
-    swizzler&lt;T, 3, 2, 1, 1, 2&gt; zyyz, bggb, pttp;
-    swizzler&lt;T, 3, 2, 1, 2, 0&gt; zyzx, bgbr, ptps;
-    swizzler&lt;T, 3, 2, 1, 2, 1&gt; zyzy, bgbg, ptpt;
-    swizzler&lt;T, 3, 2, 1, 2, 2&gt; zyzz, bgbb, ptpp;
-    swizzler&lt;T, 3, 2, 2, 0, 0&gt; zzxx, bbrr, ppss;
-    swizzler&lt;T, 3, 2, 2, 0, 1&gt; zzxy, bbrg, ppst;
-    swizzler&lt;T, 3, 2, 2, 0, 2&gt; zzxz, bbrb, ppsp;
-    swizzler&lt;T, 3, 2, 2, 1, 0&gt; zzyx, bbgr, ppts;
-    swizzler&lt;T, 3, 2, 2, 1, 1&gt; zzyy, bbgg, pptt;
-    swizzler&lt;T, 3, 2, 2, 1, 2&gt; zzyz, bbgb, pptp;
-    swizzler&lt;T, 3, 2, 2, 2, 0&gt; zzzx, bbbr, ppps;
-    swizzler&lt;T, 3, 2, 2, 2, 1&gt; zzzy, bbbg, pppt;
-    swizzler&lt;T, 3, 2, 2, 2, 2&gt; zzzz, bbbb, pppp;</code></pre></div></div></section>
+    swizzler&lt;2, 1, 2, 0&gt;::type zyzx, bgbr, ptps;
+    swizzler&lt;2, 1, 2, 1&gt;::type zyzy, bgbg, ptpt;
+    swizzler&lt;2, 1, 2, 2&gt;::type zyzz, bgbb, ptpp;
+    swizzler&lt;2, 2, 0, 0&gt;::type zzxx, bbrr, ppss;
+    swizzler&lt;2, 2, 0, 1&gt;::type zzxy, bbrg, ppst;
+    swizzler&lt;2, 2, 0, 2&gt;::type zzxz, bbrb, ppsp;
+    swizzler&lt;2, 2, 1, 0&gt;::type zzyx, bbgr, ppts;
+    swizzler&lt;2, 2, 1, 1&gt;::type zzyy, bbgg, pptt;
+    swizzler&lt;2, 2, 1, 2&gt;::type zzyz, bbgb, pptp;
+    swizzler&lt;2, 2, 2, 0&gt;::type zzzx, bbbr, ppps;
+    swizzler&lt;2, 2, 2, 1&gt;::type zzzy, bbbg, pppt;
+    swizzler&lt;2, 2, 2, 2&gt;::type zzzz, bbbb, pppp;
+};</code></pre></div></div></section>
 <section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="operators_and_functions"><h2>Operators and Functions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="limitations_and_problems"><h2>Limitations and Problems</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
