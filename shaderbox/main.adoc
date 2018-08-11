@@ -123,16 +123,17 @@ WARNING: taken on desktop PC / Nvidia GTX 1060
 == Pixar RenderMan Language
 image::img/intro/renderman.jpg[background]
 
-[.stretch]
-[source, javascript]
+[source, javascript, role="strech"]
 -----
-/* red mesh */                  /* red shaded mesh */
-surface basic() {               surface simple(color myOpacity = 1;) {
-    Ci = (1.0, 0.0, 0.0);           color myColor = (1.0, 0.0, 0.0);
-    Oi = 1;                         normal Nn = normalize(N);
-}                                   Ci = myColor * myOpacity * diffuse(Nn);
-                                    Oi = myOpacity;
-                                }
+/*
+ * red mesh                 red shaded mesh
+ */
+surface basic() {           surface simple(color Alpha = 1) {
+    Ci = (1.0, 0.0, 0.0);       color Clr = (1.0, 0.0, 0.0);
+    Oi = 1;                     normal Nn = normalize(N);
+}                               Ci = Clr * Alpha * diffuse(Nn);
+                                Oi = Alpha;
+                            }
 -----
 
 == Shading Languages History
