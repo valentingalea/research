@@ -366,8 +366,14 @@ void assign_across(const vector_type &amp;vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
 }</code></pre></div></div></section>
-<section id="code_swizzler_code_wrapper"><h2><code>swizzler&lt;&gt;</code> wrapper</h2></section>
-<section id="operators_and_functions"><h2>Operators and Functions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="code_swizzler_code_wrapper"><h2><code>swizzler&lt;&gt;</code> wrapper</h2><div class="paragraph"><p>TODO: talk/show?</p></div>
+<div class="paragraph"><p>TODO: also maybe re-iterate the constructor example with swizzles</p></div></section>
+<section id="operators_and_functions" data-state="no_list_decor"><h2>Operators and Functions</h2><div class="paragraph"><p>We will need to re-create a lot of generic utility functions</p></div>
+<div class="ulist"><ul><li class="fragment"><p>
+Example: the dot (inner) product of two vectors</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
+T dot(const vector&lt;T, N&gt; &amp;, const vector&lt;T, N&gt; &amp;);
+
+float n = dot(vec3(1, 0, 0), vec3(0, 0, 1));</code></pre></div></div></li></ul></div></section>
 <section id="limitations_and_problems"><h2>Limitations and Problems</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="solutions"><h2>Solutions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>

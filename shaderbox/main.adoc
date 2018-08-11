@@ -724,11 +724,26 @@ void assign_across(const vector_type &vec, size_t i, Indices ...j)
 -----
 
 == `swizzler<>` wrapper
-TODO:
+TODO: talk/show?
 
+TODO: also maybe re-iterate the constructor example with swizzles
+
+[state=no_list_decor]
 == Operators and Functions
+We will need to re-create a lot of generic utility functions
 
-TODO: ...
+[%step]
+- {blank}
+Example: the dot (inner) product of two vectors
+- {blank}
++
+[source, cpp]
+-----
+template<typename T, size_t N>
+T dot(const vector<T, N> &, const vector<T, N> &);
+
+float n = dot(vec3(1, 0, 0), vec3(0, 0, 1));
+-----
 
 == Limitations and Problems
 

@@ -87,3 +87,7 @@ section[id="attribution"] p {
 section[id="attribution"] ul {
     list-style-type: none;
 }
+
+section[data-state="no_list_decor"] ul {
+    list-style-type: none;
+}
