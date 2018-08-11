@@ -138,14 +138,12 @@ surface basic() {           surface simple(color Alpha = 1) {
 
 == Shading Languages History
 
-Real-time rendering:
+For real-time rendering:
 
-- ARB assembly language
-- Cg programming language
-- DirectX Shader Assembly Language
+- Early: ARB assembly, Cg
 - OpenGL shading language (*GLSL*)
 - DirectX High-Level Shader Language (*HLSL*)
-- PlayStation Shader Language
+- PlayStation Shader Language (similar to HLSL)
 
 == A glimpse of GLSL
 // from https://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/lighting.php
@@ -232,16 +230,21 @@ We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
 
 WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
-== Language: Declarations
+== Languages: Declarations
 
 |==============================================================================
 | GLSL              | HLSL                  | C++
-3+^| classic basic types
-3+^| C-style `struct`
-| `T name = T ( ... )` | `T name = { ... }` |  both (`_begin()` macro)
+3+^|
+// stupid asciidoctor bug: doesn't respect column centering
+{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
+classic basic types
+3+^|
+{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
+C-style `struct`
+| `T name = T ( ... )` | `T name = { ... }` |  both (preproc abstraction)
 |==============================================================================
 
-== Language: Arguments
+== Languages: Arguments
 
 |===========================================
 | GLSL/HLSL     | C++           | Macro glue
@@ -250,7 +253,7 @@ WARNING: only a subset of it - concentrate on procedural graphics thus minimize/
 | `out T`       | `T &`         | `_out(T)`
 |===========================================
 
-== Language: Vectors and Matrices
+== GLSL ex: Vectors and Matrices
 
 [source, cpp]
 -----
@@ -321,19 +324,35 @@ vec3 calcNormal( in vec3 pos )
 
 == Operators
 
+[cols="a,a"]
+|============
+| syntax | equivalent
+|
 [source, cpp]
 -----
-vec3 v, u, w;
-mat3 m;
-                    /* equivalent to */
-w = v + u;            w.x = v.x + u.x;
-                      w.y = v.y + u.y;
-                      w.z = v.z + u.z;
-
-u = v * m;            u.x = dot(v, m[0]); // m[0] is the left column of m
-                      u.y = dot(v, m[1]); // dot(a,b) is the inner (dot) product of a and b
-                      u.z = dot(v, m[2]);
+w = v + u;
 -----
+|
+[source, cpp]
+-----
+w.x = v.x + u.x;
+w.y = v.y + u.y;
+w.z = v.z + u.z;
+-----
+|
+[source, cpp]
+-----
+u = v * m;
+-----
+|
+[source, cpp]
+-----
+u.x = dot(v, m[0]);
+u.y = dot(v, m[1]);
+u.z = dot(v, m[2]);
+/* dot(a,b) is the inner product of a and b */
+-----
+|============
 
 [state=STL]
 == "Standard Library"
@@ -359,16 +378,16 @@ Recreating all this in C++ ...
 template<typename T, size_t N>
 struct vector : public vector_base<T, N>
 {
-	using scalar_type = T;
-	using vector_type = vector<T, N>;
-	using base_type = vector_base<T, N>;
+    using scalar_type = T;
+    using vector_type = vector<T, N>;
+    using base_type = vector_base<T, N>;
 
-	vector()
-	{
-		iterate([&](size_t i) {
-			data[i] = 0;
-		});
-	}
+    vector()
+    {
+        iterate([&](size_t i) {
+            data[i] = 0;
+        });
+    }
     ...
 -----
 
@@ -379,13 +398,13 @@ struct vector : public vector_base<T, N>
 template<size_t Begin, size_t End>
 struct static_for
 {
-	template<class Func>
-	void operator ()(Func &&f) {
-		f(Begin);
+    template<class Func>
+    void operator ()(Func &&f) {
+        f(Begin);
 
-		static_for<Begin + 1, End>()(
-			std::forward<Func>(f));
-	}
+        static_for<Begin + 1, End>()(
+            std::forward<Func>(f));
+    }
 };
 -----
 
@@ -394,8 +413,8 @@ struct static_for
 template<size_t N>
 struct static_for<N, N>
 {
-	template<class Func>
-	constexpr void operator ()(Func &&) { /* empty */ }
+    template<class Func>
+    constexpr void operator ()(Func &&) { /* empty */ }
 };
 -----
 
@@ -543,10 +562,10 @@ call    printf
 template<typename T, size_t N>
 struct vector_base
 {
-	union
-	{
-		T data[N];
-	};
+    union
+    {
+        T data[N];
+    };
 };
 -----
 
@@ -559,12 +578,12 @@ NOTE: both anonymous `struct` and `union` are permitted, only MSVC complains wit
 template<typename T>
 struct vector_base<T, 2>
 {
-	union
-	{
-		T data[2];
-		struct { T x, y; };
-		struct { T s, t; };
-		struct { T u, v; };
+    union
+    {
+        T data[2];
+        struct { T x, y; };
+        struct { T s, t; };
+        struct { T u, v; };
     }
 };
 -----
@@ -574,12 +593,12 @@ struct vector_base<T, 2>
 template<typename T>
 struct vector_base<T, 3>
 {
-	union
-	{
-		T data[3];
-		struct { T x, y, z; };
-		struct { T r, g, b; };
-		struct { T s, t, p; };
+    union
+    {
+        T data[3];
+        struct { T x, y, z; };
+        struct { T r, g, b; };
+        struct { T s, t, p; };
     }
 };
 -----

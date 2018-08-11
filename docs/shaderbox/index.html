@@ -37,15 +37,17 @@ Compute</p></div></section>
 <div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">taken on desktop PC / Nvidia GTX 1060</td></tr></table></div></section>
 <section id="shading_languages"><h2>Shading Languages</h2></section>
 <section id="pixar_renderman_language" data-background-image="img/intro/renderman.jpg" data-state="RSL"><h2>Pixar RenderMan Language</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">/* red mesh */                  /* red shaded mesh */
-surface basic() {               surface simple(color myOpacity = 1;) {
-    Ci = (1.0, 0.0, 0.0);           color myColor = (1.0, 0.0, 0.0);
-    Oi = 1;                         normal Nn = normalize(N);
-}                                   Ci = myColor * myOpacity * diffuse(Nn);
-                                    Oi = myOpacity;
-                                }</code></pre></div></div></section>
-<section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>Real-time rendering:</p></div>
-<div class="ulist"><ul><li><p>ARB assembly language</p></li><li><p>Cg programming language</p></li><li><p>DirectX Shader Assembly Language</p></li><li><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li><p>PlayStation Shader Language</p></li></ul></div></section>
+<div class="listingblock strech"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">/*
+ * red mesh                 red shaded mesh
+ */
+surface basic() {           surface simple(color Alpha = 1) {
+    Ci = (1.0, 0.0, 0.0);       color Clr = (1.0, 0.0, 0.0);
+    Oi = 1;                     normal Nn = normalize(N);
+}                               Ci = Clr * Alpha * diffuse(Nn);
+                                Oi = Alpha;
+                            }</code></pre></div></div></section>
+<section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>For real-time rendering:</p></div>
+<div class="ulist"><ul><li><p>Early: ARB assembly, Cg</p></li><li><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li><p>PlayStation Shader Language (similar to HLSL)</p></li></ul></div></section>
 <section id="a_glimpse_of_glsl"><h2>A glimpse of GLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
 varying vec3 v;
 
@@ -75,9 +77,11 @@ void main(void)
 <section id="the_plan_continued"><h2>The Plan (continued)</h2><div class="ulist"><ul><li class="fragment"><p>obligatory preprocessor layer</p></li><li class="fragment"><p>vector (linear algebra) types</p><div class="ulist"><ul><li><p>swizzle support</p></li></ul></div></li><li class="fragment"><p>matrix types</p></li><li class="fragment"><p>operators</p></li><li class="fragment"><p>"standard library" utility/math functions</p></li></ul></div></section>
 <section id="place_your_bets"><h2>Place Your Bets</h2><div class="paragraph"><p>We will chose <strong>GLSL</strong> as it&#8217;s used on <em>desktop</em>, <em>web</em> and <em>mobile</em></p></div>
 <div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)</td></tr></table></div></section>
-<section id="language_declarations"><h2>Language: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">classic basic types</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">C-style <code>struct</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = T ( &#8230;&#8203; )</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = { &#8230;&#8203; }</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">both (<code>_begin()</code> macro)</p></td></tr></table></section>
-<section id="language_arguments"><h2>Language: Arguments</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL/HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Macro glue</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const in T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_in(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>inout T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_inout(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>out T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_out(T)</code></p></td></tr></table></section>
-<section id="language_vectors_and_matrices"><h2>Language: Vectors and Matrices</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">// vectors are generic
+<section id="languages_declarations"><h2>Languages: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+classic basic types</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+C-style <code>struct</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = T ( &#8230;&#8203; )</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = { &#8230;&#8203; }</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">both (preproc abstraction)</p></td></tr></table></section>
+<section id="languages_arguments"><h2>Languages: Arguments</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL/HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Macro glue</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const in T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_in(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>inout T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_inout(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>out T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_out(T)</code></p></td></tr></table></section>
+<section id="glsl_ex_vectors_and_matrices"><h2>GLSL ex: Vectors and Matrices</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">// vectors are generic
 vec2 texcoord1, texcoord2;
 vec3 position;
 vec4 myRGBA;
@@ -110,48 +114,44 @@ pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice</code></pre></div></div></s
         e.yxy * map( pos + e.yxy ).x +
         e.xxx * map( pos + e.xxx ).x );
 }</code></pre></div></div></section>
-<section id="operators"><h2>Operators</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 v, u, w;
-mat3 m;
-                    /* equivalent to */
-w = v + u;            w.x = v.x + u.x;
-                      w.y = v.y + u.y;
-                      w.z = v.z + u.z;
-
-u = v * m;            u.x = dot(v, m[0]); // m[0] is the left column of m
-                      u.y = dot(v, m[1]); // dot(a,b) is the inner (dot) product of a and b
-                      u.z = dot(v, m[2]);</code></pre></div></div></section>
+<section id="operators"><h2>Operators</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>syntax</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>equivalent</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">w = v + u;</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">w.x = v.x + u.x;
+w.y = v.y + u.y;
+w.z = v.z + u.z;</code></pre></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">u = v * m;</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">u.x = dot(v, m[0]);
+u.y = dot(v, m[1]);
+u.z = dot(v, m[2]);
+/* dot(a,b) is the inner product of a and b */</code></pre></div></div></div></td></tr></table></section>
 <section id="standard_library" data-state="STL"><h2>"Standard Library"</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Math</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>sin</code>, <code>cos</code>, <code>radians</code>, <code>pow</code>, <code>exp</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Common</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>abs</code>, <code>sign</code>, <code>floor</code>, <code>mod</code>, <code>min</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Utility</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mix</code>, <code>step</code>, <code>smoothstep</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Geometry</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>length</code>, <code>dot</code>, <code>cross</code>, <code>distance</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Specific texture and image sampling &#8230;&#8203;</p></td></tr></table></section>
 <section><div class="paragraph"><p>Recreating all this in C++ &#8230;&#8203;</p></div></section>
 <section id="design_of_code_vector_code"><h2>Design of <code>vector&lt;&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
 struct vector : public vector_base&lt;T, N&gt;
 {
-	using scalar_type = T;
-	using vector_type = vector&lt;T, N&gt;;
-	using base_type = vector_base&lt;T, N&gt;;
+    using scalar_type = T;
+    using vector_type = vector&lt;T, N&gt;;
+    using base_type = vector_base&lt;T, N&gt;;
 
-	vector()
-	{
-		iterate([&amp;](size_t i) {
-			data[i] = 0;
-		});
-	}
+    vector()
+    {
+        iterate([&amp;](size_t i) {
+            data[i] = 0;
+        });
+    }
     ...</code></pre></div></div></section>
 <section id="code_static_for_code_utility"><h2><code>static_for</code> utility</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
 struct static_for
 {
-	template&lt;class Func&gt;
-	void operator ()(Func &amp;&amp;f) {
-		f(Begin);
+    template&lt;class Func&gt;
+    void operator ()(Func &amp;&amp;f) {
+        f(Begin);
 
-		static_for&lt;Begin + 1, End&gt;()(
-			std::forward&lt;Func&gt;(f));
-	}
+        static_for&lt;Begin + 1, End&gt;()(
+            std::forward&lt;Func&gt;(f));
+    }
 };</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t N&gt;
 struct static_for&lt;N, N&gt;
 {
-	template&lt;class Func&gt;
-	constexpr void operator ()(Func &amp;&amp;) { /* empty */ }
+    template&lt;class Func&gt;
+    constexpr void operator ()(Func &amp;&amp;) { /* empty */ }
 };</code></pre></div></div></section>
 <section id="code_vector_code_constructor"><h2><code>vector&lt;&gt;</code> constructor</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... S&gt;
 explicit vector(S... args)
@@ -240,32 +240,32 @@ call    printf</code></pre></div></div></div></td></tr></table>
 <section id="code_vector_base_code_foundation"><h2><code>vector_base</code> foundation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
 struct vector_base
 {
-	union
-	{
-		T data[N];
-	};
+    union
+    {
+        T data[N];
+    };
 };</code></pre></div></div>
 <div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">both anonymous <code>struct</code> and <code>union</code> are permitted, only MSVC complains with warning</td></tr></table></div></section>
 <section id="code_vector_base_code_variation"><h2><code>vector_base</code> variation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 2&gt;
 {
-	union
-	{
-		T data[2];
-		struct { T x, y; };
-		struct { T s, t; };
-		struct { T u, v; };
+    union
+    {
+        T data[2];
+        struct { T x, y; };
+        struct { T s, t; };
+        struct { T u, v; };
     }
 };</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 3&gt;
 {
-	union
-	{
-		T data[3];
-		struct { T x, y, z; };
-		struct { T r, g, b; };
-		struct { T s, t, p; };
+    union
+    {
+        T data[3];
+        struct { T x, y, z; };
+        struct { T r, g, b; };
+        struct { T s, t, p; };
     }
 };</code></pre></div></div>
 <div class="paragraph"><p>TODO: clarify union member access <a href="https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active" class="bare">https://stackoverflow.com/questions/47168371/what-makes-a-union-member-active</a> / <a href="https://en.cppreference.com/w/cpp/language/union" class="bare">https://en.cppreference.com/w/cpp/language/union</a></p></div></section>
