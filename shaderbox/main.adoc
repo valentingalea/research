@@ -745,17 +745,71 @@ T dot(const vector<T, N> &, const vector<T, N> &);
 float n = dot(vec3(1, 0, 0), vec3(0, 0, 1));
 -----
 
-== Limitations and Problems
+[%notitle, state=no_list_decor]
+== Functions problem
+WARNING: We immediately hit a big problem!
 
-TODO: ...
+[source, cpp]
+-----
+vec3 v = vec3(1, 0, 0);
+float n = dot(v.xzx, v.zyx);
+-----
 
-== Solutions
+[source, javascript]
+-----
+> 'dot': no matching overloaded function found
+> could not deduce template argument
+-----
 
-TODO: ...
+== !
+NOTE: Type deduction does not consider implicit conversions!
+
+[%step]
+.Possible fixes
+- {blank}
++
+[source, cpp]
+-----
+float n = dot<float, 2>(v.xzx, v.zyx);
+-----
+- create by hand all scalar/size combinations :(
+- duplicate functions for swizzler proxy as well :|
+- SFINAE tricks TODO: explain?
+
+== A better fix
+NOTE: we place the functions in a non-deduced context: inside `vector<>` itself!
+
+[source, cpp]
+-----
+template<typename T, size_t N>
+struct vector
+{
+    ...
+    friend T dot(const vector &a, const vector &b)
+    {
+        /* inline friend found via ADL */
+    }
+    ...
+-----
 
 == the `matrix<>` datatype
+Now that we have `vector<>` a matrix is pretty straightforward
 
-TODO: ...
+[source, cpp]
+-----
+template<
+    template<typename, size_t> class vector_type,
+    typename scalar_type,
+    size_t N, size_t M
+>
+struct matrix
+{
+    using column_type = vector_type<scalar_type, N>;
+    using row_type = vector_type<scalar_type, M>;
+    
+    column_type data[M]; // GLSL is column major
+...
+-----
 
 == Prior Art
 
