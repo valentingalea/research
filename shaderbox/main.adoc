@@ -604,7 +604,7 @@ TIP: We introduce an additional proxy class that allows custom access to the ind
 template<class vector_type, class T, size_t N, size_t... indices>
 struct swizzler
 {
-	T data[N]; // can differ from vector_type
+    T data[N]; // can differ from vector_type
 ...
 };
 -----
@@ -689,8 +689,42 @@ union
 -----
 
 == `swizzler<>` design
+Needs to implicitly convert/assign to its `vector<>` equivalent
+[source, cpp]
+-----
+operator vector_type()
+{
+    vector_type vec;
+    assign_across(vec, 0, indices...);
+    return vec;
+}
 
-TODO: ...
+swizzler& operator=(const vector_type &vec)
+{
+    assign_across(vec, 0, indices...);
+    return *this;
+}
+-----
+
+== `swizzler<>` decay
+We use same fold expression trick
+[source, cpp]
+-----
+template<typename... Indices>
+void assign_across(vector_type &vec, size_t i, Indices ...j) const
+{
+    ((vec[i++] = data[j]), ...);
+}
+
+template<typename... Indices>
+void assign_across(const vector_type &vec, size_t i, Indices ...j)
+{
+    ((data[j] = vec[i++]), ...);
+}
+-----
+
+== `swizzler<>` wrapper
+TODO:
 
 == Operators and Functions
 

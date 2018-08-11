@@ -279,7 +279,7 @@ struct vector_base&lt;T, 4&gt;
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;class vector_type, class T, size_t N, size_t... indices&gt;
 struct swizzler
 {
-	T data[N]; // can differ from vector_type
+    T data[N]; // can differ from vector_type
 ...
 };</code></pre></div></div></section>
 <section id="swizzle_for_code_vector_t_3_code"><h2>Swizzle for <code>vector&lt;T, 3&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">union
@@ -341,7 +341,32 @@ struct swizzler
     swizzler&lt;2, 2, 2, 1&gt;::type zzzy, bbbg, pppt;
     swizzler&lt;2, 2, 2, 2&gt;::type zzzz, bbbb, pppp;
 };</code></pre></div></div></section>
-<section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="paragraph"><p>Needs to implicitly convert/assign to its <code>vector&lt;&gt;</code> equivalent</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">operator vector_type()
+{
+    vector_type vec;
+    assign_across(vec, 0, indices...);
+    return vec;
+}
+
+swizzler&amp; operator=(const vector_type &amp;vec)
+{
+    assign_across(vec, 0, indices...);
+    return *this;
+}</code></pre></div></div></section>
+<section id="code_swizzler_code_decay"><h2><code>swizzler&lt;&gt;</code> decay</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
+void assign_across(vector_type &amp;vec, size_t i, Indices ...j) const
+{
+    ((vec[i++] = data[j]), ...);
+}
+
+template&lt;typename... Indices&gt;
+void assign_across(const vector_type &amp;vec, size_t i, Indices ...j)
+{
+    ((data[j] = vec[i++]), ...);
+}</code></pre></div></div></section>
+<section id="code_swizzler_code_wrapper"><h2><code>swizzler&lt;&gt;</code> wrapper</h2></section>
 <section id="operators_and_functions"><h2>Operators and Functions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="limitations_and_problems"><h2>Limitations and Problems</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
 <section id="solutions"><h2>Solutions</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
