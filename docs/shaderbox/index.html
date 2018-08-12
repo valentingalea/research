@@ -360,7 +360,7 @@ swizzler&amp; operator=(const vector_type &amp;vec)
     assign_across(vec, 0, indices...);
     return *this;
 }</code></pre></div></div></section>
-<section id="code_swizzler_code_decay"><h2><code>swizzler&lt;&gt;</code> decay</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
+<section id="code_swizzler_code_design_continued"><h2><code>swizzler&lt;&gt;</code> design (continued)</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
 void assign_across(vector_type &amp;vec, size_t i, Indices ...j) const
 {
@@ -372,8 +372,10 @@ void assign_across(const vector_type &amp;vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
 }</code></pre></div></div></section>
-<section id="code_swizzler_code_wrapper"><h2><code>swizzler&lt;&gt;</code> wrapper</h2><div class="paragraph"><p>TODO: talk/show?</p></div>
-<div class="paragraph"><p>TODO: also maybe re-iterate the constructor example with swizzles</p></div></section>
+<section id="code_swizzler_code_problem"><h2><code>swizzler&lt;&gt;</code> problem</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 v = vec4(other.xy, other.zw);</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="asm language-asm">&gt; error: no matching function for call to [...]
+&gt; template argument deduction/substitution failed: [...]</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>Solution? Introduce another abstraction layer!</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape>(construct_at_index(i, decay(std::forward&lt;Args&gt;(args))), ...);</code></pre></div></div></li><li class="fragment"><p><code>decay</code> calls equivalent member function (or does nothing for scalar)</p></li><li class="fragment"><p>both <code>vector</code> and <code>swizzler</code> have one so they can interchange easily</p></li></ul></div></section>
 <section id="operators_and_functions" data-state="no_list_decor"><h2>Operators and Functions</h2><div class="paragraph"><p>We will need to re-create a lot of generic utility functions</p></div>
 <div class="ulist"><ul><li class="fragment"><p>
 Example: the dot (inner) product of two vectors</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
@@ -383,10 +385,10 @@ float n = dot(vec3(1, 0, 0), vec3(0, 0, 1));</code></pre></div></div></li></ul><
 <section id="functions_problem" data-state="no_list_decor"><div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">We immediately hit a big problem!</td></tr></table></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 v = vec3(1, 0, 0);
 float n = dot(v.xzx, v.zyx);</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">&gt; 'dot': no matching overloaded function found
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="asm language-asm">&gt; 'dot': no matching overloaded function found
 &gt; could not deduce template argument</code></pre></div></div></section>
 <section><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Type deduction does not consider implicit conversions!</td></tr></table></div>
-<div class="ulist"><div class="title">Possible fixes</div><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float n = dot&lt;float, 2&gt;(v.xzx, v.zyx);</code></pre></div></div></li><li class="fragment"><p>create by hand all scalar/size combinations :(</p></li><li class="fragment"><p>duplicate functions for swizzler proxy as well :|</p></li><li class="fragment"><p>SFINAE tricks TODO: explain?</p></li></ul></div></section>
+<div class="ulist"><div class="title">Possible fixes</div><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float n = dot&lt;float, 2&gt;(v.xzx, v.zyx);</code></pre></div></div></li><li class="fragment"><p>create by hand all scalar/size combinations :(</p></li><li class="fragment"><p>duplicate functions for swizzler proxy as well :|</p></li><li class="fragment"><p>SFINAE tricks</p></li></ul></div></section>
 <section id="a_better_fix"><h2>A better fix</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">we place the functions in a non-deduced context: inside <code>vector&lt;&gt;</code> itself!</td></tr></table></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
 struct vector
