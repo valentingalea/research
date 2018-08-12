@@ -117,6 +117,16 @@ also because GPU driver render bugs
 
 WARNING: taken on desktop PC / Nvidia GTX 1060
 
+== Other advantages
+image::img/motivation/shadertoy.png[shadertoy, width="60%", float="right"]
+
+[%left]
+`+` Bragging rights :) +
+`+` Debug / Decompile algorithms from +
+http://www.shadertoy.com[shadertoy.com] +
+http://www.glslsandbox.com[glslsandbox.com] +
+`+` Unit Test shaders!
+
 == Shading Languages
 [state=RSL]
 == Pixar RenderMan Language
