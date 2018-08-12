@@ -485,7 +485,7 @@ int main()
 }
 -----
 
-https://tinyurl.com/godbolt[source]
+`-std=c++17 -Wall -O2` https://tinyurl.com/godbolt[(source)]
 
 == Godbolt (continued)
 
@@ -792,6 +792,115 @@ struct vector
     }
     ...
 -----
+
+== Godbolt sanity check
+[source, cpp]
+-----
+float a, b;
+vec3 v = vec3(a, vec2(a, b));
+
+float d = dot(v.xxx, v.rbg);
+-----
+
+[source, cpp]
+-----
+friend scalar_type dot(const vector_type &a, const vector_type &b)
+{
+    scalar_type sum = 0;
+    vector_type::iterate([&](size_t i) {
+        sum += a[i] * b[i];
+    });
+    return sum;
+}
+-----
+
+== Godbolt /02
+[source, cpp]
+-----
+call    scanf
+movss   xmm1, DWORD PTR [rsp+8]
+mov     edi, OFFSET FLAT:.LC2
+movaps  xmm2, xmm1
+mov     eax, 1
+mulss   xmm2, xmm1
+mulss   xmm1, DWORD PTR [rsp+12]
+movaps  xmm0, xmm1
+pxor    xmm1, xmm1
+addss   xmm1, xmm2
+addss   xmm0, xmm1
+addss   xmm0, xmm2
+cvtss2sd        xmm0, xmm0
+call    printf
+-----
+
+gcc 7.2 `-std=c++17 -Wall -O2` https://tinyurl.com/godbolt-dot[(source)]
+
+== Godbolt /00
+[source, cpp]
+-----
+...
+call    swizzle::vector<float, 3ul>::operator[](unsigned long) const
+movss   DWORD PTR [rbp-20], xmm0
+mov     rax, QWORD PTR [rbp-8]
+mov     rax, QWORD PTR [rax+16]
+mov     rdx, QWORD PTR [rbp-16]
+mov     rsi, rdx
+mov     rdi, rax
+call    swizzle::vector<float, 3ul>::operator[](unsigned long) const
+mulss   xmm0, DWORD PTR [rbp-20]
+mov     rax, QWORD PTR [rbp-8]
+mov     rax, QWORD PTR [rax]
+movss   xmm1, DWORD PTR [rax]
+mov     rax, QWORD PTR [rbp-8]
+mov     rax, QWORD PTR [rax]
+addss   xmm0, xmm1
+movss   DWORD PTR [rax], xmm0
+...
+-----
+
+gcc 7.2 `-std=c++17 -Wall -O0` https://tinyurl.com/godbolt-dot[(source)]
+
+== Godbolt /0g
+[source, cpp]
+-----
+call    scanf
+movss   xmm0, DWORD PTR [rsp+20]
+movss   DWORD PTR [rsp+4], xmm0
+movss   xmm1, DWORD PTR [rsp+16]
+movss   DWORD PTR [rsp+8], xmm1
+movss   DWORD PTR [rsp+12], xmm0
+mov     eax, DWORD PTR [rsp+12]
+mov     rdx, QWORD PTR [rsp+4]
+mov     QWORD PTR [rsp+24], rdx
+mov     DWORD PTR [rsp+32], eax
+movss   DWORD PTR [rsp+8], xmm0
+mov     rdx, QWORD PTR [rsp+4]
+mov     QWORD PTR [rsp+36], rdx
+mov     DWORD PTR [rsp+44], eax
+movss   xmm1, DWORD PTR [rsp+24]
+mulss   xmm1, DWORD PTR [rsp+36]
+...
+-----
+
+=== Godbolt /0g (continued)
+[source, cpp]
+-----
+...
+addss   xmm1, DWORD PTR .LC1[rip]
+movss   xmm0, DWORD PTR [rsp+28]
+mulss   xmm0, DWORD PTR [rsp+40]
+addss   xmm1, xmm0
+movss   xmm0, DWORD PTR [rsp+32]
+mulss   xmm0, DWORD PTR [rsp+44]
+addss   xmm0, xmm1
+movss   DWORD PTR [rsp+4], xmm0
+cvtss2sd        xmm0, xmm0
+mov     edi, OFFSET FLAT:.LC2
+mov     eax, 1
+call    printf
+-----
+
+gcc 7.2 `-std=c++17 -Wall -Og` https://tinyurl.com/godbolt-dot[(source)]
 
 == the `matrix<>` datatype
 Now that we have `vector<>` a matrix is pretty straightforward

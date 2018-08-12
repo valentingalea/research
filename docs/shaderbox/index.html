@@ -205,8 +205,9 @@ vec3 v = vec3(98, vec2(99, 100));
     auto v = vec3(1.f, vec2(a, b));
 
     printf("%f %f", v.x, v.y);
-}</code></pre></div></div></section>
-<section id="godbolt_continued"><h2>Godbolt (continued)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (trunk)</th><th class="tableblock halign-left valign-top">gcc (8.2)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+}</code></pre></div></div>
+<div class="paragraph"><p><code>-std=c++17 -Wall -O2</code> <a href="https://tinyurl.com/godbolt">(source)</a></p></div></section>
+<section id="godbolt_continued"><h2>Godbolt (continued)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (5.x/6.x)</th><th class="tableblock halign-left valign-top">gcc (7.x/8.x)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
 movss   xmm0, dword ptr [rsp + 4]
 cvtss2sd        xmm1, xmm0
 movss   xmm0, dword ptr [rsp]
@@ -239,7 +240,7 @@ cvtps2pd xmm2, xmm2
 movq    r9, xmm3
 movq    r8, xmm2
 call    printf</code></pre></div></div></div></td></tr></table>
-<div class="ulist"><ul><li><p>clang 5.x and 6.x produce worse code</p></li><li><p>gcc&#8217;s <code>cvtss2sd</code> from memory is pessimization (<a href="https://stackoverflow.com/a/16597686" class="bare">https://stackoverflow.com/a/16597686</a>)</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>TRIVIA: gcc&#8217;s <code>cvtss2sd</code> from memory is pessimization (<a href="https://stackoverflow.com/a/16597686" class="bare">https://stackoverflow.com/a/16597686</a>)</p></li></ul></div></section>
 <section id="code_vector_base_code_naive_impl"><h2><code>vector_base</code> naive impl</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 2&gt;
 {
@@ -391,6 +392,82 @@ struct vector
         /* inline friend found via ADL */
     }
     ...</code></pre></div></div></section>
+<section id="godbolt_sanity_check"><h2>Godbolt sanity check</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float a, b;
+vec3 v = vec3(a, vec2(a, b));
+
+float d = dot(v.xxx, v.rbg);</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend scalar_type dot(const vector_type &amp;a, const vector_type &amp;b)
+{
+    scalar_type sum = 0;
+    vector_type::iterate([&amp;](size_t i) {
+        sum += a[i] * b[i];
+    });
+    return sum;
+}</code></pre></div></div></section>
+<section id="godbolt_02"><h2>Godbolt /02</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+movss   xmm1, DWORD PTR [rsp+8]
+mov     edi, OFFSET FLAT:.LC2
+movaps  xmm2, xmm1
+mov     eax, 1
+mulss   xmm2, xmm1
+mulss   xmm1, DWORD PTR [rsp+12]
+movaps  xmm0, xmm1
+pxor    xmm1, xmm1
+addss   xmm1, xmm2
+addss   xmm0, xmm1
+addss   xmm0, xmm2
+cvtss2sd        xmm0, xmm0
+call    printf</code></pre></div></div>
+<div class="paragraph"><p>gcc 7.2 <code>-std=c++17 -Wall -O2</code> <a href="https://tinyurl.com/godbolt-dot">(source)</a></p></div></section>
+<section id="godbolt_00"><h2>Godbolt /00</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">...
+call    swizzle::vector&lt;float, 3ul&gt;::operator[](unsigned long) const
+movss   DWORD PTR [rbp-20], xmm0
+mov     rax, QWORD PTR [rbp-8]
+mov     rax, QWORD PTR [rax+16]
+mov     rdx, QWORD PTR [rbp-16]
+mov     rsi, rdx
+mov     rdi, rax
+call    swizzle::vector&lt;float, 3ul&gt;::operator[](unsigned long) const
+mulss   xmm0, DWORD PTR [rbp-20]
+mov     rax, QWORD PTR [rbp-8]
+mov     rax, QWORD PTR [rax]
+movss   xmm1, DWORD PTR [rax]
+mov     rax, QWORD PTR [rbp-8]
+mov     rax, QWORD PTR [rax]
+addss   xmm0, xmm1
+movss   DWORD PTR [rax], xmm0
+...</code></pre></div></div>
+<div class="paragraph"><p>gcc 7.2 <code>-std=c++17 -Wall -O0</code> <a href="https://tinyurl.com/godbolt-dot">(source)</a></p></div></section>
+<section><section id="godbolt_0g"><h2>Godbolt /0g</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+movss   xmm0, DWORD PTR [rsp+20]
+movss   DWORD PTR [rsp+4], xmm0
+movss   xmm1, DWORD PTR [rsp+16]
+movss   DWORD PTR [rsp+8], xmm1
+movss   DWORD PTR [rsp+12], xmm0
+mov     eax, DWORD PTR [rsp+12]
+mov     rdx, QWORD PTR [rsp+4]
+mov     QWORD PTR [rsp+24], rdx
+mov     DWORD PTR [rsp+32], eax
+movss   DWORD PTR [rsp+8], xmm0
+mov     rdx, QWORD PTR [rsp+4]
+mov     QWORD PTR [rsp+36], rdx
+mov     DWORD PTR [rsp+44], eax
+movss   xmm1, DWORD PTR [rsp+24]
+mulss   xmm1, DWORD PTR [rsp+36]
+...</code></pre></div></div></section><section id="godbolt_0g_continued"><h2>Godbolt /0g (continued)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">...
+addss   xmm1, DWORD PTR .LC1[rip]
+movss   xmm0, DWORD PTR [rsp+28]
+mulss   xmm0, DWORD PTR [rsp+40]
+addss   xmm1, xmm0
+movss   xmm0, DWORD PTR [rsp+32]
+mulss   xmm0, DWORD PTR [rsp+44]
+addss   xmm0, xmm1
+movss   DWORD PTR [rsp+4], xmm0
+cvtss2sd        xmm0, xmm0
+mov     edi, OFFSET FLAT:.LC2
+mov     eax, 1
+call    printf</code></pre></div></div>
+<div class="paragraph"><p>gcc 7.2 <code>-std=c++17 -Wall -Og</code> <a href="https://tinyurl.com/godbolt-dot">(source)</a></p></div></section></section>
 <section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>Now that we have <code>vector&lt;&gt;</code> a matrix is pretty straightforward</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
     template&lt;typename, size_t&gt; class vector_type,
