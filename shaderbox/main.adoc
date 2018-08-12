@@ -921,6 +921,13 @@ struct matrix
 ...
 -----
 
+== `matrix<>` (continued)
+[%step]
+- constructors are similar to vector
+ * it can also take smaller matrices
+- can share the same templated binary operators
+- more straightforward to implement
+
 == Prior Art
 TIP: not invented here :)
 
@@ -933,14 +940,11 @@ typedef float vec3 __attribute__((ext_vector_type(3)));
 * very limited in initializations, but support full swizzling
 - various libraries
 * GLM - `.xyz()` style only
-* CXXSwizzle - reference implementation
+* CXXSwizzle - full implementation
 
 == Results
 
 == !
-
-//TODO: doesn't work
-//[.step]
 ...but first: Crash Course into Procedural Graphics!
 
 NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
@@ -983,11 +987,12 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
  * GCC 7.2.0
  * 100x100px
 
+`>` PC / mobile apps written with https://www.libsdl.org/
+
 [%notitle, background-video="vid/planet.mp4", options="loop,muted"]
 == Planet (GPU)
 
 == Planet (CPU)
-
 |==========================================================================================
 | image:img/showcase/pc_planet.png[Planet(PC)] | image:img/showcase/droid_planet.jpg[Planet(Droid), 300, 300]
 | Desktop PC                          | Mobile Phone
@@ -998,7 +1003,6 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 == Clouds (GPU)
 
 == Clouds (CPU)
-
 |==========================================================================================
 | image:img/showcase/pc_clouds.png[Clouds(PC)] | image:img/showcase/droid_clouds.jpg[Clouds(Droid), 300, 300]
 | Desktop PC                          | Mobile Phone
@@ -1006,15 +1010,12 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 |==========================================================================================
 
 == Vinyl Turntable (GPU)
-
 TODO: capture video
 
 == Vinyl Turntable (CPU)
-
 TODO: capture pics/vid
 
 == Egg (GPU)
-
 TODO: capture video (disable 3d and longer)
 TODO: only on GPU
 
@@ -1026,7 +1027,6 @@ image:img/icon/github.png[Github, 64, 64] https://github.com/valentingalea/
 image:img/sd-brand/SD-logo-white-orange.svg[SD, 128, 128] https://www.splashdamage.com/
 
 == Attribution
-
 - Piotr Gwiazdowski @gwiazdorrr for original inspiration and help
 - Shading and Renderman: Jaume Sanchez | @thespite
 - Motivation Shaders: Inigo Quilez https://www.shadertoy.com/view/ld3Gz2 https://www.shadertoy.com/view/ldScDh https://www.shadertoy.com/view/4ttSWf
