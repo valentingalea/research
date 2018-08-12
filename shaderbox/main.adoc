@@ -22,7 +22,10 @@ _mobile_, _indie_ and _AAA_ games
 image::img/sd-brand/SD-logo-white.svg[SD, 128, 128]
 
 == Agenda
-TODO:
+- Intro and Motivation
+- Shading Languages
+- C++
+- Showcase
 
 == Shaders
 [quote]
