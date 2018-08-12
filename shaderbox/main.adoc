@@ -1023,26 +1023,24 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 
 == Showcase
 
-[%notitle]
-== Hardware
-- GPU on desktop PC
- * https://www.shadertoy.com/user/valentingalea
- * Nvidia GeForce 1060
- * 1080p
-- CPU on desktop PC
- * AMD FX 8350 8-core 4.00 GHz
- * Microsoft Visual C++ 15.7.6
- * 320x240px
+== GPU / desktop PC
+- https://www.shadertoy.com/user/valentingalea
+- Nvidia GeForce 1060
+- 1080p
 
-[%notitle]
-== Hardware (continued)
-- CPU mobile phone
- * Samsung Galaxy S7
- * C4Droid app (https://play.google.com/store/apps/details?id=com.n0n3m4.droidc)
- * GCC 7.2.0
- * 100x100px
+== CPU / desktop PC
+- minimal draw app with https://www.libsdl.org/
+- AMD FX 8350 8-core 4.00 GHz
+- Microsoft Visual C++ 15.7.6
+ * `/O2 /Ob2 /fp:fast /fp:except- /arch:SSE2 /openmp`
+- 320 x 240 px
 
-`>` PC / mobile apps written with https://www.libsdl.org/
+== CPU / mobile phone
+- C4Droid app (https://play.google.com/store/apps/details?id=com.n0n3m4.droidc)
+- Samsung Galaxy S7
+- GCC 7.2.0
+ * `-Ofast -march=native -funroll-loops`
+- 100 x 100 px
 
 [%notitle, background-video="vid/planet.mp4", options="loop,muted"]
 == Planet (GPU)
