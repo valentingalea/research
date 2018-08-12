@@ -1062,16 +1062,17 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 | 1 FPS                               | 8 FPS
 |==========================================================================================
 
+[%notitle, background-video="vid/vinyl.mp4", options="loop,muted"]
 == Vinyl Turntable (GPU)
-TODO: capture video
 
 == Vinyl Turntable (CPU)
-TODO: capture pics/vid
+|==========================================================================================
+| image:img/showcase/pc_vinyl.png[Vinyl(PC)] | image:img/showcase/droid_vinyl.jpg[Clouds(Droid), 300, 300]
+| Desktop PC                          | Mobile Phone
+| 1 FPS                               | 12 FPS
+|==========================================================================================
 
-== Egg (GPU)
-TODO: capture video (disable 3d and longer)
-TODO: only on GPU
-
+[%notitle, background-video="vid/egg.mp4", options="loop,muted"]
 == The End
 image:img/icon/twitter.png[Twitter, 64, 64] @valentin_galea
 
