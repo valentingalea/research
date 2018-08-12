@@ -122,21 +122,32 @@ u.z = dot(v, m[2]);
 /* dot(a,b) is the inner product of a and b */</code></pre></div></div></div></td></tr></table></section>
 <section id="standard_library" data-state="STL"><h2>"Standard Library"</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Math</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>sin</code>, <code>cos</code>, <code>radians</code>, <code>pow</code>, <code>exp</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Common</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>abs</code>, <code>sign</code>, <code>floor</code>, <code>mod</code>, <code>min</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Utility</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mix</code>, <code>step</code>, <code>smoothstep</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Geometry</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>length</code>, <code>dot</code>, <code>cross</code>, <code>distance</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Specific texture and image sampling &#8230;&#8203;</p></td></tr></table></section>
 <section><div class="paragraph"><p>Recreating all this in C++ &#8230;&#8203;</p></div></section>
-<section id="design_of_code_vector_code"><h2>Design of <code>vector&lt;&gt;</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
+<section id="design_of_code_vector_code" data-state="no_list_decor"><h2>Design of <code>vector&lt;&gt;</code></h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
 struct vector :
     public vector_base&lt;T, N&gt;
-{
-    vector();
+{</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    vector();
     vector(scalar_type s);
-    template&lt;typename... S&gt; explicit vector(S... args);
-...
-    scalar_type&amp; operator[](size_t i);
+    template&lt;typename... Args&gt; explicit vector(Args... args);
+...</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    scalar_type&amp; operator[](size_t i);
     scalar_type&amp; operator[](size_t i)
 ...
     vector_type&amp; operator +=(scalar_type s)
     vector_type&amp; operator +=(const vector_type &amp;v);
-...</code></pre></div></div></section>
-<section id="code_static_for_code_utility"><h2><code>static_for</code> utility</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
+...</code></pre></div></div></li></ul></div></section>
+<section id="code_vector_code_ctor_basic"><h2><code>vector&lt;&gt;</code> ctor - basic</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vector()
+{
+    static_for&lt;0, N&gt;()([this](size_t i) {
+        data[i] = 0;
+    });
+}
+
+explicit vector(scalar_type s)
+{
+    static_for&lt;0, N&gt;()([s, this](size_t i) {
+        data[i] = s;
+    });
+}</code></pre></div></div></section>
+<section id="code_static_for_code_utility" data-state="no_list_decor"><h2><code>static_for</code> utility</h2><div class="ulist"><ul><li class="fragment"><p>compile-time workhorse!</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
 struct static_for
 {
     template&lt;class Func&gt;
@@ -145,36 +156,30 @@ struct static_for
         f(Begin);
         static_for&lt;Begin + 1, End&gt;()(std::forward&lt;Func&gt;(f));
     }
-};</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t N&gt;
+};</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t N&gt;
 struct static_for&lt;N, N&gt;
 {
     template&lt;class Func&gt;
     constexpr void operator ()(Func &amp;&amp;) { /* empty */ }
-};</code></pre></div></div></section>
-<section id="code_vector_code_ctor_basic"><h2><code>vector&lt;&gt;</code> ctor - basic</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vector()
+};</code></pre></div></div></li></ul></div></section>
+<section id="code_vector_code_ctor_advanced"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args,
+    class = typename std::enable_if&lt;
+        ((sizeof... (Args) &gt;= 1) ||
+        ((sizeof... (Args) == 0) &amp;&amp; !std::is_scalar_v&lt;A0&gt;))
+    &gt;::type&gt;
+explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
 {
-    static_for&lt;0, N&gt;()([this](size_t i) {
-        data[i] = 0;
-    });
-}
+    ...</code></pre></div></div></section>
+<section id="code_vector_code_ctor_advanced_2"><h2><code>vector&lt;&gt;</code> ctor - advanced (2)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    size_t i = 0; // advances as we consume args
 
-vector(scalar_type s)
-{
-    static_for&lt;0, N&gt;()([s, this](size_t i) {
-        data[i] = s;
-    });
-}</code></pre></div></div></section>
-<section id="code_vector_code_ctor_advanced"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... S&gt;
-explicit vector(S... args)
-{
-    static_assert((sizeof...(args) &lt;= N), "too many arguments");
+    // consume the first one
+    construct_at_index(i, std::forward&lt;A0&gt;(a0));
 
-    size_t i = 0;
-    (construct_at_index(i, std::forward&lt;S&gt;(args)), ...);
+    // consume the rest, if any
+    (construct_at_index(i, std::forward&lt;Args&gt;(args)), ...);
 }</code></pre></div></div>
 <div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">unary fold expression over comma operator: send every arg to specialized processor function</td></tr></table></div></section>
-<section id="code_vector_code_ctor_advanced_continued"><h2><code>vector&lt;&gt;</code> ctor - advanced (continued)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void construct_at_index(size_t &amp;i, scalar_type arg)
+<section id="code_vector_code_ctor_advanced_3"><h2><code>vector&lt;&gt;</code> ctor - advanced (3)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void construct_at_index(size_t &amp;i, scalar_type arg)
 {
     data[i++] = arg;
 }</code></pre></div></div>

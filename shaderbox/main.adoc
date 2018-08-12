@@ -356,17 +356,31 @@ u.z = dot(v, m[2]);
 == !
 Recreating all this in C++ ...
 
+[state=no_list_decor]
 == Design of `vector<>`
+[%step]
+- {blank}
++
 [source, cpp]
 -----
 template<typename T, size_t N>
 struct vector :
     public vector_base<T, N>
 {
+-----
+- {blank}
++
+[source, cpp]
+-----
     vector();
     vector(scalar_type s);
-    template<typename... S> explicit vector(S... args);
+    template<typename... Args> explicit vector(Args... args);
 ...
+-----
+- {blank}
++
+[source, cpp]
+-----
     scalar_type& operator[](size_t i);
     scalar_type& operator[](size_t i)
 ...
@@ -375,7 +389,30 @@ struct vector :
 ...
 -----
 
+== `vector<>` ctor - basic
+[source, cpp]
+-----
+vector()
+{
+    static_for<0, N>()([this](size_t i) {
+        data[i] = 0;
+    });
+}
+
+explicit vector(scalar_type s)
+{
+    static_for<0, N>()([s, this](size_t i) {
+        data[i] = s;
+    });
+}
+-----
+
+[state=no_list_decor]
 == `static_for` utility
+[%step]
+- compile-time workhorse!
+- {blank}
++
 [source, cpp]
 -----
 template<size_t Begin, size_t End>
@@ -389,7 +426,8 @@ struct static_for
     }
 };
 -----
-
+- {blank}
++
 [source, cpp]
 -----
 template<size_t N>
@@ -400,40 +438,35 @@ struct static_for<N, N>
 };
 -----
 
-== `vector<>` ctor - basic
-[source, cpp]
------
-vector()
-{
-    static_for<0, N>()([this](size_t i) {
-        data[i] = 0;
-    });
-}
-
-vector(scalar_type s)
-{
-    static_for<0, N>()([s, this](size_t i) {
-        data[i] = s;
-    });
-}
------
-
 == `vector<>` ctor - advanced
 [source, cpp]
 -----
-template<typename... S>
-explicit vector(S... args)
+template<typename A0, typename... Args,
+    class = typename std::enable_if<
+        ((sizeof... (Args) >= 1) ||
+        ((sizeof... (Args) == 0) && !std::is_scalar_v<A0>))
+    >::type>
+explicit vector(A0&& a0, Args&&... args)
 {
-    static_assert((sizeof...(args) <= N), "too many arguments");
+    ...
+-----
 
-    size_t i = 0;
-    (construct_at_index(i, std::forward<S>(args)), ...);
+== `vector<>` ctor - advanced (2)
+[source, cpp]
+-----
+    size_t i = 0; // advances as we consume args
+
+    // consume the first one
+    construct_at_index(i, std::forward<A0>(a0));
+
+    // consume the rest, if any
+    (construct_at_index(i, std::forward<Args>(args)), ...);
 }
 -----
 
 NOTE: unary fold expression over comma operator: send every arg to specialized processor function
 
-== `vector<>` ctor - advanced (continued)
+== `vector<>` ctor - advanced (3)
 [source, cpp]
 -----
 void construct_at_index(size_t &i, scalar_type arg)
@@ -775,7 +808,7 @@ float n = dot<float, 2>(v.xzx, v.zyx);
 -----
 - create by hand all scalar/size combinations :(
 - duplicate functions for swizzler proxy as well :|
-- SFINAE tricks TODO: explain?
+- SFINAE tricks
 
 == A better fix
 NOTE: we place the functions in a non-deduced context: inside `vector<>` itself!
