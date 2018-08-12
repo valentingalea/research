@@ -485,11 +485,13 @@ int main()
 }
 -----
 
+https://tinyurl.com/godbolt[source]
+
 == Godbolt (continued)
 
 [cols="a,a,a"]
 |==================
-| clang (trunk) | gcc (8.2) | msvc (2017)
+| clang (5.x/6.x) | gcc (7.x/8.x) | msvc (2017)
 
 | [source, cpp]
 -----
@@ -540,8 +542,7 @@ call    printf
 
 |==================
 
-- clang 5.x and 6.x produce worse code
-- gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
+- TRIVIA: gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
 
 == `vector_base` naive impl
 [source, cpp]
