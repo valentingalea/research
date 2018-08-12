@@ -481,7 +481,8 @@ struct matrix
 
     column_type data[M]; // GLSL is column major
 ...</code></pre></div></div></section>
-<section id="prior_art"><h2>Prior Art</h2><div class="paragraph"><p>TODO: &#8230;&#8203;</p></div></section>
+<section id="prior_art"><h2>Prior Art</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">not invented here :)</td></tr></table></div>
+<div class="ulist"><ul><li class="fragment"><p>clang vector extensions</p><div class="ulist"><ul><li><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">typedef float vec3 __attribute__((ext_vector_type(3)));</code></pre></div></div></li><li><p>very limited in initializations, but support full swizzling</p></li></ul></div></li><li class="fragment"><p>various libraries</p><div class="ulist"><ul><li><p>GLM - <code>.xyz()</code> style only</p></li><li><p>CXXSwizzle - reference implementation</p></li></ul></div></li></ul></div></section>
 <section id="results"><h2>Results</h2></section>
 <section><div class="paragraph"><p>&#8230;&#8203;but first: Crash Course into Procedural Graphics!</p></div>
 <div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Courtesy of @ReinderNijhoff <a href="https://www.shadertoy.com/view/4dSfRc" class="bare">https://www.shadertoy.com/view/4dSfRc</a></td></tr></table></div></section>

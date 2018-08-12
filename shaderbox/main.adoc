@@ -922,8 +922,18 @@ struct matrix
 -----
 
 == Prior Art
+TIP: not invented here :)
 
-TODO: ...
+[%step]
+- clang vector extensions
+* {blank}
++
+[source, cpp]
+typedef float vec3 __attribute__((ext_vector_type(3)));
+* very limited in initializations, but support full swizzling
+- various libraries
+* GLM - `.xyz()` style only
+* CXXSwizzle - reference implementation
 
 == Results
 
