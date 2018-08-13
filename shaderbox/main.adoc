@@ -145,7 +145,7 @@ image::img/intro/renderman.jpg[background]
 surface basic() {             surface simple(color myOpacity = 1) {
     Ci = (1.0, 0.0, 0.0);         color myColor = (1.0, 0.0, 0.0);
     Oi = 1;                       normal Nn = normalize(N);
-}                                 Ci = myColor * myOpacity * diffuse(Nn);
+}                                 Ci = myColor * myOpacity * diff;
                                   Oi = myOpacity;
                               }
 -----

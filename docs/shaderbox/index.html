@@ -50,7 +50,7 @@ Compute</p></div></section>
 surface basic() {             surface simple(color myOpacity = 1) {
     Ci = (1.0, 0.0, 0.0);         color myColor = (1.0, 0.0, 0.0);
     Oi = 1;                       normal Nn = normalize(N);
-}                                 Ci = myColor * myOpacity * diffuse(Nn);
+}                                 Ci = myColor * myOpacity * diff;
                                   Oi = myOpacity;
                               }</code></pre></div></div></section>
 <section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>For real-time rendering:</p></div>
