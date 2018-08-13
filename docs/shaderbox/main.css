@@ -61,12 +61,14 @@ section[data-state="plan"] ul {
     list-style-type: none;
 }
 
-section[id="godbolt_continued"] pre { 
+section[id="godbolt_cont"] pre { 
     font-size: .4em;
-    margin-left: -33%;
 }
-section[id="godbolt_continued"] ul { 
+section[id="godbolt_cont"] ul { 
     font-size: .6em;
+}
+section[id="godbolt_cont"] table { 
+    margin-left: -20%;
 }
 
 section[id="the_end"] img {
