@@ -71,7 +71,7 @@ void main(void)
     float3 Light: TEXCOORD0,
     float3 Norm : TEXCOORD1) : COLOR
 {
-    float4 diffuse = { 1.0f, 0.0f, 0.0f, 1.0f };
+    float4 diffuse = { 1.0, 0.0, 0.0, 1.0 };
     float4 ambient = { 0.1, 0.0, 0.0, 1.0 };
     return ambient + diffuse * saturate(dot(Light, Norm));
 }</code></pre></div></div></section>
@@ -84,11 +84,11 @@ void main(void)
 <section id="the_plan_continued"><h2>The Plan (continued)</h2><div class="ulist"><ul><li class="fragment"><p>obligatory preprocessor layer</p></li><li class="fragment"><p>vector (linear algebra) types</p><div class="ulist"><ul><li><p>swizzle support</p></li></ul></div></li><li class="fragment"><p>matrix types</p></li><li class="fragment"><p>operators</p></li><li class="fragment"><p>"standard library" utility/math functions</p></li></ul></div></section>
 <section id="place_your_bets"><h2>Place Your Bets</h2><div class="paragraph"><p>We will chose <strong>GLSL</strong> as it&#8217;s used on <em>desktop</em>, <em>web</em> and <em>mobile</em></p></div>
 <div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)</td></tr></table></div></section>
-<section id="languages_declarations"><h2>Languages: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-classic basic types</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+<section id="languages_declarations"><h2>Languages: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+C-style types and arrays</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 C-style <code>struct</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = T ( &#8230;&#8203; )</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = { &#8230;&#8203; }</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">both (preproc abstraction)</p></td></tr></table></section>
 <section id="languages_arguments"><h2>Languages: Arguments</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL/HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Macro glue</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const in T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>const T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_in(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>inout T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_inout(T)</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>out T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>_out(T)</code></p></td></tr></table></section>
-<section id="glsl_ex_vectors_and_matrices"><h2>GLSL ex: Vectors and Matrices</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">// vectors are generic
+<section id="vectors_and_matrices"><h2>Vectors and Matrices</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">// vectors are generic
 vec2 texcoord1, texcoord2;
 vec3 position;
 vec4 myRGBA;
@@ -108,7 +108,7 @@ v4.b;     // is a float,
 v4.xy;    // is a vec2,</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec4 pos = vec4(1.0, 2.0, 3.0, 4.0);
 vec4 swiz= pos.wzyx; // swiz = (4.0, 3.0, 2.0, 1.0)
-vec4 dup = pos.xxyy; // dup = (1.0, 1.0, 2.0, 2.0)</code></pre></div></div>
+vec4 dup = vec4(pos.xx, pos.yy);</code></pre></div></div>
 <div class="listingblock"><div class="title">l-value assigment</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">pos.xw = vec2(5.0, 6.0); // pos = (5.0, 2.0, 3.0, 6.0)
 pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice</code></pre></div></div></section>
 <section id="vector_swizzle_motivation"><h2>Vector Swizzle - Motivation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 calcNormal( in vec3 pos )
@@ -133,12 +133,12 @@ u.z = dot(v, m[2]);
 struct vector :
     public vector_base&lt;T, N&gt;
 {</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    vector();
-    vector(scalar_type s);
+    explicit vector(scalar_type s);
     template&lt;typename... Args&gt; explicit vector(Args... args);
 ...</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    scalar_type&amp; operator[](size_t i);
-    scalar_type&amp; operator[](size_t i)
+    scalar_type&amp; operator[](size_t i);
 ...
-    vector_type&amp; operator +=(scalar_type s)
+    vector_type&amp; operator +=(scalar_type s);
     vector_type&amp; operator +=(const vector_type &amp;v);
 ...</code></pre></div></div></li></ul></div></section>
 <section id="code_vector_code_ctor_basic"><h2><code>vector&lt;&gt;</code> ctor - basic</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vector()

@@ -184,7 +184,7 @@ float4 main(
     float3 Light: TEXCOORD0,
     float3 Norm : TEXCOORD1) : COLOR
 {
-    float4 diffuse = { 1.0f, 0.0f, 0.0f, 1.0f };
+    float4 diffuse = { 1.0, 0.0, 0.0, 1.0 };
     float4 ambient = { 0.1, 0.0, 0.0, 1.0 };
     return ambient + diffuse * saturate(dot(Light, Norm));
 }
@@ -244,8 +244,8 @@ WARNING: only a subset of it - concentrate on procedural graphics thus minimize/
 | GLSL              | HLSL                  | C++
 3+^|
 // stupid asciidoctor bug: doesn't respect column centering
-{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
-classic basic types
+{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
+C-style types and arrays
 3+^|
 {nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
 C-style `struct`
@@ -260,7 +260,7 @@ C-style `struct`
 | `out T`       | `T &`         | `_out(T)`
 |===========================================
 
-== GLSL ex: Vectors and Matrices
+== Vectors and Matrices
 [source, cpp]
 -----
 // vectors are generic
@@ -300,7 +300,7 @@ v4.xy;    // is a vec2,
 -----
 vec4 pos = vec4(1.0, 2.0, 3.0, 4.0);
 vec4 swiz= pos.wzyx; // swiz = (4.0, 3.0, 2.0, 1.0)
-vec4 dup = pos.xxyy; // dup = (1.0, 1.0, 2.0, 2.0)
+vec4 dup = vec4(pos.xx, pos.yy);
 -----
 
 .l-value assigment
@@ -388,7 +388,7 @@ struct vector :
 [source, cpp]
 -----
     vector();
-    vector(scalar_type s);
+    explicit vector(scalar_type s);
     template<typename... Args> explicit vector(Args... args);
 ...
 -----
@@ -397,9 +397,9 @@ struct vector :
 [source, cpp]
 -----
     scalar_type& operator[](size_t i);
-    scalar_type& operator[](size_t i)
+    scalar_type& operator[](size_t i);
 ...
-    vector_type& operator +=(scalar_type s)
+    vector_type& operator +=(scalar_type s);
     vector_type& operator +=(const vector_type &v);
 ...
 -----
