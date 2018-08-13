@@ -76,12 +76,12 @@ void main(void)
     return ambient + diffuse * saturate(dot(Light, Norm));
 }</code></pre></div></div></section>
 <section id="glsl_vs_hlsl"><h2>GLSL vs HLSL</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Procedural, step-centric (C like)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Object oriented, data-centric (C++ like)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Compilation done in driver</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Client side compilation</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code>, <code>uint</code>, <code>double</code></p></td></tr></table></section>
-<section id="glsl_vs_hlsl_continued"><h2>GLSL vs HLSL (continued)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>vec2</code>, <code>vec3</code>, <code>vec4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>float2</code>, <code>float3</code>, <code>float4</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>mat2</code>, <code>mat3</code>, <code>mat4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>float2x2</code>, <code>float3x3</code>, <code>float4x4</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
+<section id="glsl_vs_hlsl_cont"><h2>GLSL vs HLSL (cont.)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>vec2</code>, <code>vec3</code>, <code>vec4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>float2</code>, <code>float3</code>, <code>float4</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>mat2</code>, <code>mat3</code>, <code>mat4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>float2x2</code>, <code>float3x3</code>, <code>float4x4</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
 <section id="shading_languages_future"><h2>Shading Languages Future</h2><div class="paragraph"><p>Basically C++ (usually via LLVM)</p></div>
 <div class="ulist step"><ul><li class="fragment"><p>Metal Shading Language (C++14, Apple)</p><div class="ulist"><ul><li><p>only on iOS devices</p></li></ul></div></li><li class="fragment"><p>CUDA Heterogeneous Computing (C++11, NVidia)</p><div class="ulist"><ul><li><p>only for computing, not graphics</p></li></ul></div></li><li class="fragment"><p>HLSL 6.x (C++98&#8217;ish, Microsoft)</p><div class="ulist"><ul><li><p>not released yet</p></li></ul></div></li></ul></div></section>
 <section><div class="paragraph"><p>Let&#8217;s see how C++ can help out, NOW!</p></div></section>
 <section id="the_plan" data-state="plan"><h2>The Plan</h2><div class="ulist"><ul><li class="fragment"><p><span class="image"><img src="img/icon/browser.svg" alt="cpp" width="64" height="64"></span> Pick a shading language and twist C++ to accept it as source code!</p></li><li class="fragment"><p><span class="image"><img src="img/icon/management.svg" alt="bonus" width="64" height="64"></span> BONUS: use the preprocessor for transcription back to the original language(s)!</p></li></ul></div></section>
-<section id="the_plan_continued"><h2>The Plan (continued)</h2><div class="ulist"><ul><li class="fragment"><p>obligatory preprocessor layer</p></li><li class="fragment"><p>vector (linear algebra) types</p><div class="ulist"><ul><li><p>swizzle support</p></li></ul></div></li><li class="fragment"><p>matrix types</p></li><li class="fragment"><p>operators</p></li><li class="fragment"><p>"standard library" utility/math functions</p></li></ul></div></section>
+<section id="the_plan_cont"><h2>The Plan (cont.)</h2><div class="ulist"><ul><li class="fragment"><p>obligatory preprocessor layer</p></li><li class="fragment"><p>vector (linear algebra) types</p><div class="ulist"><ul><li><p>swizzle support</p></li></ul></div></li><li class="fragment"><p>matrix types</p></li><li class="fragment"><p>operators</p></li><li class="fragment"><p>"standard library" utility/math functions</p></li></ul></div></section>
 <section id="place_your_bets"><h2>Place Your Bets</h2><div class="paragraph"><p>We will chose <strong>GLSL</strong> as it&#8217;s used on <em>desktop</em>, <em>web</em> and <em>mobile</em></p></div>
 <div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)</td></tr></table></div></section>
 <section id="languages_declarations"><h2>Languages: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
@@ -219,7 +219,7 @@ vec3 v = vec3(98, vec2(99, 100));
     printf("%f %f", v.x, v.y);
 }</code></pre></div></div>
 <div class="paragraph"><p><code>-std=c++17 -Wall -O2</code> <a href="https://tinyurl.com/godbolt">(source)</a></p></div></section>
-<section id="godbolt_continued"><h2>Godbolt (continued)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (5.x/6.x)</th><th class="tableblock halign-left valign-top">gcc (7.x/8.x)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+<section id="godbolt_cont"><h2>Godbolt (cont.)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (5.x/6.x)</th><th class="tableblock halign-left valign-top">gcc (7.x/8.x)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
 movss   xmm0, dword ptr [rsp + 4]
 cvtss2sd        xmm1, xmm0
 movss   xmm0, dword ptr [rsp]
@@ -315,7 +315,7 @@ struct swizzler
         swizzler&lt;2&gt;::type p;
     };
     ...</code></pre></div></div></section>
-<section id="swizzle_continued"><h2>swizzle (continued)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
+<section id="swizzle_cont"><h2>swizzle (cont.)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    ...
     swizzler&lt;0, 0&gt;::type xx, rr, ss;
     swizzler&lt;0, 1&gt;::type xy, rg, st;
     swizzler&lt;0, 2&gt;::type xz, rb, sp;
@@ -367,7 +367,7 @@ swizzler&amp; operator=(const vector_type &amp;vec)
     assign_across(vec, 0, indices...);
     return *this;
 }</code></pre></div></div></section>
-<section id="code_swizzler_code_design_continued"><h2><code>swizzler&lt;&gt;</code> design (continued)</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
+<section id="code_swizzler_code_design_cont"><h2><code>swizzler&lt;&gt;</code> design (cont.)</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
 void assign_across(vector_type &amp;vec, size_t i, Indices ...j) const
 {
@@ -468,7 +468,7 @@ mov     QWORD PTR [rsp+36], rdx
 mov     DWORD PTR [rsp+44], eax
 movss   xmm1, DWORD PTR [rsp+24]
 mulss   xmm1, DWORD PTR [rsp+36]
-...</code></pre></div></div></section><section id="godbolt_0g_continued"><h2>Godbolt /0g (continued)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">...
+...</code></pre></div></div></section><section id="godbolt_0g_cont"><h2>Godbolt /0g (cont.)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">...
 addss   xmm1, DWORD PTR .LC1[rip]
 movss   xmm0, DWORD PTR [rsp+28]
 mulss   xmm0, DWORD PTR [rsp+40]
@@ -495,7 +495,7 @@ struct matrix
 
     column_type data[M]; // GLSL is column major
 ...</code></pre></div></div></section>
-<section id="code_matrix_code_continued"><h2><code>matrix&lt;&gt;</code> (continued)</h2><div class="ulist"><ul><li class="fragment"><p>constructors are similar to vector</p><div class="ulist"><ul><li><p>it can also take smaller matrices</p></li></ul></div></li><li class="fragment"><p>can share the same templated binary operators</p></li><li class="fragment"><p>more straightforward to implement</p></li></ul></div></section>
+<section id="code_matrix_code_cont"><h2><code>matrix&lt;&gt;</code> (cont.)</h2><div class="ulist"><ul><li class="fragment"><p>constructors are similar to vector</p><div class="ulist"><ul><li><p>it can also take smaller matrices</p></li></ul></div></li><li class="fragment"><p>can share the same templated binary operators</p></li><li class="fragment"><p>more straightforward to implement</p></li></ul></div></section>
 <section id="prior_art"><h2>Prior Art</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">not invented here :)</td></tr></table></div>
 <div class="ulist"><ul><li class="fragment"><p>clang vector extensions</p><div class="ulist"><ul><li><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">typedef float vec3 __attribute__((ext_vector_type(3)));</code></pre></div></div></li><li><p>very limited in initializations, but support full swizzling</p></li></ul></div></li><li class="fragment"><p>various libraries</p><div class="ulist"><ul><li><p>GLM - <code>.xyz()</code> style only</p></li><li><p>CXXSwizzle - full implementation</p></li></ul></div></li></ul></div></section>
 <section id="results"><h2>Results</h2></section>

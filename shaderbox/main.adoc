@@ -198,7 +198,7 @@ float4 main(
 | `float`, `int`, `bool`            | `float`, `int`, `bool`, `uint`, `double`
 |==============================================================================
 
-== GLSL vs HLSL (continued)
+== GLSL vs HLSL (cont.)
 |==============================================================================
 | Vector type: `vec2`, `vec3`, `vec4` | Vector type: `float2`, `float3`, `float4`
 | Matrix type: `mat2`, `mat3`, `mat4` | Matrix type: `float2x2`, `float3x3`, `float4x4`
@@ -225,7 +225,7 @@ Let's see how C++ can help out, NOW!
 - image:img/icon/browser.svg[cpp, 64, 64] Pick a shading language and twist C++ to accept it as source code!
 - image:img/icon/management.svg[bonus, 64, 64] BONUS: use the preprocessor for transcription back to the original language(s)!
 
-== The Plan (continued)
+== The Plan (cont.)
 [%step]
 - obligatory preprocessor layer
 - vector (linear algebra) types
@@ -535,7 +535,7 @@ int main()
 
 `-std=c++17 -Wall -O2` https://tinyurl.com/godbolt[(source)]
 
-== Godbolt (continued)
+== Godbolt (cont.)
 
 [cols="a,a,a"]
 |==================
@@ -683,7 +683,7 @@ union
     ...
 -----
 
-== swizzle (continued)
+== swizzle (cont.)
 [source, cpp]
 -----
     ...
@@ -755,7 +755,7 @@ swizzler& operator=(const vector_type &vec)
 }
 -----
 
-== `swizzler<>` design (continued)
+== `swizzler<>` design (cont.)
 We use same fold expression trick
 [source, cpp]
 -----
@@ -942,7 +942,7 @@ mulss   xmm1, DWORD PTR [rsp+36]
 ...
 -----
 
-=== Godbolt /0g (continued)
+=== Godbolt /0g (cont.)
 [source, cpp]
 -----
 ...
@@ -981,7 +981,7 @@ struct matrix
 ...
 -----
 
-== `matrix<>` (continued)
+== `matrix<>` (cont.)
 [%step]
 - constructors are similar to vector
  * it can also take smaller matrices
