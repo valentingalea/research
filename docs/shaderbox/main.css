@@ -97,3 +97,8 @@ section[id="attribution"] ul {
 section[data-state="no_list_decor"] ul {
     list-style-type: none;
 }
+
+section[id="the_end"] ul {
+    list-style-type: none;
+    text-align: center;
+}

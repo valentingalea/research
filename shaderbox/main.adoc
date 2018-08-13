@@ -1079,11 +1079,10 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 
 [%notitle, background-video="vid/egg.mp4", options="loop,muted"]
 == The End
-image:img/icon/twitter.png[Twitter, 64, 64] @valentin_galea
-
-image:img/icon/github.png[Github, 64, 64] https://github.com/valentingalea/
-
-image:img/sd-brand/SD-logo-white-orange.svg[SD, 128, 128] https://www.splashdamage.com/
+[%step]
+- image:img/icon/twitter.png[Twitter, 64, 64] @valentin_galea
+- image:img/icon/github.png[Github, 64, 64] https://github.com/valentingalea/
+- image:img/sd-brand/SD-logo-white-orange.svg[SD, 128, 128] https://www.splashdamage.com/
 
 == Attribution
 - Piotr Gwiazdowski @gwiazdorrr for original inspiration and help
