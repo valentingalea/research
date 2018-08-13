@@ -22,6 +22,7 @@
 
 .reveal pre {
     width: 100%;
+    font-weight: 600; /* normal is 400, bold is 700 */
 }
 .reveal pre code {
     max-height: 100%;
