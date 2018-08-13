@@ -737,40 +737,44 @@ union
 };
 -----
 
+[state=no_list_decor]
 == `swizzler<>` design
-Needs to implicitly convert/assign to its `vector<>` equivalent
+[%step]
+- Needs to implicitly convert/assign to its `vector<>` equivalent
+- {blank}
++
 [source, cpp]
------
 operator vector_type()
 {
     vector_type vec;
     assign_across(vec, 0, indices...);
     return vec;
 }
-
+- {blank}
++
+[source, cpp]
 swizzler& operator=(const vector_type &vec)
 {
     assign_across(vec, 0, indices...);
     return *this;
 }
------
 
 == `swizzler<>` design (cont.)
 We use same fold expression trick
+
 [source, cpp]
------
 template<typename... Indices>
 void assign_across(vector_type &vec, size_t i, Indices ...j) const
 {
     ((vec[i++] = data[j]), ...);
 }
 
+[source, cpp]
 template<typename... Indices>
 void assign_across(const vector_type &vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
 }
------
 
 == `swizzler<>` problem
 [source, cpp]
