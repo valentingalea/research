@@ -841,11 +841,14 @@ float n = dot<float, 2>(v.xzx, v.zyx);
 - duplicate functions for swizzler proxy as well :|
 - SFINAE tricks
 
+[state=no_list_decor]
 == A better fix
 NOTE: we place the functions in a non-deduced context: inside `vector<>` itself!
 
+[%step]
+- {blank}
++
 [source, cpp]
------
 template<typename T, size_t N>
 struct vector
 {
@@ -855,9 +858,12 @@ struct vector
         /* inline friend found via ADL */
     }
     ...
------
 
+[state=no_list_decor]
 == Godbolt sanity check
+[%step]
+- {blank}
++
 [source, cpp]
 -----
 float a, b;
@@ -865,9 +871,9 @@ vec3 v = vec3(a, vec2(a, b));
 
 float d = dot(v.xxx, v.rbg);
 -----
-
+- {blank}
++
 [source, cpp]
------
 friend scalar_type dot(const vector_type &a, const vector_type &b)
 {
     scalar_type sum = 0;
@@ -876,7 +882,6 @@ friend scalar_type dot(const vector_type &a, const vector_type &b)
     });
     return sum;
 }
------
 
 == Godbolt /02
 [source, cpp]
