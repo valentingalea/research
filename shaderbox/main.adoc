@@ -481,6 +481,8 @@ explicit vector(A0&& a0, Args&&... args)
 
 NOTE: unary fold expression over comma operator: send every arg to specialized processor function
 
+//TODO: Fold Expressions N4295 gcc(6) clang(3.6) msvc(VS 2017 15.5)
+
 == `vector<>` ctor - advanced (3)
 [source, cpp]
 -----
