@@ -145,7 +145,7 @@ image::img/intro/renderman.jpg[background]
 surface basic() {             surface simple(color myOpacity = 1) {
     Ci = (1.0, 0.0, 0.0);         color myColor = (1.0, 0.0, 0.0);
     Oi = 1;                       normal Nn = normalize(N);
-}                                 Ci = myColor * myOpacity * diffuse(Nn);
+}                                 Ci = myColor * myOpacity * diff;
                                   Oi = myOpacity;
                               }
 -----
@@ -739,40 +739,44 @@ union
 };
 -----
 
+[state=no_list_decor]
 == `swizzler<>` design
-Needs to implicitly convert/assign to its `vector<>` equivalent
+[%step]
+- Needs to implicitly convert/assign to its `vector<>` equivalent
+- {blank}
++
 [source, cpp]
------
 operator vector_type()
 {
     vector_type vec;
     assign_across(vec, 0, indices...);
     return vec;
 }
-
+- {blank}
++
+[source, cpp]
 swizzler& operator=(const vector_type &vec)
 {
     assign_across(vec, 0, indices...);
     return *this;
 }
------
 
 == `swizzler<>` design (cont.)
 We use same fold expression trick
+
 [source, cpp]
------
 template<typename... Indices>
 void assign_across(vector_type &vec, size_t i, Indices ...j) const
 {
     ((vec[i++] = data[j]), ...);
 }
 
+[source, cpp]
 template<typename... Indices>
 void assign_across(const vector_type &vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
 }
------
 
 == `swizzler<>` problem
 [source, cpp]
@@ -839,11 +843,14 @@ float n = dot<float, 2>(v.xzx, v.zyx);
 - duplicate functions for swizzler proxy as well :|
 - SFINAE tricks
 
+[state=no_list_decor]
 == A better fix
 NOTE: we place the functions in a non-deduced context: inside `vector<>` itself!
 
+[%step]
+- {blank}
++
 [source, cpp]
------
 template<typename T, size_t N>
 struct vector
 {
@@ -853,9 +860,12 @@ struct vector
         /* inline friend found via ADL */
     }
     ...
------
 
+[state=no_list_decor]
 == Godbolt sanity check
+[%step]
+- {blank}
++
 [source, cpp]
 -----
 float a, b;
@@ -863,9 +873,9 @@ vec3 v = vec3(a, vec2(a, b));
 
 float d = dot(v.xxx, v.rbg);
 -----
-
+- {blank}
++
 [source, cpp]
------
 friend scalar_type dot(const vector_type &a, const vector_type &b)
 {
     scalar_type sum = 0;
@@ -874,7 +884,6 @@ friend scalar_type dot(const vector_type &a, const vector_type &b)
     });
     return sum;
 }
------
 
 == Godbolt /02
 [source, cpp]

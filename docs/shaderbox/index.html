@@ -50,7 +50,7 @@ Compute</p></div></section>
 surface basic() {             surface simple(color myOpacity = 1) {
     Ci = (1.0, 0.0, 0.0);         color myColor = (1.0, 0.0, 0.0);
     Oi = 1;                       normal Nn = normalize(N);
-}                                 Ci = myColor * myOpacity * diffuse(Nn);
+}                                 Ci = myColor * myOpacity * diff;
                                   Oi = myOpacity;
                               }</code></pre></div></div></section>
 <section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>For real-time rendering:</p></div>
@@ -354,27 +354,23 @@ struct swizzler
     swizzler&lt;2, 2, 2, 1&gt;::type zzzy, bbbg, pppt;
     swizzler&lt;2, 2, 2, 2&gt;::type zzzz, bbbb, pppp;
 };</code></pre></div></div></section>
-<section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="paragraph"><p>Needs to implicitly convert/assign to its <code>vector&lt;&gt;</code> equivalent</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">operator vector_type()
+<section id="code_swizzler_code_design" data-state="no_list_decor"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="ulist"><ul><li class="fragment"><p>Needs to implicitly convert/assign to its <code>vector&lt;&gt;</code> equivalent</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">operator vector_type()
 {
     vector_type vec;
     assign_across(vec, 0, indices...);
     return vec;
-}
-
-swizzler&amp; operator=(const vector_type &amp;vec)
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">swizzler&amp; operator=(const vector_type &amp;vec)
 {
     assign_across(vec, 0, indices...);
     return *this;
-}</code></pre></div></div></section>
+}</code></pre></div></div></li></ul></div></section>
 <section id="code_swizzler_code_design_cont"><h2><code>swizzler&lt;&gt;</code> design (cont.)</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
 void assign_across(vector_type &amp;vec, size_t i, Indices ...j) const
 {
     ((vec[i++] = data[j]), ...);
-}
-
-template&lt;typename... Indices&gt;
+}</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
 void assign_across(const vector_type &amp;vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
@@ -396,8 +392,8 @@ float n = dot(v.xzx, v.zyx);</code></pre></div></div>
 &gt; could not deduce template argument</code></pre></div></div></section>
 <section><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Type deduction does not consider implicit conversions!</td></tr></table></div>
 <div class="ulist"><div class="title">Possible fixes</div><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float n = dot&lt;float, 2&gt;(v.xzx, v.zyx);</code></pre></div></div></li><li class="fragment"><p>create by hand all scalar/size combinations :(</p></li><li class="fragment"><p>duplicate functions for swizzler proxy as well :|</p></li><li class="fragment"><p>SFINAE tricks</p></li></ul></div></section>
-<section id="a_better_fix"><h2>A better fix</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">we place the functions in a non-deduced context: inside <code>vector&lt;&gt;</code> itself!</td></tr></table></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
+<section id="a_better_fix" data-state="no_list_decor"><h2>A better fix</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">we place the functions in a non-deduced context: inside <code>vector&lt;&gt;</code> itself!</td></tr></table></div>
+<div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
 struct vector
 {
     ...
@@ -405,19 +401,18 @@ struct vector
     {
         /* inline friend found via ADL */
     }
-    ...</code></pre></div></div></section>
-<section id="godbolt_sanity_check"><h2>Godbolt sanity check</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float a, b;
+    ...</code></pre></div></div></li></ul></div></section>
+<section id="godbolt_sanity_check" data-state="no_list_decor"><h2>Godbolt sanity check</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float a, b;
 vec3 v = vec3(a, vec2(a, b));
 
-float d = dot(v.xxx, v.rbg);</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend scalar_type dot(const vector_type &amp;a, const vector_type &amp;b)
+float d = dot(v.xxx, v.rbg);</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend scalar_type dot(const vector_type &amp;a, const vector_type &amp;b)
 {
     scalar_type sum = 0;
     vector_type::iterate([&amp;](size_t i) {
         sum += a[i] * b[i];
     });
     return sum;
-}</code></pre></div></div></section>
+}</code></pre></div></div></li></ul></div></section>
 <section id="godbolt_02"><h2>Godbolt /02</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
 movss   xmm1, DWORD PTR [rsp+8]
 mov     edi, OFFSET FLAT:.LC2
