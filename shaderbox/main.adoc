@@ -386,7 +386,7 @@ struct vector :
     vector();
     explicit vector(scalar_type s);
     template<typename... Args> explicit vector(Args... args);
-...
+
 -----
 - {blank}
 +
@@ -394,10 +394,10 @@ struct vector :
 -----
     scalar_type& operator[](size_t i);
     scalar_type& operator[](size_t i);
-...
+
     vector_type& operator +=(scalar_type s);
     vector_type& operator +=(const vector_type &v);
-...
+(etc)
 -----
 
 == `vector<>` ctor - basic
@@ -458,7 +458,7 @@ template<typename A0, typename... Args,
     >::type>
 explicit vector(A0&& a0, Args&&... args)
 {
-    ...
+
 -----
 
 == `vector<>` ctor - advanced (2)
@@ -722,6 +722,44 @@ void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
     nop
     leave
     ret
+
+[state=no_list_decor]
+== Improved design of `vector<>`
+[%step]
+- {blank}
++
+[source, cpp]
+-----
+template<typename T, size_t... Ns>
+struct vector :
+    public vector_base<T, Ns...>
+{
+
+-----
+- {blank}
++
+[source, cpp]
+-----
+    vector()
+    {
+        ((data[Ns] = 0), ...);
+    }
+-----
+- {blank}
++
+[source, cpp]
+-----
+    explicit vector(scalar_type s)
+    {
+        ((data[Ns] = s), ...);
+    }
+
+    template<typename... Args> explicit vector(Args... args);
+(etc)
+-----
+
+== !
+TODO: introduce here the folding
 
 == `vector_base` naive impl
 [source, cpp]
