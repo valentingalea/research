@@ -66,13 +66,13 @@ section[data-state="plan"] ul {
     list-style-type: none;
 }
 
-section[id="godbolt_cont"] pre { 
+section[data-state="godbolt"] pre { 
     font-size: .4em;
 }
-section[id="godbolt_cont"] ul { 
+section[data-state="godbolt"] ul { 
     font-size: .6em;
 }
-section[id="godbolt_cont"] table { 
+section[data-state="godbolt"] table { 
     margin-left: -20%;
 }
 

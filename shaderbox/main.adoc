@@ -158,25 +158,21 @@ For real-time rendering:
 - DirectX High-Level Shader Language (*HLSL*)
 - PlayStation Shader Language (similar to HLSL)
 
-== A glimpse of GLSL
+== GLSL and HLSL
 // from https://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/lighting.php
 [source, javascript]
 -----
 varying vec3 N;
 varying vec3 v;
-
 void main(void)
 {
    vec3 L = normalize(gl_LightSource[0].position.xyz - v);
-   vec4 Idiff = gl_FrontLightProduct[0].diffuse 
-        * max(dot(N,L), 0.0);
+   vec4 Idiff = gl_FrontLightProduct[0].diffuse * max(dot(N,L), 0);
    Idiff = clamp(Idiff, 0.0, 1.0);
-
    gl_FragColor = Idiff;
 }
 -----
 
-== A glimpse of HLSL
 // from https://www.gamasutra.com/view/feature/131275/implementing_lighting_models_with_.php?page=2
 [source, javascript]
 -----
@@ -190,7 +186,7 @@ float4 main(
 }
 -----
 
-== GLSL vs HLSL
+== GLSL vs HLSL: general
 // from https://docs.microsoft.com/en-us/windows/uwp/gaming/glsl-to-hlsl-reference
 |==============================================================================
 | Procedural, step-centric (C like) | Object oriented, data-centric (C++ like)
@@ -198,7 +194,7 @@ float4 main(
 | `float`, `int`, `bool`            | `float`, `int`, `bool`, `uint`, `double`
 |==============================================================================
 
-== GLSL vs HLSL (cont.)
+== GLSL vs HLSL: types
 |==============================================================================
 | Vector type: `vec2`, `vec3`, `vec4` | Vector type: `float2`, `float3`, `float4`
 | Matrix type: `mat2`, `mat3`, `mat4` | Matrix type: `float2x2`, `float3x3`, `float4x4`
@@ -425,7 +421,6 @@ explicit vector(scalar_type s)
 [state=no_list_decor]
 == `static_for` utility
 [%step]
-- compile-time workhorse!
 - {blank}
 +
 [source, cpp]
@@ -537,6 +532,10 @@ int main()
 
 `-std=c++17 -Wall -O2` https://tinyurl.com/godbolt[(source)]
 
+// VML: https://godbolt.org/z/sVJV5W
+// VML -Ofast https://godbolt.org/z/2mD0zn
+
+[state=godbolt]
 == Godbolt (cont.)
 
 [cols="a,a,a"]
@@ -589,10 +588,140 @@ movq    r9, xmm3
 movq    r8, xmm2
 call    printf
 -----
-
 |==================
 
-- TRIVIA: gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
+//- TRIVIA: gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
+
+[state=godbolt]
+== Godbolt (VML)
+
+[cols="a,a,a"]
+|==================
+| clang (5.x/6.x) | gcc (7.x/8.x) | msvc (2017)
+
+| [source, cpp]
+-----
+call    scanf
+movss   xmm0, dword ptr [rsp]
+cvtss2sd        xmm1, xmm0
+movsd   xmm0, qword ptr [rip + .LCPI0_0]
+mov     edi, offset .L.str
+mov     al, 2
+call    printf
+-----
+
+| [source, cpp]
+-----
+call    scanf
+pxor    xmm1, xmm1
+mov     edi, OFFSET FLAT:.LC0
+movsd   xmm0, QWORD PTR .LC1[rip]
+mov     eax, 2
+cvtss2sd        xmm1, DWORD PTR [rsp+8]
+call    printf
+-----
+
+| [source, cpp]
+-----
+call    scanf
+movss   xmm0, DWORD PTR a$[rsp]
+lea     rcx, OFFSET FLAT:`string'
+movss   xmm1, DWORD PTR b$[rsp]
+movss   DWORD PTR $T3[rsp], xmm0
+movss   xmm0, DWORD PTR __real@3f800000
+movss   DWORD PTR $T3[rsp+4], xmm1
+mov     rax, QWORD PTR $T3[rsp]
+mov     QWORD PTR $T2[rsp], rax
+movss   xmm1, DWORD PTR $T2[rsp]
+cvtps2pd xmm2, xmm1
+movss   DWORD PTR v$[rsp+4], xmm1
+movsd   xmm1, QWORD PTR __real@3ff000000
+movq    r8, xmm2
+movss   DWORD PTR v$[rsp], xmm0
+movq    rdx, xmm1
+movss   xmm0, DWORD PTR $T2[rsp+4]
+movss   DWORD PTR v$[rsp+8], xmm0
+call    printf
+-----
+|==================
+
+[state=godbolt]
+== Godbolt (VML ffast)
+
+[cols="a,a,a"]
+|==================
+| clang (5.x/6.x) | gcc (7.x/8.x) | msvc (2017)
+
+| [source, cpp]
+-----
+call    scanf
+vmovss  xmm0, dword ptr [rsp]
+vcvtss2sd       xmm1, xmm0, xmm0
+vmovsd  xmm0, qword ptr [rip + .LCPI0_0]
+mov     edi, offset .L.str
+mov     al, 2
+call    printf
+-----
+
+| [source, cpp]
+-----
+call    scanf
+vmovsd  xmm0, QWORD PTR .LC1[rip]
+vxorpd  xmm1, xmm1, xmm1
+mov     edi, OFFSET FLAT:.LC0
+mov     eax, 2
+vcvtss2sd  xmm1, xmm1, DWORD PTR [rsp+8]
+call    printf
+-----
+
+| [source, cpp]
+-----
+call    scanf
+vmovss  xmm0, DWORD PTR a$[rsp]
+vmovss  xmm1, DWORD PTR b$[rsp]
+vmovss  DWORD PTR $T3[rsp], xmm0
+vmovss  xmm0, DWORD PTR __real@3f800000
+vmovss  DWORD PTR $T3[rsp+4], xmm1
+mov     rax, QWORD PTR $T3[rsp]
+lea     rcx, OFFSET FLAT:`string'
+mov     QWORD PTR $T2[rsp], rax
+vmovss  xmm1, DWORD PTR $T2[rsp]
+vcvtss2sd xmm2, xmm1, xmm1
+vmovss  DWORD PTR v$[rsp+4], xmm1
+vmovsd  xmm1, QWORD PTR __real@3ff000000
+vmovss  DWORD PTR v$[rsp], xmm0
+vmovss  xmm0, DWORD PTR $T2[rsp+4]
+vmovq   rdx, xmm1
+vmovq   r8, xmm2
+vmovss  DWORD PTR v$[rsp+8], xmm0
+call    printf
+-----
+|==================
+
+== Debug
+
+[source, cpp]
+void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
+    push    rbp
+    mov     rbp, rsp
+    sub     rsp, 32
+    mov     QWORD PTR [rbp-24], rdi
+    mov     QWORD PTR [rbp-32], rsi
+    mov     rax, QWORD PTR [rbp-32]
+    mov     esi, 0
+    mov     rdi, rax
+    call    vector<float, 3ul>::vector(float)::{lambda(unsigned...
+    mov     rax, QWORD PTR [rbp-32]
+    mov     rdi, rax
+    call    vector<float, 3ul>::vector(float)::{lambda(unsigned...
+    mov     rdx, rax
+    lea     rax, [rbp-1]
+    mov     rsi, rdx
+    mov     rdi, rax
+    call    void detail::static_for<1ul, 3ul>::operator()<vector...
+    nop
+    leave
+    ret
 
 == `vector_base` naive impl
 [source, cpp]
