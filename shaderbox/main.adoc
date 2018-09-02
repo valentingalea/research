@@ -450,33 +450,41 @@ struct static_for<N, N>
 
 == `vector<>` ctor - advanced
 [source, cpp]
------
 template<typename A0, typename... Args,
+
+[source, cpp]
     class = typename std::enable_if<
         ((sizeof... (Args) >= 1) ||
         ((sizeof... (Args) == 0) && !std::is_scalar_v<A0>))
     >::type>
+
+[source, cpp]
 explicit vector(A0&& a0, Args&&... args)
 {
+    iterate_construct<0, num_components>(
+        std::forward<A0>(a0), std::forward<Args>(args)...
+    );
+}
 
------
+//TODO: step
 
 == `vector<>` ctor - advanced (2)
 [source, cpp]
------
-    size_t i = 0; // advances as we consume args
-
-    // consume the first one
-    construct_at_index(i, std::forward<A0>(a0));
-
-    // consume the rest, if any
-    (construct_at_index(i, std::forward<Args>(args)), ...);
+template<size_t I, size_t IMax, typename Arg0, typename... Args>
+void iterate_construct(Arg0&& a0, Args&&... args)
+{
+    if constexpr (I < IMax) {
+        construct_at_index(I, std::forward<Arg0>(a0));
+        iterate_construct<I + get_size<Arg0>(), IMax>(
+            std::forward<Args>(args)...);
+    }
 }
------
 
-NOTE: unary fold expression over comma operator: send every arg to specialized processor function
-
-//TODO: Fold Expressions N4295 gcc(6) clang(3.6) msvc(VS 2017 15.5)
+[source, cpp]
+template<size_t I, size_t IMax>
+void iterate_construct()
+{
+}
 
 == `vector<>` ctor - advanced (3)
 [source, cpp]
@@ -516,7 +524,6 @@ vec3 v = vec3(98, vec2(99, 100));
 -----
 
 == Godbolt
-
 [source, cpp]
 -----
 int main()
@@ -575,7 +582,7 @@ movss   xmm1, DWORD PTR b$[rsp]
 lea     rcx, OFFSET FLAT:`string'
 movss   xmm0, DWORD PTR a$[rsp]
 movss   DWORD PTR $T1[rsp+4], xmm1
-movsd   xmm1, QWORD PTR __real@3ff0000000000000
+movsd   xmm1, QWORD PTR __real@3ff0000000
 movss   DWORD PTR $T1[rsp], xmm0
 movq    rdx, xmm1
 mov     rax, QWORD PTR $T1[rsp]
@@ -592,113 +599,7 @@ call    printf
 
 //- TRIVIA: gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
 
-[state=godbolt]
-== Godbolt (VML)
-
-[cols="a,a,a"]
-|==================
-| clang (5.x/6.x) | gcc (7.x/8.x) | msvc (2017)
-
-| [source, cpp]
------
-call    scanf
-movss   xmm0, dword ptr [rsp]
-cvtss2sd        xmm1, xmm0
-movsd   xmm0, qword ptr [rip + .LCPI0_0]
-mov     edi, offset .L.str
-mov     al, 2
-call    printf
------
-
-| [source, cpp]
------
-call    scanf
-pxor    xmm1, xmm1
-mov     edi, OFFSET FLAT:.LC0
-movsd   xmm0, QWORD PTR .LC1[rip]
-mov     eax, 2
-cvtss2sd        xmm1, DWORD PTR [rsp+8]
-call    printf
------
-
-| [source, cpp]
------
-call    scanf
-movss   xmm0, DWORD PTR a$[rsp]
-lea     rcx, OFFSET FLAT:`string'
-movss   xmm1, DWORD PTR b$[rsp]
-movss   DWORD PTR $T3[rsp], xmm0
-movss   xmm0, DWORD PTR __real@3f800000
-movss   DWORD PTR $T3[rsp+4], xmm1
-mov     rax, QWORD PTR $T3[rsp]
-mov     QWORD PTR $T2[rsp], rax
-movss   xmm1, DWORD PTR $T2[rsp]
-cvtps2pd xmm2, xmm1
-movss   DWORD PTR v$[rsp+4], xmm1
-movsd   xmm1, QWORD PTR __real@3ff000000
-movq    r8, xmm2
-movss   DWORD PTR v$[rsp], xmm0
-movq    rdx, xmm1
-movss   xmm0, DWORD PTR $T2[rsp+4]
-movss   DWORD PTR v$[rsp+8], xmm0
-call    printf
------
-|==================
-
-[state=godbolt]
-== Godbolt (VML ffast)
-
-[cols="a,a,a"]
-|==================
-| clang (5.x/6.x) | gcc (7.x/8.x) | msvc (2017)
-
-| [source, cpp]
------
-call    scanf
-vmovss  xmm0, dword ptr [rsp]
-vcvtss2sd       xmm1, xmm0, xmm0
-vmovsd  xmm0, qword ptr [rip + .LCPI0_0]
-mov     edi, offset .L.str
-mov     al, 2
-call    printf
------
-
-| [source, cpp]
------
-call    scanf
-vmovsd  xmm0, QWORD PTR .LC1[rip]
-vxorpd  xmm1, xmm1, xmm1
-mov     edi, OFFSET FLAT:.LC0
-mov     eax, 2
-vcvtss2sd  xmm1, xmm1, DWORD PTR [rsp+8]
-call    printf
------
-
-| [source, cpp]
------
-call    scanf
-vmovss  xmm0, DWORD PTR a$[rsp]
-vmovss  xmm1, DWORD PTR b$[rsp]
-vmovss  DWORD PTR $T3[rsp], xmm0
-vmovss  xmm0, DWORD PTR __real@3f800000
-vmovss  DWORD PTR $T3[rsp+4], xmm1
-mov     rax, QWORD PTR $T3[rsp]
-lea     rcx, OFFSET FLAT:`string'
-mov     QWORD PTR $T2[rsp], rax
-vmovss  xmm1, DWORD PTR $T2[rsp]
-vcvtss2sd xmm2, xmm1, xmm1
-vmovss  DWORD PTR v$[rsp+4], xmm1
-vmovsd  xmm1, QWORD PTR __real@3ff000000
-vmovss  DWORD PTR v$[rsp], xmm0
-vmovss  xmm0, DWORD PTR $T2[rsp+4]
-vmovq   rdx, xmm1
-vmovq   r8, xmm2
-vmovss  DWORD PTR v$[rsp+8], xmm0
-call    printf
------
-|==================
-
-== Debug
+== Problem: Debug
 
 [source, cpp]
 void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
@@ -754,12 +655,35 @@ struct vector :
         ((data[Ns] = s), ...);
     }
 
-    template<typename... Args> explicit vector(Args... args);
+    template<typename A0, typename... Args> explicit vector
 (etc)
 -----
 
-== !
-TODO: introduce here the folding
+== Folding Expressions
+NOTE: `C++17` unary fold expression over comma operator
+
+.Compatibility
+- gcc 6+
+- clang 3.6+
+- MSVC 2017 15.5+
+
+//TODO: Fold Expressions N4295 gcc(6) clang(3.6) msvc(VS 2017 15.5)
+
+== Improved `vector<>` ctor
+[source, cpp]
+-----
+template<typename A0, typename... Args>
+explicit vector(A0&& a0, Args&&... args)
+{
+    size_t i = 0; // advances as we consume args
+
+    // consume the first one
+    construct_at_index(i, std::forward<A0>(a0));
+
+    // consume the rest, if any
+    (construct_at_index(i, std::forward<Args>(args)), ...);
+}
+-----
 
 == `vector_base` naive impl
 [source, cpp]
