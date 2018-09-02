@@ -396,7 +396,7 @@ struct vector :
     scalar_type& operator[](size_t i);
 
     vector_type& operator +=(scalar_type s);
-    vector_type& operator +=(const vector_type &v);
+    vector_type& operator +=(const vector_type& v);
 (etc)
 -----
 
@@ -429,7 +429,7 @@ template<size_t Begin, size_t End>
 struct static_for
 {
     template<class Func>
-    constexpr void operator ()(Func &&f)
+    constexpr void operator ()(Func&& f)
     {
         f(Begin);
         static_for<Begin + 1, End>()(std::forward<Func>(f));
@@ -444,7 +444,7 @@ template<size_t N>
 struct static_for<N, N>
 {
     template<class Func>
-    constexpr void operator ()(Func &&) { /* empty */ }
+    constexpr void operator ()(Func&&) { /* empty */ }
 };
 -----
 
@@ -489,7 +489,7 @@ void iterate_construct()
 == `vector<>` ctor - advanced (3)
 [source, cpp]
 -----
-void construct_at_index(size_t &i, scalar_type arg)
+void construct_at_index(size_t& i, scalar_type arg)
 {
     data[i++] = arg;
 }
@@ -498,7 +498,7 @@ void construct_at_index(size_t &i, scalar_type arg)
 [source, cpp]
 -----
 template<typename Other, size_t Other_N>
-void construct_at_index(size_t &i, vector<Other, Other_N> &&arg)
+void construct_at_index(size_t& i, vector<Other, Other_N>&& arg)
 {
     constexpr auto count = std::min(N, Other_N);
 
@@ -885,7 +885,7 @@ operator vector_type()
 - {blank}
 +
 [source, cpp]
-swizzler& operator=(const vector_type &vec)
+swizzler& operator=(const vector_type& vec)
 {
     assign_across(vec, 0, indices...);
     return *this;
@@ -896,14 +896,14 @@ We use same fold expression trick
 
 [source, cpp]
 template<typename... Indices>
-void assign_across(vector_type &vec, size_t i, Indices ...j) const
+void assign_across(vector_type& vec, size_t i, Indices ...j) const
 {
     ((vec[i++] = data[j]), ...);
 }
 
 [source, cpp]
 template<typename... Indices>
-void assign_across(const vector_type &vec, size_t i, Indices ...j)
+void assign_across(const vector_type& vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
 }
@@ -979,7 +979,7 @@ template<typename T, size_t... Ns>
 struct vector
 {
     ...
-    friend T dot(const vector &a, const vector &b)
+    friend T dot(const vector& a, const vector& b)
     {
         /* inline friend found via ADL */
     }
