@@ -830,8 +830,47 @@ union
 };
 -----
 
-[state=no_list_decor]
 == `swizzler<>` design
+[source, cpp]
+-----
+template<
+    typename vector_type,
+    typename scalar_type,
+    size_t N,
+    size_t... indices>
+struct swizzler
+{
+    T data[N];
+    // N might differ from vector_type::num_components
+    // ex: .xxxx from vec2
+
+(etc)
+-----
+
+== `swizzler<>` generator
+[source, cpp]
+template<typename T, size_t... Ns>
+struct vector_base
+{
+    template<size_t... indices>
+    struct swizzler_wrapper_factory
+    {
+        using type = swizzler<
+            typename vec_equiv<T, sizeof...(indices)>::type,
+            T,
+            sizeof...(Ns),
+            indices...>;
+    };
+
+[source, cpp]
+    template<size_t x>
+    struct swizzler_wrapper_factory<x>
+    {
+        using type = T; // one component vectors are just scalars
+    };
+
+[state=no_list_decor]
+== `swizzler<>` conversions
 [%step]
 - Needs to implicitly convert/assign to its `vector<>` equivalent
 - {blank}
