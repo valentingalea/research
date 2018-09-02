@@ -55,19 +55,16 @@ surface basic() {             surface simple(color myOpacity = 1) {
                               }</code></pre></div></div></section>
 <section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>For real-time rendering:</p></div>
 <div class="ulist"><ul><li><p>Early: ARB assembly, Cg</p></li><li><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li><p>PlayStation Shader Language (similar to HLSL)</p></li></ul></div></section>
-<section id="a_glimpse_of_glsl"><h2>A glimpse of GLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
+<section id="glsl_and_hlsl"><h2>GLSL and HLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
 varying vec3 v;
-
 void main(void)
 {
    vec3 L = normalize(gl_LightSource[0].position.xyz - v);
-   vec4 Idiff = gl_FrontLightProduct[0].diffuse
-        * max(dot(N,L), 0.0);
+   vec4 Idiff = gl_FrontLightProduct[0].diffuse * max(dot(N,L), 0);
    Idiff = clamp(Idiff, 0.0, 1.0);
-
    gl_FragColor = Idiff;
-}</code></pre></div></div></section>
-<section id="a_glimpse_of_hlsl"><h2>A glimpse of HLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">float4 main(
+}</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">float4 main(
     float3 Light: TEXCOORD0,
     float3 Norm : TEXCOORD1) : COLOR
 {
@@ -75,8 +72,8 @@ void main(void)
     float4 ambient = { 0.1, 0.0, 0.0, 1.0 };
     return ambient + diffuse * saturate(dot(Light, Norm));
 }</code></pre></div></div></section>
-<section id="glsl_vs_hlsl"><h2>GLSL vs HLSL</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Procedural, step-centric (C like)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Object oriented, data-centric (C++ like)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Compilation done in driver</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Client side compilation</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code>, <code>uint</code>, <code>double</code></p></td></tr></table></section>
-<section id="glsl_vs_hlsl_cont"><h2>GLSL vs HLSL (cont.)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>vec2</code>, <code>vec3</code>, <code>vec4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>float2</code>, <code>float3</code>, <code>float4</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>mat2</code>, <code>mat3</code>, <code>mat4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>float2x2</code>, <code>float3x3</code>, <code>float4x4</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
+<section id="glsl_vs_hlsl_general"><h2>GLSL vs HLSL: general</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Procedural, step-centric (C like)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Object oriented, data-centric (C++ like)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Compilation done in driver</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Client side compilation</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code>, <code>uint</code>, <code>double</code></p></td></tr></table></section>
+<section id="glsl_vs_hlsl_types"><h2>GLSL vs HLSL: types</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>vec2</code>, <code>vec3</code>, <code>vec4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>float2</code>, <code>float3</code>, <code>float4</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>mat2</code>, <code>mat3</code>, <code>mat4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>float2x2</code>, <code>float3x3</code>, <code>float4x4</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
 <section id="shading_languages_future"><h2>Shading Languages Future</h2><div class="paragraph"><p>Basically C++ (usually via LLVM)</p></div>
 <div class="ulist step"><ul><li class="fragment"><p>Metal Shading Language (C++14, Apple)</p><div class="ulist"><ul><li><p>only on iOS devices</p></li></ul></div></li><li class="fragment"><p>CUDA Heterogeneous Computing (C++11, NVidia)</p><div class="ulist"><ul><li><p>only for computing, not graphics</p></li></ul></div></li><li class="fragment"><p>HLSL 6.x (C++98&#8217;ish, Microsoft)</p><div class="ulist"><ul><li><p>not released yet</p></li></ul></div></li></ul></div></section>
 <section><div class="paragraph"><p>Let&#8217;s see how C++ can help out, NOW!</p></div></section>
@@ -134,13 +131,12 @@ struct vector :
     public vector_base&lt;T, N&gt;
 {</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    vector();
     explicit vector(scalar_type s);
-    template&lt;typename... Args&gt; explicit vector(Args... args);
-...</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    scalar_type&amp; operator[](size_t i);
+    template&lt;typename... Args&gt; explicit vector(Args... args);</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    scalar_type&amp; operator[](size_t i);
     scalar_type&amp; operator[](size_t i);
-...
+
     vector_type&amp; operator +=(scalar_type s);
     vector_type&amp; operator +=(const vector_type &amp;v);
-...</code></pre></div></div></li></ul></div></section>
+(etc)</code></pre></div></div></li></ul></div></section>
 <section id="code_vector_code_ctor_basic"><h2><code>vector&lt;&gt;</code> ctor - basic</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vector()
 {
     static_for&lt;0, N&gt;()([this](size_t i) {
@@ -154,7 +150,7 @@ explicit vector(scalar_type s)
         data[i] = s;
     });
 }</code></pre></div></div></section>
-<section id="code_static_for_code_utility" data-state="no_list_decor"><h2><code>static_for</code> utility</h2><div class="ulist"><ul><li class="fragment"><p>compile-time workhorse!</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
+<section id="code_static_for_code_utility" data-state="no_list_decor"><h2><code>static_for</code> utility</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t Begin, size_t End&gt;
 struct static_for
 {
     template&lt;class Func&gt;
@@ -169,23 +165,30 @@ struct static_for&lt;N, N&gt;
     template&lt;class Func&gt;
     constexpr void operator ()(Func &amp;&amp;) { /* empty */ }
 };</code></pre></div></div></li></ul></div></section>
-<section id="code_vector_code_ctor_advanced"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args,
-    class = typename std::enable_if&lt;
+<section id="code_vector_code_ctor_advanced"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args,</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    class = typename std::enable_if&lt;
         ((sizeof... (Args) &gt;= 1) ||
         ((sizeof... (Args) == 0) &amp;&amp; !std::is_scalar_v&lt;A0&gt;))
-    &gt;::type&gt;
-explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
+    &gt;::type&gt;</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
 {
-    ...</code></pre></div></div></section>
-<section id="code_vector_code_ctor_advanced_2"><h2><code>vector&lt;&gt;</code> ctor - advanced (2)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    size_t i = 0; // advances as we consume args
-
-    // consume the first one
-    construct_at_index(i, std::forward&lt;A0&gt;(a0));
-
-    // consume the rest, if any
-    (construct_at_index(i, std::forward&lt;Args&gt;(args)), ...);
+    iterate_construct&lt;0, num_components&gt;(
+        std::forward&lt;A0&gt;(a0), std::forward&lt;Args&gt;(args)...
+    );
+}</code></pre></div></div></section>
+<section id="code_vector_code_ctor_advanced_2"><h2><code>vector&lt;&gt;</code> ctor - advanced (2)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I, size_t IMax, typename Arg0, typename... Args&gt;
+void iterate_construct(Arg0&amp;&amp; a0, Args&amp;&amp;... args)
+{
+    if constexpr (I &lt; IMax) {
+        construct_at_index(I, std::forward&lt;Arg0&gt;(a0));
+        iterate_construct&lt;I + get_size&lt;Arg0&gt;(), IMax&gt;(
+            std::forward&lt;Args&gt;(args)...);
+    }
 }</code></pre></div></div>
-<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">unary fold expression over comma operator: send every arg to specialized processor function</td></tr></table></div></section>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I, size_t IMax&gt;
+void iterate_construct()
+{
+}</code></pre></div></div></section>
 <section id="code_vector_code_ctor_advanced_3"><h2><code>vector&lt;&gt;</code> ctor - advanced (3)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void construct_at_index(size_t &amp;i, scalar_type arg)
 {
     data[i++] = arg;
@@ -219,7 +222,7 @@ vec3 v = vec3(98, vec2(99, 100));
     printf("%f %f", v.x, v.y);
 }</code></pre></div></div>
 <div class="paragraph"><p><code>-std=c++17 -Wall -O2</code> <a href="https://tinyurl.com/godbolt">(source)</a></p></div></section>
-<section id="godbolt_cont"><h2>Godbolt (cont.)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (5.x/6.x)</th><th class="tableblock halign-left valign-top">gcc (7.x/8.x)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
+<section id="godbolt_cont" data-state="godbolt"><h2>Godbolt (cont.)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">clang (5.x/6.x)</th><th class="tableblock halign-left valign-top">gcc (7.x/8.x)</th><th class="tableblock halign-left valign-top">msvc (2017)</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
 movss   xmm0, dword ptr [rsp + 4]
 cvtss2sd        xmm1, xmm0
 movss   xmm0, dword ptr [rsp]
@@ -240,7 +243,7 @@ movss   xmm1, DWORD PTR b$[rsp]
 lea     rcx, OFFSET FLAT:`string'
 movss   xmm0, DWORD PTR a$[rsp]
 movss   DWORD PTR $T1[rsp+4], xmm1
-movsd   xmm1, QWORD PTR __real@3ff0000000000000
+movsd   xmm1, QWORD PTR __real@3ff0000000
 movss   DWORD PTR $T1[rsp], xmm0
 movq    rdx, xmm1
 mov     rax, QWORD PTR $T1[rsp]
@@ -251,8 +254,54 @@ cvtps2pd xmm3, xmm3
 cvtps2pd xmm2, xmm2
 movq    r9, xmm3
 movq    r8, xmm2
-call    printf</code></pre></div></div></div></td></tr></table>
-<div class="ulist"><ul><li><p>TRIVIA: gcc&#8217;s <code>cvtss2sd</code> from memory is pessimization (<a href="https://stackoverflow.com/a/16597686" class="bare">https://stackoverflow.com/a/16597686</a>)</p></li></ul></div></section>
+call    printf</code></pre></div></div></div></td></tr></table></section>
+<section id="problem_debug"><h2>Problem: Debug</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void detail::static_for&lt;0ul, 3ul&gt;::operator()&lt;vector&lt;float, 3ul&gt;...
+    push    rbp
+    mov     rbp, rsp
+    sub     rsp, 32
+    mov     QWORD PTR [rbp-24], rdi
+    mov     QWORD PTR [rbp-32], rsi
+    mov     rax, QWORD PTR [rbp-32]
+    mov     esi, 0
+    mov     rdi, rax
+    call    vector&lt;float, 3ul&gt;::vector(float)::{lambda(unsigned...
+    mov     rax, QWORD PTR [rbp-32]
+    mov     rdi, rax
+    call    vector&lt;float, 3ul&gt;::vector(float)::{lambda(unsigned...
+    mov     rdx, rax
+    lea     rax, [rbp-1]
+    mov     rsi, rdx
+    mov     rdi, rax
+    call    void detail::static_for&lt;1ul, 3ul&gt;::operator()&lt;vector...
+    nop
+    leave
+    ret</code></pre></div></div></section>
+<section id="improved_design_of_code_vector_code" data-state="no_list_decor"><h2>Improved design of <code>vector&lt;&gt;</code></h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
+struct vector :
+    public vector_base&lt;T, Ns...&gt;
+{</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    vector()
+    {
+        ((data[Ns] = 0), ...);
+    }</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    explicit vector(scalar_type s)
+    {
+        ((data[Ns] = s), ...);
+    }
+
+    template&lt;typename A0, typename... Args&gt; explicit vector
+(etc)</code></pre></div></div></li></ul></div></section>
+<section id="folding_expressions"><h2>Folding Expressions</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content"><code>C++17</code> unary fold expression over comma operator</td></tr></table></div>
+<div class="ulist"><div class="title">Compatibility</div><ul><li><p>gcc 6+</p></li><li><p>clang 3.6+</p></li><li><p>MSVC 2017 15.5+</p></li></ul></div></section>
+<section id="improved_code_vector_code_ctor"><h2>Improved <code>vector&lt;&gt;</code> ctor</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args&gt;
+explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
+{
+    size_t i = 0; // advances as we consume args
+
+    // consume the first one
+    construct_at_index(i, std::forward&lt;A0&gt;(a0));
+
+    // consume the rest, if any
+    (construct_at_index(i, std::forward&lt;Args&gt;(args)), ...);
+}</code></pre></div></div></section>
 <section id="code_vector_base_code_naive_impl"><h2><code>vector_base</code> naive impl</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 2&gt;
 {
@@ -354,7 +403,36 @@ struct swizzler
     swizzler&lt;2, 2, 2, 1&gt;::type zzzy, bbbg, pppt;
     swizzler&lt;2, 2, 2, 2&gt;::type zzzz, bbbb, pppp;
 };</code></pre></div></div></section>
-<section id="code_swizzler_code_design" data-state="no_list_decor"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="ulist"><ul><li class="fragment"><p>Needs to implicitly convert/assign to its <code>vector&lt;&gt;</code> equivalent</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">operator vector_type()
+<section id="code_swizzler_code_design"><h2><code>swizzler&lt;&gt;</code> design</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
+    typename vector_type,
+    typename scalar_type,
+    size_t N,
+    size_t... indices&gt;
+struct swizzler
+{
+    T data[N];
+    // N might differ from vector_type::num_components
+    // ex: .xxxx from vec2
+
+(etc)</code></pre></div></div></section>
+<section id="code_swizzler_code_generator"><h2><code>swizzler&lt;&gt;</code> generator</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
+struct vector_base
+{
+    template&lt;size_t... indices&gt;
+    struct swizzler_wrapper_factory
+    {
+        using type = swizzler&lt;
+            typename vec_equiv&lt;T, sizeof...(indices)&gt;::type,
+            T,
+            sizeof...(Ns),
+            indices...&gt;;
+    };</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    template&lt;size_t x&gt;
+    struct swizzler_wrapper_factory&lt;x&gt;
+    {
+        using type = T; // one component vectors are just scalars
+    };</code></pre></div></div></section>
+<section id="code_swizzler_code_conversions" data-state="no_list_decor"><h2><code>swizzler&lt;&gt;</code> conversions</h2><div class="ulist"><ul><li class="fragment"><p>Needs to implicitly convert/assign to its <code>vector&lt;&gt;</code> equivalent</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">operator vector_type()
 {
     vector_type vec;
     assign_across(vec, 0, indices...);
@@ -381,19 +459,18 @@ void assign_across(const vector_type &amp;vec, size_t i, Indices ...j)
 <div class="ulist"><ul><li class="fragment"><p>Solution? Introduce another abstraction layer!</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape>(construct_at_index(i, decay(std::forward&lt;Args&gt;(args))), ...);</code></pre></div></div></li><li class="fragment"><p><code>decay</code> calls equivalent member function (or does nothing for scalar)</p></li><li class="fragment"><p>both <code>vector</code> and <code>swizzler</code> have one so they can interchange easily</p></li></ul></div></section>
 <section id="operators_and_functions" data-state="no_list_decor"><h2>Operators and Functions</h2><div class="paragraph"><p>We will need to re-create a lot of generic utility functions</p></div>
 <div class="ulist"><ul><li class="fragment"><p>
-Example: the dot (inner) product of two vectors</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
-T dot(const vector&lt;T, N&gt; &amp;, const vector&lt;T, N&gt; &amp;);
-
-float n = dot(vec3(1, 0, 0), vec3(0, 0, 1));</code></pre></div></div></li></ul></div></section>
+Example: the dot (inner) product of two vectors</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
+T dot(const vector&lt;T, Ns...&gt; &amp;, const vector&lt;T, Ns...&gt; &amp;);</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float n = dot(vec3(1, 0, 0), vec3(0, 0, 1));</code></pre></div></div></li></ul></div></section>
 <section id="functions_problem" data-state="no_list_decor"><div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">We immediately hit a big problem!</td></tr></table></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 v = vec3(1, 0, 0);
 float n = dot(v.xzx, v.zyx);</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="asm language-asm">&gt; 'dot': no matching overloaded function found
 &gt; could not deduce template argument</code></pre></div></div></section>
 <section><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Type deduction does not consider implicit conversions!</td></tr></table></div>
-<div class="ulist"><div class="title">Possible fixes</div><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float n = dot&lt;float, 2&gt;(v.xzx, v.zyx);</code></pre></div></div></li><li class="fragment"><p>create by hand all scalar/size combinations :(</p></li><li class="fragment"><p>duplicate functions for swizzler proxy as well :|</p></li><li class="fragment"><p>SFINAE tricks</p></li></ul></div></section>
+<div class="ulist"><div class="title">Possible fixes</div><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float n = dot&lt;float, 0, 1, 2&gt;(v.xzx, v.zyx);</code></pre></div></div></li><li class="fragment"><p>create by hand all scalar/size combinations :(</p></li><li class="fragment"><p>duplicate functions for swizzler proxy as well :|</p></li><li class="fragment"><p>SFINAE tricks</p></li></ul></div></section>
 <section id="a_better_fix" data-state="no_list_decor"><h2>A better fix</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">we place the functions in a non-deduced context: inside <code>vector&lt;&gt;</code> itself!</td></tr></table></div>
-<div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t N&gt;
+<div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
 struct vector
 {
     ...
@@ -402,97 +479,68 @@ struct vector
         /* inline friend found via ADL */
     }
     ...</code></pre></div></div></li></ul></div></section>
-<section id="godbolt_sanity_check" data-state="no_list_decor"><h2>Godbolt sanity check</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float a, b;
-vec3 v = vec3(a, vec2(a, b));
-
-float d = dot(v.xxx, v.rbg);</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend scalar_type dot(const vector_type &amp;a, const vector_type &amp;b)
+<section id="enough"><h2>Enough?</h2><div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">No!</td></tr></table></div>
+<div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">lots of function need to work with scalars only</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float opS(float d1, float d2)
 {
-    scalar_type sum = 0;
-    vector_type::iterate([&amp;](size_t i) {
-        sum += a[i] * b[i];
-    });
-    return sum;
-}</code></pre></div></div></li></ul></div></section>
-<section id="godbolt_02"><h2>Godbolt /02</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
-movss   xmm1, DWORD PTR [rsp+8]
-mov     edi, OFFSET FLAT:.LC2
-movaps  xmm2, xmm1
-mov     eax, 1
-mulss   xmm2, xmm1
-mulss   xmm1, DWORD PTR [rsp+12]
-movaps  xmm0, xmm1
-pxor    xmm1, xmm1
-addss   xmm1, xmm2
-addss   xmm0, xmm1
-addss   xmm0, xmm2
-cvtss2sd        xmm0, xmm0
-call    printf</code></pre></div></div>
-<div class="paragraph"><p>gcc 7.2 <code>-std=c++17 -Wall -O2</code> <a href="https://tinyurl.com/godbolt-dot">(source)</a></p></div></section>
-<section id="godbolt_00"><h2>Godbolt /00</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">...
-call    swizzle::vector&lt;float, 3ul&gt;::operator[](unsigned long) const
-movss   DWORD PTR [rbp-20], xmm0
-mov     rax, QWORD PTR [rbp-8]
-mov     rax, QWORD PTR [rax+16]
-mov     rdx, QWORD PTR [rbp-16]
-mov     rsi, rdx
-mov     rdi, rax
-call    swizzle::vector&lt;float, 3ul&gt;::operator[](unsigned long) const
-mulss   xmm0, DWORD PTR [rbp-20]
-mov     rax, QWORD PTR [rbp-8]
-mov     rax, QWORD PTR [rax]
-movss   xmm1, DWORD PTR [rax]
-mov     rax, QWORD PTR [rbp-8]
-mov     rax, QWORD PTR [rax]
-addss   xmm0, xmm1
-movss   DWORD PTR [rax], xmm0
-...</code></pre></div></div>
-<div class="paragraph"><p>gcc 7.2 <code>-std=c++17 -Wall -O0</code> <a href="https://tinyurl.com/godbolt-dot">(source)</a></p></div></section>
-<section><section id="godbolt_0g"><h2>Godbolt /0g</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">call    scanf
-movss   xmm0, DWORD PTR [rsp+20]
-movss   DWORD PTR [rsp+4], xmm0
-movss   xmm1, DWORD PTR [rsp+16]
-movss   DWORD PTR [rsp+8], xmm1
-movss   DWORD PTR [rsp+12], xmm0
-mov     eax, DWORD PTR [rsp+12]
-mov     rdx, QWORD PTR [rsp+4]
-mov     QWORD PTR [rsp+24], rdx
-mov     DWORD PTR [rsp+32], eax
-movss   DWORD PTR [rsp+8], xmm0
-mov     rdx, QWORD PTR [rsp+4]
-mov     QWORD PTR [rsp+36], rdx
-mov     DWORD PTR [rsp+44], eax
-movss   xmm1, DWORD PTR [rsp+24]
-mulss   xmm1, DWORD PTR [rsp+36]
-...</code></pre></div></div></section><section id="godbolt_0g_cont"><h2>Godbolt /0g (cont.)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">...
-addss   xmm1, DWORD PTR .LC1[rip]
-movss   xmm0, DWORD PTR [rsp+28]
-mulss   xmm0, DWORD PTR [rsp+40]
-addss   xmm1, xmm0
-movss   xmm0, DWORD PTR [rsp+32]
-mulss   xmm0, DWORD PTR [rsp+44]
-addss   xmm0, xmm1
-movss   DWORD PTR [rsp+4], xmm0
-cvtss2sd        xmm0, xmm0
-mov     edi, OFFSET FLAT:.LC2
-mov     eax, 1
-call    printf</code></pre></div></div>
-<div class="paragraph"><p>gcc 7.2 <code>-std=c++17 -Wall -Og</code> <a href="https://tinyurl.com/godbolt-dot">(source)</a></p></div></section></section>
-<section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>Now that we have <code>vector&lt;&gt;</code> a matrix is pretty straightforward</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
-    template&lt;typename, size_t&gt; class vector_type,
+    return max(-d2, d1);
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">ambiguity with literals</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">smoothstep(0, 1, v.xyz);
+
+// could be `int`, `float` or `double`</code></pre></div></div></li></ul></div></section>
+<section id="solution" data-state="no_list_decor"><h2>Solution</h2><div class="paragraph"><p>Inspect the list of function args and deduct a vector type using <code>std::common_type</code> techniques</p></div>
+<div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">first: need to make <code>vec1</code> convert to/from scalars</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">std::is_convertible&lt;vec1, float&gt;::value == true</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">then: write the custom traits</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; float                &gt;::type == vec1</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; vec3                 &gt;::type == vec3
+promote_to_vec&lt; decltype(vec3().xyz) &gt;::type == vec3</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; vec3, float          &gt;::type == vec3
+promote_to_vec&lt; vec3, float, double  &gt;::type == vec3</code></pre></div></div></li></ul></div></section>
+<section id="solution_cont"><h2>Solution (cont.)</h2><div class="listingblock"><div class="title">Insted of <code>inline</code> functions are <code>static</code></div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;template&lt;class, size_t...&gt; class vector, class T, size_t...
+struct builtin_func_lib
+{
+    static T dot(const vector&amp; a, const vector&amp; b)
+(etc)</code></pre></div></div>
+<div class="listingblock"><div class="title">Create an all-forwarding monster function</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;class... Args&gt;
+inline auto func(Args&amp;&amp;... args) -&gt;
+    decltype(decay(
+        promote_to_vec&lt;Args...&gt;::type::
+        func(std::forward&lt;Args&gt;(args)...)))
+{
+    return
+        promote_to_vec&lt;Args...&gt;::type::
+        func(std::forward&lt;Args&gt;(args)...);
+}</code></pre></div></div></section>
+<section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>Now that we have <code>vector&lt;&gt;</code> a matrix is more straightforward</p></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">two dimensional &#8594; introduce helper type for the indices</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t...&gt;
+struct indices_pack;</code></pre></div></div></section>
+<section id="the_code_matrix_code_datatype_cont"><h2>the <code>matrix&lt;&gt;</code> datatype (cont.)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
     typename scalar_type,
-    size_t N, size_t M
+    template&lt;typename, size_t...&gt; class vector_type,
+    size_t... Columns,
+    size_t... Rows
 &gt;
-struct matrix
-{
-    using column_type = vector_type&lt;scalar_type, N&gt;;
-    using row_type = vector_type&lt;scalar_type, M&gt;;
+struct matrix&lt;scalar_type, vector_type,
+    indices_pack&lt;Columns...&gt;, indices_pack&lt;Rows...&gt;&gt;</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">{
+    static constexpr auto N = sizeof...(Columns);
+    static constexpr auto M = sizeof...(Rows);
 
-    column_type data[M]; // GLSL is column major
-...</code></pre></div></div></section>
-<section id="code_matrix_code_cont"><h2><code>matrix&lt;&gt;</code> (cont.)</h2><div class="ulist"><ul><li class="fragment"><p>constructors are similar to vector</p><div class="ulist"><ul><li><p>it can also take smaller matrices</p></li></ul></div></li><li class="fragment"><p>can share the same templated binary operators</p></li><li class="fragment"><p>more straightforward to implement</p></li></ul></div></section>
+    using column_type = vector_type&lt;scalar_type, Columns...&gt;;
+    using row_type = vector_type&lt;scalar_type, Rows...&gt;;
+
+    column_type data[M];
+(etc)</code></pre></div></div></section>
+<section id="the_code_matrix_code_constructors"><h2>the <code>matrix&lt;&gt;</code> constructors</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">matrix() = default; // zeroes all data</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit matrix(scalar_type s) // fill in diagonally
+{
+    ((data[Rows][Rows] = s), ...);
+}</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Args&gt;
+explicit matrix(Args&amp;&amp;... args)
+{
+    size_t i = 0;
+    (construct_at_index(i,
+        detail::decay(std::forward&lt;Args&gt;(args))), ...);
+}</code></pre></div></div></section>
+<section id="the_code_matrix_code_ops_and_funcs"><h2>the <code>matrix&lt;&gt;</code> ops and funcs</h2><div class="ulist"><ul><li><p>can recycle the same binary operators as vector if written generic</p></li><li><p>except <em>multiplication</em></p><div class="ulist"><ul><li><p>which needs to be handled differently</p></li><li><p>for all variations of <code>matrix</code>, <code>row_type</code>, <code>column_type</code></p></li></ul></div></li></ul></div></section>
 <section id="prior_art"><h2>Prior Art</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">not invented here :)</td></tr></table></div>
-<div class="ulist"><ul><li class="fragment"><p>clang vector extensions</p><div class="ulist"><ul><li><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">typedef float vec3 __attribute__((ext_vector_type(3)));</code></pre></div></div></li><li><p>very limited in initializations, but support full swizzling</p></li></ul></div></li><li class="fragment"><p>various libraries</p><div class="ulist"><ul><li><p>GLM - <code>.xyz()</code> style only</p></li><li><p>CXXSwizzle - full implementation</p></li></ul></div></li></ul></div></section>
+<div class="ulist"><ul><li class="fragment"><p>clang vector extensions</p><div class="ulist"><ul><li><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">typedef float vec3 __attribute__((ext_vector_type(3)));</code></pre></div></div></li><li><p>very limited in initializations, but support full swizzling</p></li></ul></div></li><li class="fragment"><p>various libraries</p><div class="ulist"><ul><li><p>GLM - <code>.xyz()</code> style only</p></li><li><p>CXXSwizzle - full spec but slow debug</p></li></ul></div></li></ul></div></section>
 <section id="results"><h2>Results</h2></section>
 <section><div class="paragraph"><p>&#8230;&#8203;but first: Crash Course into Procedural Graphics!</p></div>
 <div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Courtesy of @ReinderNijhoff <a href="https://www.shadertoy.com/view/4dSfRc" class="bare">https://www.shadertoy.com/view/4dSfRc</a></td></tr></table></div></section>

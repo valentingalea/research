@@ -1007,6 +1007,7 @@ smoothstep(0, 1, v.xyz);
 // could be `int`, `float` or `double`
 -----
 
+[state=no_list_decor]
 == Solution
 Inspect the list of function args and deduct a vector type using `std::common_type` techniques
 
@@ -1018,23 +1019,19 @@ Inspect the list of function args and deduct a vector type using `std::common_ty
 std::is_convertible<vec1, float>::value == true
 - {blank}
 +
+.then: write the custom traits
 [source, cpp]
-promote_to_vec<float>::type == vec1
+promote_to_vec< float                >::type == vec1
 - {blank}
 +
 [source, cpp]
-promote_to_vec<vec3                >::type == vec3
-promote_to_vec<decltype(vec3().xyz)>::type == vec3
+promote_to_vec< vec3                 >::type == vec3
+promote_to_vec< decltype(vec3().xyz) >::type == vec3
 - {blank}
 +
 [source, cpp]
-promote_to_vec<float, float >::type == vec1
-promote_to_vec<float, double>::type == dvec1
-- {blank}
-+
-[source, cpp]
-promote_to_vec<vec3, float        >::type == vec3
-promote_to_vec<vec3, float, double>::type == vec3
+promote_to_vec< vec3, float          >::type == vec3
+promote_to_vec< vec3, float, double  >::type == vec3
 
 == Solution (cont.)
 .Insted of `inline` functions are `static`
@@ -1059,30 +1056,62 @@ inline auto func(Args&&... args) ->
 }
 
 == the `matrix<>` datatype
-Now that we have `vector<>` a matrix is pretty straightforward
+Now that we have `vector<>` a matrix is more straightforward
+
+NOTE: two dimensional -> introduce helper type for the indices
+
+[source, cpp]
+template<size_t...>
+struct indices_pack;
+
+== the `matrix<>` datatype (cont.)
+[source, cpp]
+template<
+    typename scalar_type,
+    template<typename, size_t...> class vector_type,
+    size_t... Columns,
+    size_t... Rows
+>
+struct matrix<scalar_type, vector_type, 
+    indices_pack<Columns...>, indices_pack<Rows...>>
 
 [source, cpp]
 -----
-template<
-    template<typename, size_t> class vector_type,
-    typename scalar_type,
-    size_t N, size_t M
->
-struct matrix
 {
-    using column_type = vector_type<scalar_type, N>;
-    using row_type = vector_type<scalar_type, M>;
-    
-    column_type data[M]; // GLSL is column major
-...
+    static constexpr auto N = sizeof...(Columns);
+    static constexpr auto M = sizeof...(Rows);
+
+    using column_type = vector_type<scalar_type, Columns...>;
+    using row_type = vector_type<scalar_type, Rows...>;
+
+    column_type data[M];
+(etc)
 -----
 
-== `matrix<>` (cont.)
-[%step]
-- constructors are similar to vector
- * it can also take smaller matrices
-- can share the same templated binary operators
-- more straightforward to implement
+== the `matrix<>` constructors
+[source, cpp]
+matrix() = default; // zeroes all data
+
+[source, cpp]
+explicit matrix(scalar_type s) // fill in diagonally
+{
+    ((data[Rows][Rows] = s), ...);
+}
+
+[source, cpp]
+template<typename... Args>
+explicit matrix(Args&&... args)
+{
+    size_t i = 0;
+    (construct_at_index(i, 
+        detail::decay(std::forward<Args>(args))), ...);
+}
+
+== the `matrix<>` ops and funcs
+- can recycle the same binary operators as vector if written generic
+- except _multiplication_
+ * which needs to be handled differently
+ * for all variations of `matrix`, `row_type`, `column_type`
 
 == Prior Art
 TIP: not invented here :)
@@ -1096,7 +1125,7 @@ typedef float vec3 __attribute__((ext_vector_type(3)));
 * very limited in initializations, but support full swizzling
 - various libraries
 * GLM - `.xyz()` style only
-* CXXSwizzle - full implementation
+* CXXSwizzle - full spec but slow debug
 
 == Results
 
