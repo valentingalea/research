@@ -140,7 +140,7 @@ image:img/motivation/shadertoy.png[shadertoy]
 == Pixar RenderMan Language
 image::img/intro/renderman.jpg[background]
 
-[source, javascript, role="stretch"]
+[source, javascript]
 -----
 /*
  * red mesh                   red shaded mesh
@@ -189,7 +189,7 @@ float4 main(
 }
 -----
 
-== GLSL vs HLSL: general
+== GLSL vs HLSL: General
 // from https://docs.microsoft.com/en-us/windows/uwp/gaming/glsl-to-hlsl-reference
 |==============================================================================
 | Procedural, step-centric (C like) | Object oriented, data-centric (C++ like)
@@ -197,46 +197,12 @@ float4 main(
 | `float`, `int`, `bool`            | `float`, `int`, `bool`, `uint`, `double`
 |==============================================================================
 
-== GLSL vs HLSL: types
+== GLSL vs HLSL: Types
 |==============================================================================
 | Vector type: `vec2`, `vec3`, `vec4` | Vector type: `float2`, `float3`, `float4`
 | Matrix type: `mat2`, `mat3`, `mat4` | Matrix type: `float2x2`, `float3x3`, `float4x4`
 2+^| ...textures, samplers, precision modifiers etc
 |==============================================================================
-
-== Shading Languages Future
-Basically C++ (usually via LLVM)
-
-[.step]
-- Metal Shading Language (C++14, Apple)
- * only on iOS devices
-- CUDA Heterogeneous Computing (C++11, NVidia)
- * only for computing, not graphics
-- HLSL 6.x (C++98'ish, Microsoft)
- * not released yet
-
-== !
-Let's see how C++ can help out, NOW!
-
-[state=plan]
-== The Plan
-[%step]
-- image:img/icon/browser.svg[cpp, 64, 64] Pick a shading language and twist C++ to accept it as source code!
-- image:img/icon/management.svg[bonus, 64, 64] BONUS: use the preprocessor for transcription back to the original language(s)!
-
-== The Plan (cont.)
-[%step]
-- obligatory preprocessor layer
-- vector (linear algebra) types
- * swizzle support
-- matrix types
-- operators
-- "standard library" utility/math functions
-
-== Place Your Bets
-We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
-
-WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
 == Languages: Declarations
 |==============================================================================
@@ -270,7 +236,10 @@ vec3 position;
 vec4 myRGBA;
 ivec2 textureLookup;
 bvec3 less;
+-----
 
+[source, cpp]
+-----
 // matrices are floating point only
 mat2 mat2D;
 mat3 optMatrix;
@@ -279,7 +248,6 @@ mat4 view, projection;
 
 == Vector Swizzle
 Syntactic sugar for easy referring to components (or combination of)
-
 |=========================
 | { x, y, z, w } | to represent points or normals
 | { r, g, b, a } | to refer to colors (`a` is alpha/translucency)
@@ -289,27 +257,21 @@ Syntactic sugar for easy referring to components (or combination of)
 == Vector Swizzle - Examples
 .subcomponents mix & match
 [source, cpp]
------
 vec4 v4;
 v4.rgba;  // is a vec4 and the same as just using v4,
 v4.rgb;   // is a vec3,
 v4.b;     // is a float,
 v4.xy;    // is a vec2,
------
 
 [source, cpp]
------
 vec4 pos = vec4(1.0, 2.0, 3.0, 4.0);
 vec4 swiz= pos.wzyx; // swiz = (4.0, 3.0, 2.0, 1.0)
 vec4 dup = vec4(pos.xx, pos.yy);
------
 
 .l-value assigment
 [source, cpp]
------
 pos.xw = vec2(5.0, 6.0); // pos = (5.0, 2.0, 3.0, 6.0)
 pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice
------
 
 == Vector Swizzle - Motivation
 [source, cpp]
@@ -369,8 +331,39 @@ u.z = dot(v, m[2]);
 2+| Specific texture and image sampling ...
 |==========================================================
 
+== Shading Languages Future
+Basically C++ (usually via LLVM)
+
+[.step]
+- Metal Shading Language (C++14, Apple)
+ * only on iOS devices
+- CUDA Heterogeneous Computing (C++11, NVidia)
+ * only for computing, not graphics
+- HLSL 6.x (C++98'ish, Microsoft)
+ * not released yet
+
 == !
-Recreating all this in C++ ...
+Let's see how C++ can help out, NOW!
+
+[state=plan]
+== The Plan
+[%step]
+- image:img/icon/browser.svg[cpp, 64, 64] Pick a shading language and twist C++ to accept it as source code!
+- image:img/icon/management.svg[bonus, 64, 64] BONUS: use the preprocessor for transcription back to the original language(s)!
+
+== The Plan (cont.)
+[%step]
+- obligatory preprocessor layer
+- vector (linear algebra) types
+ * swizzle support
+- matrix types
+- operators
+- "standard library" utility/math functions
+
+== Place Your Bets
+We will chose *GLSL* as it's used on _desktop_, _web_ and _mobile_
+
+WARNING: only a subset of it - concentrate on procedural graphics thus minimize/eliminate inputs (textures, vertex data, etc)
 
 [state=no_list_decor]
 == Design of `vector<>`
