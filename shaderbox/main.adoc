@@ -449,7 +449,7 @@ template<size_t N>
 struct static_for<N, N>
 {
     template<class Func>
-    constexpr void operator ()(Func&&) { /* empty */ }
+    constexpr void operator ()(Func&&) { /* terminate */ }
 };
 -----
 
@@ -466,8 +466,9 @@ template<typename A0, typename... Args,
 [source, cpp]
 explicit vector(A0&& a0, Args&&... args)
 {
-    iterate_construct<0, num_components>(
-        std::forward<A0>(a0), std::forward<Args>(args)...
+    static_recurse<0>(
+        std::forward<A0>(a0),
+        std::forward<Args>(args)...
     );
 }
 
@@ -475,40 +476,40 @@ explicit vector(A0&& a0, Args&&... args)
 
 == `vector<>` ctor - advanced (2)
 [source, cpp]
-template<size_t I, size_t IMax, typename Arg0, typename... Args>
-void iterate_construct(Arg0&& a0, Args&&... args)
+-----
+template<size_t I, typename Arg0, typename... Args>
+void static_recurse(Arg0&& a0, Args&&... args)
 {
-    if constexpr (I < IMax) {
-        construct_at_index(I, std::forward<Arg0>(a0));
-        iterate_construct<I + get_size<Arg0>(), IMax>(
-            std::forward<Args>(args)...);
-    }
+    construct_at_index<I>(std::forward<Arg0>(a0));
+
+    static_recurse<I + detail::get_size<Arg0>()>(
+        std::forward<Args>(args)...
+    );
 }
+-----
 
 [source, cpp]
-template<size_t I, size_t IMax>
-void iterate_construct()
-{
-}
+template<size_t I>
+void static_recurse()
+{ /* terminate */ }
 
 == `vector<>` ctor - advanced (3)
 [source, cpp]
------
-void construct_at_index(size_t& i, scalar_type arg)
+template<size_t i>
+void construct_at_index(scalar_type arg)
 {
-    data[i++] = arg;
+    data[i] = arg;
 }
------
 
 [source, cpp]
 -----
 template<typename Other, size_t Other_N>
 void construct_at_index(size_t& i, vector<Other, Other_N>&& arg)
 {
-    constexpr auto count = std::min(N, Other_N);
+    constexpr auto count = std::min(i + Other_N, num_components);
 
-    detail::static_for<0, count>()([&](size_t j) {
-        data[i++] = arg.data[j];
+    static_for<i, count>()([&](size_t j) {
+        data[j] = arg.data[j - i];
     });
 }
 -----
