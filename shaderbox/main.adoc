@@ -140,7 +140,7 @@ image:img/motivation/shadertoy.png[shadertoy]
 == Pixar RenderMan Language
 image::img/intro/renderman.jpg[background]
 
-[source, javascript, role="strech"]
+[source, javascript, role="stretch"]
 -----
 /*
  * red mesh                   red shaded mesh
@@ -242,7 +242,7 @@ WARNING: only a subset of it - concentrate on procedural graphics thus minimize/
 |==============================================================================
 | GLSL              | HLSL                  | C++
 3+^|
-// stupid asciidoctor bug: doesn't respect column centering
+// stupid asciidoctor bug: doesn't respect column centring
 {nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
 C-style types and arrays
 3+^|
@@ -752,9 +752,9 @@ TIP: We introduce an additional proxy class that allows custom access to the ind
 template<class vector_type, class T, size_t N, size_t... indices>
 struct swizzler
 {
-    T data[N]; // can differ from vector_type
-...
-};
+    T data[N];
+
+(etc)
 -----
 
 == Swizzle for `vector<T, 3>`
@@ -959,18 +959,16 @@ float n = dot(v.xzx, v.zyx);
 > 'dot': no matching overloaded function found
 > could not deduce template argument
 
-
 == !
 NOTE: Type deduction does not consider implicit conversions!
 
 [%step]
-.Possible fixes
+- Possible fixes:
 - {blank}
 +
 [source, cpp]
 float n = dot<float, 0, 1, 2>(v.xzx, v.zyx);
 - create by hand all scalar/size combinations :(
-- duplicate functions for swizzler proxy as well :|
 - SFINAE tricks
 
 [state=no_list_decor]
@@ -991,21 +989,22 @@ struct vector
     }
     ...
 
-== Enough?
+[state=no_list_decor]
+== Are we done?
 WARNING: No!
 
 [%step]
 - {blank}
 +
-.lots of function need to work with scalars only
+.Lots of shader code uses scalar types only:
 [source, cpp]
 float opS(float d1, float d2)
 {
-    return max(-d2, d1);
+    return max(-d2, d1); // defined only for vectors!
 }
 - {blank}
 +
-.ambiguity with literals
+.Ambiguity with literals:
 [source, cpp]
 -----
 smoothstep(0, 1, v.xyz);
@@ -1020,12 +1019,12 @@ Inspect the list of function args and deduct a vector type using `std::common_ty
 [%step]
 - {blank}
 +
-.first: need to make `vec1` convert to/from scalars
+.First: need to make `vec1` convert to/from scalars
 [source, cpp]
 std::is_convertible<vec1, float>::value == true
 - {blank}
 +
-.then: write the custom traits
+.Then: provide custom type traits
 [source, cpp]
 promote_to_vec< float                >::type == vec1
 - {blank}
@@ -1060,6 +1059,18 @@ inline auto func(Args&&... args) ->
         promote_to_vec<Args...>::type:: 
         func(std::forward<Args>(args)...);
 }
+
+== Solution (demo)
+[source, cpp]
+return max(-d2, d1);
+//      ||
+//      ||
+//      \/
+    promove_to_vec<float, float>
+//      ||
+//      ||
+//      \/
+return vector<float, 0>::max(-d2, d1);
 
 == the `matrix<>` datatype
 Now that we have `vector<>` a matrix is more straightforward
@@ -1122,16 +1133,23 @@ explicit matrix(Args&&... args)
 == Prior Art
 TIP: not invented here :)
 
-[%step]
+== !
 - clang vector extensions
 * {blank}
 +
 [source, cpp]
 typedef float vec3 __attribute__((ext_vector_type(3)));
-* very limited in initializations, but support full swizzling
-- various libraries
-* GLM - `.xyz()` style only
-* CXXSwizzle - full spec but slow debug
+* PRO: supports full swizzling
+* CON: very limited in initializations
+
+== !
+- 3rd party libraries
+* GLM
+** `.xyz()` style only
+** horrible preprocessor heavy implementation
+* CXXSwizzle
+** full spec
+** slow debug
 
 == Results
 
