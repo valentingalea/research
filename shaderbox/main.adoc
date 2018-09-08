@@ -1178,46 +1178,61 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 == CPU / desktop PC
 - minimal draw app with https://www.libsdl.org/
 - AMD FX 8350 8-core 4.00 GHz
-- Microsoft Visual C++ 15.7.6
- * `/O2 /Ob2 /fp:fast /fp:except- /arch:SSE2 /openmp`
-- 320 x 240 px
+- Microsoft Visual C++ 2017
+ * `/O2 /Ob2 /fp:fast /fp:except-`
 
 == CPU / mobile phone
 - C4Droid app (https://play.google.com/store/apps/details?id=com.n0n3m4.droidc)
 - Samsung Galaxy S7
-- GCC 7.2.0
+- GCC 8.0
  * `-Ofast -march=native -funroll-loops`
-- 100 x 100 px
+
+== Hello World (CPU)
+ TODO: redo @work
+
+|==========================================================================================
+| | image:img/showcase/pc_default.png[Default(PC)] | image:img/showcase/droid_default.jpg[Default(Droid)]
+| 240x240 px | 85.62 FPS | 166.77
+| 120x120 px | 100.27 FPS | 468.49
+|==========================================================================================
+// PC: 240p max: 93.77 avrg: 85.62 | 120p max: 115.20 avrg: 100.27
+// Droid: 240p max: 376.08 avrg: 166.77 | 120p max: 907.26 avrg: 468.49
 
 [%notitle, background-video="vid/planet.mp4", options="loop,muted"]
 == Planet (GPU)
 
 == Planet (CPU)
 |==========================================================================================
-| image:img/showcase/pc_planet.png[Planet(PC)] | image:img/showcase/droid_planet.jpg[Planet(Droid), 300, 300]
-| Desktop PC                          | Mobile Phone
-| .1 FPS :(                           | 5 FPS
+| | image:img/showcase/pc_planet.png[Planet(PC)] | image:img/showcase/droid_planet.jpg[Planet(Droid)]
+| 240x240 px | 1.92 FPS | 0.83 FPS
+| 120x120 px | 7.30 FPS | 3.34 FPS
 |==========================================================================================
+// PC: 240p max: 1.92 avrg: 1.70 | 120p max: 7.30 avrg: 6.48
+// Droid: 240p max: 0.84 avrg: 0.73 | 120p max: 3.23 avrg 2.87
 
 [%notitle, background-video="vid/clouds.mp4", options="loop,muted"]
 == Clouds (GPU)
 
 == Clouds (CPU)
 |==========================================================================================
-| image:img/showcase/pc_clouds.png[Clouds(PC)] | image:img/showcase/droid_clouds.jpg[Clouds(Droid), 300, 300]
-| Desktop PC                          | Mobile Phone
-| 1 FPS                               | 8 FPS
+| | image:img/showcase/pc_clouds.png[Clouds(PC)] | image:img/showcase/droid_clouds.jpg[Clouds(Droid)]
+| 240x240 px | 2.54 FPS | 2.44 FPS
+| 120x120 px | 9.63 FPS | 9.64 FPS
 |==========================================================================================
+// PC: 240p max: 2.54 avrg: 1.79 | 120p max: 9.63 avrg: 6.48
+// Droid: 240p max: 2.44 avrg: 1.72 | 120p max: 9.63 avrg: 6.48
 
 [%notitle, background-video="vid/vinyl.mp4", options="loop,muted"]
 == Vinyl Turntable (GPU)
 
 == Vinyl Turntable (CPU)
 |==========================================================================================
-| image:img/showcase/pc_vinyl.png[Vinyl(PC)] | image:img/showcase/droid_vinyl.jpg[Clouds(Droid), 300, 300]
-| Desktop PC                          | Mobile Phone
-| 1 FPS                               | 12 FPS
+| | image:img/showcase/pc_vinyl.png[Vinyl(PC)] | image:img/showcase/droid_vinyl.jpg[Clouds(Droid)]
+| 240x240 px | 8.44 FPS | 2.94 FPS
+| 120x120 px | 28.11 FPS | 12.82 FPS
 |==========================================================================================
+// PC: 240p max: 8.44 avrg: 7.82 | 120p max: 28.11 avrg: 25.98
+// Droid: 240p max: 2.94 avrg: 2.43 | 120p max: 12.84 avrg: 9.94
 
 [%notitle, background-video="vid/egg.mp4", options="loop,muted"]
 == The End
