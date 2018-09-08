@@ -123,7 +123,6 @@ also because GPU driver render bugs
 WARNING: taken on desktop PC / Nvidia GTX 1060
 
 == Other advantages
-
 [cols="a,a"]
 |=================
 |
@@ -252,12 +251,14 @@ C-style `struct`
 | `T name = T ( ... )` | `T name = { ... }` |  both (preproc abstraction)
 |==============================================================================
 
-== Languages: Arguments
+== Languages: Func Args
 |===========================================
-| GLSL/HLSL     | C++           | Macro glue
-| `const in T`  | `const T &`   | `_in(T)`
-| `inout T`     | `T &`         | `_inout(T)`
-| `out T`       | `T &`         | `_out(T)`
+| GLSL and HLSL     | C++
+| `in T`            | `T`
+| `out T`           | `T &`
+| `inout T`         | `T &`
+2+^|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
+`const [...] T`
 |===========================================
 
 == Vectors and Matrices
