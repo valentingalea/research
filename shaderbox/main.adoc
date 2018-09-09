@@ -446,16 +446,24 @@ struct static_for<N, N>
 };
 -----
 
+[state=no_list_decor]
 == `vector<>` ctor - advanced
+[%step]
+- {blank}
++
 [source, cpp]
 template<typename A0, typename... Args,
-
+- {blank}
++
 [source, cpp]
+-----
     class = typename std::enable_if<
         ((sizeof... (Args) >= 1) ||
         ((sizeof... (Args) == 0) && !std::is_scalar_v<A0>))
     >::type>
-
+-----
+- {blank}
++
 [source, cpp]
 explicit vector(A0&& a0, Args&&... args)
 {
@@ -465,7 +473,11 @@ explicit vector(A0&& a0, Args&&... args)
     );
 }
 
+[state=no_list_decor]
 == `vector<>` ctor - advanced (2)
+[%step]
+- {blank}
++
 [source, cpp]
 -----
 template<size_t I, typename Arg0, typename... Args>
@@ -478,20 +490,26 @@ void static_recurse(Arg0&& a0, Args&&... args)
     );
 }
 -----
-
+- {blank}
++
 [source, cpp]
 template<size_t I>
 void static_recurse()
 { /* terminate */ }
 
+[state=no_list_decor]
 == `vector<>` ctor - advanced (3)
+[%step]
+- {blank}
++
 [source, cpp]
 template<size_t i>
 void construct_at_index(scalar_type arg)
 {
     data[i] = arg;
 }
-
+- {blank}
++
 [source, cpp]
 -----
 template<typename Other, size_t Other_N>
@@ -705,6 +723,8 @@ explicit vector(A0&& a0, Args&&... args)
 }
 -----
 
+== Swizzling
+
 == `vector_base` naive impl
 [source, cpp]
 -----
@@ -868,6 +888,8 @@ struct swizzler
 -----
 
 == `swizzler<>` generator
+TODO: time and see if time for this
+
 [source, cpp]
 template<typename T, size_t... Ns>
 struct vector_base
@@ -911,16 +933,21 @@ swizzler& operator=(const vector_type& vec)
     return *this;
 }
 
+[state=no_list_decor]
 == `swizzler<>` design (cont.)
 We use same fold expression trick
 
+[%step]
+- {blank}
++
 [source, cpp]
 template<typename... Indices>
 void assign_across(vector_type& vec, size_t i, Indices ...j) const
 {
     ((vec[i++] = data[j]), ...);
 }
-
+- {blank}
++
 [source, cpp]
 template<typename... Indices>
 void assign_across(const vector_type& vec, size_t i, Indices ...j)
@@ -945,8 +972,10 @@ vec3 v = vec4(other.xy, other.zw);
 - `decay` calls equivalent member function (or does nothing for scalar)
 - both `vector` and `swizzler` have one so they can interchange easily
 
-[state=no_list_decor]
 == Operators and Functions
+
+[state=no_list_decor]
+== !
 We will need to re-create a lot of generic utility functions
 
 [%step]
@@ -993,15 +1022,18 @@ NOTE: we place the functions in a non-deduced context: inside `vector<>` itself!
 - {blank}
 +
 [source, cpp]
+-----
 template<typename T, size_t... Ns>
 struct vector
 {
-    ...
+
     friend T dot(const vector& a, const vector& b)
     {
         /* inline friend found via ADL */
     }
-    ...
+
+(etc)
+-----
 
 [state=no_list_decor]
 == Are we done?
@@ -1014,16 +1046,33 @@ WARNING: No!
 [source, cpp]
 float opS(float d1, float d2)
 {
-    return max(-d2, d1); // defined only for vectors!
+    return max(-d2, d1);
 }
+- {blank}
++
+.We only provide the vector variant
+[source, cpp]
+friend vector max(const vector&, const vector&);
+
+[state=no_list_decor]
+== More trouble
+[%step]
 - {blank}
 +
 .Ambiguity with literals:
 [source, cpp]
 -----
 smoothstep(0, 1, v.xyz);
-
-// could be `int`, `float` or `double`
+//           ^
+//           could be `int`, `float` or `double`
+-----
+- {blank}
++
+[source, cpp]
+-----
+friend vector smoothstep(scalar_type, scalar_type, const vector&);
+//       ^
+//       only templated on vector
 -----
 
 [state=no_list_decor]
@@ -1052,15 +1101,20 @@ promote_to_vec< decltype(vec3().xyz) >::type == vec3
 promote_to_vec< vec3, float          >::type == vec3
 promote_to_vec< vec3, float, double  >::type == vec3
 
+[state=no_list_decor]
 == Solution (cont.)
+[%step]
+- {blank}
++
 .Insted of `inline` functions are `static`
 [source, cpp]
 template<template<class, size_t...> class vector, class T, size_t...
 struct builtin_func_lib
 {
-    static T dot(const vector& a, const vector& b)
+    static vector max(const vector& a, const vector& b)
 (etc)
-
+- {blank}
++
 .Create an all-forwarding monster function
 [source, cpp]
 template<class... Args>
@@ -1086,16 +1140,31 @@ return max(-d2, d1);
 //      \/
 return vector<float, 0>::max(-d2, d1);
 
+== Matrix
+
 == the `matrix<>` datatype
 Now that we have `vector<>` a matrix is more straightforward
 
+[source, cpp]
+template<
+    typename,
+    template<typename, size_t...> class vector_type,
+    typename...
+>
+struct matrix;
+
+== Folding helper
 NOTE: two dimensional -> introduce helper type for the indices
 
 [source, cpp]
 template<size_t...>
 struct indices_pack;
 
+[state=no_list_decor]
 == the `matrix<>` datatype (cont.)
+[%step]
+- {blank}
++
 [source, cpp]
 template<
     typename scalar_type,
@@ -1105,7 +1174,8 @@ template<
 >
 struct matrix<scalar_type, vector_type, 
     indices_pack<Columns...>, indices_pack<Rows...>>
-
+- {blank}
++
 [source, cpp]
 -----
 {
@@ -1119,16 +1189,22 @@ struct matrix<scalar_type, vector_type,
 (etc)
 -----
 
+[state=no_list_decor]
 == the `matrix<>` constructors
+[%step]
+- {blank}
++
 [source, cpp]
 matrix() = default; // zeroes all data
-
+- {blank}
++
 [source, cpp]
 explicit matrix(scalar_type s) // fill in diagonally
 {
     ((data[Rows][Rows] = s), ...);
 }
-
+- {blank}
++
 [source, cpp]
 template<typename... Args>
 explicit matrix(Args&&... args)

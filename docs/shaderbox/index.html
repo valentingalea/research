@@ -94,7 +94,7 @@ v4.xy;    // is a vec2,</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec4 pos = vec4(1.0, 2.0, 3.0, 4.0);
 vec4 swiz= pos.wzyx; // swiz = (4.0, 3.0, 2.0, 1.0)
 vec4 dup = vec4(pos.xx, pos.yy);</code></pre></div></div>
-<div class="listingblock"><div class="title">l-value assigment</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">pos.xw = vec2(5.0, 6.0); // pos = (5.0, 2.0, 3.0, 6.0)
+<div class="listingblock"><div class="title">l-value assignment</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">pos.xw = vec2(5.0, 6.0); // pos = (5.0, 2.0, 3.0, 6.0)
 pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice</code></pre></div></div></section>
 <section id="vector_swizzle_motivation"><h2>Vector Swizzle - Motivation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 calcNormal( in vec3 pos )
 {
@@ -159,19 +159,17 @@ struct static_for&lt;N, N&gt;
     template&lt;class Func&gt;
     constexpr void operator ()(Func&amp;&amp;) { /* terminate */ }
 };</code></pre></div></div></li></ul></div></section>
-<section id="code_vector_code_ctor_advanced"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args,</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    class = typename std::enable_if&lt;
+<section id="code_vector_code_ctor_advanced" data-state="no_list_decor"><h2><code>vector&lt;&gt;</code> ctor - advanced</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args,</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    class = typename std::enable_if&lt;
         ((sizeof... (Args) &gt;= 1) ||
         ((sizeof... (Args) == 0) &amp;&amp; !std::is_scalar_v&lt;A0&gt;))
-    &gt;::type&gt;</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
+    &gt;::type&gt;</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
 {
     static_recurse&lt;0&gt;(
         std::forward&lt;A0&gt;(a0),
         std::forward&lt;Args&gt;(args)...
     );
-}</code></pre></div></div></section>
-<section id="code_vector_code_ctor_advanced_2"><h2><code>vector&lt;&gt;</code> ctor - advanced (2)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I, typename Arg0, typename... Args&gt;
+}</code></pre></div></div></li></ul></div></section>
+<section id="code_vector_code_ctor_advanced_2" data-state="no_list_decor"><h2><code>vector&lt;&gt;</code> ctor - advanced (2)</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I, typename Arg0, typename... Args&gt;
 void static_recurse(Arg0&amp;&amp; a0, Args&amp;&amp;... args)
 {
     construct_at_index&lt;I&gt;(std::forward&lt;Arg0&gt;(a0));
@@ -179,16 +177,14 @@ void static_recurse(Arg0&amp;&amp; a0, Args&amp;&amp;... args)
     static_recurse&lt;I + detail::get_size&lt;Arg0&gt;()&gt;(
         std::forward&lt;Args&gt;(args)...
     );
-}</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I&gt;
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I&gt;
 void static_recurse()
-{ /* terminate */ }</code></pre></div></div></section>
-<section id="code_vector_code_ctor_advanced_3"><h2><code>vector&lt;&gt;</code> ctor - advanced (3)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t i&gt;
+{ /* terminate */ }</code></pre></div></div></li></ul></div></section>
+<section id="code_vector_code_ctor_advanced_3" data-state="no_list_decor"><h2><code>vector&lt;&gt;</code> ctor - advanced (3)</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t i&gt;
 void construct_at_index(scalar_type arg)
 {
     data[i] = arg;
-}</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename Other, size_t Other_N&gt;
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename Other, size_t Other_N&gt;
 void construct_at_index(size_t&amp; i, vector&lt;Other, Other_N&gt;&amp;&amp; arg)
 {
     constexpr auto count = std::min(i + Other_N, num_components);
@@ -196,7 +192,7 @@ void construct_at_index(size_t&amp; i, vector&lt;Other, Other_N&gt;&amp;&amp; ar
     static_for&lt;i, count&gt;()([&amp;](size_t j) {
         data[j] = arg.data[j - i];
     });
-}</code></pre></div></div></section>
+}</code></pre></div></div></li></ul></div></section>
 <section id="code_vector_code_ctor_in_action"><h2><code>vector&lt;&gt;</code> ctor in action</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">using vec2 = vector&lt;int, 2&gt;;
 using vec3 = vector&lt;int, 3&gt;;
 
@@ -271,6 +267,8 @@ call    printf</code></pre></div></div></div></td></tr></table></section>
     nop
     leave
     ret</code></pre></div></div></section>
+<section id="solution_folding_expressions"><h2>Solution: Folding Expressions</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content"><code>C++17</code> unary fold expression over comma operator</td></tr></table></div>
+<div class="ulist"><div class="title">Compatibility</div><ul><li><p>gcc 6+</p></li><li><p>clang 3.6+</p></li><li><p>MSVC 2017 15.5+</p></li></ul></div></section>
 <section id="improved_design_of_code_vector_code" data-state="no_list_decor"><h2>Improved design of <code>vector&lt;&gt;</code></h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
 struct vector :
     public vector_base&lt;T, Ns...&gt;
@@ -284,8 +282,18 @@ struct vector :
 
     template&lt;typename A0, typename... Args&gt; explicit vector
 (etc)</code></pre></div></div></li></ul></div></section>
-<section id="folding_expressions"><h2>Folding Expressions</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content"><code>C++17</code> unary fold expression over comma operator</td></tr></table></div>
-<div class="ulist"><div class="title">Compatibility</div><ul><li><p>gcc 6+</p></li><li><p>clang 3.6+</p></li><li><p>MSVC 2017 15.5+</p></li></ul></div></section>
+<section id="folding_expressions_in_action"><h2>Folding Expressions in action</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>declaration</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>instantiation</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><br></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit vector(scalar_type s)
+{
+    ((data[Ns] = s), ...);
+}</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vector&lt;float, 0, 1, 2&gt;
+
+explicit vector(float s)
+{
+    data[0] = s,
+    data[1] = s,
+    data[2] = s;
+}</code></pre></div></div></div></td></tr></table></section>
 <section id="improved_code_vector_code_ctor"><h2>Improved <code>vector&lt;&gt;</code> ctor</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename A0, typename... Args&gt;
 explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
 {
@@ -297,6 +305,7 @@ explicit vector(A0&amp;&amp; a0, Args&amp;&amp;... args)
     // consume the rest, if any
     (construct_at_index(i, std::forward&lt;Args&gt;(args)), ...);
 }</code></pre></div></div></section>
+<section id="swizzling"><h2>Swizzling</h2></section>
 <section id="code_vector_base_code_naive_impl"><h2><code>vector_base</code> naive impl</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T&gt;
 struct vector_base&lt;T, 2&gt;
 {
@@ -410,7 +419,8 @@ struct swizzler
     // ex: .xxxx from vec2
 
 (etc)</code></pre></div></div></section>
-<section id="code_swizzler_code_generator"><h2><code>swizzler&lt;&gt;</code> generator</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
+<section id="code_swizzler_code_generator"><h2><code>swizzler&lt;&gt;</code> generator</h2><div class="paragraph"><p>TODO: time and see if time for this</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
 struct vector_base
 {
     template&lt;size_t... indices&gt;
@@ -437,22 +447,22 @@ struct vector_base
     assign_across(vec, 0, indices...);
     return *this;
 }</code></pre></div></div></li></ul></div></section>
-<section id="code_swizzler_code_design_cont"><h2><code>swizzler&lt;&gt;</code> design (cont.)</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
+<section id="code_swizzler_code_design_cont" data-state="no_list_decor"><h2><code>swizzler&lt;&gt;</code> design (cont.)</h2><div class="paragraph"><p>We use same fold expression trick</p></div>
+<div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
 void assign_across(vector_type&amp; vec, size_t i, Indices ...j) const
 {
     ((vec[i++] = data[j]), ...);
-}</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Indices&gt;
 void assign_across(const vector_type&amp; vec, size_t i, Indices ...j)
 {
     ((data[j] = vec[i++]), ...);
-}</code></pre></div></div></section>
+}</code></pre></div></div></li></ul></div></section>
 <section id="code_swizzler_code_problem"><h2><code>swizzler&lt;&gt;</code> problem</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">vec3 v = vec4(other.xy, other.zw);</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="asm language-asm">&gt; error: no matching function for call to [...]
 &gt; template argument deduction/substitution failed: [...]</code></pre></div></div>
 <div class="ulist"><ul><li class="fragment"><p>Solution? Introduce another abstraction layer!</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape>(construct_at_index(i, decay(std::forward&lt;Args&gt;(args))), ...);</code></pre></div></div></li><li class="fragment"><p><code>decay</code> calls equivalent member function (or does nothing for scalar)</p></li><li class="fragment"><p>both <code>vector</code> and <code>swizzler</code> have one so they can interchange easily</p></li></ul></div></section>
-<section id="operators_and_functions" data-state="no_list_decor"><h2>Operators and Functions</h2><div class="paragraph"><p>We will need to re-create a lot of generic utility functions</p></div>
+<section id="operators_and_functions"><h2>Operators and Functions</h2></section>
+<section data-state="no_list_decor"><div class="paragraph"><p>We will need to re-create a lot of generic utility functions</p></div>
 <div class="ulist"><ul><li class="fragment"><p>
 Example: the dot (inner) product of two vectors</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
 T dot(const vector&lt;T, Ns...&gt; &amp;, const vector&lt;T, Ns...&gt; &amp;);</code></pre></div></div>
@@ -468,29 +478,32 @@ float n = dot(v.xzx, v.zyx);</code></pre></div></div>
 <div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
 struct vector
 {
-    ...
+
     friend T dot(const vector&amp; a, const vector&amp; b)
     {
         /* inline friend found via ADL */
     }
-    ...</code></pre></div></div></li></ul></div></section>
+
+(etc)</code></pre></div></div></li></ul></div></section>
 <section id="are_we_done" data-state="no_list_decor"><h2>Are we done?</h2><div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">No!</td></tr></table></div>
 <div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Lots of shader code uses scalar types only:</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float opS(float d1, float d2)
 {
-    return max(-d2, d1); // defined only for vectors!
-}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">Ambiguity with literals:</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">smoothstep(0, 1, v.xyz);
-
-// could be `int`, `float` or `double`</code></pre></div></div></li></ul></div></section>
+    return max(-d2, d1);
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">We only provide the vector variant</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend vector max(const vector&amp;, const vector&amp;);</code></pre></div></div></li></ul></div></section>
+<section id="more_trouble" data-state="no_list_decor"><h2>More trouble</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Ambiguity with literals:</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">smoothstep(0, 1, v.xyz);
+//           ^
+//           could be `int`, `float` or `double`</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend vector smoothstep(scalar_type, scalar_type, const vector&amp;);
+//       ^
+//       only templated on vector</code></pre></div></div></li></ul></div></section>
 <section id="solution" data-state="no_list_decor"><h2>Solution</h2><div class="paragraph"><p>Inspect the list of function args and deduct a vector type using <code>std::common_type</code> techniques</p></div>
 <div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">First: need to make <code>vec1</code> convert to/from scalars</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">std::is_convertible&lt;vec1, float&gt;::value == true</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">Then: provide custom type traits</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; float                &gt;::type == vec1</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; vec3                 &gt;::type == vec3
 promote_to_vec&lt; decltype(vec3().xyz) &gt;::type == vec3</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; vec3, float          &gt;::type == vec3
 promote_to_vec&lt; vec3, float, double  &gt;::type == vec3</code></pre></div></div></li></ul></div></section>
-<section id="solution_cont"><h2>Solution (cont.)</h2><div class="listingblock"><div class="title">Insted of <code>inline</code> functions are <code>static</code></div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;template&lt;class, size_t...&gt; class vector, class T, size_t...
+<section id="solution_cont" data-state="no_list_decor"><h2>Solution (cont.)</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Insted of <code>inline</code> functions are <code>static</code></div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;template&lt;class, size_t...&gt; class vector, class T, size_t...
 struct builtin_func_lib
 {
-    static T dot(const vector&amp; a, const vector&amp; b)
-(etc)</code></pre></div></div>
-<div class="listingblock"><div class="title">Create an all-forwarding monster function</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;class... Args&gt;
+    static vector max(const vector&amp; a, const vector&amp; b)
+(etc)</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">Create an all-forwarding monster function</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;class... Args&gt;
 inline auto func(Args&amp;&amp;... args) -&gt;
     decltype(decay(
         promote_to_vec&lt;Args...&gt;::type::
@@ -499,29 +512,35 @@ inline auto func(Args&amp;&amp;... args) -&gt;
     return
         promote_to_vec&lt;Args...&gt;::type::
         func(std::forward&lt;Args&gt;(args)...);
-}</code></pre></div></div></section>
+}</code></pre></div></div></li></ul></div></section>
 <section id="solution_demo"><h2>Solution (demo)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">return max(-d2, d1);
 //      ||
 //      ||
 //      \/
-    promove_to_vec&lt;float, float&gt;
+    promote_to_vec&lt;float, float&gt;
 //      ||
 //      ||
 //      \/
 return vector&lt;float, 0&gt;::max(-d2, d1);</code></pre></div></div></section>
+<section id="matrix"><h2>Matrix</h2></section>
 <section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>Now that we have <code>vector&lt;&gt;</code> a matrix is more straightforward</p></div>
-<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">two dimensional &#8594; introduce helper type for the indices</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
+    typename,
+    template&lt;typename, size_t...&gt; class vector_type,
+    typename...
+&gt;
+struct matrix;</code></pre></div></div></section>
+<section id="folding_helper"><h2>Folding helper</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">two dimensional &#8594; introduce helper type for the indices</td></tr></table></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t...&gt;
 struct indices_pack;</code></pre></div></div></section>
-<section id="the_code_matrix_code_datatype_cont"><h2>the <code>matrix&lt;&gt;</code> datatype (cont.)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
+<section id="the_code_matrix_code_datatype_cont" data-state="no_list_decor"><h2>the <code>matrix&lt;&gt;</code> datatype (cont.)</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;
     typename scalar_type,
     template&lt;typename, size_t...&gt; class vector_type,
     size_t... Columns,
     size_t... Rows
 &gt;
 struct matrix&lt;scalar_type, vector_type,
-    indices_pack&lt;Columns...&gt;, indices_pack&lt;Rows...&gt;&gt;</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">{
+    indices_pack&lt;Columns...&gt;, indices_pack&lt;Rows...&gt;&gt;</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">{
     static constexpr auto N = sizeof...(Columns);
     static constexpr auto M = sizeof...(Rows);
 
@@ -529,19 +548,17 @@ struct matrix&lt;scalar_type, vector_type,
     using row_type = vector_type&lt;scalar_type, Rows...&gt;;
 
     column_type data[M];
-(etc)</code></pre></div></div></section>
-<section id="the_code_matrix_code_constructors"><h2>the <code>matrix&lt;&gt;</code> constructors</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">matrix() = default; // zeroes all data</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit matrix(scalar_type s) // fill in diagonally
+(etc)</code></pre></div></div></li></ul></div></section>
+<section id="the_code_matrix_code_constructors" data-state="no_list_decor"><h2>the <code>matrix&lt;&gt;</code> constructors</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">matrix() = default; // zeroes all data</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit matrix(scalar_type s) // fill in diagonally
 {
     ((data[Rows][Rows] = s), ...);
-}</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Args&gt;
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename... Args&gt;
 explicit matrix(Args&amp;&amp;... args)
 {
     size_t i = 0;
     (construct_at_index(i,
         detail::decay(std::forward&lt;Args&gt;(args))), ...);
-}</code></pre></div></div></section>
+}</code></pre></div></div></li></ul></div></section>
 <section id="the_code_matrix_code_ops_and_funcs"><h2>the <code>matrix&lt;&gt;</code> ops and funcs</h2><div class="ulist"><ul><li><p>can recycle the same binary operators as vector if written generic</p></li><li><p>except <em>multiplication</em></p><div class="ulist"><ul><li><p>which needs to be handled differently</p></li><li><p>for all variations of <code>matrix</code>, <code>row_type</code>, <code>column_type</code></p></li></ul></div></li></ul></div></section>
 <section id="prior_art"><h2>Prior Art</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">not invented here :)</td></tr></table></div></section>
 <section><div class="ulist"><ul><li><p>clang vector extensions</p><div class="ulist"><ul><li><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">typedef float vec3 __attribute__((ext_vector_type(3)));</code></pre></div></div></li><li><p>PRO: supports full swizzling</p></li><li><p>CON: very limited in initializations</p></li></ul></div></li></ul></div></section>
