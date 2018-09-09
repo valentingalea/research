@@ -268,7 +268,7 @@ vec4 pos = vec4(1.0, 2.0, 3.0, 4.0);
 vec4 swiz= pos.wzyx; // swiz = (4.0, 3.0, 2.0, 1.0)
 vec4 dup = vec4(pos.xx, pos.yy);
 
-.l-value assigment
+.l-value assignment
 [source, cpp]
 pos.xw = vec2(5.0, 6.0); // pos = (5.0, 2.0, 3.0, 6.0)
 pos.xx = vec2(3.0, 4.0); // illegal - 'x' used twice
@@ -321,7 +321,7 @@ u.z = dot(v, m[2]);
 
 [state=STL]
 == "Standard Library"
-//TODO: table styling attrib are ignored
+//TODO: table styling attributes are ignored
 [cols="%20,%80", width="100%"]
 |==========================================================
 | Math      | `sin`, `cos`, `radians`, `pow`, `exp`, etc
@@ -464,8 +464,6 @@ explicit vector(A0&& a0, Args&&... args)
         std::forward<Args>(args)...
     );
 }
-
-//TODO: step
 
 == `vector<>` ctor - advanced (2)
 [source, cpp]
@@ -665,8 +663,6 @@ NOTE: `C++17` unary fold expression over comma operator
 - gcc 6+
 - clang 3.6+
 - MSVC 2017 15.5+
-
-//TODO: Fold Expressions N4295 gcc(6) clang(3.6) msvc(VS 2017 15.5)
 
 == Improved `vector<>` ctor
 [source, cpp]
@@ -1059,7 +1055,7 @@ return max(-d2, d1);
 //      ||
 //      ||
 //      \/
-    promove_to_vec<float, float>
+    promote_to_vec<float, float>
 //      ||
 //      ||
 //      \/
