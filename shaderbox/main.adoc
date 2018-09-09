@@ -541,7 +541,6 @@ int main()
 
 [state=godbolt]
 == Godbolt (cont.)
-
 [cols="a,a,a"]
 |==================
 | clang (5.x/6.x) | gcc (7.x/8.x) | msvc (2017)
@@ -597,7 +596,6 @@ call    printf
 //- TRIVIA: gcc's `cvtss2sd` from memory is pessimization (https://stackoverflow.com/a/16597686)
 
 == Problem: Debug
-
 [source, cpp]
 void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
     push    rbp
@@ -620,6 +618,14 @@ void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
     nop
     leave
     ret
+
+== Solution: Folding Expressions
+NOTE: `C++17` unary fold expression over comma operator
+
+.Compatibility
+- gcc 6+
+- clang 3.6+
+- MSVC 2017 15.5+
 
 [state=no_list_decor]
 == Improved design of `vector<>`
@@ -656,13 +662,32 @@ struct vector :
 (etc)
 -----
 
-== Folding Expressions
-NOTE: `C++17` unary fold expression over comma operator
+== Folding Expressions in action
+[cols="a,a"]
+|============
+| declaration | instantiation
+|
+{blank} +
+[source, cpp]
+-----
+explicit vector(scalar_type s)
+{
+    ((data[Ns] = s), ...);
+}
+-----
+|
+[source, cpp]
+-----
+vector<float, 0, 1, 2>
 
-.Compatibility
-- gcc 6+
-- clang 3.6+
-- MSVC 2017 15.5+
+explicit vector(float s)
+{
+    data[0] = s,
+    data[1] = s,
+    data[2] = s;
+}
+-----
+|============
 
 == Improved `vector<>` ctor
 [source, cpp]
