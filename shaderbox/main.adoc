@@ -400,7 +400,6 @@ struct vector :
 
 == `vector<>` ctor - basic
 [source, cpp]
------
 vector()
 {
     static_for<0, N>()([this](size_t i) {
@@ -408,13 +407,13 @@ vector()
     });
 }
 
+[source, cpp]
 explicit vector(scalar_type s)
 {
     static_for<0, N>()([s, this](size_t i) {
         data[i] = s;
     });
 }
------
 
 [state=no_list_decor]
 == `static_for` utility
@@ -485,7 +484,7 @@ void static_recurse(Arg0&& a0, Args&&... args)
 {
     construct_at_index<I>(std::forward<Arg0>(a0));
 
-    static_recurse<I + detail::get_size<Arg0>()>(
+    static_recurse<I + get_size<Arg0>()>(
         std::forward<Args>(args)...
     );
 }
@@ -512,8 +511,8 @@ void construct_at_index(scalar_type arg)
 +
 [source, cpp]
 -----
-template<typename Other, size_t Other_N>
-void construct_at_index(size_t& i, vector<Other, Other_N>&& arg)
+template<size_t i, typename Other, size_t Other_N>
+void construct_at_index(vector<Other, Other_N>&& arg)
 {
     constexpr auto count = std::min(i + Other_N, num_components);
 
@@ -1052,7 +1051,10 @@ float opS(float d1, float d2)
 +
 .We only provide the vector variant
 [source, cpp]
-friend vector max(const vector&, const vector&);
+friend vector max(const vector& a, const vector& b)
+{
+    return vector((a.data[Ns] < b.data[Ns] ? a.data[Ns] : b.data[Ns])...);
+}
 
 [state=no_list_decor]
 == More trouble
@@ -1106,7 +1108,7 @@ promote_to_vec< vec3, float, double  >::type == vec3
 [%step]
 - {blank}
 +
-.Insted of `inline` functions are `static`
+.Insted of `friend` functions are `static`
 [source, cpp]
 template<template<class, size_t...> class vector, class T, size_t...
 struct builtin_func_lib
@@ -1285,8 +1287,6 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
  * `-Ofast -march=native -funroll-loops`
 
 == Hello World (CPU)
- TODO: redo @work
-
 |==========================================================================================
 | | image:img/showcase/pc_default.png[Default(PC)] | image:img/showcase/droid_default.jpg[Default(Droid)]
 | 240x240 px | 85.62 FPS | 166.77
@@ -1305,6 +1305,7 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 | 120x120 px | 7.30 FPS | 3.34 FPS
 |==========================================================================================
 // PC: 240p max: 1.92 avrg: 1.70 | 120p max: 7.30 avrg: 6.48
+// PC @work 240p max: 4.42 avrg 4.06
 // Droid: 240p max: 0.84 avrg: 0.73 | 120p max: 3.23 avrg 2.87
 
 [%notitle, background-video="vid/clouds.mp4", options="loop,muted"]

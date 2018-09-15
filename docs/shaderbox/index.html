@@ -136,9 +136,8 @@ struct vector :
     static_for&lt;0, N&gt;()([this](size_t i) {
         data[i] = 0;
     });
-}
-
-explicit vector(scalar_type s)
+}</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit vector(scalar_type s)
 {
     static_for&lt;0, N&gt;()([s, this](size_t i) {
         data[i] = s;
@@ -174,7 +173,7 @@ void static_recurse(Arg0&amp;&amp; a0, Args&amp;&amp;... args)
 {
     construct_at_index&lt;I&gt;(std::forward&lt;Arg0&gt;(a0));
 
-    static_recurse&lt;I + detail::get_size&lt;Arg0&gt;()&gt;(
+    static_recurse&lt;I + get_size&lt;Arg0&gt;()&gt;(
         std::forward&lt;Args&gt;(args)...
     );
 }</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t I&gt;
@@ -184,8 +183,8 @@ void static_recurse()
 void construct_at_index(scalar_type arg)
 {
     data[i] = arg;
-}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename Other, size_t Other_N&gt;
-void construct_at_index(size_t&amp; i, vector&lt;Other, Other_N&gt;&amp;&amp; arg)
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;size_t i, typename Other, size_t Other_N&gt;
+void construct_at_index(vector&lt;Other, Other_N&gt;&amp;&amp; arg)
 {
     constexpr auto count = std::min(i + Other_N, num_components);
 
@@ -489,7 +488,10 @@ struct vector
 <div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Lots of shader code uses scalar types only:</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">float opS(float d1, float d2)
 {
     return max(-d2, d1);
-}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">We only provide the vector variant</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend vector max(const vector&amp;, const vector&amp;);</code></pre></div></div></li></ul></div></section>
+}</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">We only provide the vector variant</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend vector max(const vector&amp; a, const vector&amp; b)
+{
+    return vector((a.data[Ns] &lt; b.data[Ns] ? a.data[Ns] : b.data[Ns])...);
+}</code></pre></div></div></li></ul></div></section>
 <section id="more_trouble" data-state="no_list_decor"><h2>More trouble</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Ambiguity with literals:</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">smoothstep(0, 1, v.xyz);
 //           ^
 //           could be `int`, `float` or `double`</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">friend vector smoothstep(scalar_type, scalar_type, const vector&amp;);
@@ -499,7 +501,7 @@ struct vector
 <div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">First: need to make <code>vec1</code> convert to/from scalars</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">std::is_convertible&lt;vec1, float&gt;::value == true</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="title">Then: provide custom type traits</div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; float                &gt;::type == vec1</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; vec3                 &gt;::type == vec3
 promote_to_vec&lt; decltype(vec3().xyz) &gt;::type == vec3</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">promote_to_vec&lt; vec3, float          &gt;::type == vec3
 promote_to_vec&lt; vec3, float, double  &gt;::type == vec3</code></pre></div></div></li></ul></div></section>
-<section id="solution_cont" data-state="no_list_decor"><h2>Solution (cont.)</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Insted of <code>inline</code> functions are <code>static</code></div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;template&lt;class, size_t...&gt; class vector, class T, size_t...
+<section id="solution_cont" data-state="no_list_decor"><h2>Solution (cont.)</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="title">Insted of <code>friend</code> functions are <code>static</code></div><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;template&lt;class, size_t...&gt; class vector, class T, size_t...
 struct builtin_func_lib
 {
     static vector max(const vector&amp; a, const vector&amp; b)
@@ -578,8 +580,7 @@ explicit matrix(Args&amp;&amp;... args)
 <section id="gpu_desktop_pc"><h2>GPU / desktop PC</h2><div class="ulist"><ul><li><p><a href="https://www.shadertoy.com/user/valentingalea" class="bare">https://www.shadertoy.com/user/valentingalea</a></p></li><li><p>Nvidia GeForce 1060</p></li><li><p>1080p</p></li></ul></div></section>
 <section id="cpu_desktop_pc"><h2>CPU / desktop PC</h2><div class="ulist"><ul><li><p>minimal draw app with <a href="https://www.libsdl.org/" class="bare">https://www.libsdl.org/</a></p></li><li><p>AMD FX 8350 8-core 4.00 GHz</p></li><li><p>Microsoft Visual C++ 2017</p><div class="ulist"><ul><li><p><code>/O2 /Ob2 /fp:fast /fp:except-</code></p></li></ul></div></li></ul></div></section>
 <section id="cpu_mobile_phone"><h2>CPU / mobile phone</h2><div class="ulist"><ul><li><p>C4Droid app (<a href="https://play.google.com/store/apps/details?id=com.n0n3m4.droidc" class="bare">https://play.google.com/store/apps/details?id=com.n0n3m4.droidc</a>)</p></li><li><p>Samsung Galaxy S7</p></li><li><p>GCC 8.0</p><div class="ulist"><ul><li><p><code>-Ofast -march=native -funroll-loops</code></p></li></ul></div></li></ul></div></section>
-<section id="hello_world_cpu"><h2>Hello World (CPU)</h2><div class="literalblock"><div class="content"><pre>TODO: redo @work</pre></div></div>
-<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/pc_default.png" alt="Default(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/droid_default.jpg" alt="Default(Droid)"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">240x240 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">85.62 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">166.77</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">120x120 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">100.27 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">468.49</p></td></tr></table></section>
+<section id="hello_world_cpu"><h2>Hello World (CPU)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/pc_default.png" alt="Default(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/droid_default.jpg" alt="Default(Droid)"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">240x240 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">85.62 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">166.77</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">120x120 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">100.27 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">468.49</p></td></tr></table></section>
 <section id="planet_gpu" data-background-video="vid/planet.mp4" data-background-video-loop data-background-video-muted></section>
 <section id="planet_cpu"><h2>Planet (CPU)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/pc_planet.png" alt="Planet(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/droid_planet.jpg" alt="Planet(Droid)"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">240x240 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.92 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.83 FPS</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">120x120 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">7.30 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3.34 FPS</p></td></tr></table></section>
 <section id="clouds_gpu" data-background-video="vid/clouds.mp4" data-background-video-loop data-background-video-muted></section>
