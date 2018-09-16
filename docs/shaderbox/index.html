@@ -50,7 +50,7 @@ surface basic() {             surface simple(color myOpacity = 1) {
                               }</code></pre></div></div></section>
 <section id="shading_languages_history"><h2>Shading Languages History</h2><div class="paragraph"><p>For real-time rendering:</p></div>
 <div class="ulist"><ul><li><p>Early: ARB assembly, Cg</p></li><li><p>OpenGL shading language (<strong>GLSL</strong>)</p></li><li><p>DirectX High-Level Shader Language (<strong>HLSL</strong>)</p></li><li><p>PlayStation Shader Language (similar to HLSL)</p></li></ul></div></section>
-<section id="glsl_and_hlsl"><h2>GLSL and HLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
+<section id="glsl_vs_hlsl"><h2>GLSL vs HLSL</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">varying vec3 N;
 varying vec3 v;
 void main(void)
 {
@@ -67,11 +67,10 @@ void main(void)
     float4 ambient = { 0.1, 0.0, 0.0, 1.0 };
     return ambient + diffuse * saturate(dot(Light, Norm));
 }</code></pre></div></div></section>
-<section id="glsl_vs_hlsl_general"><h2>GLSL vs HLSL: General</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Procedural, step-centric (C like)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Object oriented, data-centric (C++ like)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Compilation done in driver</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Client side compilation</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code>, <code>int</code>, <code>bool</code>, <code>uint</code>, <code>double</code></p></td></tr></table></section>
-<section id="glsl_vs_hlsl_types"><h2>GLSL vs HLSL: Types</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>vec2</code>, <code>vec3</code>, <code>vec4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Vector type: <code>float2</code>, <code>float3</code>, <code>float4</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>mat2</code>, <code>mat3</code>, <code>mat4</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix type: <code>float2x2</code>, <code>float3x3</code>, <code>float4x4</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
+<section id="languages_types"><h2>Languages: Types</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:5%"><col style="width:40%"><col style="width:55%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Scalar</p></td><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>bool</code>, <code>int</code>, <code>uint</code>, <code>float</code>, <code>double</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Vector</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>vec2</code>, <code>vec3</code>, &#8230;&#8203;</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float2</code>, <code>float3</code>, &#8230;&#8203;</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Matrix</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mat2</code>, <code>mat3</code>, &#8230;&#8203;</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>float2x2</code>, <code>float3x3</code>, &#8230;&#8203;</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#8230;&#8203;textures, samplers, precision modifiers etc</p></td></tr></table></section>
 <section id="languages_declarations"><h2>Languages: Declarations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 C-style types and arrays</p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-C-style <code>struct</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = T ( &#8230;&#8203; )</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = { &#8230;&#8203; }</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">both (preproc abstraction)</p></td></tr></table></section>
+C-style <code>struct</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = T ( &#8230;&#8203; )</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T name = { &#8230;&#8203; }</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">both</p></td></tr></table></section>
 <section id="languages_func_args"><h2>Languages: Func Args</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">GLSL and HLSL</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">C++</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>in T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>out T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>inout T</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>T &amp;</code></p></td></tr><tr><td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 <code>const [&#8230;&#8203;] T</code></p></td></tr></table></section>
 <section id="vectors_and_matrices"><h2>Vectors and Matrices</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">// vectors are generic
@@ -112,7 +111,7 @@ w.z = v.z + u.z;</code></pre></div></div></div></td></tr><tr><td class="tableblo
 u.y = dot(v, m[1]);
 u.z = dot(v, m[2]);
 /* dot(a,b) is the inner product of a and b */</code></pre></div></div></div></td></tr></table></section>
-<section id="standard_library" data-state="STL"><h2>"Standard Library"</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Math</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>sin</code>, <code>cos</code>, <code>radians</code>, <code>pow</code>, <code>exp</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Common</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>abs</code>, <code>sign</code>, <code>floor</code>, <code>mod</code>, <code>min</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Utility</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mix</code>, <code>step</code>, <code>smoothstep</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Geometry</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>length</code>, <code>dot</code>, <code>cross</code>, <code>distance</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Specific texture and image sampling &#8230;&#8203;</p></td></tr></table></section>
+<section id="standard_library" data-state="STL"><h2>"Standard Library"</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:20%"><col style="width:80%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Math</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>sin</code>, <code>cos</code>, <code>radians</code>, <code>pow</code>, <code>exp</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Common</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>abs</code>, <code>sign</code>, <code>floor</code>, <code>mod</code>, <code>min</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Utility</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>mix</code>, <code>step</code>, <code>smoothstep</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Geometry</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>length</code>, <code>dot</code>, <code>cross</code>, <code>distance</code>, etc</p></td></tr><tr><td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Specific texture and image sampling &#8230;&#8203;</p></td></tr></table></section>
 <section id="shading_languages_future"><h2>Shading Languages Future</h2><div class="paragraph"><p>Basically C++ (usually via LLVM)</p></div>
 <div class="ulist step"><ul><li class="fragment"><p>Metal Shading Language (C++14, Apple)</p><div class="ulist"><ul><li><p>only on iOS devices</p></li></ul></div></li><li class="fragment"><p>CUDA Heterogeneous Computing (C++11, NVidia)</p><div class="ulist"><ul><li><p>only for computing, not graphics</p></li></ul></div></li><li class="fragment"><p>HLSL 6.x (C++98&#8217;ish, Microsoft)</p><div class="ulist"><ul><li><p>not released yet</p></li></ul></div></li></ul></div></section>
 <section><div class="paragraph"><p>Let&#8217;s see how C++ can help out, NOW!</p></div></section>
@@ -245,7 +244,7 @@ cvtps2pd xmm2, xmm2
 movq    r9, xmm3
 movq    r8, xmm2
 call    printf</code></pre></div></div></div></td></tr></table></section>
-<section id="problem_debug"><h2>Problem: Debug</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void detail::static_for&lt;0ul, 3ul&gt;::operator()&lt;vector&lt;float, 3ul&gt;...
+<section id="problem_debug"><h2>Problem: Debug</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">void static_for&lt;0ul, 3ul&gt;::operator()&lt;vector&lt;float, 3ul&gt;...
     push    rbp
     mov     rbp, rsp
     sub     rsp, 32
@@ -262,7 +261,7 @@ call    printf</code></pre></div></div></div></td></tr></table></section>
     lea     rax, [rbp-1]
     mov     rsi, rdx
     mov     rdi, rax
-    call    void detail::static_for&lt;1ul, 3ul&gt;::operator()&lt;vector...
+    call    void static_for&lt;1ul, 3ul&gt;::operator()&lt;vector...
     nop
     leave
     ret</code></pre></div></div></section>
@@ -418,24 +417,6 @@ struct swizzler
     // ex: .xxxx from vec2
 
 (etc)</code></pre></div></div></section>
-<section id="code_swizzler_code_generator"><h2><code>swizzler&lt;&gt;</code> generator</h2><div class="paragraph"><p>TODO: time and see if time for this</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
-struct vector_base
-{
-    template&lt;size_t... indices&gt;
-    struct swizzler_wrapper_factory
-    {
-        using type = swizzler&lt;
-            typename vec_equiv&lt;T, sizeof...(indices)&gt;::type,
-            T,
-            sizeof...(Ns),
-            indices...&gt;;
-    };</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">    template&lt;size_t x&gt;
-    struct swizzler_wrapper_factory&lt;x&gt;
-    {
-        using type = T; // one component vectors are just scalars
-    };</code></pre></div></div></section>
 <section id="code_swizzler_code_conversions" data-state="no_list_decor"><h2><code>swizzler&lt;&gt;</code> conversions</h2><div class="ulist"><ul><li class="fragment"><p>Needs to implicitly convert/assign to its <code>vector&lt;&gt;</code> equivalent</p></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">operator vector_type()
 {
     vector_type vec;
@@ -515,14 +496,29 @@ inline auto func(Args&amp;&amp;... args) -&gt;
         promote_to_vec&lt;Args...&gt;::type::
         func(std::forward&lt;Args&gt;(args)...);
 }</code></pre></div></div></li></ul></div></section>
-<section id="solution_demo"><h2>Solution (demo)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">return max(-d2, d1);
-//      ||
-//      ||
-//      \/
+<section id="solution_compromise"><h2>Solution - Compromise</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">...
+MAKE_LIB_FUNC(abs)
+MAKE_LIB_FUNC(sign)
+MAKE_LIB_FUNC(floor)
+MAKE_LIB_FUNC(trunc)
+MAKE_LIB_FUNC(ceil)
+MAKE_LIB_FUNC(fract)
+MAKE_LIB_FUNC(mod)
+MAKE_LIB_FUNC(min)
+MAKE_LIB_FUNC(max)
+MAKE_LIB_FUNC(clamp)
+MAKE_LIB_FUNC(mix)
+MAKE_LIB_FUNC(step)
+MAKE_LIB_FUNC(smoothstep)
+...</code></pre></div></div></section>
+<section id="solution_demo"><h2>Solution - Demo</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">return max(-d2, d1);
+//            ||
+//            ||
+//            \/
     promote_to_vec&lt;float, float&gt;
-//      ||
-//      ||
-//      \/
+//            ||
+//            ||
+//            \/
 return vector&lt;float, 0&gt;::max(-d2, d1);</code></pre></div></div></section>
 <section id="matrix"><h2>Matrix</h2></section>
 <section id="the_code_matrix_code_datatype"><h2>the <code>matrix&lt;&gt;</code> datatype</h2><div class="paragraph"><p>Now that we have <code>vector&lt;&gt;</code> a matrix is more straightforward</p></div>
@@ -551,6 +547,17 @@ struct matrix&lt;scalar_type, vector_type,
 
     column_type data[M];
 (etc)</code></pre></div></div></li></ul></div></section>
+<section id="the_code_matrix_code_declaration"><h2>the <code>matrix&lt;&gt;</code> declaration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">using vec2 = vector&lt;float, 0, 1&gt;;
+using vec3 = vector&lt;float, 0, 1, 2&gt;;
+
+using mat2 = matrix&lt;float, vector,
+    indices_pack&lt;0, 1&gt;, indices_pack&lt;0, 1&gt;&gt;;
+
+using mat3 = matrix&lt;float, vector,
+    indices_pack&lt;0, 1, 2&gt;, indices_pack&lt;0, 1, 2&gt;&gt;;
+
+using mat2x3 = matrix&lt;float, vector,
+    indices_pack&lt;0, 1&gt;, indices_pack&lt;0, 1, 2&gt;&gt;;</code></pre></div></div></section>
 <section id="the_code_matrix_code_constructors" data-state="no_list_decor"><h2>the <code>matrix&lt;&gt;</code> constructors</h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">matrix() = default; // zeroes all data</code></pre></div></div></li><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">explicit matrix(scalar_type s) // fill in diagonally
 {
     ((data[Rows][Rows] = s), ...);
@@ -559,7 +566,7 @@ explicit matrix(Args&amp;&amp;... args)
 {
     size_t i = 0;
     (construct_at_index(i,
-        detail::decay(std::forward&lt;Args&gt;(args))), ...);
+        decay(std::forward&lt;Args&gt;(args))), ...);
 }</code></pre></div></div></li></ul></div></section>
 <section id="the_code_matrix_code_ops_and_funcs"><h2>the <code>matrix&lt;&gt;</code> ops and funcs</h2><div class="ulist"><ul><li><p>can recycle the same binary operators as vector if written generic</p></li><li><p>except <em>multiplication</em></p><div class="ulist"><ul><li><p>which needs to be handled differently</p></li><li><p>for all variations of <code>matrix</code>, <code>row_type</code>, <code>column_type</code></p></li></ul></div></li></ul></div></section>
 <section id="prior_art"><h2>Prior Art</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">not invented here :)</td></tr></table></div></section>
@@ -580,7 +587,7 @@ explicit matrix(Args&amp;&amp;... args)
 <section id="gpu_desktop_pc"><h2>GPU / desktop PC</h2><div class="ulist"><ul><li><p><a href="https://www.shadertoy.com/user/valentingalea" class="bare">https://www.shadertoy.com/user/valentingalea</a></p></li><li><p>Nvidia GeForce 1060</p></li><li><p>1080p</p></li></ul></div></section>
 <section id="cpu_desktop_pc"><h2>CPU / desktop PC</h2><div class="ulist"><ul><li><p>minimal draw app with <a href="https://www.libsdl.org/" class="bare">https://www.libsdl.org/</a></p></li><li><p>AMD FX 8350 8-core 4.00 GHz</p></li><li><p>Microsoft Visual C++ 2017</p><div class="ulist"><ul><li><p><code>/O2 /Ob2 /fp:fast /fp:except-</code></p></li></ul></div></li></ul></div></section>
 <section id="cpu_mobile_phone"><h2>CPU / mobile phone</h2><div class="ulist"><ul><li><p>C4Droid app (<a href="https://play.google.com/store/apps/details?id=com.n0n3m4.droidc" class="bare">https://play.google.com/store/apps/details?id=com.n0n3m4.droidc</a>)</p></li><li><p>Samsung Galaxy S7</p></li><li><p>GCC 8.0</p><div class="ulist"><ul><li><p><code>-Ofast -march=native -funroll-loops</code></p></li></ul></div></li></ul></div></section>
-<section id="hello_world_cpu"><h2>Hello World (CPU)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/pc_default.png" alt="Default(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/droid_default.jpg" alt="Default(Droid)"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">240x240 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">85.62 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">166.77</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">120x120 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">100.27 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">468.49</p></td></tr></table></section>
+<section id="hello_world_cpu"><h2>Hello World (CPU)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/pc_default.png" alt="Default(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/droid_default.jpg" alt="Default(Droid)"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">240x240 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">85.62 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">166.77 FPS</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">120x120 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">100.27 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">468.49 FPS</p></td></tr></table></section>
 <section id="planet_gpu" data-background-video="vid/planet.mp4" data-background-video-loop data-background-video-muted></section>
 <section id="planet_cpu"><h2>Planet (CPU)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/pc_planet.png" alt="Planet(PC)"></span></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="img/showcase/droid_planet.jpg" alt="Planet(Droid)"></span></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">240x240 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.92 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.83 FPS</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">120x120 px</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">7.30 FPS</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3.34 FPS</p></td></tr></table></section>
 <section id="clouds_gpu" data-background-video="vid/clouds.mp4" data-background-video-loop data-background-video-muted></section>

@@ -161,7 +161,7 @@ For real-time rendering:
 - DirectX High-Level Shader Language (*HLSL*)
 - PlayStation Shader Language (similar to HLSL)
 
-== GLSL and HLSL
+== GLSL vs HLSL
 // from https://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/lighting.php
 [source, javascript]
 -----
@@ -189,19 +189,14 @@ float4 main(
 }
 -----
 
-== GLSL vs HLSL: General
-// from https://docs.microsoft.com/en-us/windows/uwp/gaming/glsl-to-hlsl-reference
+== Languages: Types
+[cols="5%,40%,55%", width="100%"]
 |==============================================================================
-| Procedural, step-centric (C like) | Object oriented, data-centric (C++ like)
-| Compilation done in driver        | Client side compilation
-| `float`, `int`, `bool`            | `float`, `int`, `bool`, `uint`, `double`
-|==============================================================================
-
-== GLSL vs HLSL: Types
-|==============================================================================
-| Vector type: `vec2`, `vec3`, `vec4` | Vector type: `float2`, `float3`, `float4`
-| Matrix type: `mat2`, `mat3`, `mat4` | Matrix type: `float2x2`, `float3x3`, `float4x4`
-2+^| ...textures, samplers, precision modifiers etc
+|        | GLSL                | HLSL
+| Scalar 2+^| `bool`, `int`, `uint`, `float`, `double`
+| Vector | `vec2`, `vec3`, ... | `float2`, `float3`, ...
+| Matrix | `mat2`, `mat3`, ... | `float2x2`, `float3x3`, ...
+3+^| ...textures, samplers, precision modifiers etc
 |==============================================================================
 
 == Languages: Declarations
@@ -214,7 +209,7 @@ C-style types and arrays
 3+^|
 {nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}
 C-style `struct`
-| `T name = T ( ... )` | `T name = { ... }` |  both (preproc abstraction)
+| `T name = T ( ... )` | `T name = { ... }` |  both
 |==============================================================================
 
 == Languages: Func Args
@@ -321,8 +316,7 @@ u.z = dot(v, m[2]);
 
 [state=STL]
 == "Standard Library"
-//TODO: table styling attributes are ignored
-[cols="%20,%80", width="100%"]
+[cols="20%,80%", width="100%"]
 |==========================================================
 | Math      | `sin`, `cos`, `radians`, `pow`, `exp`, etc
 | Common    | `abs`, `sign`, `floor`, `mod`, `min`, etc
@@ -614,7 +608,7 @@ call    printf
 
 == Problem: Debug
 [source, cpp]
-void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
+void static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
     push    rbp
     mov     rbp, rsp
     sub     rsp, 32
@@ -631,7 +625,7 @@ void detail::static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
     lea     rax, [rbp-1]
     mov     rsi, rdx
     mov     rdi, rax
-    call    void detail::static_for<1ul, 3ul>::operator()<vector...
+    call    void static_for<1ul, 3ul>::operator()<vector...
     nop
     leave
     ret
@@ -886,30 +880,6 @@ struct swizzler
 (etc)
 -----
 
-== `swizzler<>` generator
-TODO: time and see if time for this
-
-[source, cpp]
-template<typename T, size_t... Ns>
-struct vector_base
-{
-    template<size_t... indices>
-    struct swizzler_wrapper_factory
-    {
-        using type = swizzler<
-            typename vec_equiv<T, sizeof...(indices)>::type,
-            T,
-            sizeof...(Ns),
-            indices...>;
-    };
-
-[source, cpp]
-    template<size_t x>
-    struct swizzler_wrapper_factory<x>
-    {
-        using type = T; // one component vectors are just scalars
-    };
-
 [state=no_list_decor]
 == `swizzler<>` conversions
 [%step]
@@ -1130,16 +1100,34 @@ inline auto func(Args&&... args) ->
         func(std::forward<Args>(args)...);
 }
 
-== Solution (demo)
+== Solution - Compromise
+[source, javascript]
+...
+MAKE_LIB_FUNC(abs)
+MAKE_LIB_FUNC(sign)
+MAKE_LIB_FUNC(floor)
+MAKE_LIB_FUNC(trunc)
+MAKE_LIB_FUNC(ceil)
+MAKE_LIB_FUNC(fract)
+MAKE_LIB_FUNC(mod)
+MAKE_LIB_FUNC(min)
+MAKE_LIB_FUNC(max)
+MAKE_LIB_FUNC(clamp)
+MAKE_LIB_FUNC(mix)
+MAKE_LIB_FUNC(step)
+MAKE_LIB_FUNC(smoothstep)
+...
+
+== Solution - Demo
 [source, cpp]
 return max(-d2, d1);
-//      ||
-//      ||
-//      \/
+//            ||
+//            ||
+//            \/
     promote_to_vec<float, float>
-//      ||
-//      ||
-//      \/
+//            ||
+//            ||
+//            \/
 return vector<float, 0>::max(-d2, d1);
 
 == Matrix
@@ -1191,6 +1179,22 @@ struct matrix<scalar_type, vector_type,
 (etc)
 -----
 
+== the `matrix<>` declaration
+[source, cpp]
+-----
+using vec2 = vector<float, 0, 1>;
+using vec3 = vector<float, 0, 1, 2>;
+
+using mat2 = matrix<float, vector,
+    indices_pack<0, 1>, indices_pack<0, 1>>;
+
+using mat3 = matrix<float, vector,
+    indices_pack<0, 1, 2>, indices_pack<0, 1, 2>>;
+
+using mat2x3 = matrix<float, vector,
+    indices_pack<0, 1>, indices_pack<0, 1, 2>>;
+-----
+
 [state=no_list_decor]
 == the `matrix<>` constructors
 [%step]
@@ -1213,7 +1217,7 @@ explicit matrix(Args&&... args)
 {
     size_t i = 0;
     (construct_at_index(i, 
-        detail::decay(std::forward<Args>(args))), ...);
+        decay(std::forward<Args>(args))), ...);
 }
 
 == the `matrix<>` ops and funcs
@@ -1289,8 +1293,8 @@ NOTE: Courtesy of @ReinderNijhoff https://www.shadertoy.com/view/4dSfRc
 == Hello World (CPU)
 |==========================================================================================
 | | image:img/showcase/pc_default.png[Default(PC)] | image:img/showcase/droid_default.jpg[Default(Droid)]
-| 240x240 px | 85.62 FPS | 166.77
-| 120x120 px | 100.27 FPS | 468.49
+| 240x240 px | 85.62 FPS | 166.77 FPS
+| 120x120 px | 100.27 FPS | 468.49 FPS
 |==========================================================================================
 // PC: 240p max: 93.77 avrg: 85.62 | 120p max: 115.20 avrg: 100.27
 // Droid: 240p max: 376.08 avrg: 166.77 | 120p max: 907.26 avrg: 468.49
