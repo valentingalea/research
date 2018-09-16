@@ -122,13 +122,14 @@ also because GPU driver render bugs
 
 WARNING: taken on desktop PC / Nvidia GTX 1060
 
-== Other advantages
+== Giveaway: VML
+https://github.com/valentingalea/vml[https://github.com/valentingalea/vml]
+
 [cols="a,a"]
 |=================
 |
-- Debug / Decompile algorithms from
-* http://www.shadertoy.com[shadertoy.com]
-* http://www.glslsandbox.com[glslsandbox.com]
+- Debug / Decompile algorithms (from Shadertoy, etc)
+- Texture generator (noise patterns, etc)
 - Unit Test shaders!
 - Quick prototype
 |
