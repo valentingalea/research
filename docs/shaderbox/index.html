@@ -6,8 +6,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="paragraph"><p>More than 10 years in
 <em>mobile</em>, <em>indie</em> and <em>AAA</em> games</p></div>
 <div class="imageblock" style=""><img src="img/sd-brand/SD-logo-white.svg" alt="SD" width="128" height="128"></div></section>
-<section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li><p>Intro and Motivation</p></li><li><p>Shading Languages</p></li><li><p>C++</p></li><li><p>Showcase</p></li></ul></div>
-<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">questions welcomed throughout</td></tr></table></div></section>
+<section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li><p>Intro and Motivation</p></li><li><p>Shading Languages</p></li><li><p>C++</p></li><li><p>Showcase</p></li></ul></div></section>
 <section id="shaders"><h2>Shaders</h2><div class="quoteblock"><blockquote>A computer program that is used to do <strong>shading</strong></blockquote></div></section>
 <section id="shaders_definition" data-background-image="img/intro/shaded_shapes.jpg"><div class="quoteblock"><blockquote>Depicting depth perception in 3D models or illustrations by varying levels of darkness</blockquote><div class="attribution">&#8212; Wikipedia</div></div></section>
 <section id="shaders_pixar" data-background-image="img/intro/pixar_luxo.jpg"><div class="quoteblock"><blockquote>A computer program that tells the computer how to draw something</blockquote><div class="attribution">&#8212; Pixar RenderMan 1988</div></div></section>
@@ -266,8 +265,9 @@ call    printf</code></pre></div></div></div></td></tr></table></section>
     nop
     leave
     ret</code></pre></div></div></section>
-<section id="solution_folding_expressions"><h2>Solution: Folding Expressions</h2><div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content"><code>C++17</code> unary fold expression over comma operator</td></tr></table></div>
-<div class="ulist"><div class="title">Compatibility</div><ul><li><p>gcc 6+</p></li><li><p>clang 3.6+</p></li><li><p>MSVC 2017 15.5+</p></li></ul></div></section>
+<section id="solution_c_17_fold_expressions"><h2>Solution: C++17 Fold Expressions</h2><div class="paragraph"><div class="title">Unary right fold</div><p><code>(E op &#8230;&#8203;)</code> &#8594; <code>(E<sub>1</sub> op (&#8230;&#8203; op (E<sub>N-1</sub> op E<sub>N</sub>)))</code></p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:30%"><col style="width:30%"><col style="width:40%"></colgroup><tbody><tr><td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><br>
+</p></td></tr><tr><td class="tableblock halign-center valign-top"><p class="tableblock">clang 3.6+</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">gcc 6+</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">MSVC 2017 15.5+</p></td></tr></table></section>
 <section id="improved_design_of_code_vector_code" data-state="no_list_decor"><h2>Improved design of <code>vector&lt;&gt;</code></h2><div class="ulist"><ul><li class="fragment"><p></p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="cpp language-cpp">template&lt;typename T, size_t... Ns&gt;
 struct vector :
     public vector_base&lt;T, Ns...&gt;

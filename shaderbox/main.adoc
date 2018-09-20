@@ -27,8 +27,6 @@ image::img/sd-brand/SD-logo-white.svg[SD, 128, 128]
 - C++
 - Showcase
 
-TIP: questions welcomed throughout
-
 == Shaders
 [quote]
 A computer program that is used to do *shading*
@@ -631,13 +629,20 @@ void static_for<0ul, 3ul>::operator()<vector<float, 3ul>...
     leave
     ret
 
-== Solution: Folding Expressions
-NOTE: `C++17` unary fold expression over comma operator
+== Solution: C++17 Fold Expressions
+.Unary right fold
+`(E op ...)` -> `(E~1~ op (... op (E~N-1~ op E~N~)))`
 
-.Compatibility
-- gcc 6+
-- clang 3.6+
-- MSVC 2017 15.5+
+//`(... op E)` -> `(((E~1~ op E~2~) op ...) op E~N~)`
+//`(E op ... op I)` -> `(E~1~ op (... op (E~N−1~ op (E~N~ op I))))`
+//`(I op ... op E)` -> `((((I op E~1~) op E~2~) op ...) op E~N~)`
+
+[cols="^30%,^30%,^40%"]
+|======
+3+^| {blank} +
+{blank}
+| clang 3.6+ | gcc 6+ | MSVC 2017 15.5+
+|======
 
 [state=no_list_decor]
 == Improved design of `vector<>`
