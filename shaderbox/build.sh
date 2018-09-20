@@ -1,6 +1,6 @@
 #! /bin/bash
 
-node build.js
+node convert.js
 
 # default way to enable plugins in asciidoctor doesn't seem to work
 # so I cheated and created my own mini mechanism
