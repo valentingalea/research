@@ -1136,7 +1136,9 @@ return max(-d2, d1);
 //            \/
 return vector<float, 0>::max(-d2, d1);
 
+[%notitle]
 == Matrix
+image::vid/matrix.gif[the matrix]
 
 == the `matrix<>` datatype
 Now that we have `vector<>` a matrix is more straightforward
