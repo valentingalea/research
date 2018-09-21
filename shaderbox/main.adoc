@@ -134,6 +134,12 @@ https://github.com/valentingalea/vml[https://github.com/valentingalea/vml]
 image:img/motivation/shadertoy.png[shadertoy]
 |=================
 
+== Demo: GPU via Shadertoy.com
+video::vid/planet.mp4[options="loop,muted,autoplay"]
+
+== Demo: CPU via GCC 8.0 (mobile)
+video::vid/shaderbox.mp4[options="loop,muted,autoplay"]
+
 == Shading Languages
 [state=RSL]
 == Pixar RenderMan Language
