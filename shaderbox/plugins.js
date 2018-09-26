@@ -114,7 +114,17 @@ barColor: 'rgb(66, 175, 250)',
 // plugins
 //
 dependencies: [
-    { src: 'node_modules/reveal.js/plugin/elapsed-time-bar/elapsed-time-bar.js'}, // https://github.com/tkrkt/reveal.js-elapsed-time-bar
-    { src: 'node_modules/reveal.js-menu/menu.js' } // https://github.com/denehyg/reveal.js-menu
+    // https://github.com/tkrkt/reveal.js-elapsed-time-bar
+    { src: 'node_modules/reveal.js/plugin/elapsed-time-bar/elapsed-time-bar.js'}
+
+    // https://github.com/denehyg/reveal.js-menu
+    ,{ src: 'node_modules/reveal.js-menu/menu.js' }
+    
+    // https://github.com/e-gor/Reveal.js-Title-Footer
+    // ,{ src: 'node_modules/reveal.js/plugin/title-footer/title-footer.js'
+    //     ,callback: function() {
+    //         title_footer.initialize("@valentin_galea");
+    //     }
+    // }
 
     , // default plugins past this point; also add new-line
