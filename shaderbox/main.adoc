@@ -54,13 +54,13 @@ A computer program that tells the computer how to draw something
 image::img/intro/gpu_gtx1080.png[GPU, width="60%", float="right"]
 
 [%left]
-`-` Computer graphics
-
-[%left]
-`-` Image manipulation
+`-` Computer graphics / Images
 
 [%left]
 `-` Highly parallel computing
+
+[%left]
+`-` Mining for cryptocurrency :)
 
 == Why on GPU
 image::img/intro/cpu_vs_gpu.png[]
