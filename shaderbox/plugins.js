@@ -106,7 +106,7 @@ menu: {
     loadIcons: true
 },
 // https://github.com/tkrkt/reveal.js-elapsed-time-bar
-allottedTime: 45 * 60 * 1000, // minutes
+allottedTime: 50 * 60 * 1000, // minutes
 progressBarHeight: 5,
 barColor: 'rgb(66, 175, 250)',
 
