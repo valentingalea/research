@@ -14,6 +14,16 @@
     font-size: 1em;
 }
 
+#title-footer {
+    top: 0 !important;
+    text-align: right !important;
+    padding: .25em !important;
+    background: rgba(0,0,0,0) !important;
+}
+#title-footer a {
+    margin-right: 1em;
+}
+
 .reveal section img {
     border: 0;
     padding: 0;
