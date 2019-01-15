@@ -1,9 +1,24 @@
-= How Unreal Engine 4 solved all C++'s problems, failed, and got rich trying
+= Growing a Healthy UE4 Ecosystem - How Splash Damage approaches development 
 
-Unreal Engine from Epic Games is a veteran 3D engine in the video games industry. It powers well known franchises such as Gears Of War, Bioshock, Borderlands and countless others, as well as the phenomenally successful Fortnite.
+Unreal Engine is a complex engine powering a wide suite of games from indie to AAA. Modern games however need more than the UE4 heartbeat, as gamedev teams grow so does the demand for enhancements, tools and processes around the main scaffolding of the engine.
 
-Now at version 4, it has a rich history dating back to 1996. It was originally written in C\++ and continues to be to this day. Such a heritage brings its own set of problems - most of its initial design predates Modern C+\+, although recently it caught up. Couple this with the relative isolation of game development and you get a very interesting mix of C++ design and architectural decisions.
+Splash Damage has a rich history with Unreal from UE3 in DirtyBomb to the award winning Gears Of War on UE4. This talk will present the culmination of that heritage and  present workflows and systems that help us empower our developers whilst also nourishing the next big company endeavours.
 
-The talk will highlight the various struggles of Epic in mastering and augmenting C++ at various points in time and their unique and sometimes questionable solutions. We will analyse their approaches in build systems, simulation of modules, adding GC, reflection, hot-patching, and of course custom containers and self-made STL alternative.
+We will start from how our dev teams are formed, how we bind them together using our unique take on Coding and Content Standards, the modular architecture of the game projects, unit and functional testing, gameplay (ECS and GAS) learnings. We will also cover tools and policies we put in place that help drive good collaboration, minimize build breakages and allow for game-as-a-service models. All these modifications add up and it's important to keep up to date with Epic's own advancement so we'll show our merge strategies and shares learnings that other studios might find useful.
 
-Purist of C\++ will be outraged, game developers will smirk knowingly and general C++ users will be at least intrigued at this unwieldly, complex, but ultimately hugely successful system. 
+Agenda:
+- Quick history of the studio
+- Overview of the shipped UE games
+- Internal teams and management
+- Coding Standards and approach
+- Content Standards and enforcing
+- Engine changes
+- Game architecture / modules
+- Unit / Functional testing
+- Approach in ECS design
+- Learnings from GAS
+- Tools overview
+- Submit and review policies
+- Build pipelines / CI
+- Engine migrations and merge strategy
+- Multiple project management
