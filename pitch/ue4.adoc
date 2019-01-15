@@ -7,6 +7,7 @@ Splash Damage has a rich history with Unreal from UE3 in DirtyBomb to the award 
 We will start from how our dev teams are formed, how we bind them together using our unique take on Coding and Content Standards, the modular architecture of the game projects, unit and functional testing, gameplay (ECS and GAS) learnings. We will also cover tools and policies we put in place that help drive good collaboration, minimize build breakages and allow for game-as-a-service models. All these modifications add up and it's important to keep up to date with Epic's own advancement so we'll show our merge strategies and shares learnings that other studios might find useful.
 
 Agenda:
+
 - Quick history of the studio
 - Overview of the shipped UE games
 - Internal teams and management
