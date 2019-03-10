@@ -16,8 +16,6 @@ Agenda:
 - Engine changes
 - Game architecture / modules
 - Unit / Functional testing
-- Approach in ECS design
-- Learnings from GAS
 - Tools overview
 - Submit and review policies
 - Build pipelines / CI
