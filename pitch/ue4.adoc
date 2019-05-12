@@ -1,10 +1,10 @@
-= Growing a Healthy UE4 Ecosystem - How Splash Damage approaches development 
+= Growing a Healthy UE4 Ecosystem - How Splash Damage Approaches Development
 
 Unreal Engine is a complex engine powering a wide suite of games from indie to AAA. Modern games however need more than the UE4 heartbeat, as gamedev teams grow so does the demand for enhancements, tools and processes around the main scaffolding of the engine.
 
-Splash Damage has a rich history with Unreal from UE3 in DirtyBomb to the award winning Gears Of War on UE4. This talk will present the culmination of that heritage and  present workflows and systems that help us empower our developers whilst also nourishing the next big company endeavours.
+Splash Damage has a rich history with Unreal from UE3 in DirtyBomb to the award-winning Gears Of War on UE4. This talk will present the culmination of that heritage and present workflows and systems that help us empower our developers whilst also nourishing the next big company endeavours.
 
-We will start from how our dev teams are formed, how we bind them together using our unique take on Coding and Content Standards, the modular architecture of the game projects, unit and functional testing, gameplay (ECS and GAS) learnings. We will also cover tools and policies we put in place that help drive good collaboration, minimize build breakages and allow for game-as-a-service models. All these modifications add up and it's important to keep up to date with Epic's own advancement so we'll show our merge strategies and shares learnings that other studios might find useful.
+We will start from how our dev teams are formed, how we bind them together using our unique take on Coding and Content Standards, the modular architecture of the game projects, unit and functional testing, gameplay architecture (ECS and GAS). We will also cover tools and policies we put in place that help drive good collaboration, minimize build breakages and allow for both traditional games and game-as-a-service model. All these modifications add up and it’s important to keep up to date with Epic’s own advancement, so we’ll show our merge strategies and shares learnings that other studios might find useful.
 
 Agenda:
 
@@ -16,8 +16,6 @@ Agenda:
 - Engine changes
 - Game architecture / modules
 - Unit / Functional testing
-- Approach in ECS design
-- Learnings from GAS
 - Tools overview
 - Submit and review policies
 - Build pipelines / CI
