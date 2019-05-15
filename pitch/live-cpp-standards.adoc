@@ -1,4 +1,8 @@
-= Live C++ Coding Standards
+== Live C++ Coding Standards
+
+or
+
+== Compiled C++ Coding Standards - An Alternative Approach
 
 Coding conventions, guides and standards are a perennial effort of software development. Lots of effort goes into preparing and writing them but arguably less in following them. Part of this is caused because they are usually documents relegated outside the main development work, where they evolve separately and often retroactively. 
 
